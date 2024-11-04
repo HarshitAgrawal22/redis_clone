@@ -20,6 +20,7 @@ type Server struct {
 	peers     map[*Peer]bool // map to track connected peers with *Peer as keys and boolean as value
 	ln        net.Listener   // a network listener for accepting connections
 	addPeerCh chan *Peer     // a channel to add peers to the server
+	quitCh    chan struct{}
 }
 
 func NewServer(cfg Config) *Server {
@@ -32,6 +33,7 @@ func NewServer(cfg Config) *Server {
 		Config:    cfg,
 		peers:     make(map[*Peer]bool), // A map to track active peers
 		addPeerCh: make(chan *Peer),     // A channel to add new peers to the server
+		quitCh:    make(chan struct{}),
 	}
 }
 
@@ -47,6 +49,8 @@ func (s *Server) Start() error {
 	s.ln = ln
 	fmt.Printf("Server started, listening on %s\n", s.ListenAddress)
 
+	go s.loop()
+	slog.Info("server running", "ListenAdress", s.ListenAddress)
 	// calling the acceptLoop to handle incoming connections
 	return s.acceptLoop()
 }
@@ -54,12 +58,14 @@ func (s *Server) Start() error {
 func (s *Server) loop() {
 	// this function waits for a peer to be received on the addPeerCh channel and adds it to peers map. if no new peer is received, it defaults to printing
 	for {
+
 		select {
+		case <-s.quitCh:
+			return
 		case peer := <-s.addPeerCh:
 			s.peers[peer] = true
 			fmt.Printf("New peer connected: %v\n", peer.conn.RemoteAddr())
-		default:
-			// Added sleep to prevent busy-waiting in the loop
+
 		}
 	}
 }
@@ -81,6 +87,8 @@ func (s *Server) handleConn(conn net.Conn) {
 	// this function is meant to handle each new connection by creating a Peer instance for the connection (newPeer(conn)).
 	peer := newPeer(conn)
 	s.addPeerCh <- peer
+
+	slog.Info("new peer connected", "remoteAddress", conn.RemoteAddr())
 	go peer.readLoop()
 }
 

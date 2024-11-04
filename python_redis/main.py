@@ -25,6 +25,7 @@ class Server:
             socket.AF_INET, socket.SOCK_STREAM
         )  # Network listener
         self.add_peer_ch: list[peer.Peer] = []  # Channel to add peers to the server
+        self.quit_event = threading.Event()
 
     @staticmethod
     def new_server(config: Config) -> "Server":
@@ -46,43 +47,62 @@ class Server:
             print(
                 f"Server started, listening on {self.config.listen_address}"
             )  # Added print statement
+
+            threading.Thread(target=self.loop, daemon=True).start()
             self.accept_loop()
         except Exception as e:
             print(f"Error starting server: {e}")
 
     def loop(self) -> None:
         # This loop waits for a peer in add_peer_ch and adds to the peers dict
-        while True:
+        while not self.quit_event.is_set():
             if self.add_peer_ch:
                 peer = self.add_peer_ch.pop(0)
                 self.peers[peer] = True
-                print(f"Added new peer: {peer}")  # Added print statement
+                print(
+                    f"Added new peer: {peer.Conn.getpeername()}"
+                )  # Added print statement
             else:
+                threading.Event().wait(0.5)
+                # slight delay tp prevent busy waiting
                 print("No new peer is received")
 
     def accept_loop(self) -> None:
         # Accepts incoming connections in a loop, handling each connection concurrently
-        while True:
+        while not self.quit_event.is_set():
             try:
-                conn, _ = self.listener.accept()
-                print("Accepted a new connection")  # Added print statement
-                thread = threading.Thread(target=self.handle_conn, args=(conn,))
+                conn, addr = self.listener.accept()
+                print(f"Accepted a new connection from {addr}")  # Added print statement
+                thread = threading.Thread(
+                    target=self.handle_conn, args=(conn,), daemon=True
+                )
                 thread.start()
             except Exception as e:
                 print(f"Accept error: {e}")
 
     def handle_conn(self, conn: socket.socket) -> None:
         # Handles each new connection by creating a Peer instance
-        this_peer: peer.Peer = peer.Peer.new_peer(conn)
+        this_peer: peer.Peer = peer.Peer.newPeer(conn)
         print(f"Handling connection for peer: {this_peer}")  # Added print statement
         self.add_peer_ch.append(this_peer)
+        ic(conn.getpeername())
         thread = threading.Thread(target=this_peer.readLoop)
         thread.start()
+
+    def stop(self) -> None:
+        # stops the server gracefully
+        self.quit_event.set()
+        self.listener.close()
+        print("Server stopped")
 
 
 def main() -> None:
     server = Server.new_server(config=Config())
-    ic(server.start())  # Using IceCream to print the return value of start()
+    try:
+        ic(server.start())  # Using IceCream to print the return value of start()
+    except KeyboardInterrupt:
+        print("server stopped")
+        server.stop()
 
 
 if __name__ == "__main__":
