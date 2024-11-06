@@ -85,11 +85,13 @@ func (s *Server) acceptLoop() error {
 
 func (s *Server) handleConn(conn net.Conn) {
 	// this function is meant to handle each new connection by creating a Peer instance for the connection (newPeer(conn)).
-	peer := newPeer(conn)
-	s.addPeerCh <- peer
+	this_peer := newPeer(conn)
+	s.addPeerCh <- this_peer
 
 	slog.Info("new peer connected", "remoteAddress", conn.RemoteAddr())
-	go peer.readLoop()
+	if err := this_peer.readLoop(); err != nil {
+		slog.Error("peer read error", "err", err, "remoteAddr", conn.RemoteAddr())
+	}
 }
 
 func main() {

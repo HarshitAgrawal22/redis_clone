@@ -1,6 +1,9 @@
 package main
 
-import "net"
+import (
+	"fmt"
+	"net"
+)
 
 type Peer struct {
 	conn net.Conn
@@ -12,7 +15,14 @@ func newPeer(conn net.Conn) *Peer {
 	}
 }
 
-func (p *Peer) readLoop() {
-	server := NewServer(Config{ListenAddress: ":5001"})
-	server.Start()
+func (p *Peer) readLoop() error {
+	buf := make([]byte, 1024)
+	for {
+		n, err := p.conn.Read(buf)
+		if err != nil {
+
+			return err
+		}
+		fmt.Println(string(buf[:n]))
+	}
 }
