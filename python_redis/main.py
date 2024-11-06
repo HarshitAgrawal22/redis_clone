@@ -3,6 +3,8 @@ import threading
 from typing import Dict
 import peer
 from icecream import ic
+from queue import Queue
+
 
 default_listen_address: str = ":5001"
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
@@ -26,6 +28,7 @@ class Server:
         )  # Network listener
         self.add_peer_ch: list[peer.Peer] = []  # Channel to add peers to the server
         self.quit_event = threading.Event()
+        self.msg_queue = Queue()  # Queue to manage message for broadcasting
 
     @staticmethod
     def new_server(config: Config) -> "Server":
@@ -53,9 +56,24 @@ class Server:
         except Exception as e:
             print(f"Error starting server: {e}")
 
+    def handle_raw_message(self, rawMsg: bytearray):
+        print(type(rawMsg))
+        print(rawMsg)
+
+        return None
+
     def loop(self) -> None:
         # This loop waits for a peer in add_peer_ch and adds to the peers dict
         while not self.quit_event.is_set():
+
+            if not self.msg_queue.empty():
+
+                raw_msg = self.msg_queue.get()
+                err = self.handle_raw_message(raw_msg)
+                if err:
+                    print(f"Raw Message Error-> {err}")
+                print(raw_msg)
+
             if self.add_peer_ch:
                 peer = self.add_peer_ch.pop(0)
                 self.peers[peer] = True
@@ -65,7 +83,7 @@ class Server:
             else:
                 threading.Event().wait(0.5)
                 # slight delay tp prevent busy waiting
-                print("No new peer is received")
+                # print("No new peer is received")
 
     def accept_loop(self) -> None:
         # Accepts incoming connections in a loop, handling each connection concurrently
@@ -82,11 +100,14 @@ class Server:
 
     def handle_conn(self, conn: socket.socket) -> None:
         # Handles each new connection by creating a Peer instance
-        this_peer: peer.Peer = peer.Peer.newPeer(conn)
-        print(f"Handling connection for peer: {this_peer}")  # Added print statement
+        this_peer: peer.Peer = peer.Peer.newPeer(conn, self.msg_queue)
+        print(f"Handling connection for peer: {this_peer}")
+
         self.add_peer_ch.append(this_peer)
+        # added new peer to the add_peer_ch of server
         ic(conn.getpeername())
-        thread = threading.Thread(target=this_peer.readLoop)
+        # starting the peer's readloop on a seperate thread to isolate each peer;s connection from every other peer
+        thread = threading.Thread(target=this_peer.read_loop)
         thread.start()
 
     def stop(self) -> None:
