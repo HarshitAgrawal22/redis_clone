@@ -103,7 +103,7 @@ func (s *Server) handleConn(conn net.Conn) {
 	// this function is meant to handle each new connection by creating a Peer instance for the connection (newPeer(conn)).
 
 	this_peer := newPeer(conn, s.msgch) // here we are sending server's msg chan to new peer to access messages directly from the server of all the peers
-
+	this_peer.TestProtocol()
 	s.addPeerCh <- this_peer // Send the newly created Peer to the addPeerCh channel for the server to add it to its peers list
 
 	slog.Info("new peer connected", "remoteAddress", conn.RemoteAddr())
@@ -114,8 +114,10 @@ func (s *Server) handleConn(conn net.Conn) {
 }
 
 func main() {
+
 	server := NewServer(Config{})
 	if err := server.Start(); err != nil {
 		log.Fatal(err)
 	}
+
 }
