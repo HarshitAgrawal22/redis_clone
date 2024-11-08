@@ -61,26 +61,26 @@ class Server:
     def handle_raw_message(self, rawMsg: bytearray):
         print(type(rawMsg))
         print(rawMsg)
-        cmd = protocol.parse_command(rawMsg.decode("utf-8"))
+        cmd = protocol.parse_command(rawMsg)
         ic(cmd)
         return None
 
     def loop(self) -> None:
         # This loop waits for a peer in add_peer_ch and adds to the peers dict
         while not self.quit_event.is_set():
-            print(self.msg_queue.get())
-
-            if (
-                self.msg_queue.get().decode("utf-8") == "quit\r\n"
-            ):  # if we get quit message from any server then the server is stoppped
-                self.stop()
-                # this is for development phase only
 
             if not self.msg_queue.empty():
-
+                print("analyzing command")
                 raw_msg = self.msg_queue.get()
 
-                err = self.handle_raw_message(raw_msg)
+                if raw_msg.decode("utf-8") != "quit\r\n":
+                    print(raw_msg.decode("utf-8"))
+                    err = self.handle_raw_message(raw_msg)
+
+                else:  # if we get quit message from any server then the server is stoppped
+                    self.stop()
+                    # this is for development phase only
+
                 if err:
                     print(f"Raw Message Error-> {err}")
 

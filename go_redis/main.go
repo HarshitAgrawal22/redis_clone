@@ -63,7 +63,7 @@ func (s *Server) handleRawMessage(rawMsg []byte) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(cmd)
+	fmt.Println(cmd, "is the cmd")
 	return nil
 }
 
