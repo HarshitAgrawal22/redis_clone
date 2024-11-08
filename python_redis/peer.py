@@ -1,6 +1,9 @@
 import socket
-from main import Server, Config
+
+# from main import Server, Config
 from queue import Queue
+from protocol import RESPReader
+import io
 
 
 class Peer:
@@ -35,3 +38,22 @@ class Peer:
         except Exception as e:
             print(f"Read loop error: {e}")
             return e
+
+    def test_protocol(self):
+        raw = "*3\r\n$3\r\nSET\r\n$5\r\nmyKey\r\n$3\r\nbar\r\n"
+
+        buffer = io.StringIO(raw)
+        rd = RESPReader(buffer)
+
+        try:
+            while True:
+                v_type, v_value = rd.read_value()
+                print(f"Read {v_type}")
+                if v_type == "Array":
+                    for i, element in enumerate(v_value):
+                        e_type, e_value = element
+                        print(f" #{i} {e_type}, value: '{e_value}'")
+        except EOFError:
+            pass
+        except Exception as e:
+            print(f"Error: {e}")

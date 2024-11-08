@@ -59,6 +59,11 @@ func (s *Server) Start() error {
 
 func (s *Server) handleRawMessage(rawMsg []byte) error {
 	fmt.Println(string(rawMsg))
+	cmd, err := parseCommand(string(rawMsg))
+	if err != nil {
+		return err
+	}
+	fmt.Println(cmd)
 	return nil
 }
 
@@ -70,6 +75,8 @@ func (s *Server) loop() {
 		case rawMsg := <-s.msgch:
 
 			// it listens for msgchannel , when it a new message is received , it prints the message
+			fmt.Println(rawMsg)
+
 			if err := s.handleRawMessage(rawMsg); err != nil {
 				slog.Error("Raw Message Error from", "err", err)
 			}
@@ -103,7 +110,7 @@ func (s *Server) handleConn(conn net.Conn) {
 	// this function is meant to handle each new connection by creating a Peer instance for the connection (newPeer(conn)).
 
 	this_peer := newPeer(conn, s.msgch) // here we are sending server's msg chan to new peer to access messages directly from the server of all the peers
-	this_peer.TestProtocol()
+
 	s.addPeerCh <- this_peer // Send the newly created Peer to the addPeerCh channel for the server to add it to its peers list
 
 	slog.Info("new peer connected", "remoteAddress", conn.RemoteAddr())

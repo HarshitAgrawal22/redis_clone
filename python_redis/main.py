@@ -1,7 +1,9 @@
 import socket
 import threading
 from typing import Dict
+import protocol
 import peer
+
 from icecream import ic
 from queue import Queue
 
@@ -59,20 +61,28 @@ class Server:
     def handle_raw_message(self, rawMsg: bytearray):
         print(type(rawMsg))
         print(rawMsg)
-
+        cmd = protocol.parse_command(rawMsg.decode("utf-8"))
+        ic(cmd)
         return None
 
     def loop(self) -> None:
         # This loop waits for a peer in add_peer_ch and adds to the peers dict
         while not self.quit_event.is_set():
+            print(self.msg_queue.get())
+
+            if (
+                self.msg_queue.get().decode("utf-8") == "quit\r\n"
+            ):  # if we get quit message from any server then the server is stoppped
+                self.stop()
+                # this is for development phase only
 
             if not self.msg_queue.empty():
 
                 raw_msg = self.msg_queue.get()
+
                 err = self.handle_raw_message(raw_msg)
                 if err:
                     print(f"Raw Message Error-> {err}")
-                print(raw_msg)
 
             if self.add_peer_ch:
                 peer = self.add_peer_ch.pop(0)
@@ -100,9 +110,11 @@ class Server:
 
     def handle_conn(self, conn: socket.socket) -> None:
         # Handles each new connection by creating a Peer instance
-        this_peer: peer.Peer = peer.Peer.newPeer(conn, self.msg_queue)
+        this_peer: peer.Peer = peer.Peer.newPeer(
+            conn, self.msg_queue
+        )  # here we are provinng the conn and msg_queue of server's to the Peer
         print(f"Handling connection for peer: {this_peer}")
-
+        # this_peer.test_protocol()
         self.add_peer_ch.append(this_peer)
         # added new peer to the add_peer_ch of server
         ic(conn.getpeername())

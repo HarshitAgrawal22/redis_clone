@@ -1,13 +1,12 @@
 package main
 
 import (
-	"bytes"
+	// "bytes"
 	"fmt"
-	"io"
-	"log"
+	// "io"
+	// "log"
 	"net"
-
-	"github.com/tidwall/resp"
+	// "github.com/tidwall/resp"
 )
 
 type Peer struct {
@@ -42,25 +41,4 @@ func (p *Peer) readLoop() error {
 		copy(msgBuf, buf[:n])     // copying data of buffer to msgbuffer
 		p.msgch <- msgBuf         // appendingmsg to  peer's buffer
 	}
-}
-
-func (p *Peer) TestProtocol() error {
-	raw := "*3\r\n$3\r\nSET\r\n$5\r\nmyKey\r\n$3\r\nbar\r\n"
-	rd := resp.NewReader(bytes.NewBufferString(raw))
-	for {
-		v, _, err := rd.ReadValue()
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			log.Fatal(err)
-		}
-		fmt.Printf("Read %s \n", v.Type())
-		if v.Type() == resp.Array {
-			for i, v := range v.Array() {
-				fmt.Printf(" #%d %s, value: '%s'\n", i, v.Type(), v)
-			}
-		}
-	}
-	return nil
 }
