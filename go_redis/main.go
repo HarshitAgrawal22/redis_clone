@@ -1,10 +1,14 @@
 package main
 
 import (
+	"context"
 	"fmt"
+
 	"log"
 	"log/slog"
+	"main/client"
 	"net"
+	"time"
 )
 
 const defaultAddress = ":5001"
@@ -125,10 +129,16 @@ func (s *Server) handleConn(conn net.Conn) {
 }
 
 func main() {
+	go func() {
+		server := NewServer(Config{})
+		log.Fatal(server.Start())
+	}()
 
-	server := NewServer(Config{})
-	if err := server.Start(); err != nil {
+	time.Sleep(time.Second)
+
+	c := client.NewClient("localhost:5001")
+	if err := c.Set(context.TODO(), "data", "harshit"); err != nil {
 		log.Fatal(err)
 	}
-
+	time.Sleep(time.Second)
 }

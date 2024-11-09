@@ -3,10 +3,10 @@ import threading
 from typing import Dict
 import protocol
 import peer
-
+import time
 from icecream import ic
 from queue import Queue
-
+from client import client
 
 default_listen_address: str = ":5001"
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
@@ -83,13 +83,12 @@ class Server:
                 if raw_msg.decode("utf-8") != "quit\r\n":
                     print(raw_msg.decode("utf-8"))
                     err = self.handle_raw_message(raw_msg)
+                    if err:
+                        print(f"Raw Message Error-> {err}")
 
                 else:  # if we get quit message from any server then the server is stoppped
                     self.stop()
                     # this is for development phase only
-
-                if err:
-                    print(f"Raw Message Error-> {err}")
 
             if self.add_peer_ch:
                 peer = self.add_peer_ch.pop(0)
@@ -139,7 +138,16 @@ class Server:
 def main() -> None:
     server = Server.new_server(config=Config())
     try:
-        ic(server.start())  # Using IceCream to print the return value of start()
+        server_thread = threading.Thread(target=server.start)
+        server_thread.start()
+        # ic(server.start())
+        # Using IceCream to print the return value of start()
+        time.sleep(1)
+
+        client_server = client.Client("localhost:5001")
+        if err := client_server.set(key="pakoda", value="aloo"):
+            print(f"error= > {err}")
+        time.sleep(1)
     except KeyboardInterrupt:
         print("server stopped")
         server.stop()
