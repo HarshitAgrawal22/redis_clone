@@ -61,8 +61,15 @@ class Server:
     def handle_raw_message(self, rawMsg: bytearray):
         print(type(rawMsg))
         print(rawMsg)
-        cmd = protocol.parse_command(rawMsg)
-        ic(cmd)
+        try:
+            cmd = protocol.parse_command(rawMsg)
+            # print(f"{cmd} is the cmd")
+        except ValueError as e:
+            return e
+        if isinstance(cmd, protocol.SetCommand):
+            print(
+                f"Somebody wants to set a key into the hashtable \nkey=>{cmd.key}\nvalue =>{cmd.value}"
+            )
         return None
 
     def loop(self) -> None:

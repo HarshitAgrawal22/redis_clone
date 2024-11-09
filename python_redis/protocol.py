@@ -19,6 +19,9 @@ class SetCommand(Command):
         self.key: str = key
         self.value: str = value
 
+    def __str__(self):
+        return f"key:{self.key}  value:{self.value}"
+
 
 def parse_command(raw: bytes) -> Union[Command, None]:
     """Parses the raw RESP command bytes and returns a Command object if valid."""
@@ -27,11 +30,12 @@ def parse_command(raw: bytes) -> Union[Command, None]:
     arr_len = len(holder_arr := raw.split())
     raw = "*3\r\n"
     for i in holder_arr:
-        raw += f"${len(i)}\r\n{i}"
+        temp_str = i.decode("utf-8")
+        raw += f"${len(i)}\r\n{temp_str}"
         raw += "\r\n"
     raw = raw.encode("utf-8")
-    print(raw)
-    ic(raw)
+    # print(raw)
+    # ic(raw)
     raw = raw.decode("utf-8")
     print("Decoded Command:", repr(raw))  # Debugging line
 
@@ -52,7 +56,7 @@ def parse_command(raw: bytes) -> Union[Command, None]:
 
     # Validate RESP format
     if len(items) != expected_items:
-        raise ValueError("RESP array length mismatch")
+        raise ValueError(f"RESP array length mismatch command:{raw}")
 
     # Extract command name and arguments
     command_name, *args = [item[1] for item in items]
@@ -70,9 +74,9 @@ def parse_command(raw: bytes) -> Union[Command, None]:
 
 # Example usage
 # Testing with a correctly formatted RESP command
-raw_resp = "*3\r\n$3\r\nSET\r\n$5\r\nhello\r\n$5\r\nworld\r\n".encode("utf-8")
-resp = "set harshit bro"
-command = parse_command(resp)
+# raw_resp = "*3\r\n$3\r\nSET\r\n$5\r\nhello\r\n$5\r\nworld\r\n".encode("utf-8")
+# resp = "set harshit bro"
+# command = parse_command(resp)
 
-if isinstance(command, SetCommand):
-    print(f"SET Command: key={command.key}, value={command.value}")
+# if isinstance(command, SetCommand):
+#     print(f"SET Command: key={command.key}, value={command.value}")

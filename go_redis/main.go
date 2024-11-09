@@ -64,6 +64,10 @@ func (s *Server) handleRawMessage(rawMsg []byte) error {
 		return err
 	}
 	fmt.Println(cmd, "is the cmd")
+	switch v := cmd.(type) {
+	case setCommand:
+		slog.Info("Somebody wants to det a key into hashtable", "key", v.key, "val", v.value)
+	}
 	return nil
 }
 
