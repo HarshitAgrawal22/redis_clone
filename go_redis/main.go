@@ -1,14 +1,11 @@
 package main
 
 import (
-	"context"
 	"fmt"
 
 	"log"
 	"log/slog"
-	"main/client"
 	"net"
-	"time"
 )
 
 const defaultAddress = ":5001"
@@ -18,6 +15,10 @@ type Config struct {
 	ListenAddress string
 }
 
+type Message struct {
+	data []byte
+	peer *Peer
+}
 type Server struct {
 	// Server holds the server's settings, a list of peers, a listener, and a channel to channel new peers.
 	Config                   // Embeds the config for easy access to its fields
@@ -25,7 +26,8 @@ type Server struct {
 	ln        net.Listener   // a network listener for accepting connections
 	addPeerCh chan *Peer     // a channel to add peers to the server
 	quitCh    chan struct{}  // A channel for signaling server shutdown, used to gracefully stop loops.
-	msgch     chan []byte    // A channel for broadcasting messages to connected peers.
+	msgch     chan Message   // A channel for broadcasting messages to connected peers.
+	kv        *KV
 }
 
 func NewServer(cfg Config) *Server {
@@ -39,7 +41,8 @@ func NewServer(cfg Config) *Server {
 		peers:     make(map[*Peer]bool), // A map to track active peers
 		addPeerCh: make(chan *Peer),     // A channel to add new peers to the server
 		quitCh:    make(chan struct{}),
-		msgch:     make(chan []byte),
+		msgch:     make(chan Message),
+		kv:        NewKeyVal(),
 	}
 }
 
@@ -61,16 +64,32 @@ func (s *Server) Start() error {
 	return s.acceptLoop()
 }
 
-func (s *Server) handleRawMessage(rawMsg []byte) error {
-	fmt.Println(string(rawMsg))
-	cmd, err := parseCommand(string(rawMsg))
+func (s *Server) set(key string, val string) error {
+	return nil
+}
+func (s *Server) handleMessage(msg Message) error {
+	fmt.Println(string(msg.data))
+	cmd, err := parseCommand(string(msg.data))
 	if err != nil {
 		return err
 	}
 	fmt.Println(cmd, "is the cmd")
 	switch v := cmd.(type) {
-	case setCommand:
+	case SetCommand:
 		slog.Info("Somebody wants to det a key into hashtable", "key", v.key, "val", v.value)
+		return s.kv.Set(v.key, v.value)
+	case GetCommand:
+
+		val, ok := s.kv.Get(v.key)
+		if !ok {
+			return fmt.Errorf("key not found")
+
+		}
+		fmt.Println(val, "found the item ")
+		_, err := msg.peer.Send(val)
+		if err != nil {
+			slog.Error("peer send error", "err", err)
+		}
 	}
 	return nil
 }
@@ -80,15 +99,15 @@ func (s *Server) loop() {
 	for {
 
 		select {
-		case rawMsg := <-s.msgch:
+		case Msg := <-s.msgch:
 
 			// it listens for msgchannel , when it a new message is received , it prints the message
-			fmt.Println(rawMsg)
+			// fmt.Println(rawMsg)
 
-			if err := s.handleRawMessage(rawMsg); err != nil {
+			if err := s.handleMessage(Msg); err != nil {
 				slog.Error("Raw Message Error from", "err", err)
 			}
-			fmt.Println(rawMsg)
+			// fmt.Println(rawMsg)
 
 		case <-s.quitCh:
 			fmt.Println("qutting server")
@@ -129,16 +148,26 @@ func (s *Server) handleConn(conn net.Conn) {
 }
 
 func main() {
+	server := NewServer(Config{})
+	log.Fatal(server.Start())
 	go func() {
-		server := NewServer(Config{})
+
 		log.Fatal(server.Start())
 	}()
 
-	time.Sleep(time.Second)
+	// time.Sleep(time.Second)
+	// for i := 0; i < 10; i++ {
+	// 	c := client.NewClient("localhost:5001")
+	// 	if err := c.Set(context.TODO(), fmt.Sprintf("key_%d", i), fmt.Sprintf("data_%d", i)); err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// 	val, err := c.Get(context.TODO(), fmt.Sprintf("key_%d", i))
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// 	fmt.Println(val)
+	// }
 
-	c := client.NewClient("localhost:5001")
-	if err := c.Set(context.TODO(), "data", "harshit"); err != nil {
-		log.Fatal(err)
-	}
-	time.Sleep(time.Second)
+	// time.Sleep(time.Second)
+	// fmt.Println(server.kv.data)
 }

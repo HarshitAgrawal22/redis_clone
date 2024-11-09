@@ -11,17 +11,19 @@ import (
 
 type Peer struct {
 	conn  net.Conn
-	msgch chan []byte
+	msgch chan Message
 }
 
-func newPeer(conn net.Conn, msg_ch chan []byte) *Peer {
+func newPeer(conn net.Conn, msg_ch chan Message) *Peer {
 	// server's msgchain is set as peer's message chain
 	return &Peer{
 		conn:  conn,
 		msgch: msg_ch,
 	}
 }
-
+func (p *Peer) Send(msg []byte) (int, error) {
+	return p.conn.Write(msg)
+}
 func (p *Peer) readLoop() error {
 	// function continously reads data from, the connection in a never ending loop
 	buf := make([]byte, 1024)
@@ -39,6 +41,9 @@ func (p *Peer) readLoop() error {
 
 		msgBuf := make([]byte, n) // creating a msg buffer of exact read data size
 		copy(msgBuf, buf[:n])     // copying data of buffer to msgbuffer
-		p.msgch <- msgBuf         // appendingmsg to  peer's buffer
+		p.msgch <- Message{
+			data: msgBuf,
+			peer: p,
+		} // appending msg to  peer's buffer
 	}
 }
