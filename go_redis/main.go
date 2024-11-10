@@ -1,7 +1,10 @@
 package main
 
 import (
+	"context"
 	"fmt"
+	"main/client"
+	"time"
 
 	"log"
 	"log/slog"
@@ -87,6 +90,7 @@ func (s *Server) handleMessage(msg Message) error {
 		}
 		fmt.Println(val, "found the item ")
 		_, err := msg.peer.Send(val)
+
 		if err != nil {
 			slog.Error("peer send error", "err", err)
 		}
@@ -149,25 +153,25 @@ func (s *Server) handleConn(conn net.Conn) {
 
 func main() {
 	server := NewServer(Config{})
-	log.Fatal(server.Start())
+	// log.Fatal(server.Start())
 	go func() {
 
 		log.Fatal(server.Start())
 	}()
 
-	// time.Sleep(time.Second)
-	// for i := 0; i < 10; i++ {
-	// 	c := client.NewClient("localhost:5001")
-	// 	if err := c.Set(context.TODO(), fmt.Sprintf("key_%d", i), fmt.Sprintf("data_%d", i)); err != nil {
-	// 		log.Fatal(err)
-	// 	}
-	// 	val, err := c.Get(context.TODO(), fmt.Sprintf("key_%d", i))
-	// 	if err != nil {
-	// 		log.Fatal(err)
-	// 	}
-	// 	fmt.Println(val)
-	// }
+	time.Sleep(time.Second)
+	for i := 0; i < 10; i++ {
+		c := client.NewClient("localhost:5001")
+		if err := c.Set(context.TODO(), fmt.Sprintf("key_%d", i), fmt.Sprintf("data_%d", i)); err != nil {
+			log.Fatal(err)
+		}
+		val, err := c.Get(context.TODO(), fmt.Sprintf("key_%d", i))
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(string(val))
+	}
 
-	// time.Sleep(time.Second)
-	// fmt.Println(server.kv.data)
+	time.Sleep(time.Second)
+	fmt.Println(server.kv.data)
 }
