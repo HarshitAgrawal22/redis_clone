@@ -1,4 +1,6 @@
 import socket
+from typing import Optional
+import main
 
 # from main import Server, Config
 from queue import Queue
@@ -30,15 +32,29 @@ class Peer:
                 if not data:
                     # If data is empty, the connection has likely closed
                     break
-                print(
-                    str(data.decode("utf-8")), len(str(data.decode("utf-8")))
-                )  # Decode and print the received data
+                # print(str(data.decode("utf-8")), len(str(data.decode("utf-8"))))
+                # Decode and print the received data
                 msg_buf = bytearray(data)
-                self.msg_chan.put(msg_buf)
+                self.msg_chan.put(main.Message(data=msg_buf, conn_peer=self))
 
         except Exception as e:
             print(f"Read loop error: {e}")
             return e
+
+    def send(self, msg: bytes) -> Optional[int]:
+        """
+        Sends a message to the peer's connection.
+
+        :param msg: The message to send, as bytes.
+        :return: The number of bytes sent, or None if an error occurred.
+        """
+        try:
+            # Send the message and return the number of bytes sent
+            bytes_sent = self.Conn.send(msg)
+            return bytes_sent
+        except socket.error as e:
+            print(f"Send error: {e}")
+            return None
 
     # def test_protocol(self):
     #     raw = "*3\r\n$3\r\nSET\r\n$5\r\nmyKey\r\n$3\r\nbar\r\n"

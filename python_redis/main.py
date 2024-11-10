@@ -2,11 +2,13 @@ import socket
 import threading
 from typing import Dict
 import protocol
+from protocol import SetCommand, GetCommand
 import peer
 import time
 from icecream import ic
 from queue import Queue
 from client import client
+import keyval
 
 default_listen_address: str = ":5001"
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
@@ -16,6 +18,12 @@ class Config:
     def __init__(self, listen_address: str = default_listen_address):
         # It holds data like "ListenAddress," specifying where the server listens for connections
         self.listen_address: str = listen_address
+
+
+class Message:
+    def __init__(self, data: bytearray, conn_peer):
+        self.conn_peer = conn_peer
+        self.data: bytearray = data
 
 
 class Server:
@@ -31,6 +39,7 @@ class Server:
         self.add_peer_ch: list[peer.Peer] = []  # Channel to add peers to the server
         self.quit_event = threading.Event()
         self.msg_queue = Queue()  # Queue to manage message for broadcasting
+        self.kv: keyval.KV = keyval.KV.NewKV()
 
     @staticmethod
     def new_server(config: Config) -> "Server":
@@ -58,18 +67,34 @@ class Server:
         except Exception as e:
             print(f"Error starting server: {e}")
 
-    def handle_raw_message(self, rawMsg: bytearray):
-        print(type(rawMsg))
-        print(rawMsg)
+    def handle_message(self, msg: Message):
+
+        # print(type(rawMsg))
+        # print(rawMsg)
         try:
-            cmd = protocol.parse_command(rawMsg)
+
+            cmd = protocol.parse_command(msg.data)
             # print(f"{cmd} is the cmd")
         except ValueError as e:
             return e
         if isinstance(cmd, protocol.SetCommand):
-            print(
-                f"Somebody wants to set a key into the hashtable \nkey=>{cmd.key}\nvalue =>{cmd.value}"
-            )
+            # print(
+            #     f"Somebody wants to set a key into the hashtable \nkey=>{cmd.key}\nvalue =>{cmd.value}"
+            # )
+            return self.kv.set(cmd.key, cmd.value)
+        if isinstance(cmd, protocol.GetCommand):
+            try:
+                (val, isok) = self.kv.get(cmd.key)
+                ic(val)
+                ic(isok)
+                # if not ok:
+                #     raise ValueError("response not ok ")
+                try:
+                    msg.conn_peer.send(val)
+                except Exception as e:
+                    return e
+            except ValueError as e:
+                return e
         return None
 
     def loop(self) -> None:
@@ -77,12 +102,12 @@ class Server:
         while not self.quit_event.is_set():
 
             if not self.msg_queue.empty():
-                print("analyzing command")
-                raw_msg = self.msg_queue.get()
+                # print("analyzing command")
+                msg: Message = self.msg_queue.get()
 
-                if raw_msg.decode("utf-8") != "quit\r\n":
-                    print(raw_msg.decode("utf-8"))
-                    err = self.handle_raw_message(raw_msg)
+                if msg.data.decode("utf-8") != "quit\r\n":
+                    # print(raw_msg.decode("utf-8"))
+                    err = self.handle_message(msg)
                     if err:
                         print(f"Raw Message Error-> {err}")
 
@@ -144,10 +169,18 @@ def main() -> None:
         # Using IceCream to print the return value of start()
         time.sleep(1)
 
-        client_server = client.Client("localhost:5001")
-        if err := client_server.set(key="pakoda", value="aloo"):
-            print(f"error= > {err}")
+        client_server = client.Client("127.0.0.1:5001")
+        for i in range(10):
+            if err := client_server.set(key=f"pakoda_{i}", value=f"aloo_{i}"):
+                print(f"error= > {err}")
+            try:
+                value = client_server.get(key=f"pakoda_{i}")
+
+                print(f"received value => { value}")
+            except Exception as e:
+                print(e)
         time.sleep(1)
+        print(server.kv.data)
     except KeyboardInterrupt:
         print("server stopped")
         server.stop()

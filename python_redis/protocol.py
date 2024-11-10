@@ -15,9 +15,18 @@ class Command:
 
 
 class SetCommand(Command):
-    def __init__(self, key: str, value: str):
-        self.key: str = key
-        self.value: str = value
+    def __init__(self, key: bytearray, value: bytearray):
+        self.key: bytearray = key
+        self.value: bytearray = value
+
+    def __str__(self):
+        return f"key:{self.key}  value:{self.value}"
+
+
+class GetCommand(Command):
+    def __init__(self, key: bytearray):
+        self.key: bytearray = key
+        self.value: bytearray
 
     def __str__(self):
         return f"key:{self.key}  value:{self.value}"
@@ -27,13 +36,13 @@ def parse_command(raw: bytes) -> Union[Command, None]:
     """Parses the raw RESP command bytes and returns a Command object if valid."""
 
     # Decode raw bytes to string without removing any characters
-    arr_len = len(holder_arr := raw.split())
-    raw = "*3\r\n"
-    for i in holder_arr:
-        temp_str = i.decode("utf-8")
-        raw += f"${len(i)}\r\n{temp_str}"
-        raw += "\r\n"
-    raw = raw.encode("utf-8")
+    # arr_len = len(holder_arr := raw.split())
+    # raw = "*3\r\n"
+    # for i in holder_arr:
+    #     temp_str = i.decode("utf-8")
+    #     raw += f"${len(i)}\r\n{temp_str}"
+    #     raw += "\r\n"
+    # raw = raw.encode("utf-8")
     # print(raw)
     # ic(raw)
     raw = raw.decode("utf-8")
@@ -62,6 +71,15 @@ def parse_command(raw: bytes) -> Union[Command, None]:
     command_name, *args = [item[1] for item in items]
 
     # Check if the command is "set" and requires exactly 2 arguments
+    if command_name.lower() == COMMAND_GET:
+        if len(args) != 1:
+            print(f"{args} = args")
+            raise ValueError("Invalid number of arguments for GET command")
+        key = args[0]
+        return GetCommand(key)
+
+    # If no command matches, return None or raise an error
+
     if command_name.lower() == COMMAND_SET:
         if len(args) != 2:
             raise ValueError("Invalid number of arguments for SET command")
