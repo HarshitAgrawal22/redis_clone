@@ -8,6 +8,7 @@ COMMAND_SET = "set"
 COMMAND_GET = "get"
 COMMAND_HELLO = "hello"
 COMMAND_CLIENT = "client"
+COMMAND_QUIT = "quit"
 
 
 class Command:
@@ -26,10 +27,18 @@ class SetCommand(Command):
 class GetCommand(Command):
     def __init__(self, key: bytearray):
         self.key: bytearray = key
-        self.value: bytearray
+        # self.value: bytearray
 
     def __str__(self):
-        return f"key:{self.key}  value:{self.value}"
+        return f"key:{self.key}"
+
+
+class QuitCommand(Command):
+    def __init__(self, want_to_quit: bool):
+        self.want_to_quit: bool = want_to_quit
+
+    def __str__(self):
+        return "Got Order to Quit Server"
 
 
 def parse_command(raw: bytes) -> Union[Command, None]:

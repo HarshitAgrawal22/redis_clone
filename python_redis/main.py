@@ -2,7 +2,7 @@ import socket
 import threading
 from typing import Dict
 import protocol
-from protocol import SetCommand, GetCommand
+from protocol import SetCommand, GetCommand, Command
 import peer
 import time
 from icecream import ic
@@ -21,9 +21,12 @@ class Config:
 
 
 class Message:
-    def __init__(self, data: bytearray, conn_peer):
+    def __init__(self, cmd: bytearray, conn_peer):
         self.conn_peer = conn_peer
-        self.data: bytearray = data
+        self.cmd: Command = cmd
+
+    def __str__(self):
+        return f"conn_peer:{self.conn_peer}     cmd:{self.cmd}"
 
 
 class Server:
@@ -71,26 +74,28 @@ class Server:
 
         # print(type(rawMsg))
         # print(rawMsg)
-        try:
+        # try:
 
-            cmd = protocol.parse_command(msg.data)
-            # print(f"{cmd} is the cmd")
-        except ValueError as e:
-            return e
-        if isinstance(cmd, protocol.SetCommand):
+        #     # cmd = protocol.parse_command(msg.data)
+        #     # print(f"{cmd} is the cmd")
+        # except ValueError as e:
+        # return e
+        if isinstance(msg.cmd, protocol.QuitCommand):
+            self.stop()
+        if isinstance(msg.cmd, protocol.SetCommand):
             # print(
             #     f"Somebody wants to set a key into the hashtable \nkey=>{cmd.key}\nvalue =>{cmd.value}"
             # )
-            return self.kv.set(cmd.key, cmd.value)
-        if isinstance(cmd, protocol.GetCommand):
+            return self.kv.set(msg.cmd.key, msg.cmd.value)
+        if isinstance(msg.cmd, protocol.GetCommand):
             try:
-                (val, isok) = self.kv.get(cmd.key)
-                ic(val)
+                (value, isok) = self.kv.get(msg.cmd.key)
+                ic(value)
                 ic(isok)
                 # if not ok:
                 #     raise ValueError("response not ok ")
                 try:
-                    msg.conn_peer.send(val)
+                    msg.conn_peer.send(value)
                 except Exception as e:
                     return e
             except ValueError as e:
@@ -105,15 +110,15 @@ class Server:
                 # print("analyzing command")
                 msg: Message = self.msg_queue.get()
 
-                if msg.data.decode("utf-8") != "quit\r\n":
-                    # print(raw_msg.decode("utf-8"))
-                    err = self.handle_message(msg)
-                    if err:
-                        print(f"Raw Message Error-> {err}")
+                # if msg.cmd.decode("utf-8") != "quit\r\n":
+                # print(raw_msg.decode("utf-8"))
+                err = self.handle_message(msg)
+                if err:
+                    print(f"Raw Message Error-> {err}")
 
-                else:  # if we get quit message from any server then the server is stoppped
-                    self.stop()
-                    # this is for development phase only
+                # else:  # if we get quit message from any server then the server is stoppped
+                # self.stop()
+                # this is for development phase only
 
             if self.add_peer_ch:
                 peer = self.add_peer_ch.pop(0)
@@ -169,8 +174,8 @@ def main() -> None:
         # Using IceCream to print the return value of start()
         time.sleep(1)
 
-        client_server = client.Client("127.0.0.1:5001")
         for i in range(10):
+            client_server = client.Client("127.0.0.1:5001")
             if err := client_server.set(key=f"pakoda_{i}", value=f"aloo_{i}"):
                 print(f"error= > {err}")
             try:

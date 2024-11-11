@@ -19,7 +19,7 @@ type Config struct {
 }
 
 type Message struct {
-	data []byte
+	cmd  Command
 	peer *Peer
 }
 type Server struct {
@@ -71,13 +71,13 @@ func (s *Server) set(key string, val string) error {
 	return nil
 }
 func (s *Server) handleMessage(msg Message) error {
-	fmt.Println(string(msg.data))
-	cmd, err := parseCommand(string(msg.data))
-	if err != nil {
-		return err
-	}
-	fmt.Println(cmd, "is the cmd")
-	switch v := cmd.(type) {
+	// fmt.Println(string(msg.data))
+	// cmd, err := parseCommand(string(msg.data))
+	// if err != nil {
+	// 	return err
+	// }
+	// fmt.Println(cmd, "is the cmd")
+	switch v := msg.cmd.(type) {
 	case SetCommand:
 		slog.Info("Somebody wants to det a key into hashtable", "key", v.key, "val", v.value)
 		return s.kv.Set(v.key, v.value)
@@ -161,15 +161,20 @@ func main() {
 
 	time.Sleep(time.Second)
 	for i := 0; i < 10; i++ {
-		c := client.NewClient("localhost:5001")
+		c, err := client.NewClient("localhost:5001")
+		if err != nil {
+			log.Fatal(err)
+		}
 		if err := c.Set(context.TODO(), fmt.Sprintf("key_%d", i), fmt.Sprintf("data_%d", i)); err != nil {
 			log.Fatal(err)
 		}
+		fmt.Println("SET =>", fmt.Sprintf("key_%d with data+%d", i, i))
+
 		val, err := c.Get(context.TODO(), fmt.Sprintf("key_%d", i))
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println(string(val))
+		fmt.Printf("GET => %+v\n", string(val))
 	}
 
 	time.Sleep(time.Second)
