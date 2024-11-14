@@ -15,14 +15,17 @@ import (
 type Peer struct {
 	conn  net.Conn
 	msgch chan Message
+	delch chan *Peer
 }
 
-func newPeer(conn net.Conn, msg_ch chan Message) *Peer {
+func newPeer(conn net.Conn, msg_ch chan Message, delCh chan *Peer) *Peer {
 	// server's msgchain is set as peer's message chain
 	return &Peer{
 		conn:  conn,
 		msgch: msg_ch,
+		delch: delCh,
 	}
+
 }
 func (p *Peer) Send(msg []byte) (int, error) {
 	return p.conn.Write(msg)
@@ -34,50 +37,59 @@ func (p *Peer) readLoop() error {
 	for {
 		v, _, err := rd.ReadValue()
 		if err == io.EOF {
+			p.delch <- p
 			break
 		}
 		if err != nil {
 			log.Fatal(err)
 		}
+		var cmd Command
 		// fmt.Printf("Read %s \n", v.Type())
 		if v.Type() == resp.Array {
-			for i, value := range v.Array() {
-				fmt.Printf(" #%d %s, value: '%s'\n", i, v.Type(), v)
-				switch value.String() {
+			rawCMD := v.Array()[0]
 
-				case CommandGET:
-					// fmt.Printf("%+v\n", v.Array())
-					if len(v.Array()) != 2 {
-						return fmt.Errorf("invalid number of variables for GET command")
-
-					}
-
-					cmd := GetCommand{
-						key: v.Array()[1].Bytes(),
-					}
-					// return cmd
-					fmt.Printf("got GET cmd %+v\n", cmd)
-					p.msgch <- Message{
-						cmd:  cmd,
-						peer: p,
-					}
-				case CommandSET:
-					fmt.Printf("%+v\n", v.Array())
-					if len(v.Array()) != 3 {
-						return fmt.Errorf("invalid number of variables for SET command")
-
-					}
-					cmd := SetCommand{
-						key:   v.Array()[1].Bytes(),
-						value: v.Array()[2].Bytes(),
-					}
-
-					p.msgch <- Message{
-						cmd:  cmd,
-						peer: p,
-					}
-					fmt.Printf("got SET cmd %+v", cmd)
+			switch rawCMD.String() {
+			case CommandClient:
+				cmd = ClientCommand{
+					value: v.Array()[1].String(),
 				}
+			case CommandGET:
+				// fmt.Printf("%+v\n", v.Array())
+				if len(v.Array()) != 2 {
+					return fmt.Errorf("invalid number of variables for GET command")
+
+				}
+
+				cmd = GetCommand{
+					key: v.Array()[1].Bytes(),
+				}
+				// return cmd
+				fmt.Printf("got GET cmd %+v\n", cmd)
+
+			case CommandSET:
+				fmt.Printf("%+v\n", v.Array())
+				if len(v.Array()) != 3 {
+					return fmt.Errorf("invalid number of variables for SET command")
+
+				}
+				cmd = SetCommand{
+					key:   v.Array()[1].Bytes(),
+					value: v.Array()[2].Bytes(),
+				}
+
+				fmt.Printf("got SET cmd %+v", cmd)
+			case CommandHELLO:
+				cmd = HelloCommand{
+					value: v.Array()[1].String(),
+				}
+				fmt.Printf("got HELLO cmd %+v\n", cmd)
+			default:
+				fmt.Println(v.Array())
+				fmt.Println("unknown Command bro")
+			}
+			p.msgch <- Message{
+				cmd:  cmd,
+				peer: p,
 			}
 		}
 

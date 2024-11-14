@@ -1,14 +1,13 @@
 package main
 
 import (
-	"context"
 	"fmt"
-	"main/client"
-	"time"
 
 	"log"
 	"log/slog"
 	"net"
+
+	"github.com/tidwall/resp"
 )
 
 const defaultAddress = ":5001"
@@ -28,8 +27,9 @@ type Server struct {
 	peers     map[*Peer]bool // map to track connected peers with *Peer as keys and boolean as value
 	ln        net.Listener   // a network listener for accepting connections
 	addPeerCh chan *Peer     // a channel to add peers to the server
-	quitCh    chan struct{}  // A channel for signaling server shutdown, used to gracefully stop loops.
-	msgch     chan Message   // A channel for broadcasting messages to connected peers.
+	delPeerCh chan *Peer
+	quitCh    chan struct{} // A channel for signaling server shutdown, used to gracefully stop loops.
+	msgch     chan Message  // A channel for broadcasting messages to connected peers.
 	kv        *KV
 }
 
@@ -43,6 +43,7 @@ func NewServer(cfg Config) *Server {
 		Config:    cfg,
 		peers:     make(map[*Peer]bool), // A map to track active peers
 		addPeerCh: make(chan *Peer),     // A channel to add new peers to the server
+		delPeerCh: make(chan *Peer),
 		quitCh:    make(chan struct{}),
 		msgch:     make(chan Message),
 		kv:        NewKeyVal(),
@@ -78,9 +79,22 @@ func (s *Server) handleMessage(msg Message) error {
 	// }
 	// fmt.Println(cmd, "is the cmd")
 	switch v := msg.cmd.(type) {
+	case ClientCommand:
+		if err := resp.NewWriter(msg.peer.conn).WriteString("OK"); err != nil {
+			return err
+		}
 	case SetCommand:
 		slog.Info("Somebody wants to det a key into hashtable", "key", v.key, "val", v.value)
-		return s.kv.Set(v.key, v.value)
+		err := s.kv.Set(v.key, v.value)
+		if err != nil {
+			return err
+
+		}
+
+		if err := resp.NewWriter(msg.peer.conn).WriteString("OK"); err != nil {
+			return err
+		}
+
 	case GetCommand:
 
 		val, ok := s.kv.Get(v.key)
@@ -89,10 +103,19 @@ func (s *Server) handleMessage(msg Message) error {
 
 		}
 		fmt.Println(val, "found the item ")
-		_, err := msg.peer.Send(val)
+		// _, err := msg.peer.Send(val)
 
+		if err := resp.NewWriter(msg.peer.conn).WriteString(string(val)); err != nil {
+
+			return err
+		}
+	case HelloCommand:
+		spec := map[string]string{
+			"server": "redis",
+		}
+		_, err := msg.peer.Send(respWriteMap(spec))
 		if err != nil {
-			slog.Error("peer send error", "err", err)
+			return fmt.Errorf("peer send error %s", err)
 		}
 	}
 	return nil
@@ -114,12 +137,16 @@ func (s *Server) loop() {
 			// fmt.Println(rawMsg)
 
 		case <-s.quitCh:
-			fmt.Println("qutting server")
+			fmt.Println("quitting server")
 			return
+
 		case peer := <-s.addPeerCh:
 			s.peers[peer] = true
-			fmt.Printf("New peer connected: %v\n", peer.conn.RemoteAddr())
+			slog.Info("New peer connected: ", "remoteAddr", peer.conn.RemoteAddr())
 
+		case peer := <-s.delPeerCh:
+			slog.Info("Peer Disconnected ", "remoteAddr", peer.conn.RemoteAddr())
+			delete(s.peers, peer)
 		}
 	}
 }
@@ -140,7 +167,7 @@ func (s *Server) acceptLoop() error {
 func (s *Server) handleConn(conn net.Conn) {
 	// this function is meant to handle each new connection by creating a Peer instance for the connection (newPeer(conn)).
 
-	this_peer := newPeer(conn, s.msgch) // here we are sending server's msg chan to new peer to access messages directly from the server of all the peers
+	this_peer := newPeer(conn, s.msgch, s.delPeerCh) // here we are sending server's msg chan to new peer to access messages directly from the server of all the peers
 
 	s.addPeerCh <- this_peer // Send the newly created Peer to the addPeerCh channel for the server to add it to its peers list
 
@@ -153,30 +180,30 @@ func (s *Server) handleConn(conn net.Conn) {
 
 func main() {
 	server := NewServer(Config{})
-	// log.Fatal(server.Start())
-	go func() {
+	log.Fatal(server.Start())
+	// go func() {
 
-		log.Fatal(server.Start())
-	}()
+	// 	log.Fatal(server.Start())
+	// }()
 
-	time.Sleep(time.Second)
-	for i := 0; i < 10; i++ {
-		c, err := client.NewClient("localhost:5001")
-		if err != nil {
-			log.Fatal(err)
-		}
-		if err := c.Set(context.TODO(), fmt.Sprintf("key_%d", i), fmt.Sprintf("data_%d", i)); err != nil {
-			log.Fatal(err)
-		}
-		fmt.Println("SET =>", fmt.Sprintf("key_%d with data+%d", i, i))
+	// time.Sleep(time.Second)
+	// for i := 0; i < 10; i++ {
+	// 	c, err := client.NewClient("localhost:5001")
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// 	if err := c.Set(context.TODO(), fmt.Sprintf("key_%d", i), fmt.Sprintf("data_%d", i)); err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// 	fmt.Println("SET =>", fmt.Sprintf("key_%d with data+%d", i, i))
 
-		val, err := c.Get(context.TODO(), fmt.Sprintf("key_%d", i))
-		if err != nil {
-			log.Fatal(err)
-		}
-		fmt.Printf("GET => %+v\n", string(val))
-	}
+	// 	val, err := c.Get(context.TODO(), fmt.Sprintf("key_%d", i))
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// 	fmt.Printf("GET => %+v\n", string(val))
+	// }
 
-	time.Sleep(time.Second)
-	fmt.Println(server.kv.data)
+	// time.Sleep(time.Second)
+	// fmt.Println(server.kv.data)
 }
