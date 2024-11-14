@@ -1,5 +1,3 @@
-run:
-	@go run main.go
 
 run:build
 	@./bin/go_redis

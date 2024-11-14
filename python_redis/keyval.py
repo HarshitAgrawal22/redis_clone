@@ -2,6 +2,30 @@ import threading
 from typing import Dict, Tuple, Optional
 
 
+# # Set fields
+# HSET user:1001 name "Alice" email "alice@example.com" age "30"
+
+# # Get specific fields
+# HGET user:1001 name  # Output: Alice
+# HGET user:1001 age   # Output: 30
+
+# # Get all fields and values
+# HGETALL user:1001    # Output: name Alice email alice@example.com age 30
+
+# # Check if a field exists
+# HEXISTS user:1001 age  # Output: 1
+
+# # Increment age by 1
+# HINCRBY user:1001 age 1  # Output: 31
+
+# # Delete a field
+# HDEL user:1001 email
+
+# # Get all keys and values separately
+# HKEYS user:1001  # Output: name age
+# HVALS user:1001  # Output: Alice 31
+
+
 class KV:
     def __init__(self):  # Initialize an empty dictionary and an RLock for thread safety
         self.data: Dict[str, bytes] = {}
@@ -20,6 +44,99 @@ class KV:
             val = self.data.get(key)
             return (val, val is not None)
 
+    def set_attributes(self):
+        pass
+
+    def set_multiple_pairs(self):
+        pass
+
+    def get_multiple_values(self, keys: list[str]):
+        result: list = list()
+        for i in keys:
+            result.append(self.data.get(i))
+        return result
+
+    def check(self, key: str):
+        with self.lock:
+            # Return the value for the key if it exists, otherwise None and False
+            return self.data.get(key) is not None
+
+    def delete_pair(self, key: str):
+        with self.lock:
+            # Return the value for the key if it exists, otherwise None and False
+            print(key)
+            del self.data[key]
+            return key
+
+    def total(self):
+        return len(self.data)
+
+    def increament(self, key: str):
+        with self.lock:
+            # Return the value for the key if it exists, otherwise None and False
+            print(key)
+            self.data[key] = int(self.data.get(key)) + 1
+            return (self.data.get(key), self.data.get(key) is not None)
+
     @staticmethod
     def NewKV():
         return KV()
+
+
+# In Redis, you can indeed implement queues, and while binary trees are not directly supported as a native data structure, you can achieve tree-like functionality using sorted sets and other structures. Here’s a closer look at how queues and tree structures can be achieved in Redis:
+
+# 1. Queues in Redis
+# Redis supports queues through its List data structure, which allows you to create both FIFO (First-In, First-Out) and LIFO (Last-In, First-Out) queues. The List commands provide efficient ways to add and remove items from both ends of a list, making it suitable for queue-like behavior.
+
+# FIFO Queue:
+
+# Use LPUSH to add an item to the start of the list and RPOP to remove an item from the end of the list, ensuring that the first item added is the first to be removed.
+# Example:
+# shell
+# Copy code
+# LPUSH myQueue item1  # Add item to the start of the queue
+# RPOP myQueue         # Remove item from the end of the queue
+# LIFO Queue (Stack):
+
+# Use LPUSH to add an item and LPOP to remove from the start of the list.
+# Example:
+# shell
+# Copy code
+# LPUSH myStack item1  # Add item to the start of the stack
+# LPOP myStack         # Remove item from the start of the stack
+# Blocking Queues:
+
+# Redis also provides blocking operations (BLPOP and BRPOP), which allow the queue to block and wait for new elements if the queue is empty, making it ideal for task queues or pub/sub patterns.
+# 2. Binary Trees in Redis
+# While Redis does not directly support binary trees as a native data structure, you can simulate a binary tree or other types of tree structures using:
+
+# Sorted Sets (Zset):
+
+# Redis Sorted Sets (ZSET) can be used to store elements in a sorted order with a score attached to each element, which you can leverage for tree-based logic. Each element in a ZSET is unique, and you can retrieve elements in sorted order based on their scores, somewhat simulating traversal in a binary tree structure.
+
+# Sorted sets support operations like:
+
+# Range queries (ZRANGE, ZREVRANGE): Fetch elements within a score range, useful for in-order traversal.
+# Ranked elements (ZRANK, ZREVRANK): Get the rank (position) of an element, which helps in positioning within a tree-like structure.
+# Example:
+
+# shell
+# Copy code
+# ZADD myTree 1 "node1"  # Add node with score 1
+# ZADD myTree 2 "node2"  # Add node with score 2
+# ZADD myTree 3 "node3"  # Add node with score 3
+# Parent-Child Relationships with Hashes:
+
+# You can use Hashes or Lists to create relationships between nodes. For instance, each node could be a hash entry, and parent-child relationships can be stored as references within the hashes.
+# Example structure:
+# shell
+# Copy code
+# HSET node:1 value "root" left_child "node:2" right_child "node:3"
+# HSET node:2 value "left_child" left_child "node:4" right_child "node:5"
+# This setup emulates pointers in a binary tree, with each node containing references to its children.
+# Tree-Like Data Access Patterns
+# In Redis, using these methods, you can manage hierarchical data and access patterns common in binary trees. However, if your application demands highly complex tree operations, consider using a graph database like Neo4j or an embedded data structure specifically optimized for tree management, as Redis is optimized more for flat and linear data access.
+
+# Summary
+# Queues: Use Redis Lists for FIFO or LIFO queues.
+# Binary Trees: Use Sorted Sets for sorted node access or Hashes to create parent-child relationships.

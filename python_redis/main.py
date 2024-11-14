@@ -22,7 +22,7 @@ class Config:
 
 class Message:
     def __init__(self, cmd: bytearray, conn_peer):
-        self.conn_peer = conn_peer
+        self.conn_peer: peer.Peer = conn_peer
         self.cmd: Command = cmd
 
     def __str__(self):
@@ -40,6 +40,8 @@ class Server:
             socket.AF_INET, socket.SOCK_STREAM
         )  # Network listener
         self.add_peer_ch: list[peer.Peer] = []  # Channel to add peers to the server
+        self.del_peer_ch: list[peer.Peer] = []
+        # Channel to delete connection of a peer from the server
         self.quit_event = threading.Event()
         self.msg_queue = Queue()  # Queue to manage message for broadcasting
         self.kv: keyval.KV = keyval.KV.NewKV()
@@ -80,18 +82,29 @@ class Server:
         #     # print(f"{cmd} is the cmd")
         # except ValueError as e:
         # return e
+        if isinstance(msg.cmd, protocol.HelloCommand):
+            spec = dict({"server": "redis"})
+            try:
+                msg.conn_peer.send(f"{spec}".encode("utf-8"))
+            except:
+                print("got error while sending specs")
+
         if isinstance(msg.cmd, protocol.QuitCommand):
             self.stop()
         if isinstance(msg.cmd, protocol.SetCommand):
-            # print(
-            #     f"Somebody wants to set a key into the hashtable \nkey=>{cmd.key}\nvalue =>{cmd.value}"
+            print(
+                f"Somebody wants to set a key into the hashtable \nkey=>{msg.cmd.key}\nvalue =>{msg.cmd.value}"
+            )
+            # msg.conn_peer.send(
+            #     f"key=>{msg.cmd.key}\nvalue =>{msg.cmd.value}".encode("utf-8")
             # )
+            msg.conn_peer.send("OK".encode("utf-8"))
+
             return self.kv.set(msg.cmd.key, msg.cmd.value)
         if isinstance(msg.cmd, protocol.GetCommand):
             try:
                 (value, isok) = self.kv.get(msg.cmd.key)
-                ic(value)
-                ic(isok)
+
                 # if not ok:
                 #     raise ValueError("response not ok ")
                 try:
@@ -126,6 +139,11 @@ class Server:
                 print(
                     f"Added new peer: {peer.Conn.getpeername()}"
                 )  # Added print statement
+                # if self.del_peer_ch:
+                # this_peer = self.del_peer_ch.pop(0)
+                # ic(self.peers)
+                # del self.peers[this_peer]
+                # print(f"Deleted peer: {this_peer.Conn.getpeername()}")
             else:
                 threading.Event().wait(0.5)
                 # slight delay tp prevent busy waiting
@@ -147,7 +165,7 @@ class Server:
     def handle_conn(self, conn: socket.socket) -> None:
         # Handles each new connection by creating a Peer instance
         this_peer: peer.Peer = peer.Peer.newPeer(
-            conn, self.msg_queue
+            conn, self.msg_queue, self.del_peer_ch
         )  # here we are provinng the conn and msg_queue of server's to the Peer
         print(f"Handling connection for peer: {this_peer}")
         # this_peer.test_protocol()
@@ -172,20 +190,21 @@ def main() -> None:
         server_thread.start()
         # ic(server.start())
         # Using IceCream to print the return value of start()
-        time.sleep(1)
+        # time.sleep(1)
 
-        for i in range(10):
-            client_server = client.Client("127.0.0.1:5001")
-            if err := client_server.set(key=f"pakoda_{i}", value=f"aloo_{i}"):
-                print(f"error= > {err}")
-            try:
-                value = client_server.get(key=f"pakoda_{i}")
+        # for i in range(10):
+        #     client_server = client.Client("127.0.0.1:5001")
+        #     if err := client_server.set(key=f"pakoda_{i}", value=f"aloo_{i}"):
+        #         print(f"error= > {err}")
+        #     try:
+        #         threading.Event.wait(1)
+        #         value = client_server.get(key=f"pakoda_{i}")
 
-                print(f"received value => { value}")
-            except Exception as e:
-                print(e)
-        time.sleep(1)
-        print(server.kv.data)
+        #         print(f"received value => { value}")
+        #     except Exception as e:
+        #         print(e)
+        # time.sleep(1)
+        # print(server.kv.data)
     except KeyboardInterrupt:
         print("server stopped")
         server.stop()

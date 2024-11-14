@@ -6,9 +6,26 @@ from protocol import (
     SetCommand,
     GetCommand,
     QuitCommand,
+    HelloCommand,
+    CheckCommand,
+    SetMultipleAttributeCommand,
+    GetMultipleKeyValCommand,
+    TotalCommand,
+    ClientCommand,
+    DeleteCommand,
+    IncreamentCommand,
+    SetMultipleKeyValCommand,
     COMMAND_SET,
     COMMAND_GET,
     COMMAND_QUIT,
+    COMMAND_CHECK,
+    COMMAND_DELETE,
+    COMMAND_HELLO,
+    COMMAND_CLIENT,
+    COMMAND_GET_MULTIPLE_VALUES,
+    COMMAND_INCREAMENT,
+    COMMAND_MULTIPLE_ATTRIBUTE_SET,
+    COMMAND_SET_MULTIPLE_KEY_VAL,
 )
 import re
 from icecream import ic
@@ -26,13 +43,14 @@ class Peer:
             f"IP ->{self.Conn.getpeername()[0]}   port-> {self.Conn.getpeername()[1]}"
         )
 
-    def __init__(self, conn: socket.socket, msg_chan: Queue):
+    def __init__(self, conn: socket.socket, msg_chan: Queue, del_chan: list["Peer"]):
         self.Conn: socket.socket = conn
         self.msg_chan: Queue = msg_chan
+        self.del_chan: list[Peer] = del_chan
 
     @staticmethod
-    def newPeer(conn: socket.socket, msg_chan: Queue) -> "Peer":
-        return Peer(conn, msg_chan)
+    def newPeer(conn: socket.socket, msg_chan: Queue, del_chan: list["Peer"]) -> "Peer":
+        return Peer(conn, msg_chan, del_chan)
 
     def parse_command(self, raw: str) -> Optional[Command]:
         """Parses the raw RESP command bytes and returns a Command object if valid."""
@@ -87,7 +105,10 @@ class Peer:
                 raise ValueError("Invalid number of arguments for GET command")
             key = args[0]
             return GetCommand(key)
-
+        if command_name.lower() == COMMAND_HELLO:
+            if len(args) != 1:
+                raise ValueError("Invalid number of arguments for SET command")
+            return HelloCommand(args[0])
         # If no command matches, return None or raise an error
 
         if command_name.lower() == COMMAND_SET:
@@ -127,16 +148,17 @@ class Peer:
                 # Read data from the socket
                 raw_data: bytearray = self.Conn.recv(1024)
                 if not raw_data:
+                    # self.del_chan.append(self)
                     print("Connection closed.")
                     break
 
                 # Decode raw data to string for RESP parsing
                 raw_str = raw_data.decode("utf-8")
                 print("Decoded Command:", repr(raw_str))  # Debugging line
-
+                raw_str = raw_str.strip()
                 # Parse the command
                 command = self.parse_command(raw_str)
-                print("got till here")
+                # print("got till here")
                 # If a valid command is returned, add to message queue
                 if command:
                     message = Message(cmd=command, conn_peer=self)

@@ -1,6 +1,9 @@
+# this file contains all the protocols and Commands need for the server
+
 import re
 from typing import Union
 from icecream import ic
+from io import BytesIO
 
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
@@ -8,7 +11,16 @@ COMMAND_SET = "set"
 COMMAND_GET = "get"
 COMMAND_HELLO = "hello"
 COMMAND_CLIENT = "client"
-COMMAND_QUIT = "quit"
+COMMAND_QUIT = "shaanti"
+COMMAND_MULTIPLE_ATTRIBUTE_SET = "setattr"  # multiple attributes of a object where name of object will be key and attributes will be value
+COMMAND_SET_MULTIPLE_KEY_VAL = "setm"  # set multiple pairs in one command
+
+
+COMMAND_GET_MULTIPLE_VALUES = "getm"  # multiple keys will given to server and server will return all keys' values in same order
+COMMAND_CHECK = "chec"  # check if a key exists
+COMMAND_DELETE = "del"  # delete a pair
+COMMAND_TOTAL = "len"  # total no. of keys and values on the database
+COMMAND_INCREAMENT = "incryby"  # HINCRBY user:1000 age 1
 
 
 class Command:
@@ -41,69 +53,70 @@ class QuitCommand(Command):
         return "Got Order to Quit Server"
 
 
-def parse_command(raw: bytes) -> Union[Command, None]:
-    """Parses the raw RESP command bytes and returns a Command object if valid."""
-
-    # Decode raw bytes to string without removing any characters
-    # arr_len = len(holder_arr := raw.split())
-    # raw = "*3\r\n"
-    # for i in holder_arr:
-    #     temp_str = i.decode("utf-8")
-    #     raw += f"${len(i)}\r\n{temp_str}"
-    #     raw += "\r\n"
-    # raw = raw.encode("utf-8")
-    # print(raw)
-    # ic(raw)
-    raw = raw.decode("utf-8")
-    print("Decoded Command:", repr(raw))  # Debugging line
-
-    # Regular expressions for RESP patterns
-    array_pattern = r"\*([0-9]+)\r\n"
-    bulk_string_pattern = r"\$([0-9]+)\r\n(.+?)\r\n"
-
-    # Find the array count in the RESP string
-    array_match = re.match(array_pattern, raw)
-    if not array_match:
-        raise ValueError("Invalid RESP format (Array not found)")
-
-    expected_items = int(array_match.group(1))
-    items = re.findall(bulk_string_pattern, raw)
-
-    # Debugging output for items parsed
-    print(f"Found items: {items}")
-
-    # Validate RESP format
-    if len(items) != expected_items:
-        raise ValueError(f"RESP array length mismatch command:{raw}")
-
-    # Extract command name and arguments
-    command_name, *args = [item[1] for item in items]
-
-    # Check if the command is "set" and requires exactly 2 arguments
-    if command_name.lower() == COMMAND_GET:
-        if len(args) != 1:
-            print(f"{args} = args")
-            raise ValueError("Invalid number of arguments for GET command")
-        key = args[0]
-        return GetCommand(key)
-
-    # If no command matches, return None or raise an error
-
-    if command_name.lower() == COMMAND_SET:
-        if len(args) != 2:
-            raise ValueError("Invalid number of arguments for SET command")
-        key, value = args
-        return SetCommand(key, value)
-
-    # If no command matches, return None or raise an error
-    raise ValueError(f"Unknown command: {command_name}")
+class ClientCommand(Command):
+    def __init__(self, value: str):
+        self.string: str = value
 
 
-# Example usage
-# Testing with a correctly formatted RESP command
-# raw_resp = "*3\r\n$3\r\nSET\r\n$5\r\nhello\r\n$5\r\nworld\r\n".encode("utf-8")
-# resp = "set harshit bro"
-# command = parse_command(resp)
+class HelloCommand(Command):
+    def __init__(self, value: str):
+        self.value: str = value
 
-# if isinstance(command, SetCommand):
-#     print(f"SET Command: key={command.key}, value={command.value}")
+    def __str__(self):
+        return "hello from peer"
+
+
+class SetMultipleAttributeCommand(Command):
+    def __init__(self, key: str, attrs: dict):
+        self.attrs: dict[str, bytearray] = attrs
+        self.key: str = key
+
+    def __str__(self):
+        return f"{self.key}:{self.attrs}"
+
+
+class SetMultipleKeyValCommand(Command):
+    def __init__(self, pairs: dict[bytearray, bytearray]):
+        for key, val in pairs.items():
+            print(key, val)
+            SetCommand(key, val)
+
+
+class GetMultipleKeyValCommand(Command):
+    def __init__(self, keys: list[str]):
+        self.keys: list[str] = keys
+
+
+class CheckCommand(Command):
+    def __init__(self, key: str):
+        self.key: str = key
+
+
+class DeleteCommand(Command):
+    def __init__(self, key: str):
+        self.key: str = key
+
+
+class TotalCommand(Command):
+    def __init__(self, cmd):
+        self.cmd: str = cmd
+
+
+class IncreamentCommand(Command):
+    def __init__(self, key):
+        self.key: str = key
+
+
+def resp_write_dict(m: dict[str, str]) -> bytes:
+
+    buf = BytesIO()
+
+    buf.write(b"%" + f"{len(m)}\r\n".encode("utf-8"))
+
+    for k, v in m.items():
+
+        buf.write(f"4{len(m)}\r\n".encode("utf-8"))
+
+        buf.write(f":{v}\r\n".encode("utf-8"))
+
+    return buf.getvalue()
