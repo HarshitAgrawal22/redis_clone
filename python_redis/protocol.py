@@ -20,14 +20,14 @@ COMMAND_GET_MULTIPLE_VALUES = "getm"  # multiple keys will given to server and s
 COMMAND_CHECK = "chec"  # check if a key exists
 COMMAND_DELETE = "del"  # delete a pair
 COMMAND_TOTAL = "len"  # total no. of keys and values on the database
-COMMAND_INCREAMENT = "incryby"  # HINCRBY user:1000 age 1
+COMMAND_INCREMENT = "incryby"  # HINCRBY user:1000 age 1
 
 
 class Command:
     pass
 
 
-class SetCommand(Command):
+class SetCommand(Command):  #
     def __init__(self, key: bytearray, value: bytearray):
         self.key: bytearray = key
         self.value: bytearray = value
@@ -36,7 +36,7 @@ class SetCommand(Command):
         return f"key:{self.key}  value:{self.value}"
 
 
-class GetCommand(Command):
+class GetCommand(Command):  #
     def __init__(self, key: bytearray):
         self.key: bytearray = key
         # self.value: bytearray
@@ -45,7 +45,7 @@ class GetCommand(Command):
         return f"key:{self.key}"
 
 
-class QuitCommand(Command):
+class QuitCommand(Command):  #
     def __init__(self, want_to_quit: bool):
         self.want_to_quit: bool = want_to_quit
 
@@ -53,12 +53,12 @@ class QuitCommand(Command):
         return "Got Order to Quit Server"
 
 
-class ClientCommand(Command):
+class ClientCommand(Command):  #
     def __init__(self, value: str):
         self.string: str = value
 
 
-class HelloCommand(Command):
+class HelloCommand(Command):  #
     def __init__(self, value: str):
         self.value: str = value
 
@@ -87,22 +87,22 @@ class GetMultipleKeyValCommand(Command):
         self.keys: list[str] = keys
 
 
-class CheckCommand(Command):
+class CheckCommand(Command):  #
+    def __init__(self, keys: list[str]):
+        self.keys: list[str] = keys
+
+
+class DeleteCommand(Command):  #
     def __init__(self, key: str):
         self.key: str = key
 
 
-class DeleteCommand(Command):
-    def __init__(self, key: str):
-        self.key: str = key
-
-
-class TotalCommand(Command):
+class TotalCommand(Command):  #
     def __init__(self, cmd):
         self.cmd: str = cmd
 
 
-class IncreamentCommand(Command):
+class IncrementCommand(Command):
     def __init__(self, key):
         self.key: str = key
 

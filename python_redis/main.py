@@ -82,6 +82,39 @@ class Server:
         #     # print(f"{cmd} is the cmd")
         # except ValueError as e:
         # return e
+        if isinstance(msg.cmd, protocol.TotalCommand):
+            try:
+                length: int = self.kv.total()
+
+                msg.conn_peer.send(f"{length}".encode("utf-8"))
+            except Exception as e:
+                print(f"got error in CLIENT command: {e}")
+
+        if isinstance(msg.cmd, protocol.DeleteCommand):
+            try:
+                self.kv.delete_pair(msg.cmd.key)
+                msg.conn_peer.send("Ok".encode("utf-8"))
+            except Exception as e:
+                print(f"got error in CLIENT command: {e}")
+
+        if isinstance(msg.cmd, protocol.ClientCommand):
+            try:
+                msg.conn_peer.send("OK".encode("utf-8"))
+            except Exception as e:
+                print(f"got error in CLIENT command: {e}")
+
+        if isinstance(msg.cmd, protocol.CheckCommand):
+            try:
+
+                result: list[bool] = self.kv.check(msg.cmd.keys)
+                data = "OK "
+                for i in result:
+                    data += f"{i} "
+                msg.conn_peer.send(data.encode("utf-8"))
+
+            except Exception as e:
+                print(f"got error while CHECK command: {e}")
+
         if isinstance(msg.cmd, protocol.HelloCommand):
             spec = dict({"server": "redis"})
             try:
@@ -93,14 +126,17 @@ class Server:
             self.stop()
         if isinstance(msg.cmd, protocol.SetCommand):
             print(
-                f"Somebody wants to set a key into the hashtable \nkey=>{msg.cmd.key}\nvalue =>{msg.cmd.value}"
+                f"Somebody wants to set a key into the hash table \nkey=>{msg.cmd.key}\nvalue =>{msg.cmd.value}"
             )
             # msg.conn_peer.send(
             #     f"key=>{msg.cmd.key}\nvalue =>{msg.cmd.value}".encode("utf-8")
             # )
-            msg.conn_peer.send("OK".encode("utf-8"))
+            try:
+                msg.conn_peer.send("OK".encode("utf-8"))
 
-            return self.kv.set(msg.cmd.key, msg.cmd.value)
+                return self.kv.set(msg.cmd.key, msg.cmd.value)
+            except Exception as e:
+                print(f"got exception while sending SET message  {e}")
         if isinstance(msg.cmd, protocol.GetCommand):
             try:
                 (value, isok) = self.kv.get(msg.cmd.key)
@@ -113,6 +149,7 @@ class Server:
                     return e
             except ValueError as e:
                 return e
+        print(type(msg.cmd))
         return None
 
     def loop(self) -> None:

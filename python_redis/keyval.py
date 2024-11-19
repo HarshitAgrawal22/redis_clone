@@ -44,39 +44,55 @@ class KV:
             val = self.data.get(key)
             return (val, val is not None)
 
-    def set_attributes(self):
-        pass
+    def set_attributes(self, key: str, attr: list):
+        with self.lock:
+            self.data[key] = [i for i in attr]
 
-    def set_multiple_pairs(self):
-        pass
+    def set_multiple_pairs(self, attrs: list):
+        # this may trigger a error so needed to be solved later on if needed
+        for i in range(0, len(attrs), 2):
+            self.set(attrs[i], attrs[i + 1])
 
     def get_multiple_values(self, keys: list[str]):
-        result: list = list()
-        for i in keys:
-            result.append(self.data.get(i))
-        return result
-
-    def check(self, key: str):
         with self.lock:
-            # Return the value for the key if it exists, otherwise None and False
-            return self.data.get(key) is not None
+            result: list = list()
+            for i in keys:
+                result.append(self.data.get(i))
+            return result
+
+    def check(self, keys: list[str]):
+        with self.lock:
+
+            if len(keys) == 1:
+                return self.data.get(keys[0]) is not None
+
+            return [self.data.get(i) is not None for i in keys]
 
     def delete_pair(self, key: str):
         with self.lock:
             # Return the value for the key if it exists, otherwise None and False
             print(key)
-            del self.data[key]
-            return key
+            try:
+                del self.data[key]
+                return key
+            except Exception as e:
+                print(f"Exception in delete pair: {e}")
+                return e
 
     def total(self):
-        return len(self.data)
+        with self.lock:
+            return len(self.data)
 
-    def increament(self, key: str):
+    def increment(self, key: str):
         with self.lock:
             # Return the value for the key if it exists, otherwise None and False
-            print(key)
-            self.data[key] = int(self.data.get(key)) + 1
-            return (self.data.get(key), self.data.get(key) is not None)
+            try:
+                print(key)
+                self.data[key] = int(self.data.get(key)) + 1
+                return (self.data.get(key), self.data.get(key) is not None)
+            except Exception as e:
+                print(f"Exception in increment method: {e}")
+                return e
 
     @staticmethod
     def NewKV():

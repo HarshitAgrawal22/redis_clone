@@ -8,12 +8,12 @@ from protocol import (
     QuitCommand,
     HelloCommand,
     CheckCommand,
-    SetMultipleAttributeCommand,
     GetMultipleKeyValCommand,
     TotalCommand,
     ClientCommand,
     DeleteCommand,
-    IncreamentCommand,
+    IncrementCommand,
+    SetMultipleAttributeCommand,
     SetMultipleKeyValCommand,
     COMMAND_SET,
     COMMAND_GET,
@@ -23,7 +23,8 @@ from protocol import (
     COMMAND_HELLO,
     COMMAND_CLIENT,
     COMMAND_GET_MULTIPLE_VALUES,
-    COMMAND_INCREAMENT,
+    COMMAND_INCREMENT,
+    COMMAND_TOTAL,
     COMMAND_MULTIPLE_ATTRIBUTE_SET,
     COMMAND_SET_MULTIPLE_KEY_VAL,
 )
@@ -38,6 +39,7 @@ import io
 
 
 class Peer:
+
     def __str__(self):
         return (
             f"IP ->{self.Conn.getpeername()[0]}   port-> {self.Conn.getpeername()[1]}"
@@ -56,7 +58,7 @@ class Peer:
         """Parses the raw RESP command bytes and returns a Command object if valid."""
 
         # Decode raw bytes to string without removing any characters
-        print(f"raw commadn => {raw} {type(raw)} ")
+        print(f"raw command => {raw} {type(raw)} ")
         arr_len = len(holder_arr := raw.split())
         raw = f"*{arr_len}\r\n"
         for i in holder_arr:
@@ -91,26 +93,74 @@ class Peer:
         # Extract command name and arguments
         command_name, *args = [item[1] for item in items]
 
-        # Check if the command is "set" and requires exactly 2 arguments
+        # check if the command is "setm" and requires more then 0 and even arguments
+        if command_name.lower().strip() == COMMAND_SET_MULTIPLE_KEY_VAL:
+            if len(args) == 0:
+                raise ValueError("No arguments given for SET MULTIPLE KEY VALUE PAIRS")
+            if len(args) % 2 != 0:
+                raise ValueError("Invalid Key Value pairs")
+            return SetMultipleKeyValCommand(args)
+
+        # check if the command is "setattr" and requires more than no arguments
+        if command_name.lower().strip() == COMMAND_MULTIPLE_ATTRIBUTE_SET:
+            if len(args) == 0:
+                raise ValueError("No argument for SET MULTIPLE ATTRIBUTE command")
+
+            return SetMultipleAttributeCommand()  # here work is left
+        # check if the command is "total" and requires no argument
+        if command_name.lower().strip() == COMMAND_TOTAL:
+            return TotalCommand("return total")
+
+        # check if the command is "increment" and requires exactly 1 argument
+        if command_name.lower().strip() == COMMAND_INCREMENT:
+            if len(args) == 0:
+                raise ValueError("No key for INCREMENT command")
+            return IncrementCommand(args[0])
+
+        # check if the command is "hello" and requires exactly 1 argument
+        if command_name.lower().strip() == COMMAND_GET_MULTIPLE_VALUES:
+            if len(args) == 0:
+                raise ValueError("No key given to get value")
+            return GetMultipleKeyValCommand(args)
+
+        # check if the command is "delete" and requires exactly 1 argument
+        if command_name.lower().strip() == COMMAND_DELETE:
+            if len(args) == 0:
+                raise ValueError("No key given for DELETE command")
+            print(args)
+            return DeleteCommand(args[0])
+        # check if the command is "client" and requires exactly 1 argument
+        if command_name.lower().strip() == COMMAND_CLIENT:
+            if len(args) == 0:
+                raise ValueError("No arguments for CLIENT command")
+            return ClientCommand(args[0])
+
+        # check if the command is "check" and requires exactly 1 argument
+        if command_name.lower().strip() == COMMAND_CHECK:
+            if len(args) >= 1:
+                return CheckCommand(args)
+            raise ValueError("No arguments given for CHECK command")
+        # check if the command is "quit" and requires no argument
         if command_name.lower().strip() == COMMAND_QUIT:
             if len(args) != 0:
                 print(f"{args} are args for quitting server")
                 raise ValueError("Invalid number of arguments for GET command")
 
             return QuitCommand(want_to_quit=True)
-
+        # check if the command is "get" and requires exactly 1 argument
         if command_name.lower() == COMMAND_GET:
             if len(args) != 1:
                 print(f"{args} = args")
                 raise ValueError("Invalid number of arguments for GET command")
             key = args[0]
             return GetCommand(key)
+        # check if the command is "hello" and requires exactly 1 argument
         if command_name.lower() == COMMAND_HELLO:
             if len(args) != 1:
                 raise ValueError("Invalid number of arguments for SET command")
             return HelloCommand(args[0])
-        # If no command matches, return None or raise an error
 
+        # Check if the command is "set" and requires exactly 2 arguments
         if command_name.lower() == COMMAND_SET:
             if len(args) != 2:
                 raise ValueError("Invalid number of arguments for SET command")
