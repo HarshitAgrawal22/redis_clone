@@ -14,6 +14,7 @@ from protocol import (
     DeleteCommand,
     IncrementCommand,
     SetMultipleAttributeCommand,
+    GetMultipleAttributeCommand,
     SetMultipleKeyValCommand,
     COMMAND_SET,
     COMMAND_GET,
@@ -25,6 +26,7 @@ from protocol import (
     COMMAND_GET_MULTIPLE_VALUES,
     COMMAND_INCREMENT,
     COMMAND_TOTAL,
+    COMMAND_MULTIPLE_ATTRIBUTE_GET,
     COMMAND_MULTIPLE_ATTRIBUTE_SET,
     COMMAND_SET_MULTIPLE_KEY_VAL,
 )
@@ -101,12 +103,23 @@ class Peer:
                 raise ValueError("Invalid Key Value pairs")
             return SetMultipleKeyValCommand(args)
 
+        # check if the command is "getattr" and requires more than no arguments
+        if command_name.lower().strip() == COMMAND_MULTIPLE_ATTRIBUTE_GET:
+            if len(args) == 0:
+                raise ValueError("No argument for SET MULTIPLE ATTRIBUTE command")
+            key: str = args[0]
+            attrs: tuple = args[1:]
+            if len(attrs) % 2 != 0:
+                raise ValueError("Invalid attribute pairs")
+            return GetMultipleAttributeCommand(key=key, attrs=attrs)
         # check if the command is "setattr" and requires more than no arguments
         if command_name.lower().strip() == COMMAND_MULTIPLE_ATTRIBUTE_SET:
             if len(args) == 0:
                 raise ValueError("No argument for SET MULTIPLE ATTRIBUTE command")
+            key: str = args[0]
+            attrs: tuple = args[1:]
 
-            return SetMultipleAttributeCommand()  # here work is left
+            return SetMultipleAttributeCommand(key=key, attrs=attrs)
         # check if the command is "total" and requires no argument
         if command_name.lower().strip() == COMMAND_TOTAL:
             return TotalCommand("return total")
@@ -217,7 +230,9 @@ class Peer:
 
             except Exception as e:
                 print(f"Error in read_loop: {e}")
-                pass  # Exit loop on error
+
+                break
+                # Exit loop on error
 
     def send(self, msg: bytes) -> Optional[int]:
         """

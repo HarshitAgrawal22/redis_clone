@@ -73,15 +73,37 @@ class Server:
             print(f"Error starting server: {e}")
 
     def handle_message(self, msg: Message):
+        if isinstance(msg.cmd, protocol.SetMultipleAttributeCommand):
+            try:
 
-        # print(type(rawMsg))
-        # print(rawMsg)
-        # try:
+                self.kv.set_attributes(msg.cmd.key, msg.cmd.attrs)
+            except Exception as e:
+                print(f"got error in SET_MULTIPLE_ATTRIBUTES {e}")
+        if isinstance(msg.cmd, protocol.SetMultipleKeyValCommand):
+            try:
+                ic(msg.cmd.args)
+                self.kv.set_multiple_pairs(msg.cmd.args)
 
-        #     # cmd = protocol.parse_command(msg.data)
-        #     # print(f"{cmd} is the cmd")
-        # except ValueError as e:
-        # return e
+                msg.conn_peer.send("OK".encode("utf-8"))
+            except Exception as e:
+
+                print(f"got error in SET_MULTIPLE_KEY_VAL_COMMAND{e}")
+
+        if isinstance(msg.cmd, protocol.GetMultipleKeyValCommand):
+            try:
+                ic(msg.cmd.keys)
+                result: str = self.kv.get_multiple_values(msg.cmd.keys)
+                msg.conn_peer.send(f"{result}".encode("utf-8"))
+            except Exception as e:
+                print(f"got error in CLIENT command: {e}")
+
+        if isinstance(msg.cmd, protocol.IncrementCommand):
+            try:
+                self.kv.increment(msg.cmd.key)
+                msg.conn_peer.send("OK".encode("utf-8"))
+            except Exception as e:
+                print(f"got error in CLIENT command: {e}")
+
         if isinstance(msg.cmd, protocol.TotalCommand):
             try:
                 length: int = self.kv.total()
@@ -166,7 +188,7 @@ class Server:
                 if err:
                     print(f"Raw Message Error-> {err}")
 
-                # else:  # if we get quit message from any server then the server is stoppped
+                # else:  # if we get quit message from any server then the server is stopped
                 # self.stop()
                 # this is for development phase only
 

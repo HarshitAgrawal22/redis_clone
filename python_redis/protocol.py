@@ -13,6 +13,7 @@ COMMAND_HELLO = "hello"
 COMMAND_CLIENT = "client"
 COMMAND_QUIT = "shaanti"
 COMMAND_MULTIPLE_ATTRIBUTE_SET = "setattr"  # multiple attributes of a object where name of object will be key and attributes will be value
+COMMAND_MULTIPLE_ATTRIBUTE_GET = "getattr"
 COMMAND_SET_MULTIPLE_KEY_VAL = "setm"  # set multiple pairs in one command
 
 
@@ -68,21 +69,28 @@ class HelloCommand(Command):  #
 
 class SetMultipleAttributeCommand(Command):
     def __init__(self, key: str, attrs: dict):
-        self.attrs: dict[str, bytearray] = attrs
+        self.attrs: list = attrs
         self.key: str = key
 
     def __str__(self):
         return f"{self.key}:{self.attrs}"
 
 
-class SetMultipleKeyValCommand(Command):
-    def __init__(self, pairs: dict[bytearray, bytearray]):
-        for key, val in pairs.items():
-            print(key, val)
-            SetCommand(key, val)
+class GetMultipleAttributeCommand(Command):
+    def __init__(self, key: str, attrs: list):
+        self.attrs: list = attrs
+        self.key: str = key
+
+    def __str__(self):
+        return f"{self.key}:{self.attrs}"
 
 
-class GetMultipleKeyValCommand(Command):
+class SetMultipleKeyValCommand(Command):  #
+    def __init__(self, pairs: list):
+        self.args = pairs
+
+
+class GetMultipleKeyValCommand(Command):  #
     def __init__(self, keys: list[str]):
         self.keys: list[str] = keys
 
@@ -102,7 +110,7 @@ class TotalCommand(Command):  #
         self.cmd: str = cmd
 
 
-class IncrementCommand(Command):
+class IncrementCommand(Command):  #
     def __init__(self, key):
         self.key: str = key
 

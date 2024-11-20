@@ -46,18 +46,29 @@ class KV:
 
     def set_attributes(self, key: str, attr: list):
         with self.lock:
-            self.data[key] = [i for i in attr]
+            for i in range(0, len(attr), 2):
+                self.data[f"{key}_{attr[i]}"] = attr[i + 1]
+
+    def get_attributes(self, key: str, attr: list):
+        with self.lock:
+            result = ""
+            for i in range(0, len(attr)):
+                value: bytes = self.data.get(f"{key}_{attr[i]}")
+                result += f"{value.decode('utf-8') if value!=None else value } "
+            return result
 
     def set_multiple_pairs(self, attrs: list):
         # this may trigger a error so needed to be solved later on if needed
         for i in range(0, len(attrs), 2):
             self.set(attrs[i], attrs[i + 1])
 
-    def get_multiple_values(self, keys: list[str]):
+    def get_multiple_values(self, keys: list[str]) -> str:
         with self.lock:
-            result: list = list()
+            result: str = ""
             for i in keys:
-                result.append(self.data.get(i))
+                # print(f"value of {i} => {self.data.get(i)}")
+                value: bytes = self.data.get(i)
+                result += f"{value.decode('utf-8') if value!= None else value} "
             return result
 
     def check(self, keys: list[str]):
@@ -88,7 +99,7 @@ class KV:
             # Return the value for the key if it exists, otherwise None and False
             try:
                 print(key)
-                self.data[key] = int(self.data.get(key)) + 1
+                self.data[key] = str(int(self.data.get(key)) + 1).encode("utf-8")
                 return (self.data.get(key), self.data.get(key) is not None)
             except Exception as e:
                 print(f"Exception in increment method: {e}")
