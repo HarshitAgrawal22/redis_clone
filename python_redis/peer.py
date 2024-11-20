@@ -109,8 +109,7 @@ class Peer:
                 raise ValueError("No argument for SET MULTIPLE ATTRIBUTE command")
             key: str = args[0]
             attrs: tuple = args[1:]
-            if len(attrs) % 2 != 0:
-                raise ValueError("Invalid attribute pairs")
+
             return GetMultipleAttributeCommand(key=key, attrs=attrs)
         # check if the command is "setattr" and requires more than no arguments
         if command_name.lower().strip() == COMMAND_MULTIPLE_ATTRIBUTE_SET:

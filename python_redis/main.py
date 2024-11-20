@@ -73,10 +73,20 @@ class Server:
             print(f"Error starting server: {e}")
 
     def handle_message(self, msg: Message):
+        if isinstance(msg.cmd, protocol.GetMultipleAttributeCommand):
+            try:
+                ic(msg.cmd.key)
+                ic(msg.cmd.attrs)
+                result = self.kv.get_attributes(msg.cmd.key, msg.cmd.attrs)
+                msg.conn_peer.send(f"{result}".encode("utf-8"))
+            except Exception as e:
+                print(f"got error in SET_MULTIPLE_ATTRIBUTES {e}")
         if isinstance(msg.cmd, protocol.SetMultipleAttributeCommand):
             try:
-
+                ic(msg.cmd.key)
+                ic(msg.cmd.attrs)
                 self.kv.set_attributes(msg.cmd.key, msg.cmd.attrs)
+                msg.conn_peer.send("OK".encode("utf-8"))
             except Exception as e:
                 print(f"got error in SET_MULTIPLE_ATTRIBUTES {e}")
         if isinstance(msg.cmd, protocol.SetMultipleKeyValCommand):

@@ -47,7 +47,7 @@ class KV:
     def set_attributes(self, key: str, attr: list):
         with self.lock:
             for i in range(0, len(attr), 2):
-                self.data[f"{key}_{attr[i]}"] = attr[i + 1]
+                self.data[f"{key}_{attr[i]}"] = attr[i + 1].encode("utf-8")
 
     def get_attributes(self, key: str, attr: list):
         with self.lock:
