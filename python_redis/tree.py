@@ -174,8 +174,8 @@ class bstree:
         def minValue(node: Node):
             minv = node.value
             while node.left != None:
-                minv = node.left.key
-                root = root.left
+                minv = node.left.value
+                node = node.left
             return minv
 
         def delete_node(key, root: Node):
@@ -220,6 +220,7 @@ class bstree:
 # Commands:
 # bash
 # Copy code
+
 # LPUSH list "item1"
 # RPUSH list "item2"
 # LRANGE list 0 -1
