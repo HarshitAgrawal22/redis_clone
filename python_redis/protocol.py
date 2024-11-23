@@ -5,27 +5,40 @@ from typing import Union
 from icecream import ic
 from io import BytesIO
 
+
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
-COMMAND_SET = "set"
-COMMAND_GET = "get"
+COMMAND_SET = "hset"
+COMMAND_GET = "hget"
 COMMAND_HELLO = "hello"
 COMMAND_CLIENT = "client"
 COMMAND_QUIT = "shaanti"
-COMMAND_MULTIPLE_ATTRIBUTE_SET = "setattr"  # multiple attributes of a object where name of object will be key and attributes will be value
-COMMAND_MULTIPLE_ATTRIBUTE_GET = "getattr"
-COMMAND_SET_MULTIPLE_KEY_VAL = "setm"  # set multiple pairs in one command
+COMMAND_MULTIPLE_ATTRIBUTE_SET = "hsetattr"  # multiple attributes of a object where name of object will be key and attributes will be value
+COMMAND_MULTIPLE_ATTRIBUTE_GET = "hgetattr"
+COMMAND_SET_MULTIPLE_KEY_VAL = "hsetm"  # set multiple pairs in one command
 
 
-COMMAND_GET_MULTIPLE_VALUES = "getm"  # multiple keys will given to server and server will return all keys' values in same order
-COMMAND_CHECK = "chec"  # check if a key exists
-COMMAND_DELETE = "del"  # delete a pair
-COMMAND_TOTAL = "len"  # total no. of keys and values on the database
-COMMAND_INCREMENT = "incryby"  # HINCRBY user:1000 age 1
+COMMAND_GET_MULTIPLE_VALUES = "hgetm"  # multiple keys will given to server and server will return all keys' values in same order
+COMMAND_CHECK = "hchec"  # check if a key exists
+COMMAND_DELETE = "hdel"  # delete a pair
+COMMAND_TOTAL = "hlen"  # total no. of keys and values on the database
+COMMAND_INCREMENT = "hincryby"  # HINCRBY user:1000 age 1
+
+
+COMMAND_CREATE_QUEUE = "fifo"
 
 
 class Command:
     pass
+
+
+class CreateNewQueue(Command):
+    def __init__(self, key: str, peer):
+        self.key = key
+        self.peer = peer
+
+    def __str__(self):
+        return f"command to create a new Queue for {self.peer} "
 
 
 class SetCommand(Command):  #

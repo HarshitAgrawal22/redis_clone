@@ -25,16 +25,32 @@ from typing import Dict, Tuple, Optional
 # HKEYS user:1001  # Output: name age
 # HVALS user:1001  # Output: Alice 31
 
+# try:
+#     d = {}
+#     while True:
+#         # Continuously adding items to the dictionary
+#         d[len(d)] = "a" * 10**6  # 1 MB string
+# except MemoryError:
+#     print("Memory is full! Cannot allocate more memory.")
+
 
 class KV:
     def __init__(self):  # Initialize an empty dictionary and an RLock for thread safety
         self.data: Dict[str, bytes] = {}
         self.lock = threading.RLock()
 
+    def LRU(self):
+        with self.lock:
+            pass
+
     def set(self, key: str, val: str):
         # Acquire the lock for writing to ensure thread safety
         with self.lock:
-            self.data[key] = val.encode("utf-8")
+            try:
+                self.data[key] = val.encode("utf-8")
+            except MemoryError:
+                print("System ran out of memory so deleting some key-val pair")
+                self.LRU()
 
     def get(self, key: str) -> Tuple[Optional[bytes], bool]:
         # Acquire a read lock for safe concurrent access

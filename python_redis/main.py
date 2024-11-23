@@ -73,6 +73,9 @@ class Server:
             print(f"Error starting server: {e}")
 
     def handle_message(self, msg: Message):
+        if isinstance(msg.cmd, protocol.CreateNewQueue):
+            msg.conn_peer.storage_queue = Queue()
+            msg.conn_peer.send("OK".encode("utf-8"))
         if isinstance(msg.cmd, protocol.GetMultipleAttributeCommand):
             try:
                 ic(msg.cmd.key)
@@ -81,6 +84,7 @@ class Server:
                 msg.conn_peer.send(f"{result}".encode("utf-8"))
             except Exception as e:
                 print(f"got error in SET_MULTIPLE_ATTRIBUTES {e}")
+
         if isinstance(msg.cmd, protocol.SetMultipleAttributeCommand):
             try:
                 ic(msg.cmd.key)
@@ -89,6 +93,7 @@ class Server:
                 msg.conn_peer.send("OK".encode("utf-8"))
             except Exception as e:
                 print(f"got error in SET_MULTIPLE_ATTRIBUTES {e}")
+
         if isinstance(msg.cmd, protocol.SetMultipleKeyValCommand):
             try:
                 ic(msg.cmd.args)

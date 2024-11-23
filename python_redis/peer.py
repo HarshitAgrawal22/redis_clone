@@ -16,11 +16,13 @@ from protocol import (
     SetMultipleAttributeCommand,
     GetMultipleAttributeCommand,
     SetMultipleKeyValCommand,
+    CreateNewQueue,
     COMMAND_SET,
     COMMAND_GET,
     COMMAND_QUIT,
     COMMAND_CHECK,
     COMMAND_DELETE,
+    COMMAND_CREATE_QUEUE,
     COMMAND_HELLO,
     COMMAND_CLIENT,
     COMMAND_GET_MULTIPLE_VALUES,
@@ -51,6 +53,7 @@ class Peer:
         self.Conn: socket.socket = conn
         self.msg_chan: Queue = msg_chan
         self.del_chan: list[Peer] = del_chan
+        self.storage_queue: Queue
 
     @staticmethod
     def newPeer(conn: socket.socket, msg_chan: Queue, del_chan: list["Peer"]) -> "Peer":
@@ -94,8 +97,9 @@ class Peer:
         command_name: str
         # Extract command name and arguments
         command_name, *args = [item[1] for item in items]
-
-        # check if the command is "setm" and requires more then 0 and even arguments
+        if command_name.lower().strip() == COMMAND_CREATE_QUEUE:
+            return CreateNewQueue(key="queue needed ", peer=self)
+        # check if the command is "hsetm" and requires more then 0 and even arguments
         if command_name.lower().strip() == COMMAND_SET_MULTIPLE_KEY_VAL:
             if len(args) == 0:
                 raise ValueError("No arguments given for SET MULTIPLE KEY VALUE PAIRS")
