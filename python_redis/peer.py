@@ -1,45 +1,13 @@
 import socket
-from typing import Optional, Union
+from typing import Optional
 from main import Message
-from protocol import (
-    Command,
-    SetCommand,
-    GetCommand,
-    QuitCommand,
-    HelloCommand,
-    CheckCommand,
-    GetMultipleKeyValCommand,
-    TotalCommand,
-    ClientCommand,
-    DeleteCommand,
-    IncrementCommand,
-    SetMultipleAttributeCommand,
-    GetMultipleAttributeCommand,
-    SetMultipleKeyValCommand,
-    CreateNewQueue,
-    COMMAND_SET,
-    COMMAND_GET,
-    COMMAND_QUIT,
-    COMMAND_CHECK,
-    COMMAND_DELETE,
-    COMMAND_CREATE_QUEUE,
-    COMMAND_HELLO,
-    COMMAND_CLIENT,
-    COMMAND_GET_MULTIPLE_VALUES,
-    COMMAND_INCREMENT,
-    COMMAND_TOTAL,
-    COMMAND_MULTIPLE_ATTRIBUTE_GET,
-    COMMAND_MULTIPLE_ATTRIBUTE_SET,
-    COMMAND_SET_MULTIPLE_KEY_VAL,
-)
+from command_dict import execute_command_hash_map
 import re
 from icecream import ic
+from keyval_protocol import Command, CreateNewQueue, COMMAND_CREATE_QUEUE
 
 # from main import Server, Config
 from queue import Queue
-
-# from protocol import RESPReader
-import io
 
 
 class Peer:
@@ -100,91 +68,95 @@ class Peer:
         if command_name.lower().strip() == COMMAND_CREATE_QUEUE:
             return CreateNewQueue(key="queue needed ", peer=self)
         # check if the command is "hsetm" and requires more then 0 and even arguments
-        if command_name.lower().strip() == COMMAND_SET_MULTIPLE_KEY_VAL:
-            if len(args) == 0:
-                raise ValueError("No arguments given for SET MULTIPLE KEY VALUE PAIRS")
-            if len(args) % 2 != 0:
-                raise ValueError("Invalid Key Value pairs")
-            return SetMultipleKeyValCommand(args)
+        # if command_name.lower().strip() == COMMAND_SET_MULTIPLE_KEY_VAL:
+        #     if len(args) == 0:
+        #         raise ValueError("No arguments given for SET MULTIPLE KEY VALUE PAIRS")
+        #     if len(args) % 2 != 0:
+        #         raise ValueError("Invalid Key Value pairs")
+        #     return SetMultipleKeyValCommand(args)
 
         # check if the command is "getattr" and requires more than no arguments
-        if command_name.lower().strip() == COMMAND_MULTIPLE_ATTRIBUTE_GET:
-            if len(args) == 0:
-                raise ValueError("No argument for SET MULTIPLE ATTRIBUTE command")
-            key: str = args[0]
-            attrs: tuple = args[1:]
+        # if command_name.lower().strip() == COMMAND_MULTIPLE_ATTRIBUTE_GET:
+        #     if len(args) == 0:
+        #         raise ValueError("No argument for SET MULTIPLE ATTRIBUTE command")
+        #     key: str = args[0]
+        #     attrs: tuple = args[1:]
 
-            return GetMultipleAttributeCommand(key=key, attrs=attrs)
+        #     return GetMultipleAttributeCommand(key=key, attrs=attrs)
         # check if the command is "setattr" and requires more than no arguments
-        if command_name.lower().strip() == COMMAND_MULTIPLE_ATTRIBUTE_SET:
-            if len(args) == 0:
-                raise ValueError("No argument for SET MULTIPLE ATTRIBUTE command")
-            key: str = args[0]
-            attrs: tuple = args[1:]
+        # if command_name.lower().strip() == COMMAND_MULTIPLE_ATTRIBUTE_SET:
+        #     if len(args) == 0:
+        #         raise ValueError("No argument for SET MULTIPLE ATTRIBUTE command")
+        #     key: str = args[0]
+        #     attrs: tuple = args[1:]
 
-            return SetMultipleAttributeCommand(key=key, attrs=attrs)
+        #     return SetMultipleAttributeCommand(key=key, attrs=attrs)
         # check if the command is "total" and requires no argument
-        if command_name.lower().strip() == COMMAND_TOTAL:
-            return TotalCommand("return total")
+        # if command_name.lower().strip() == COMMAND_TOTAL:
+        #     return TotalCommand("return total")
 
         # check if the command is "increment" and requires exactly 1 argument
-        if command_name.lower().strip() == COMMAND_INCREMENT:
-            if len(args) == 0:
-                raise ValueError("No key for INCREMENT command")
-            return IncrementCommand(args[0])
+        # if command_name.lower().strip() == COMMAND_INCREMENT:
+        #     if len(args) == 0:
+        #         raise ValueError("No key for INCREMENT command")
+        #     return IncrementCommand(args[0])
 
         # check if the command is "hello" and requires exactly 1 argument
-        if command_name.lower().strip() == COMMAND_GET_MULTIPLE_VALUES:
-            if len(args) == 0:
-                raise ValueError("No key given to get value")
-            return GetMultipleKeyValCommand(args)
+        # if command_name.lower().strip() == COMMAND_GET_MULTIPLE_VALUES:
+        #     if len(args) == 0:
+        #         raise ValueError("No key given to get value")
+        #     return GetMultipleKeyValCommand(args)
 
         # check if the command is "delete" and requires exactly 1 argument
-        if command_name.lower().strip() == COMMAND_DELETE:
-            if len(args) == 0:
-                raise ValueError("No key given for DELETE command")
-            print(args)
-            return DeleteCommand(args[0])
+        # if command_name.lower().strip() == COMMAND_DELETE:
+        #     if len(args) == 0:
+        #         raise ValueError("No key given for DELETE command")
+        #     print(args)
+        #     return DeleteCommand(args[0])
         # check if the command is "client" and requires exactly 1 argument
-        if command_name.lower().strip() == COMMAND_CLIENT:
-            if len(args) == 0:
-                raise ValueError("No arguments for CLIENT command")
-            return ClientCommand(args[0])
+        # if command_name.lower().strip() == COMMAND_CLIENT:
+        #     if len(args) == 0:
+        #         raise ValueError("No arguments for CLIENT command")
+        #     return ClientCommand(args[0])
 
         # check if the command is "check" and requires exactly 1 argument
-        if command_name.lower().strip() == COMMAND_CHECK:
-            if len(args) >= 1:
-                return CheckCommand(args)
-            raise ValueError("No arguments given for CHECK command")
+        # if command_name.lower().strip() == COMMAND_CHECK:
+        #     if len(args) >= 1:
+        #         return CheckCommand(args)
+        #     raise ValueError("No arguments given for CHECK command")
         # check if the command is "quit" and requires no argument
-        if command_name.lower().strip() == COMMAND_QUIT:
-            if len(args) != 0:
-                print(f"{args} are args for quitting server")
-                raise ValueError("Invalid number of arguments for GET command")
+        # if command_name.lower().strip() == COMMAND_QUIT:
+        #     if len(args) != 0:
+        #         print(f"{args} are args for quitting server")
+        #         raise ValueError("Invalid number of arguments for GET command")
 
-            return QuitCommand(want_to_quit=True)
+        #     return QuitCommand(want_to_quit=True)
         # check if the command is "get" and requires exactly 1 argument
-        if command_name.lower() == COMMAND_GET:
-            if len(args) != 1:
-                print(f"{args} = args")
-                raise ValueError("Invalid number of arguments for GET command")
-            key = args[0]
-            return GetCommand(key)
+        # if command_name.lower().strip() == COMMAND_GET:
+        #     if len(args) != 1:
+        #         print(f"{args} = args")
+        #         raise ValueError("Invalid number of arguments for GET command")
+        #     key = args[0]
+        #     return GetCommand(key)
         # check if the command is "hello" and requires exactly 1 argument
-        if command_name.lower() == COMMAND_HELLO:
-            if len(args) != 1:
-                raise ValueError("Invalid number of arguments for SET command")
-            return HelloCommand(args[0])
+        # if command_name.lower().strip() == COMMAND_HELLO:
+        #     if len(args) != 1:
+        #         raise ValueError("Invalid number of arguments for SET command")
+        #     return HelloCommand(args[0])
 
         # Check if the command is "set" and requires exactly 2 arguments
-        if command_name.lower() == COMMAND_SET:
-            if len(args) != 2:
-                raise ValueError("Invalid number of arguments for SET command")
-            key, value = args
-            return SetCommand(key, value)
-
+        # if command_name.lower() == COMMAND_SET:
+        #     if len(args) != 2:
+        #         raise ValueError("Invalid number of arguments for SET command")
+        #     key, value = args
+        #     return SetCommand(key, value)
+        func = execute_command_hash_map.get(command_name.lower().strip())
+        print(func, "is the function we have got")
+        if func != None:
+            return func(args)
         # If no command matches, return None or raise an error
-        raise ValueError(f"Unknown command: {command_name}")
+        else:
+            raise ValueError(f"Unknown command: {command_name}")
 
     def read_loop(self):
         # buf_size = 1024
@@ -231,10 +203,13 @@ class Peer:
                     self.msg_chan.put(message)
                     print(f"Message queued: {message}")
 
+            except ConnectionResetError as e:
+                print("connection is broken from the client")
+                break
             except Exception as e:
                 print(f"Error in read_loop: {e}")
+                pass
 
-                break
                 # Exit loop on error
 
     def send(self, msg: bytes) -> Optional[int]:
@@ -251,22 +226,3 @@ class Peer:
         except socket.error as e:
             print(f"Send error: {e}")
             return None
-
-    # def test_protocol(self):
-    #     raw = "*3\r\n$3\r\nSET\r\n$5\r\nmyKey\r\n$3\r\nbar\r\n"
-
-    #     buffer = io.StringIO(raw)
-    #     rd = RESPReader(buffer)
-
-    #     try:
-    #         while True:
-    #             v_type, v_value = rd.read_value()
-    #             print(f"Read {v_type}")
-    #             if v_type == "Array":
-    #                 for i, element in enumerate(v_value):
-    #                     e_type, e_value = element
-    #                     print(f" #{i} {e_type}, value: '{e_value}'")
-    #     except EOFError:
-    #         pass
-    #     except Exception as e:
-    #         print(f"Error: {e}")

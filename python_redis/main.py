@@ -1,10 +1,10 @@
 import socket
 import threading
 from typing import Dict
-import protocol
-from protocol import SetCommand, GetCommand, Command
+import keyval_protocol
+from keyval_protocol import Command
+import command_dict
 import peer
-import time
 from icecream import ic
 from queue import Queue
 from client import client
@@ -73,120 +73,17 @@ class Server:
             print(f"Error starting server: {e}")
 
     def handle_message(self, msg: Message):
-        if isinstance(msg.cmd, protocol.CreateNewQueue):
+
+        if isinstance(msg.cmd, keyval_protocol.CreateNewQueue):
             msg.conn_peer.storage_queue = Queue()
             msg.conn_peer.send("OK".encode("utf-8"))
-        if isinstance(msg.cmd, protocol.GetMultipleAttributeCommand):
-            try:
-                ic(msg.cmd.key)
-                ic(msg.cmd.attrs)
-                result = self.kv.get_attributes(msg.cmd.key, msg.cmd.attrs)
-                msg.conn_peer.send(f"{result}".encode("utf-8"))
-            except Exception as e:
-                print(f"got error in SET_MULTIPLE_ATTRIBUTES {e}")
 
-        if isinstance(msg.cmd, protocol.SetMultipleAttributeCommand):
-            try:
-                ic(msg.cmd.key)
-                ic(msg.cmd.attrs)
-                self.kv.set_attributes(msg.cmd.key, msg.cmd.attrs)
-                msg.conn_peer.send("OK".encode("utf-8"))
-            except Exception as e:
-                print(f"got error in SET_MULTIPLE_ATTRIBUTES {e}")
+        func = command_dict.execute_task_hash_map.get(type(msg.cmd))
+        if func != None:
+            func(msg, self)
+        else:
+            print("Command not")
 
-        if isinstance(msg.cmd, protocol.SetMultipleKeyValCommand):
-            try:
-                ic(msg.cmd.args)
-                self.kv.set_multiple_pairs(msg.cmd.args)
-
-                msg.conn_peer.send("OK".encode("utf-8"))
-            except Exception as e:
-
-                print(f"got error in SET_MULTIPLE_KEY_VAL_COMMAND{e}")
-
-        if isinstance(msg.cmd, protocol.GetMultipleKeyValCommand):
-            try:
-                ic(msg.cmd.keys)
-                result: str = self.kv.get_multiple_values(msg.cmd.keys)
-                msg.conn_peer.send(f"{result}".encode("utf-8"))
-            except Exception as e:
-                print(f"got error in CLIENT command: {e}")
-
-        if isinstance(msg.cmd, protocol.IncrementCommand):
-            try:
-                self.kv.increment(msg.cmd.key)
-                msg.conn_peer.send("OK".encode("utf-8"))
-            except Exception as e:
-                print(f"got error in CLIENT command: {e}")
-
-        if isinstance(msg.cmd, protocol.TotalCommand):
-            try:
-                length: int = self.kv.total()
-
-                msg.conn_peer.send(f"{length}".encode("utf-8"))
-            except Exception as e:
-                print(f"got error in CLIENT command: {e}")
-
-        if isinstance(msg.cmd, protocol.DeleteCommand):
-            try:
-                self.kv.delete_pair(msg.cmd.key)
-                msg.conn_peer.send("Ok".encode("utf-8"))
-            except Exception as e:
-                print(f"got error in CLIENT command: {e}")
-
-        if isinstance(msg.cmd, protocol.ClientCommand):
-            try:
-                msg.conn_peer.send("OK".encode("utf-8"))
-            except Exception as e:
-                print(f"got error in CLIENT command: {e}")
-
-        if isinstance(msg.cmd, protocol.CheckCommand):
-            try:
-
-                result: list[bool] = self.kv.check(msg.cmd.keys)
-                data = "OK "
-                for i in result:
-                    data += f"{i} "
-                msg.conn_peer.send(data.encode("utf-8"))
-
-            except Exception as e:
-                print(f"got error while CHECK command: {e}")
-
-        if isinstance(msg.cmd, protocol.HelloCommand):
-            spec = dict({"server": "redis"})
-            try:
-                msg.conn_peer.send(f"{spec}".encode("utf-8"))
-            except:
-                print("got error while sending specs")
-
-        if isinstance(msg.cmd, protocol.QuitCommand):
-            self.stop()
-        if isinstance(msg.cmd, protocol.SetCommand):
-            print(
-                f"Somebody wants to set a key into the hash table \nkey=>{msg.cmd.key}\nvalue =>{msg.cmd.value}"
-            )
-            # msg.conn_peer.send(
-            #     f"key=>{msg.cmd.key}\nvalue =>{msg.cmd.value}".encode("utf-8")
-            # )
-            try:
-                msg.conn_peer.send("OK".encode("utf-8"))
-
-                return self.kv.set(msg.cmd.key, msg.cmd.value)
-            except Exception as e:
-                print(f"got exception while sending SET message  {e}")
-        if isinstance(msg.cmd, protocol.GetCommand):
-            try:
-                (value, isok) = self.kv.get(msg.cmd.key)
-
-                # if not ok:
-                #     raise ValueError("response not ok ")
-                try:
-                    msg.conn_peer.send(value)
-                except Exception as e:
-                    return e
-            except ValueError as e:
-                return e
-        print(type(msg.cmd))
         return None
 
     def loop(self) -> None:

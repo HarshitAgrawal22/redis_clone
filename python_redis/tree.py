@@ -97,32 +97,38 @@ class bstree:
     def pre_order_traversal(self, root: Node):
         with self.lock:
             stack: list = [self.root]
+            result: str = ""
             while stack:
                 node: Node = stack.pop()
                 if node:
-                    print(node.value)
+                    result += str(node.value)
                     stack.append(node.right)
                     stack.append(node.left)
+            return result
 
     def post_order_traversal(self, root: Node):
         with self.lock:
+            result: str = ""
             stack: list = [self.root]
             while stack:
                 node: Node = stack.pop()
                 if node:
                     stack.append(node.right)
                     stack.append(node.left)
-                    print(node.value)
+                    result += str(node.value)
+            return result
 
     def in_order_traversal(self, root: Node):
         with self.lock:
+            result: str = ""
             stack: list = [self.root]
             while stack:
                 node: Node = stack.pop()
                 if node:
                     stack.append(node.right)
-                    print(node.value)
+                    result += str(node.value)
                     stack.append(node.left)
+            return result
 
     def search_node(self, value, root: Node):
         # we cant use recursion with lock as each function call will aquire a new lock and will increase the lock counter .

@@ -57,7 +57,7 @@ class KV:
         with self.lock:
             # Return the value for the key if it exists, otherwise None and False
             print(key)
-            val = self.data.get(key)
+            val = self.data.get(key).decode("utf-8")
             return (val, val is not None)
 
     def set_attributes(self, key: str, attr: list):
@@ -87,11 +87,13 @@ class KV:
                 result += f"{value.decode('utf-8') if value!= None else value} "
             return result
 
-    def check(self, keys: list[str]):
-        with self.lock:
+    def check(self, keys: list[bool]):
 
+        with self.lock:
+            print(f"{keys} are the keys available")
             if len(keys) == 1:
-                return self.data.get(keys[0]) is not None
+
+                return [self.data.get(keys[0]) is not None]
 
             return [self.data.get(i) is not None for i in keys]
 
@@ -116,6 +118,7 @@ class KV:
             try:
                 print(key)
                 self.data[key] = str(int(self.data.get(key)) + 1).encode("utf-8")
+                print(self.data[key])
                 return (self.data.get(key), self.data.get(key) is not None)
             except Exception as e:
                 print(f"Exception in increment method: {e}")
