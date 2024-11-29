@@ -66,3 +66,6 @@ class GraphList:
                 ptr = ptr.next
             result += "\n"
         return result
+
+
+"""this file have the code to store in graph format in cache"""
