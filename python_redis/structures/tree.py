@@ -6,28 +6,16 @@ from typing import dict, Tuple, Optional
 # Use Cases
 # Redis is widely used for:
 
-# Caching: Reducing database load by storing frequently accessed data.
 
 # Session Management: Storing user session data for web applications.
 
-# Real-Time Analytics: Handling high-speed data for dashboards and monitoring.
-
-# Message Queues: Implementing lightweight and fast message brokers.
 
 # Leaderboard and Ranking: Using sorted sets for scoring and ranking systems.
 
-# Geo-based Applications: Storing and querying location data.
-
-
-# atures of Redis Database
 
 # In-Memory Data Store
 
-# Redis stores data entirely in memory, ensuring low-latency and high-speed operations.
-# Data Persistence
 
-# Although an in-memory database, Redis offers persistent storage through:
-# RDB (Redis Database Backup): Periodic snapshots of data.
 # AOF (Append-Only File): Logs all write operations for durability.
 # Data Structures
 
