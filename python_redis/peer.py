@@ -4,7 +4,7 @@ from main import Message
 from services.command_dict import execute_command_hash_map
 import re
 from icecream import ic
-from python_redis.protocols.keyval_protocol import (
+from protocols.keyval_protocol import (
     Command,
     CreateNewQueue,
     COMMAND_CREATE_QUEUE,

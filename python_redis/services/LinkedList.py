@@ -45,12 +45,13 @@ class LinkedList:
         self.tail = temp
         return
 
-    def remove_head(self):
+    def remove_head(self) -> int:
         if self.head == None:
             print("Cant delete head its empty ")
-            return
+            return -1
+        temp = self.head.value
         self.head = self.head.next
-        return
+        return temp
 
     def remove_tail(self):
         if self.head == None:

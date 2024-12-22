@@ -3,6 +3,7 @@
 import re
 from typing import Union
 from icecream import ic
+from .command import Command
 
 # from main import Message, Server
 
@@ -26,10 +27,6 @@ COMMAND_INCREMENT = "hincryby"  # HINCRBY user:1000 age 1
 
 
 COMMAND_CREATE_QUEUE = "fifo"
-
-
-class Command:
-    pass
 
 
 class CreateNewQueue(Command):

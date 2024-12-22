@@ -1,4 +1,4 @@
-from services.LinkedList import LinkedList
+from services.LinkedList import LinkedList, Node
 import threading
 
 
@@ -9,6 +9,7 @@ class Stackstruc:
 
     def push(self, item):
         self.ll.add_head(item)
+        return "data pushed"
 
     def pop(self):
         return self.ll.remove_head()

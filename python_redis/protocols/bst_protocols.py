@@ -1,6 +1,7 @@
 from typing import Union
 from icecream import ic
-from .keyval_protocol import Command
+from .command import Command
+
 
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
