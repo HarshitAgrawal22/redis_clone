@@ -13,29 +13,33 @@ from services.LinkedList import LinkedList, Node
 
 class GraphMatrix:
     def __init__(self, nodes):
+        self.lock = threading.RLock()
         self.E = 0
         self.v = nodes
         self.adj_matrix = [[0 for j in range(nodes)] for i in range(nodes)]
 
     def addEdgeMatrix(self, u: int, v: int):
-        self.adj_matrix[u][v] = 1
-        self.adj_matrix[v][u] = 1
-        self.E += 1
+        with self.lock:
+            self.adj_matrix[u][v] = 1
+            self.adj_matrix[v][u] = 1
+            self.E += 1
 
     def removeEdgeMatrix(self, u: int, v: int):
-        self.adj_matrix[v][u] = 0
-        self.adj_matrix[u][v] = 0
-        self.E -= 1
+        with self.lock:
+            self.adj_matrix[v][u] = 0
+            self.adj_matrix[u][v] = 0
+            self.E -= 1
 
     def __str__(self):
-        result = ""
+        with self.lock:
+            result = ""
 
-        for i in self.adj_matrix:
-            for j in i:
-                result += f"{self.adj_matrix[i][j]} "
-            result += "\n"
+            for i in self.adj_matrix:
+                for j in i:
+                    result += f"{self.adj_matrix[i][j]} "
+                result += "\n"
 
-        return result
+            return result
 
     def dfs(self, root):
         pass

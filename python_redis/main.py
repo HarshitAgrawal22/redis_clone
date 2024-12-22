@@ -1,14 +1,14 @@
 import socket
 import threading
 from typing import Dict
-import keyval_protocol
-from keyval_protocol import Command
+import python_redis.protocols.keyval_protocol as keyval_protocol
+from python_redis.protocols.keyval_protocol import Command
 import command_dict
 import peer
 from icecream import ic
 from queue import Queue
 from client import client
-import keyval
+import python_redis.structures.keyval as keyval
 
 default_listen_address: str = ":5001"
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)

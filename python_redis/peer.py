@@ -1,10 +1,14 @@
 import socket
 from typing import Optional
 from main import Message
-from command_dict import execute_command_hash_map
+from services.command_dict import execute_command_hash_map
 import re
 from icecream import ic
-from keyval_protocol import Command, CreateNewQueue, COMMAND_CREATE_QUEUE
+from python_redis.protocols.keyval_protocol import (
+    Command,
+    CreateNewQueue,
+    COMMAND_CREATE_QUEUE,
+)
 
 # from main import Server, Config
 from queue import Queue

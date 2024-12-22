@@ -1,4 +1,4 @@
-import keyval_protocol
+import python_redis.protocols.keyval_protocol as keyval_protocol
 
 
 execute_task_hash_map: dict = {

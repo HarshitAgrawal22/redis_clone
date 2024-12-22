@@ -3,12 +3,27 @@ class Node:
         self.value = value
         self.next = None
 
+    def __str__(self):
+        return str(self.value)
+
 
 class LinkedList:
 
     def __init__(self):
         self.head: Node = None
         self.tail: Node = None
+
+    def show_head(self):
+        if self.head == None:
+            return "empty"
+        else:
+            return self.head.value
+
+    def show_tail(self):
+        if self.head == None:
+            return "Empty"
+        else:
+            return self.tail.value
 
     def add_head(self, data):
         temp: Node = Node(data)

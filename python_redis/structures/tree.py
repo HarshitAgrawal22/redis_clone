@@ -64,7 +64,7 @@ from typing import dict, Tuple, Optional
 
 class Node:
     def __init__(self, value):
-        self.value = value
+        self.value: dict = value
         self.right: Node = None
         self.left: Node = None
 
@@ -90,6 +90,7 @@ class bstree:
                 node: Node = stack.pop()
                 if node:
                     result += str(node.value)
+                    result += "\n"
                     stack.append(node.right)
                     stack.append(node.left)
             return result
@@ -104,6 +105,7 @@ class bstree:
                     stack.append(node.right)
                     stack.append(node.left)
                     result += str(node.value)
+                    result += "\n"
             return result
 
     def in_order_traversal(self, root: Node):
@@ -115,10 +117,11 @@ class bstree:
                 if node:
                     stack.append(node.right)
                     result += str(node.value)
+                    result += "\n"
                     stack.append(node.left)
             return result
 
-    def search_node(self, value, root: Node):
+    def search_node(self, value, key, root: Node):
         # we cant use recursion with lock as each function call will aquire a new lock and will increase the lock counter .
         def search(value, root: Node):
 
