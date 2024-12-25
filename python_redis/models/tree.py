@@ -1,65 +1,6 @@
 import threading
 from threading import RLock, Timer
-from typing import dict, Tuple, Optional
-
-
-# Use Cases
-# Redis is widely used for:
-
-
-# Session Management: Storing user session data for web applications.
-
-
-# Leaderboard and Ranking: Using sorted sets for scoring and ranking systems.
-
-
-# In-Memory Data Store
-
-
-# AOF (Append-Only File): Logs all write operations for durability.
-# Data Structures
-
-# Redis supports a variety of data structures beyond simple key-value pairs, including:
-# Strings
-# Lists (linked lists)
-# Sets (collections of unique values)
-# Sorted Sets (sets with a score for ordering)
-# Hashes (key-value pairs, like dictionaries)
-# Streams
-# Bitmaps and HyperLogLogs (used for approximate data structures)
-# Pub/Sub Messaging
-
-# Redis provides a publish/subscribe mechanism for building real-time messaging systems.
-# Lua Scripting
-
-# Redis supports server-side Lua scripts, enabling complex operations to be performed atomically.
-# Transactions
-
-# Redis supports transactions with the commands MULTI, EXEC, WATCH, and DISCARD, ensuring atomicity.
-# Replication
-
-# Redis supports master-slave replication for high availability and horizontal scaling.
-# Clustering
-
-# Redis Cluster allows sharding and scaling data across multiple Redis nodes for distributed use cases.
-# High Availability
-
-# Using Redis Sentinel, you can monitor Redis instances, perform failover, and ensure the system is resilient to outages.
-# Lightweight and Fast
-
-# Redis is extremely lightweight and efficient, capable of handling millions of requests per second.
-# Geospatial Support
-# Redis includes geospatial data types and commands for storing and querying location-based data.
-# Streams for Data Logging
-# Redis Streams allow storage and processing of a log of data points, useful for event sourcing and real-time analytics.
-# Atomic Operations
-# All Redis operations are atomic, ensuring data consistency during concurrent operations.
-# Redis Modules
-
-# Redis can be extended with modules such as RedisJSON (JSON handling), RedisGraph (graph database), and RedisAI (AI/ML model serving).
-# Rich Set of Clients
-
-# Redis has client libraries available for almost all programming languages, including Python, Go, Java, Node.js, and more.
+from typing import Tuple, Optional
 
 
 class Node:
@@ -74,13 +15,15 @@ class Node:
 
 class bstree:
 
-    def __init__(self, value):
-        self.root: Node = Node(value)
+    def __init__(
+        self,
+    ):
+        self.ll
         self.lock = threading.RLock()
 
     @staticmethod
-    def new_tree(value_type):  # 0 for string and 1 for integer
-        return bstree(value_type)
+    def new_tree():
+        return bstree()
 
     def pre_order_traversal(self, root: Node):
         with self.lock:

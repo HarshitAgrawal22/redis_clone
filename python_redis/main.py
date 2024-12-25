@@ -3,12 +3,12 @@ import threading
 from typing import Dict
 import protocols.keyval_protocol as keyval_protocol
 from protocols.keyval_protocol import Command
-import services.command_dict as command_dict
+from command_map import execute_task_hash_map
 import peer
 from icecream import ic
 from queue import Queue
 from client import client
-import structures.keyval as keyval
+import models.keyval as keyval
 
 default_listen_address: str = ":5001"
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
@@ -78,9 +78,10 @@ class Server:
             msg.conn_peer.storage_queue = Queue()
             msg.conn_peer.send("OK".encode("utf-8"))
 
-        func = command_dict.execute_task_hash_map.get(type(msg.cmd))
+        func = execute_task_hash_map.get(type(msg.cmd))
         if func != None:
-            func(msg, self)
+            data = func(msg, self)
+            ic(f"{data} is the data we got in return ")
         else:
             print("Command not")
 

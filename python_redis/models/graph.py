@@ -71,5 +71,9 @@ class GraphList:
             result += "\n"
         return result
 
+    @staticmethod
+    def NewGraph():
+        return GraphList()
+
 
 """this file have the code to store in graph format in cache"""

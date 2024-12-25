@@ -53,12 +53,15 @@ class STACK_TASKS:
 
     @staticmethod
     def task_push_command(msg, server):
-        pass
+        ic(msg.cmd.item)
+        msg.conn_peer.send("OK".encode("utf-8"))
+        return msg.conn_peer._stack.push(msg.cmd.item)
 
     @staticmethod
     def task_pop_command(msg, server):
-        pass
+        value = msg.conn_peer._stack.pop()
+        msg.conn_peer.send(f"{value}".encode("utf-8"))
 
     @staticmethod
     def task_peek_command(msg, server):
-        pass
+        msg.conn_peer.send(f"{msg.conn_peer._stack.peek()}".encode("utf-8"))

@@ -32,5 +32,3 @@ execute_command_hash_map: dict = {
     keyval_protocol.COMMAND_SET_MULTIPLE_KEY_VAL: keyval_protocol.execute_set_multi_key_val_command,
     keyval_protocol.COMMAND_HELLO: keyval_protocol.execute_hello_command,
 }
-
-execute_command_queue: dict = {}

@@ -16,3 +16,7 @@ class Stackstruc:
 
     def peek(self):
         return self.ll.show_head()
+
+    @staticmethod
+    def new_stack():
+        return Stackstruc()

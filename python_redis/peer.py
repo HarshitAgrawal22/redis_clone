@@ -1,7 +1,7 @@
 import socket
 from typing import Optional
 from main import Message
-from services.command_dict import execute_command_hash_map
+from command_map import execute_command_hash_map
 import re
 from icecream import ic
 from protocols.keyval_protocol import (
@@ -9,6 +9,7 @@ from protocols.keyval_protocol import (
     CreateNewQueue,
     COMMAND_CREATE_QUEUE,
 )
+from models import keyval, sets, stacks, queuestruc
 
 # from main import Server, Config
 from queue import Queue
@@ -25,7 +26,12 @@ class Peer:
         self.Conn: socket.socket = conn
         self.msg_chan: Queue = msg_chan
         self.del_chan: list[Peer] = del_chan
-        self.storage_queue: Queue
+        self._queue: queuestruc.DataQueue = queuestruc.DataQueue.new_queue()
+        # self._tree: tree.bstree = tree.bstree.new_tree()
+        self._stack: stacks.Stackstruc = stacks.Stackstruc.new_stack()
+        self._sets: sets.Set = sets.Set.new_set()
+        # self._Lgraph: graph.GraphList = graph.GraphList.NewGraph()
+        # self._Mgraph: graph.GraphMatrix = graph.GraphMatrix.new_graph()
 
     @staticmethod
     def newPeer(conn: socket.socket, msg_chan: Queue, del_chan: list["Peer"]) -> "Peer":
