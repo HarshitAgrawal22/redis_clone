@@ -7,17 +7,25 @@ class Set:
         self.storage: set = set()
         self.lock = threading.RLock()
 
-    def get(self, target_attr):
+    def remove(self, target_attr):
         with self.lock:
-            for i in self.storage:
-                if i.get(target_attr) != None:
-                    return i
-                return None
+            try:
+                self.storage.remove(target_attr)
+                return "OK"
+            except:
+                return "NOT FOUND"
 
     @staticmethod
     def new_set():
         return Set()
 
-    def set(self, item):
+    def display(self):
+        with self.lock:
+            result = ""
+            for i in self.storage:
+                result += f"-{i}"
+            return result
+
+    def add(self, item):
         with self.lock:
             self.storage.add(item)

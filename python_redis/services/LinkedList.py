@@ -68,6 +68,6 @@ class LinkedList:
         result = ""
         ptr: Node = self.head
         while ptr != None:
-            result += f"{ptr.value} "
+            result += f"<-{ptr.value}"
             ptr = ptr.next
         return result

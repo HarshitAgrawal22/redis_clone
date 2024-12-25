@@ -23,7 +23,7 @@ class DataQueue:
 
     def enqueue(self, value):
         with self.lock:
-            return self.ll.add_last()
+            return self.ll.add_last(value)
 
     @staticmethod
     def new_queue():
