@@ -1,4 +1,4 @@
-import protocols.stack_protocols as stack_protocols
+import python_redis.protocols.stack_protocols as stack_protocols
 
 execute_task_stack = {
     stack_protocols.PushCommand: stack_protocols.STACK_TASKS.task_push_command,

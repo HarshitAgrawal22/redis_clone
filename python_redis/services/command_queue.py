@@ -1,4 +1,4 @@
-import protocols.queue_protocols as queue_protocols
+import python_redis.protocols.queue_protocols as queue_protocols
 
 execute_task_queue = {
     queue_protocols.DisplayCommand: queue_protocols.QUEUE_TASKS.task_display_command,

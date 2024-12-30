@@ -9,7 +9,7 @@ ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 COMMAND_ADD = "fadd"
 COMMAND_REMOVE = "frem"
 
-COMMAND_DISPLAY = "fdisp"
+COMMAND_DISPLAY = "fmem"
 
 
 class RemoveCommand(Command):

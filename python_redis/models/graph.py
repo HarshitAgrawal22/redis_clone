@@ -1,5 +1,5 @@
 import threading
-from services.LinkedList import LinkedList, Node
+from python_redis.models.service_ds.LinkedList import LinkedList, Node
 
 
 # class Node:

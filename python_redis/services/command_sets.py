@@ -1,4 +1,4 @@
-import protocols.sets_protocols as sets_protocols
+import python_redis.protocols.sets_protocols as sets_protocols
 
 execute_task_sets = {
     sets_protocols.DisplayCommand: sets_protocols.SETS_TASKS.task_display_command,

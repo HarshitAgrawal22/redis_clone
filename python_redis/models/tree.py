@@ -13,17 +13,23 @@ class Node:
         return f"value stored on this node is:{self.value}"
 
 
+# here we intent to store a object in the form of dictionary in the bst
 class bstree:
 
-    def __init__(
-        self,
-    ):
+    def __init__(self):
         self.ll
         self.lock = threading.RLock()
+        self.key: str = None
 
     @staticmethod
     def new_tree():
         return bstree()
+
+    def check_key_None(self):
+        return self.key != None
+
+    def set_key(self, key: str):
+        self.key: str = key
 
     def pre_order_traversal(self, root: Node):
         with self.lock:
@@ -64,18 +70,18 @@ class bstree:
                     stack.append(node.left)
             return result
 
-    def search_node(self, value, key, root: Node):
+    def search_node(self, value, root: Node):
         # we cant use recursion with lock as each function call will aquire a new lock and will increase the lock counter .
         def search(value, root: Node):
-
-            if root == None:
-                return False
-            if root.value == value:
-                return True
-            elif value > root.value:
-                return search(root.right)
-            else:
-                return search(root.left)
+            if self.check_key_None(self):
+                if root == None:
+                    return False
+                if root.value[self.key] == value:
+                    return True
+                elif value > root.value[self.key]:
+                    return search(root.right)
+                else:
+                    return search(root.left)
 
         with self.lock:
             return search(value, root)
@@ -85,15 +91,15 @@ class bstree:
             if root == None:
                 root = Node(value=value)
 
-            elif value > root.value:
+            elif value > root.value[self.key]:
                 root.right = insert_node(root.right)
-            elif value < root.value:
+            elif value < root.value[self.key]:
                 root.left = insert_node(root.left)
             return root
 
         with self.lock:
             self.root = insert_node(value, self.root)
-        Timer(15 * 60, self.delete_root).start()
+        Timer(15 * 60, self.delete, args=(self, value[self.key])).start()
 
     def display(self):
         def display_tree(root: Node, map: str, level: int):
@@ -114,14 +120,14 @@ class bstree:
         def minValue(node: Node):
             minv = node.value
             while node.left != None:
-                minv = node.left.value
+                minv = node.left.value[self.key]
                 node = node.left
             return minv
 
         def delete_node(key, root: Node):
             if root == None:
                 return root
-            if key < root.value:
+            if key < root.value[self.key]:
                 root.left = delete_node(key, root.left)
 
             elif root > root.right:
@@ -140,41 +146,6 @@ class bstree:
             self.root = delete_node(key, self.root)
 
 
-# Redis supports a variety of data structures that allow for efficient storage and retrieval of data. Here are the primary data structures in Redis:
-
-# 1. Strings
-# Description: The simplest data structure in Redis, storing text or binary data.
-# Use Cases:
-# Caching strings, JSON, or serialized objects.
-# Storing counters or numeric values (e.g., view counts).
-# Example:
-# bash
-# Copy code
-# SET key "value"
-# GET key
-# 2. Lists
-# Description: Linked lists of strings, where items are ordered by insertion.
-# Use Cases:
-# Task queues.
-# Streaming or timeline-like data.
-# Commands:
-# bash
-# Copy code
-
-# LPUSH list "item1"
-# RPUSH list "item2"
-# LRANGE list 0 -1
-# 3. Sets
-# Description: Unordered collections of unique strings.
-# Use Cases:
-# Tracking unique items (e.g., IPs or user IDs).
-# Performing set operations like intersections, unions, and differences.
-# Commands:
-# bash
-# Copy code
-# SADD set "item1" "item2"
-# SMEMBERS set
-# SINTER set1 set2
 # 4. Sorted Sets (ZSets)
 # Description: Similar to sets but with an associated score for each item, allowing sorting.
 # Use Cases:
@@ -187,56 +158,6 @@ class bstree:
 # ZADD zset 1 "item1"
 # ZADD zset 2 "item2"
 # ZRANGE zset 0 -1 WITHSCORES
-# 5. Hashes
-# Description: Key-value pairs within a single key, similar to a dictionary.
-# Use Cases:
-# Storing user profiles or small objects.
-# Representing database rows or JSON-like structures.
-# Commands:
-# bash
-# Copy code
-# HSET hash key1 "value1"
-# HGET hash key1
-# HGETALL hash
-# 6. Bitmaps
-# Description: A string of bits, where each bit can be set or cleared.
-# Use Cases:
-# Storing true/false values.
-# Tracking user activity (e.g., daily login status).
-# Commands:
-# bash
-# Copy code
-# SETBIT key 0 1
-# GETBIT key 0
-# 7. HyperLogLogs
-# Description: A probabilistic data structure for approximate cardinality estimation.
-# Use Cases:
-# Estimating unique items in large datasets (e.g., unique visitors).
-# Commands:
-# bash
-# Copy code
-# PFADD hyperloglog "item1"
-# PFCOUNT hyperloglog
-# 8. Streams
-# Description: Log-like data structure for handling event streams.
-# Use Cases:
-# Event sourcing.
-# Real-time messaging systems.
-# Commands:
-# bash
-# Copy code
-# XADD stream * key "value"
-# XRANGE stream - +
-# 9. Geospatial Indexes
-# Description: A specialized data type for storing and querying geographic locations.
-# Use Cases:
-# Location-based applications (e.g., "find the nearest restaurant").
-# Commands:
-# bash
-# Copy code
-# GEOADD geo 13.361389 38.115556 "Palermo"
-# GEORADIUS geo 15 37 100 km
-# Summary of Use Cases by Data Structure
 
 
 # Data Structure	Common Use Cases
@@ -250,8 +171,3 @@ class bstree:
 # Streams	Event sourcing, real-time analytics.
 # Geospatial	Location-based queries.
 # Redis's flexible data structures make it suitable for a wide range of applications, from caching and messaging to advanced analytics and real-time data processing.
-
-
-# Eviction Policies
-
-# Redis uses algorithms for managing memory and deciding which keys to evict (e.g., LRU or LFU).

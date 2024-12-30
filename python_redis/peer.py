@@ -1,15 +1,15 @@
 import socket
 from typing import Optional
-from main import Message
-from command_map import execute_command_hash_map
+
+from python_redis.common import execute_command_hash_map
 import re
 from icecream import ic
-from protocols.keyval_protocol import (
+from python_redis.protocols.keyval_protocol import (
     Command,
     CreateNewQueue,
     COMMAND_CREATE_QUEUE,
 )
-from models import keyval, sets, stacks, queuestruc
+from python_redis.models import sets, stacks, liststruc, queuestruc
 
 # from main import Server, Config
 from queue import Queue
@@ -28,6 +28,7 @@ class Peer:
         self.del_chan: list[Peer] = del_chan
         self._queue: queuestruc.DataQueue = queuestruc.DataQueue.new_queue()
         # self._tree: tree.bstree = tree.bstree.new_tree()
+        self._list: list = liststruc.List_Struc.new_list()
         self._stack: stacks.Stackstruc = stacks.Stackstruc.new_stack()
         self._sets: sets.Set = sets.Set.new_set()
         # self._Lgraph: graph.GraphList = graph.GraphList.NewGraph()

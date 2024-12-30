@@ -1,14 +1,14 @@
 import socket
 import threading
 from typing import Dict
-import protocols.keyval_protocol as keyval_protocol
-from protocols.keyval_protocol import Command
-from command_map import execute_task_hash_map
-import peer
+import python_redis.protocols.keyval_protocol as keyval_protocol
+
+from python_redis.common import execute_task_hash_map, Message
+import python_redis.peer
 from icecream import ic
 from queue import Queue
-from client import client
-import models.keyval as keyval
+from python_redis.client import client
+import python_redis.models.keyval as keyval
 
 default_listen_address: str = ":5001"
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
@@ -20,22 +20,12 @@ class Config:
         self.listen_address: str = listen_address
 
 
-class Message:
-    def __init__(self, cmd: bytearray, conn_peer):
-        self.conn_peer: peer.Peer = conn_peer
-        self.cmd: Command = cmd
-
-    def __str__(self):
-        return f"conn_peer:{self.conn_peer}     cmd:{self.cmd}"
-
-
 class Server:
     def __init__(self, config: Config):
         # Server holds settings, a list of peers, a listener, and a channel for new peers.
         self.config: Config = config
-        self.peers: Dict[peer.Peer, bool] = (
-            {}
-        )  # Dict to track connected peers with Peer as keys
+        self.peers: Dict[peer.Peer, bool] = {}
+        # Dict to track connected peers with Peer as keys
         self.listener: socket.socket = socket.socket(
             socket.AF_INET, socket.SOCK_STREAM
         )  # Network listener
