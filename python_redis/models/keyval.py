@@ -2,38 +2,6 @@ import threading
 from typing import Dict, Tuple, Optional
 
 
-# # Set fields
-# HSET user:1001 name "Alice" email "alice@example.com" age "30"
-
-# # Get specific fields
-# HGET user:1001 name  # Output: Alice
-# HGET user:1001 age   # Output: 30
-
-# # Get all fields and values
-# HGETALL user:1001    # Output: name Alice email alice@example.com age 30
-
-# # Check if a field exists
-# HEXISTS user:1001 age  # Output: 1
-
-# # Increment age by 1
-# HINCRBY user:1001 age 1  # Output: 31
-
-# # Delete a field
-# HDEL user:1001 email
-
-# # Get all keys and values separately
-# HKEYS user:1001  # Output: name age
-# HVALS user:1001  # Output: Alice 31
-
-# try:
-#     d = {}
-#     while True:
-#         # Continuously adding items to the dictionary
-#         d[len(d)] = "a" * 10**6  # 1 MB string
-# except MemoryError:
-#     print("Memory is full! Cannot allocate more memory.")
-
-
 class KV:
     def __init__(self):  # Initialize an empty dictionary and an RLock for thread safety
         self.data: Dict[str, bytes] = {}

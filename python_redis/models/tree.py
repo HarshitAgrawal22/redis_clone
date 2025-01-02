@@ -6,6 +6,7 @@ from typing import Tuple, Optional
 class Node:
     def __init__(self, value):
         self.value: dict = value
+
         self.right: Node = None
         self.left: Node = None
 
@@ -17,7 +18,7 @@ class Node:
 class bstree:
 
     def __init__(self):
-        self.ll
+        self.root: Node = None
         self.lock = threading.RLock()
         self.key: str = None
 
@@ -28,14 +29,14 @@ class bstree:
     def check_key_None(self):
         return self.key != None
 
-    def set_key(self, key: str):
-        self.key: str = key
+    def set_key(self, key: list):
+        self.key: str = key[0]
         return key
 
-    def get_key(self, key: str):
+    def get_key(self):
         return self.key
 
-    def pre_order_traversal(self, root: Node):
+    def pre_order_traversal(self):
         with self.lock:
             stack: list = [self.root]
             result: str = ""
@@ -46,9 +47,10 @@ class bstree:
                     result += "\n"
                     stack.append(node.right)
                     stack.append(node.left)
+            print(result)
             return result
 
-    def post_order_traversal(self, root: Node):
+    def post_order_traversal(self):
         with self.lock:
             result: str = ""
             stack: list = [self.root]
@@ -59,9 +61,10 @@ class bstree:
                     stack.append(node.left)
                     result += str(node.value)
                     result += "\n"
+                print(result)
             return result
 
-    def in_order_traversal(self, root: Node):
+    def in_order_traversal(self):
         with self.lock:
             result: str = ""
             stack: list = [self.root]
@@ -72,6 +75,7 @@ class bstree:
                     result += str(node.value)
                     result += "\n"
                     stack.append(node.left)
+            print(result)
             return result
 
     def search_node(self, value, root: Node):
@@ -90,20 +94,32 @@ class bstree:
         with self.lock:
             return search(value, root)
 
-    def insert(self, value):
-        def insert_node(value, root: Node):
+    def insert(self, value: list):
+        temp_dict = dict()
+        if (len(value)) % 2 == 0:
+
+            for i in range(0, len(value), 2):
+                temp_dict[value[i]] = value[i + 1]
+        print(temp_dict)
+
+        def insert_node(value: dict, root: Node):
+            print(value)
             if root == None:
                 root = Node(value=value)
-
-            elif value > root.value[self.key]:
-                root.right = insert_node(root.right)
-            elif value < root.value[self.key]:
-                root.left = insert_node(root.left)
+            if root.value[self.key] == value[self.key]:
+                return None
+            elif value[self.key] > root.value[self.key]:
+                root.right = insert_node(value, root.right)
+            elif value[self.key] < root.value[self.key]:
+                root.left = insert_node(value, root.left)
             return root
 
         with self.lock:
-            self.root = insert_node(value, self.root)
-        Timer(15 * 60, self.delete, args=(self, value[self.key])).start()
+            if temp_dict.get(self.get_key()) != None:
+                self.root = insert_node(temp_dict, self.root)
+            else:
+                return "key not set "
+        # Timer(15 * 60, self.delete, args=(self, value[self.key])).start()
 
     def display(self):
         def display_tree(root: Node, map: str, level: int):
@@ -118,7 +134,8 @@ class bstree:
             return map
 
         with self.lock:
-            display_tree(self.root)
+            print(x := display_tree(self.root, "", 0))
+            return x
 
     def delete(self, key):
         def minValue(node: Node):
@@ -148,20 +165,6 @@ class bstree:
 
         with self.lock:
             self.root = delete_node(key, self.root)
-
-
-# 4. Sorted Sets (ZSets)
-# Description: Similar to sets but with an associated score for each item, allowing sorting.
-# Use Cases:
-# Leaderboards.
-# Ranking systems.
-# Time-series data with scores as timestamps.
-# Commands:
-# bash
-# Copy code
-# ZADD zset 1 "item1"
-# ZADD zset 2 "item2"
-# ZRANGE zset 0 -1 WITHSCORES
 
 
 # Data Structure	Common Use Cases

@@ -6,6 +6,7 @@ from .command import Command
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
 COMMAND_INSERT = "tins"
+COMMAND_SET = "tset"
 COMMAND_GET = "tget"
 COMMAND_SEARCH = "tlook"
 COMMAND_DELETE = "tdel"
@@ -55,35 +56,27 @@ class GetKeyCommand(Command):
 
 
 class PreOrderTraversalCommand(Command):
-    def __init__(self, data):
-        print(f"data got is {data}")
+    def __init__(self):
+        print("got command for pre order ")
 
     def __str__(self):
         return f"got order to print preorder traversal"
 
 
 class PostOrderTraversalCommand(Command):
-    def __init__(self, data):
-        print(f"data got is {data}")
+    def __init__(self):
+        print("got command for post order ")
 
     def __str__(self):
         return f"got order to print postorder traversal"
 
 
 class InOrderTraversalCommand(Command):
-    def __init__(self, data):
-        print(f"data got is {data}")
+    def __init__(self):
+        print("got command for in order ")
 
     def __str__(self):
         return f"got order to print inorder traversal"
-
-
-class PostOrderTraversalCommand(Command):
-    def __init__(self, data):
-        print(f"data got is {data}")
-
-    def __str__(self):
-        return f"got order to print whole tree"
 
 
 def execute_insert_command(args):
@@ -117,19 +110,19 @@ def execute_in_order_traversal_command(args):
 
 
 def execute_display_command(args):
-    if len(args) != 1:
+    if len(args) != 0:
         raise ValueError("invalid no. args for push command")
     return DisplayCommand()
 
 
 def execute_delete_command(args):
-    if len(args) != 0:
+    if len(args) != 1:
         raise ValueError("invalid no. args for pop command")
     return DeleteCommand(args)
 
 
 def execute_set_command(args):
-    if len(args) != 0:
+    if len(args) != 1:
         raise ValueError("invalid no. args for pop command")
     return SetKeyCommand(args)
 
@@ -157,49 +150,44 @@ class TREE_TASKS:
 
     @staticmethod
     def task_pre_order_traversal_command(msg, server):
-        ic(msg.cmd.item)
-        msg.conn_peer.send("OK".encode("utf-8"))
-        return msg.conn_peer._list.rpush(msg.cmd.item)
+
+        msg.conn_peer.send(
+            f"{msg.conn_peer._tree.pre_order_traversal()}".encode("utf-8")
+        )
 
     @staticmethod
     def task_post_order_traversal_command(msg, server):
-        ic(msg.cmd.item)
-        msg.conn_peer.send("OK".encode("utf-8"))
-        return msg.conn_peer._list.lpush(msg.cmd.item)
+        msg.conn_peer.send(
+            f"{msg.conn_peer._tree.post_order_traversal()}".encode("utf-8")
+        )
 
     @staticmethod
     def task_in_order_traversal_command(msg, server):
 
-        msg.conn_peer.send(f"{ msg.conn_peer._list.lpull()}".encode("utf-8"))
+        msg.conn_peer.send(
+            f"{msg.conn_peer._tree.in_order_traversal()}".encode("utf-8")
+        )
 
     @staticmethod
     def task_search_node_command(msg, server):
 
-        msg.conn_peer.send(f"{ msg.conn_peer._list.rpull()}".encode("utf-8"))
+        msg.conn_peer.send(
+            f"{ msg.conn_peer._tree.search_node(msg.cmd.key)}".encode("utf-8")
+        )
 
     @staticmethod
     def task_insert_command(msg, server):
-
-        msg.conn_peer.send(
-            f"{ msg.conn_peer._list.search_index(int(msg.cmd.index[0]))}".encode(
-                "utf-8"
-            )
-        )
+        ic(msg.cmd.item)
+        print(msg.conn_peer._tree.insert(msg.cmd.item))
+        msg.conn_peer.send(f"OK".encode("utf-8"))
 
     @staticmethod
     def task_display_command(msg, server):
-
-        msg.conn_peer.send(
-            f"{ msg.conn_peer._list.search_index(int(msg.cmd.index[0]))}".encode(
-                "utf-8"
-            )
-        )
+        msg.conn_peer.send(f"{ msg.conn_peer._tree.display()}".encode("utf-8"))
 
     @staticmethod
     def task_delete_command(msg, server):
 
         msg.conn_peer.send(
-            f"{ msg.conn_peer._list.search_index(int(msg.cmd.index[0]))}".encode(
-                "utf-8"
-            )
+            f"{ msg.conn_peer._tree.delete_node(msg.cmd.key)}".encode("utf-8")
         )
