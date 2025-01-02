@@ -4,7 +4,7 @@ from typing import Dict
 import python_redis.protocols.keyval_protocol as keyval_protocol
 
 from python_redis.common import execute_task_hash_map, Message
-import python_redis.peer
+from python_redis import peer
 from icecream import ic
 from queue import Queue
 from python_redis.client import client

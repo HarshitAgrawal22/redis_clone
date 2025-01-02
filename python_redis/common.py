@@ -5,6 +5,7 @@ from python_redis.services import (
     command_dict,
     command_queue,
     command_sets,
+    command_lists,
 )
 from python_redis.protocols.command import Command
 
@@ -20,6 +21,7 @@ class Message:
 
 
 execute_task_hash_map = {
+    **command_lists.execute_task_list,
     **command_dict.execute_task_hash_map,
     **command_stack.execute_task_stack,
     **command_queue.execute_task_queue,
@@ -30,4 +32,5 @@ execute_command_hash_map = {
     **command_stack.execute_command_stack,
     **command_queue.execute_command_queue,
     **command_sets.execute_command_sets,
+    **command_lists.execute_command_list,
 }
