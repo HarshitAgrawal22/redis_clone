@@ -30,6 +30,10 @@ class bstree:
 
     def set_key(self, key: str):
         self.key: str = key
+        return key
+
+    def get_key(self, key: str):
+        return self.key
 
     def pre_order_traversal(self, root: Node):
         with self.lock:

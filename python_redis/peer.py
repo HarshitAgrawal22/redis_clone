@@ -9,7 +9,7 @@ from python_redis.protocols.keyval_protocol import (
     CreateNewQueue,
     COMMAND_CREATE_QUEUE,
 )
-from python_redis.models import sets, stacks, liststruc, queuestruc
+from python_redis.models import sets, stacks, liststruc, tree, queuestruc
 
 # from main import Server, Config
 from queue import Queue
@@ -27,7 +27,7 @@ class Peer:
         self.msg_chan: Queue = msg_chan
         self.del_chan: list[Peer] = del_chan
         self._queue: queuestruc.DataQueue = queuestruc.DataQueue.new_queue()
-        # self._tree: tree.bstree = tree.bstree.new_tree()
+        self._tree: tree.bstree = tree.bstree.new_tree()
         self._list: list = liststruc.List_Struc.new_list()
         self._stack: stacks.Stackstruc = stacks.Stackstruc.new_stack()
         self._sets: sets.Set = sets.Set.new_set()
