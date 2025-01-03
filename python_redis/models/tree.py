@@ -37,46 +37,54 @@ class bstree:
         return self.key
 
     def pre_order_traversal(self):
+
+        def traversal(node: Node):
+
+            if node == None:
+                return ""
+            else:
+                map = f"{node.value}\n"
+                map += traversal(node.left)
+                map += traversal(node.right)
+                return map
+
+        print("pre order traversal ")
         with self.lock:
-            stack: list = [self.root]
-            result: str = ""
-            while stack:
-                node: Node = stack.pop()
-                if node:
-                    result += str(node.value)
-                    result += "\n"
-                    stack.append(node.right)
-                    stack.append(node.left)
-            print(result)
-            return result
+            return traversal(self.root)
 
     def post_order_traversal(self):
+        print("post order traversal ")
+
+        def traversal(node: Node):
+
+            if node == None:
+                return ""
+            else:
+                map = traversal(node.left)
+                map += traversal(node.right)
+                map += f"{node.value}\n"
+                return map
+
         with self.lock:
-            result: str = ""
-            stack: list = [self.root]
-            while stack:
-                node: Node = stack.pop()
-                if node:
-                    stack.append(node.right)
-                    stack.append(node.left)
-                    result += str(node.value)
-                    result += "\n"
-                print(result)
-            return result
+
+            return traversal(self.root)
 
     def in_order_traversal(self):
+        print("in order traversal ")
+
+        def traversal(node: Node):
+
+            if node == None:
+                return ""
+            else:
+                map = traversal(node.left)
+                map += f"{node.value}\n"
+                map += traversal(node.right)
+                return map
+
         with self.lock:
-            result: str = ""
-            stack: list = [self.root]
-            while stack:
-                node: Node = stack.pop()
-                if node:
-                    stack.append(node.right)
-                    result += str(node.value)
-                    result += "\n"
-                    stack.append(node.left)
-            print(result)
-            return result
+
+            return traversal(self.root)
 
     def search_node(self, value, root: Node):
         # we cant use recursion with lock as each function call will aquire a new lock and will increase the lock counter .
@@ -95,19 +103,14 @@ class bstree:
             return search(value, root)
 
     def insert(self, value: list):
-        temp_dict = dict()
-        if (len(value)) % 2 == 0:
-
-            for i in range(0, len(value), 2):
-                temp_dict[value[i]] = value[i + 1]
-        print(temp_dict)
 
         def insert_node(value: dict, root: Node):
             print(value)
             if root == None:
                 root = Node(value=value)
-            if root.value[self.key] == value[self.key]:
-                return None
+            # if root.value[self.key] == value[self.key]:
+            #     print("here we are ")
+            #     return None
             elif value[self.key] > root.value[self.key]:
                 root.right = insert_node(value, root.right)
             elif value[self.key] < root.value[self.key]:
@@ -115,10 +118,20 @@ class bstree:
             return root
 
         with self.lock:
+            temp_dict = dict()
+            if (len(value)) % 2 == 0:
+
+                for i in range(0, len(value), 2):
+                    temp_dict[value[i]] = value[i + 1]
+            print(f"{temp_dict} => temp_dict")
             if temp_dict.get(self.get_key()) != None:
                 self.root = insert_node(temp_dict, self.root)
+                self.display()
+                return "OK"
             else:
-                return "key not set "
+
+                return "key not in set "
+
         # Timer(15 * 60, self.delete, args=(self, value[self.key])).start()
 
     def display(self):
@@ -128,12 +141,14 @@ class bstree:
             else:
                 level += 1
                 map = display_tree(root.left, map, level)
-                map += "  " * level
+                map += "        " * level
                 map += str(root.value) + "\n"
                 map += display_tree(root.right, map, level)
             return map
 
         with self.lock:
+            if self.root == None:
+                print("empty tree")
             print(x := display_tree(self.root, "", 0))
             return x
 

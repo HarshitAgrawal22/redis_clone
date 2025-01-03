@@ -25,7 +25,8 @@ class Client:
         # RESP format for "*3\r\n$3\r\nSET\r\n$<key_length>\r\n<key>\r\n$<value_length>\r\n<value>\r\n"
 
         # message = f"*3\r\n${len('SET')}\r\nSET\r\n${len(key)}\r\n{key}\r\n${len(value)}\r\n{value}\r\n"
-        message: str = f"set {key} {value}"
+        lists = ["harshit", "hrishika", "shreyanshi", "shreya", "agrawal"]
+        message: str = f"tins name "
 
         encoded_message = message.encode("utf-8")
 

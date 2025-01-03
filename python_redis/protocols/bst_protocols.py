@@ -177,9 +177,9 @@ class TREE_TASKS:
 
     @staticmethod
     def task_insert_command(msg, server):
-        ic(msg.cmd.item)
-        print(msg.conn_peer._tree.insert(msg.cmd.item))
-        msg.conn_peer.send(f"OK".encode("utf-8"))
+
+        print(result := msg.conn_peer._tree.insert(msg.cmd.item))
+        msg.conn_peer.send(f"{result}".encode("utf-8"))
 
     @staticmethod
     def task_display_command(msg, server):
