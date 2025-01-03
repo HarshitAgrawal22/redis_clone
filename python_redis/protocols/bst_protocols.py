@@ -88,7 +88,7 @@ def execute_insert_command(args):
 def execute_search_command(args):
     if len(args) <= 0:
         raise ValueError("not enough ")
-    return SearchCommand(args)
+    return SearchCommand(args[0])
 
 
 def execute_pre_order_traversal_command(args):
@@ -118,7 +118,7 @@ def execute_display_command(args):
 def execute_delete_command(args):
     if len(args) != 1:
         raise ValueError("invalid no. args for pop command")
-    return DeleteCommand(args)
+    return DeleteCommand(args[0])
 
 
 def execute_set_command(args):
@@ -187,7 +187,5 @@ class TREE_TASKS:
 
     @staticmethod
     def task_delete_command(msg, server):
-
-        msg.conn_peer.send(
-            f"{ msg.conn_peer._tree.delete_node(msg.cmd.key)}".encode("utf-8")
-        )
+        msg.conn_peer._tree.delete(msg.cmd.key)
+        msg.conn_peer.send(f"OK".encode("utf-8"))

@@ -86,21 +86,23 @@ class bstree:
 
             return traversal(self.root)
 
-    def search_node(self, value, root: Node):
+    def search_node(self, value: str):
         # we cant use recursion with lock as each function call will aquire a new lock and will increase the lock counter .
+
         def search(value, root: Node):
-            if self.check_key_None(self):
-                if root == None:
-                    return False
-                if root.value[self.key] == value:
-                    return True
-                elif value > root.value[self.key]:
-                    return search(root.right)
-                else:
-                    return search(root.left)
+
+            if root == None:
+                return "NOT FOUND"
+            if root.value[self.key] == value:
+                return root.value
+            elif value > root.value[self.key]:
+                return search(value, root.right)
+            else:
+                return search(value, root.left)
 
         with self.lock:
-            return search(value, root)
+            if self.check_key_None():
+                return search(value, self.root)
 
     def insert(self, value: list):
 
@@ -126,7 +128,7 @@ class bstree:
             print(f"{temp_dict} => temp_dict")
             if temp_dict.get(self.get_key()) != None:
                 self.root = insert_node(temp_dict, self.root)
-                self.display()
+                # self.display()
                 return "OK"
             else:
 
@@ -166,7 +168,7 @@ class bstree:
             if key < root.value[self.key]:
                 root.left = delete_node(key, root.left)
 
-            elif root > root.right:
+            elif key > root.value[self.key]:
                 root.right = delete_node(key, root.right)
             else:
                 if root.left == None:
@@ -180,6 +182,7 @@ class bstree:
 
         with self.lock:
             self.root = delete_node(key, self.root)
+            self.display()
 
 
 # Data Structure	Common Use Cases
