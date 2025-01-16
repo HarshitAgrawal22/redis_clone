@@ -1,6 +1,6 @@
 import threading
 from python_redis.models.service_ds.LinkedList import LinkedList, Node
-
+from python_redis.models.graph_config import Vertex, Edge
 
 # class Node:
 #     def __init__(self, vertex):
@@ -16,7 +16,12 @@ class GraphMatrix:
         self.lock = threading.RLock()
         self.E = 0
         self.v = nodes
+        self.stack: LinkedList = LinkedList()
+        self.queue: LinkedList = LinkedList()
         self.adj_matrix = [[0 for j in range(nodes)] for i in range(nodes)]
+        self.map: dict = (
+            dict()
+        )  # it will map the name of the nodes to the integer index of arrays
 
     def addEdgeMatrix(self, u: int, v: int):
         with self.lock:
@@ -77,3 +82,51 @@ class GraphList:
 
 
 """this file have the code to store in graph format in cache"""
+
+
+class graph:
+    def __init__(self, is_weighted: int, is_directed: int):
+        self.vertices: list[Vertex.Vertex] = list()
+        self.is_directed: bool = is_directed
+        self.is_weighted: bool = is_weighted
+
+    def add_vertex(self, data: str) -> Vertex:
+        new_vertex: Vertex.Vertex = Vertex.Vertex(data)
+        self.vertices.append(new_vertex)
+        return new_vertex
+
+    def add_edge(self, v1: Vertex.Vertex, v2: Vertex.Vertex, weight: int):
+        if not self.is_weighted:
+            weight = 0
+        v1.add_edge(v2, weight)
+        if not self.is_directed:
+            v2.add_edge(v1, weight)
+
+    def remove_edge(self, vertex: Vertex.Vertex):
+        self.vertices.remove(vertex)
+
+    def is_directed(self) -> bool:
+        return self.is_directed
+
+    def is_weighted(self) -> bool:
+        return self.is_weighted
+
+    def get_vertices(self) -> list[Vertex.Vertex]:
+        return self.vertices
+
+    def get_vertex_by_value(self, value: str):
+        for v in self.vertices:
+            if v.get_data() == value:
+                return v
+        return None
+
+    def print(self):
+        for v in self.vertices:
+            v.print(self.is_weighted)
+
+
+bus_network = graph(True, False)
+mathura: Vertex.Vertex = bus_network.add_vertex("Mathura")
+Agra: Vertex.Vertex = bus_network.add_vertex("Agra")
+bus_network.add_edge(mathura, Agra, 65)
+bus_network.print()
