@@ -1,87 +1,6 @@
 import threading
 from python_redis.models.service_ds.LinkedList import LinkedList, Node
-from python_redis.models.graph_config import Vertex, Edge
-
-# class Node:
-#     def __init__(self, vertex):
-#         self.vertex = vertex
-#         self.next = None
-
-#     def __str__(self):
-#         return f"{self.next} is the next node , {self.vertex}"
-
-
-class GraphMatrix:
-    def __init__(self, nodes):
-        self.lock = threading.RLock()
-        self.E = 0
-        self.v = nodes
-        self.stack: LinkedList = LinkedList()
-        self.queue: LinkedList = LinkedList()
-        self.adj_matrix = [[0 for j in range(nodes)] for i in range(nodes)]
-        self.map: dict = (
-            dict()
-        )  # it will map the name of the nodes to the integer index of arrays
-
-    def addEdgeMatrix(self, u: int, v: int):
-        with self.lock:
-            self.adj_matrix[u][v] = 1
-            self.adj_matrix[v][u] = 1
-            self.E += 1
-
-    def removeEdgeMatrix(self, u: int, v: int):
-        with self.lock:
-            self.adj_matrix[v][u] = 0
-            self.adj_matrix[u][v] = 0
-            self.E -= 1
-
-    def __str__(self):
-        with self.lock:
-            result = ""
-
-            for i in self.adj_matrix:
-                for j in i:
-                    result += f"{self.adj_matrix[i][j]} "
-                result += "\n"
-
-            return result
-
-    def dfs(self, root):
-        pass
-
-    @staticmethod
-    def new_graph():
-
-        return GraphMatrix()
-
-
-class GraphList:
-    def __init__(self, nodes):
-        self.adj_list: list[LinkedList] = list()
-        for i in range(nodes):
-            self.adj_list[i] = LinkedList()
-
-    def addEdgeList(self, u: int, v: int):
-        self.adj_list[u].add_tail(v)
-        self.adj_list[v].add_tail(u)
-
-    def __str__(self):
-        result: str = ""
-        for i in range(len(self.adj_list)):
-            ptr: Node = self.adj_list[i].head
-            result += f"{i} -> "
-            while ptr != None:
-                result += ptr.value
-                ptr = ptr.next
-            result += "\n"
-        return result
-
-    @staticmethod
-    def NewGraph():
-        return GraphList()
-
-
-"""this file have the code to store in graph format in cache"""
+from python_redis.models.graph_config import Vertex, Edge, dijkistra
 
 
 class graph:
@@ -90,10 +9,50 @@ class graph:
         self.is_directed: bool = is_directed
         self.is_weighted: bool = is_weighted
 
-    def add_vertex(self, data: str) -> Vertex:
+    def add_vertex(self, data: list) -> Vertex:
+        # TODO here the list of args needs to processed for to be inserted in to the graph
         new_vertex: Vertex.Vertex = Vertex.Vertex(data)
         self.vertices.append(new_vertex)
         return new_vertex
+
+    def remove_vertex(self, data: str):
+        targetVertex: Vertex
+        for v in self.vertices:
+            if v.get_data() == data:
+                targetVertex = v
+                self.remove_edge(v)
+                self.vertices.remove(v)
+            else:
+                for e in v.get_edges():
+                    if e.get_end() == targetVertex:
+                        v.remove_edge(e)
+
+    def breath_first_search(
+        self, start: Vertex.Vertex, visited_nodes: list[Vertex.Vertex]
+    ):
+
+        visited_queue: LinkedList = LinkedList()
+        visited_queue.add_last(start)
+        visited_queue.display()
+        while not visited_queue.is_empty():
+            current: Vertex.Vertex = visited_queue.remove_head()
+            print(current.get_data())
+
+            for e in current.get_edges():
+                neighbor: Vertex.Vertex = e.get_end()
+                if neighbor not in visited_nodes:
+                    visited_nodes.append(neighbor)
+                    visited_queue.add_last(neighbor)
+
+    def depth_first_search(
+        self, start: Vertex.Vertex, visitedNodes: list[Vertex.Vertex]
+    ):
+        print(start.get_data())
+        for e in start.get_edges():
+            neighbor: Vertex.Vertex = e.get_end()
+            if neighbor not in visitedNodes:
+                visitedNodes.append(neighbor)
+                self.depth_first_search(neighbor, visitedNodes)
 
     def add_edge(self, v1: Vertex.Vertex, v2: Vertex.Vertex, weight: int):
         if not self.is_weighted:
@@ -130,3 +89,33 @@ mathura: Vertex.Vertex = bus_network.add_vertex("Mathura")
 Agra: Vertex.Vertex = bus_network.add_vertex("Agra")
 bus_network.add_edge(mathura, Agra, 65)
 bus_network.print()
+print("bfs")
+bus_network.breath_first_search(mathura, list())
+print("dfs")
+bus_network.depth_first_search(Agra, list())
+
+testGraph: graph = graph(True, True)
+
+a = testGraph.add_vertex("a")
+b = testGraph.add_vertex("b")
+c = testGraph.add_vertex("c")
+
+d = testGraph.add_vertex("d")
+
+e = testGraph.add_vertex("e")
+f = testGraph.add_vertex("f")
+g = testGraph.add_vertex("g")
+testGraph.add_edge(a, b, 3)
+testGraph.add_edge(a, c, 100)
+testGraph.add_edge(a, d, 4)
+testGraph.add_edge(d, c, 3)
+testGraph.add_edge(d, e, 8)
+testGraph.add_edge(e, b, 2)
+testGraph.add_edge(a, f, 10)
+testGraph.add_edge(b, g, 10)
+testGraph.add_edge(e, g, 50)
+
+dij: dijkistra.dijkistra = dijkistra.dijkistra()
+dij.dijkistra_result_printer(dij.dijkistra_dicts(testGraph, a))
+dij.shortest_path_between(testGraph, a, f)
+# python -m python_redis.models.graph

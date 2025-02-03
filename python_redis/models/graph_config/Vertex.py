@@ -3,8 +3,8 @@ from python_redis.models.graph_config.Edge import Edge
 
 class Vertex:
 
-    def __init__(self, data: str):
-        self.data: str = data
+    def __init__(self, data: dict):
+        self.data: dict = data
         self.edges: list[Edge] = list()
 
     def add_edge(self, endVertex: "Vertex", weight: int):

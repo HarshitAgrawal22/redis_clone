@@ -45,6 +45,9 @@ class LinkedList:
         self.tail = temp
         return
 
+    def is_empty(self):
+        return self.head == None
+
     def remove_head(self) -> int:
         if self.head == None:
             print("Cant delete head its empty ")
