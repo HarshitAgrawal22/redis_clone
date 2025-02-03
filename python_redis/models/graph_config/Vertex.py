@@ -16,13 +16,13 @@ class Vertex:
             filter(lambda edge: not edge.get_end() == (end_edge), self.edges)
         )
 
-    def get_data(self):
+    def get_data(self) -> dict:
         return self.data
 
-    def get_edges(self):
+    def get_edges(self) -> list:
         return self.edges
 
-    def print(self, show_weight: bool):
+    def print(self, show_weight: bool) -> str:
         message: str = ""
         if len(self.edges) == 0:
             print(str(self.data) + " --> ")
@@ -35,4 +35,4 @@ class Vertex:
                 message += "(" + str(self.edges[i].get_weight()) + ")"
             if i != len(self.edges) - 1:
                 message += ","
-        print(message)
+        return message

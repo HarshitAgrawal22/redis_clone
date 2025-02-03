@@ -140,7 +140,7 @@ class TREE_TASKS:
     @staticmethod
     def task_set_key_command(msg, server):
         value = msg.conn_peer._tree.set_key(msg.cmd.key)
-        msg.conn_peer.send(f"{value}".encode("utf-8"))
+        msg.conn_peer.send(f"OK".encode("utf-8"))
 
     @staticmethod
     def task_get_key_command(msg, server):

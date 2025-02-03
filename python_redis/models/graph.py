@@ -8,17 +8,40 @@ class graph:
         self.vertices: list[Vertex.Vertex] = list()
         self.is_directed: bool = is_directed
         self.is_weighted: bool = is_weighted
+        self.key_name: str = None
+
+    @staticmethod
+    def new_graph():
+        return graph(True, True)
+
+    def check_key_name_none(self):
+        return self.key_name != None
+
+    def get_key_name(self):
+        return self.key_name
+
+    def set_key_name(self, key):
+        self.key_name = key
 
     def add_vertex(self, data: list) -> Vertex:
         # TODO here the list of args needs to processed for to be inserted in to the graph
-        new_vertex: Vertex.Vertex = Vertex.Vertex(data)
-        self.vertices.append(new_vertex)
-        return new_vertex
+        temp_dict = dict()
+        if (len(data)) % 2 == 0:
 
-    def remove_vertex(self, data: str):
+            for i in range(0, len(data), 2):
+                temp_dict[data[i]] = data[i + 1]
+        print(f"{temp_dict} => temp_dict")
+
+        if temp_dict.get(self.get_key()) != None:
+
+            new_vertex: Vertex.Vertex = Vertex.Vertex(data)
+            self.vertices.append(new_vertex)
+            return new_vertex
+
+    def remove_vertex(self, data: dict):
         targetVertex: Vertex
         for v in self.vertices:
-            if v.get_data() == data:
+            if v.get_data().get(self.get_key_name()) == data.get(self.get_key_name()):
                 targetVertex = v
                 self.remove_edge(v)
                 self.vertices.remove(v)
@@ -29,30 +52,39 @@ class graph:
 
     def breath_first_search(
         self, start: Vertex.Vertex, visited_nodes: list[Vertex.Vertex]
-    ):
-
+    ) -> str:
+        result = ""
         visited_queue: LinkedList = LinkedList()
         visited_queue.add_last(start)
         visited_queue.display()
         while not visited_queue.is_empty():
             current: Vertex.Vertex = visited_queue.remove_head()
-            print(current.get_data())
+            result += f"{current.get_data()}"
 
             for e in current.get_edges():
                 neighbor: Vertex.Vertex = e.get_end()
                 if neighbor not in visited_nodes:
                     visited_nodes.append(neighbor)
                     visited_queue.add_last(neighbor)
+        return result
 
     def depth_first_search(
         self, start: Vertex.Vertex, visitedNodes: list[Vertex.Vertex]
     ):
-        print(start.get_data())
-        for e in start.get_edges():
-            neighbor: Vertex.Vertex = e.get_end()
-            if neighbor not in visitedNodes:
-                visitedNodes.append(neighbor)
-                self.depth_first_search(neighbor, visitedNodes)
+        result = ""
+
+        def dfs(
+            start: Vertex.Vertex, visitedNodes: list[Vertex.Vertex], result: str
+        ) -> str:
+            result += f"{start.get_data()}"
+            for e in start.get_edges():
+                neighbor: Vertex.Vertex = e.get_end()
+                if neighbor not in visitedNodes:
+                    visitedNodes.append(neighbor)
+                    dfs(neighbor, visitedNodes)
+            return result
+
+        return dfs(start, visitedNodes, result)
 
     def add_edge(self, v1: Vertex.Vertex, v2: Vertex.Vertex, weight: int):
         if not self.is_weighted:
