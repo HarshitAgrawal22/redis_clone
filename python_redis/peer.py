@@ -31,8 +31,7 @@ class Peer:
         self._list: list = liststruc.List_Struc.new_list()
         self._stack: stacks.Stackstruc = stacks.Stackstruc.new_stack()
         self._sets: sets.Set = sets.Set.new_set()
-        self._Lgraph: graph.graph = graph.graph
-        # self._Mgraph: graph.GraphMatrix = graph.GraphMatrix.new_graph()
+        self._graph: graph.graph = graph.graph.new_graph()
 
     @staticmethod
     def newPeer(conn: socket.socket, msg_chan: Queue, del_chan: list["Peer"]) -> "Peer":

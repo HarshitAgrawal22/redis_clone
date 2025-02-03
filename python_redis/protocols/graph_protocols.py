@@ -21,16 +21,16 @@ COMMAND_GET_VERTEX_EDGE = "ggetved"
 
 
 class BFSCommand(Command):  #
-    def __init__(self):
-        print("got command to bfs")
+    def __init__(self, start):
+        self.start = start
 
     def __str__(self):
         return "got command for bfs"
 
 
 class DFSCommand(Command):  #
-    def __init__(self):
-        print("got command to dfs")
+    def __init__(self, start):
+        self.start = start
 
     def __str__(self):
         return "got command for dfs"
@@ -44,14 +44,14 @@ class AddVertexCommand(Command):  #
         return str(self.data)
 
 
-class AddEdgeCommand(Command):
+class AddEdgeCommand(Command):  #
     def __init__(self, v1, v2, weight):
         self.v1 = v1
         self.v2 = v2
         self.weight = weight
 
 
-class RemoveEdgeCommand(Command):
+class RemoveEdgeCommand(Command):  #
     def __init__(self, v1, v2):
         self.v1 = v1
         self.v2 = v2
@@ -62,12 +62,12 @@ class RemoveVertexCommand(Command):  #
         self.data = data
 
 
-class IsDirectedCommand(Command):
+class IsDirectedCommand(Command):  #
     def __init__(self):
         pass
 
 
-class IsWeightedCommand(Command):
+class IsWeightedCommand(Command):  #
     def __init__(self):
         pass
 
@@ -105,15 +105,15 @@ def execute_get_vertex_by_value_command(args):
 
 
 def execute_depth_first_search_command(args):
-    if len(args) != 0:
+    if len(args) != 1:
         raise ValueError("invalid no. args for pre order traversal command")
-    return DFSCommand()
+    return DFSCommand(args[0])
 
 
 def execute_breadth_first_search_command(args):
-    if len(args) != 0:
+    if len(args) != 1:
         raise ValueError("invalid no. args for post order traversal command")
-    return BFSCommand()
+    return BFSCommand(args[0])
 
 
 def execute_get_vertices_command(args):
@@ -135,15 +135,33 @@ def execute_remove_vertex_by_value_command(args):
 
 
 def execute_add_edge_command(args):
+    if len(args) != 2:
+        raise ValueError("invalid no. args for pop command")
+    return AddEdgeCommand(args)
+
+
+def execute_remove_edge_command(args):
+    if len(args) != 2:
+        raise ValueError("invalid no. args for pop command")
+    return RemoveEdgeCommand(args[0], args[1])
+
+
+def execute_get_edges_by_vertex_command(args):
     if len(args) != 1:
         raise ValueError("invalid no. args for pop command")
-    return SetKeyCommand(args)
+    return GetEdgesByVertexCommand(args[0])
 
 
-def execute_get_command(args):
+def execute_is_weighted_command(args):
     if len(args) != 0:
         raise ValueError("invalid no. args for pop command")
-    return GetKeyCommand()
+    return IsWeightedCommand()
+
+
+def execute_is_directed_command(args):
+    if len(args) != 0:
+        raise ValueError("invalid no. args for pop command")
+    return IsDirectedCommand()
 
 
 class GRAPH_TASKS:
@@ -153,41 +171,84 @@ class GRAPH_TASKS:
 
     @staticmethod
     def task_bfs_command(msg, server):
-        value = msg.conn_peer._list.rrange(msg.cmd.start, msg.cmd.end)
+        value = msg.conn_peer._graph.breadth_first_search(msg.cmd.start, list())
         msg.conn_peer.send(f"{value}".encode("utf-8"))
 
     @staticmethod
     def task_dfs_command(msg, server):
-        value = msg.conn_peer._list.lrange(msg.cmd.start, msg.cmd.end)
+        value = msg.conn_peer._graph.depth_first_search(msg.cmd.start, list())
         msg.conn_peer.send(f"{value}".encode("utf-8"))
 
     @staticmethod
     def task_add_vertex_command(msg, server):
         ic(msg.cmd.item)
-        msg.conn_peer.send("OK".encode("utf-8"))
-        return msg.conn_peer._list.rpush(msg.cmd.item)
+        vertex = msg.conn_peer._graph.add_vertex(msg.cmd.data)
+
+        (
+            msg.conn_peer.send("OK".encode("utf-8"))
+            if vertex != None
+            else msg.conn_peer.send("Task Not Done".encode("utf-8"))
+        )
 
     @staticmethod
     def task_remove_vertex_command(msg, server):
         ic(msg.cmd.item)
+        msg.conn_peer._graph.remove_vertex(msg.cmd.data)
         msg.conn_peer.send("OK".encode("utf-8"))
-        return msg.conn_peer._list.lpush(msg.cmd.item)
 
     @staticmethod
     def task_add_edge_command(msg, server):
 
-        msg.conn_peer.send(f"{ msg.conn_peer._list.lpull()}".encode("utf-8"))
+        msg.conn_peer.send(
+            f"{ msg.conn_peer._graph.add_edge(msg.cmd.v1,msg.cmd.v2,msg.cmd.weight )}".encode(
+                "utf-8"
+            )
+        )
 
     @staticmethod
     def task_remove_edge_command(msg, server):
+        try:
+            vertex = msg.conn_peer._graph.get_vertex_by_value(msg.cmd.v1)
+            vertex.remove_edge(msg.cmd.v2)
+            msg.conn_peer.send("OK".encode("utf-8"))
+        except Exception as e:
 
-        msg.conn_peer.send(f"{ msg.conn_peer._list.rpull()}".encode("utf-8"))
+            msg.conn_peer.send("invalid Vertex data".encode("utf-8"))
 
     @staticmethod
-    def task_search_vertex_by_value_command(msg, server):
+    def task_get_vertex_by_value_command(msg, server):
+        vertex = msg.conn_peer._graph.get_vertex_by_value(msg.cmd.data)
+        if vertex != None:
+
+            msg.conn_peer.send(f"{vertex.data}".encode("utf-8"))
+        else:
+            msg.conn_peer.send(f"vertex not found".encode("utf-8"))
+
+    @staticmethod
+    def task_is_directed_command(msg, server):
+
+        msg.conn_peer.send(f"{ msg.conn_peer._graph.is_directed()}".encode("utf-8"))
+
+    @staticmethod
+    def task_is_weighted_command(msg, server):
+
+        msg.conn_peer.send(f"{ msg.conn_peer._graph.is_weighted()}".encode("utf-8"))
+
+    @staticmethod
+    def task_display_command(msg, server):
+
+        msg.conn_peer.send(f"{msg.conn_peer._graph.print()}".encode("utf-8"))
+
+    @staticmethod
+    def task_get_vertices_command(msg, server):
+
+        msg.conn_peer.send(f"{msg.conn_peer._graph.get_vertices()}".encode("utf-8"))
+
+    @staticmethod
+    def task_get_edges_by_vertex_command(msg, server):
 
         msg.conn_peer.send(
-            f"{ msg.conn_peer._list.search_index(int(msg.cmd.index[0]))}".encode(
+            f"{msg.conn_peer._graph.get_vertex_by_value(msg.cmd.data).get_edges}".encode(
                 "utf-8"
             )
         )

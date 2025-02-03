@@ -11,10 +11,10 @@ class Edge:
         self.end: Vertex = endV  # to where the edge will be ending
         self.weight: int = inputWeight  # weight of the edge
 
-    def get_start(self) -> Vertex:
+    def get_start(self):
         return self.start
 
-    def get_end(self) -> Vertex:
+    def get_end(self):
         return self.end
 
     def get_weight(self) -> int:

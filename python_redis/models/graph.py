@@ -32,7 +32,7 @@ class graph:
                 temp_dict[data[i]] = data[i + 1]
         print(f"{temp_dict} => temp_dict")
 
-        if temp_dict.get(self.get_key()) != None:
+        if temp_dict.get(self.get_key_name()) != None:
 
             new_vertex: Vertex.Vertex = Vertex.Vertex(data)
             self.vertices.append(new_vertex)
@@ -50,7 +50,7 @@ class graph:
                     if e.get_end() == targetVertex:
                         v.remove_edge(e)
 
-    def breath_first_search(
+    def breadth_first_search(
         self, start: Vertex.Vertex, visited_nodes: list[Vertex.Vertex]
     ) -> str:
         result = ""
@@ -93,8 +93,8 @@ class graph:
         if not self.is_directed:
             v2.add_edge(v1, weight)
 
-    def remove_edge(self, vertex: Vertex.Vertex):
-        self.vertices.remove(vertex)
+    def remove_edge(self, v1: Vertex.Vertex, v2: Vertex.Vertex):
+        v1.remove_edge(v2)
 
     def is_directed(self) -> bool:
         return self.is_directed
@@ -116,38 +116,38 @@ class graph:
             v.print(self.is_weighted)
 
 
-bus_network = graph(True, False)
-mathura: Vertex.Vertex = bus_network.add_vertex("Mathura")
-Agra: Vertex.Vertex = bus_network.add_vertex("Agra")
-bus_network.add_edge(mathura, Agra, 65)
-bus_network.print()
-print("bfs")
-bus_network.breath_first_search(mathura, list())
-print("dfs")
-bus_network.depth_first_search(Agra, list())
+# bus_network = graph(True, False)
+# mathura: Vertex.Vertex = bus_network.add_vertex("Mathura")
+# Agra: Vertex.Vertex = bus_network.add_vertex("Agra")
+# bus_network.add_edge(mathura, Agra, 65)
+# bus_network.print()
+# print("bfs")
+# bus_network.breath_first_search(mathura, list())
+# print("dfs")
+# bus_network.depth_first_search(Agra, list())
 
-testGraph: graph = graph(True, True)
+# testGraph: graph = graph(True, True)
 
-a = testGraph.add_vertex("a")
-b = testGraph.add_vertex("b")
-c = testGraph.add_vertex("c")
+# a = testGraph.add_vertex("a")
+# b = testGraph.add_vertex("b")
+# c = testGraph.add_vertex("c")
 
-d = testGraph.add_vertex("d")
+# d = testGraph.add_vertex("d")
 
-e = testGraph.add_vertex("e")
-f = testGraph.add_vertex("f")
-g = testGraph.add_vertex("g")
-testGraph.add_edge(a, b, 3)
-testGraph.add_edge(a, c, 100)
-testGraph.add_edge(a, d, 4)
-testGraph.add_edge(d, c, 3)
-testGraph.add_edge(d, e, 8)
-testGraph.add_edge(e, b, 2)
-testGraph.add_edge(a, f, 10)
-testGraph.add_edge(b, g, 10)
-testGraph.add_edge(e, g, 50)
+# e = testGraph.add_vertex("e")
+# f = testGraph.add_vertex("f")
+# g = testGraph.add_vertex("g")
+# testGraph.add_edge(a, b, 3)
+# testGraph.add_edge(a, c, 100)
+# testGraph.add_edge(a, d, 4)
+# testGraph.add_edge(d, c, 3)
+# testGraph.add_edge(d, e, 8)
+# testGraph.add_edge(e, b, 2)
+# testGraph.add_edge(a, f, 10)
+# testGraph.add_edge(b, g, 10)
+# testGraph.add_edge(e, g, 50)
 
-dij: dijkistra.dijkistra = dijkistra.dijkistra()
-dij.dijkistra_result_printer(dij.dijkistra_dicts(testGraph, a))
-dij.shortest_path_between(testGraph, a, f)
-# python -m python_redis.models.graph
+# dij: dijkistra.dijkistra = dijkistra.dijkistra()
+# dij.dijkistra_result_printer(dij.dijkistra_dicts(testGraph, a))
+# dij.shortest_path_between(testGraph, a, f)
+# # python -m python_redis.models.graph
