@@ -101,7 +101,7 @@ class KV:
         return KV()
 
 
-# In Redis, you can indeed implement queues, and while binary trees are not directly supported as a native data structure, you can achieve tree-like functionality using sorted sets and other structures. Here’s a closer look at how queues and tree structures can be achieved in Redis:
+# In Redis, you can indeed implement queues, and while binary trees are not directly supported as a native data structure, you can achieve tree-like functionality using sorted sets and other structures. Here’s a closer loOK at how queues and tree structures can be achieved in Redis:
 
 # 1. Queues in Redis
 # Redis supports queues through its List data structure, which allows you to create both FIFO (First-In, First-Out) and LIFO (Last-In, First-Out) queues. The List commands provide efficient ways to add and remove items from both ends of a list, making it suitable for queue-like behavior.

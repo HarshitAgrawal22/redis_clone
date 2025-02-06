@@ -17,16 +17,16 @@ class Vertex:
         )
 
     def get_data(self) -> dict:
-        return self.data
+        return f"{self.data}"
 
     def get_edges(self) -> list:
-        return self.edges
+        return f'{self.data}-> {", ".join(map(str, self.edges))}'
 
     def print(self, show_weight: bool) -> str:
         message: str = ""
         if len(self.edges) == 0:
-            print(str(self.data) + " --> ")
-            return
+            message += str(self.data) + " --> \n"
+            return message
         for i in range(len(self.edges)):
             if i == 0:
                 message += str(self.edges[i].get_start().data) + " --> "
@@ -34,5 +34,8 @@ class Vertex:
             if show_weight:
                 message += "(" + str(self.edges[i].get_weight()) + ")"
             if i != len(self.edges) - 1:
-                message += ","
+                message += ",\n"
         return message
+
+    def __str__(self):
+        return f"{self.data}"

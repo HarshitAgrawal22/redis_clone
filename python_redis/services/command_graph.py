@@ -13,8 +13,12 @@ execute_task_graph = {
     graph_protocols.GetVertexCommand: graph_protocols.GRAPH_TASKS.task_get_vertex_by_value_command,
     graph_protocols.GetVerticesCommand: graph_protocols.GRAPH_TASKS.task_get_vertices_command,
     graph_protocols.GetEdgesByVertexCommand: graph_protocols.GRAPH_TASKS.task_get_edges_by_vertex_command,
+    graph_protocols.GetKeyCommand: graph_protocols.GRAPH_TASKS.task_get_key_command,
+    graph_protocols.SetKeyCommand: graph_protocols.GRAPH_TASKS.task_set_key_command,
 }
 execute_command_graph = {
+    graph_protocols.COMMAND_SET_KEY: graph_protocols.execute_set_key_command,
+    graph_protocols.COMMAND_GET_KEY: graph_protocols.execute_get_key_command,
     graph_protocols.COMMAND_BFS: graph_protocols.execute_breadth_first_search_command,
     graph_protocols.COMMAND_DFS: graph_protocols.execute_depth_first_search_command,
     graph_protocols.COMMAND_ADD_VERTEX: graph_protocols.execute_add_vertex_command,

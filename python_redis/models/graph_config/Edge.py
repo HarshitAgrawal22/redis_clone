@@ -19,3 +19,6 @@ class Edge:
 
     def get_weight(self) -> int:
         return self.weight
+
+    def __str__(self):
+        return f"end->{self.end}({self.weight})"

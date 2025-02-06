@@ -8,7 +8,7 @@ ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 COMMAND_INSERT = "tins"
 COMMAND_SET = "tset"
 COMMAND_GET = "tget"
-COMMAND_SEARCH = "tlook"
+COMMAND_SEARCH = "tloOK"
 COMMAND_DELETE = "tdel"
 COMMAND_PRE_ORDER = "tpre"
 COMMAND_POST_ORDER = "tpost"

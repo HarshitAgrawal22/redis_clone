@@ -18,9 +18,30 @@ COMMAND_SHOW = "gshow"
 COMMAND_GET_VERTEX_BY_VALUE = "ggetvv"
 COMMAND_GET_VERTICES = "ggetv"
 COMMAND_GET_VERTEX_EDGE = "ggetved"
+COMMAND_SET_KEY = "gsetk"
+COMMAND_GET_KEY = "ggetk"
+COMMAND_DIJKISTRA = "gdij"
 
 
-class BFSCommand(Command):  #
+class DijkistraCommand(Command):
+    def __init__(self, start):
+        self.start = start
+
+    def __str__(self):
+        return f"{self.start}"
+
+
+class SetKeyCommand(Command):  #
+    def __init__(self, key):
+        self.key = key
+
+
+class GetKeyCommand(Command):  #
+    def __init__(self):
+        print("Got command for getting key")
+
+
+class BFSCommand(Command):
     def __init__(self, start):
         self.start = start
 
@@ -28,7 +49,7 @@ class BFSCommand(Command):  #
         return "got command for bfs"
 
 
-class DFSCommand(Command):  #
+class DFSCommand(Command):
     def __init__(self, start):
         self.start = start
 
@@ -51,13 +72,13 @@ class AddEdgeCommand(Command):  #
         self.weight = weight
 
 
-class RemoveEdgeCommand(Command):  #
+class RemoveEdgeCommand(Command):
     def __init__(self, v1, v2):
         self.v1 = v1
         self.v2 = v2
 
 
-class RemoveVertexCommand(Command):  #
+class RemoveVertexCommand(Command):
     def __init__(self, data):
         self.data = data
 
@@ -87,9 +108,21 @@ class GetVerticesCommand(Command):  #
         pass
 
 
-class GetEdgesByVertexCommand(Command):
+class GetEdgesByVertexCommand(Command):  #
     def __init__(self, data):
         self.data = data
+
+
+def execute_set_key_command(args):
+    if len(args) != 1:
+        raise ValueError("not enough args")
+    return SetKeyCommand(args[0])
+
+
+def execute_get_key_command(args):
+    if len(args) != 0:
+        raise ValueError("not enough args")
+    return GetKeyCommand()
 
 
 def execute_add_vertex_command(args):
@@ -135,9 +168,9 @@ def execute_remove_vertex_by_value_command(args):
 
 
 def execute_add_edge_command(args):
-    if len(args) != 2:
-        raise ValueError("invalid no. args for pop command")
-    return AddEdgeCommand(args)
+    if len(args) != 3:
+        raise ValueError("invalid no. args for add edge command")
+    return AddEdgeCommand(*args)
 
 
 def execute_remove_edge_command(args):
@@ -170,6 +203,16 @@ class GRAPH_TASKS:
         print(self)
 
     @staticmethod
+    def task_set_key_command(msg, server):
+        value = msg.conn_peer._graph.set_key_name(msg.cmd.key)
+        msg.conn_peer.send(f"{value}".encode("utf-8"))
+
+    @staticmethod
+    def task_get_key_command(msg, server):
+        value = msg.conn_peer._graph.get_key_name()
+        msg.conn_peer.send(f"{value}".encode("utf-8"))
+
+    @staticmethod
     def task_bfs_command(msg, server):
         value = msg.conn_peer._graph.breadth_first_search(msg.cmd.start, list())
         msg.conn_peer.send(f"{value}".encode("utf-8"))
@@ -181,7 +224,7 @@ class GRAPH_TASKS:
 
     @staticmethod
     def task_add_vertex_command(msg, server):
-        ic(msg.cmd.item)
+
         vertex = msg.conn_peer._graph.add_vertex(msg.cmd.data)
 
         (
@@ -192,7 +235,7 @@ class GRAPH_TASKS:
 
     @staticmethod
     def task_remove_vertex_command(msg, server):
-        ic(msg.cmd.item)
+
         msg.conn_peer._graph.remove_vertex(msg.cmd.data)
         msg.conn_peer.send("OK".encode("utf-8"))
 
@@ -200,7 +243,7 @@ class GRAPH_TASKS:
     def task_add_edge_command(msg, server):
 
         msg.conn_peer.send(
-            f"{ msg.conn_peer._graph.add_edge(msg.cmd.v1,msg.cmd.v2,msg.cmd.weight )}".encode(
+            f"{msg.conn_peer._graph.add_edge(msg.cmd.v1, msg.cmd.v2, msg.cmd.weight)}".encode(
                 "utf-8"
             )
         )
@@ -227,12 +270,16 @@ class GRAPH_TASKS:
     @staticmethod
     def task_is_directed_command(msg, server):
 
-        msg.conn_peer.send(f"{ msg.conn_peer._graph.is_directed()}".encode("utf-8"))
+        msg.conn_peer.send(
+            f"{ msg.conn_peer._graph.is_directed_graph()}".encode("utf-8")
+        )
 
     @staticmethod
     def task_is_weighted_command(msg, server):
 
-        msg.conn_peer.send(f"{ msg.conn_peer._graph.is_weighted()}".encode("utf-8"))
+        msg.conn_peer.send(
+            f"{ msg.conn_peer._graph.is_weighted_graph()}".encode("utf-8")
+        )
 
     @staticmethod
     def task_display_command(msg, server):
@@ -248,7 +295,7 @@ class GRAPH_TASKS:
     def task_get_edges_by_vertex_command(msg, server):
 
         msg.conn_peer.send(
-            f"{msg.conn_peer._graph.get_vertex_by_value(msg.cmd.data).get_edges}".encode(
+            f"{msg.conn_peer._graph.get_vertex_by_value(msg.cmd.data).get_edges()}".encode(
                 "utf-8"
             )
         )

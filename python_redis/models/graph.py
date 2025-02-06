@@ -11,32 +11,38 @@ class graph:
         self.key_name: str = None
 
     @staticmethod
-    def new_graph():
+    def new_graph():  #
         return graph(True, True)
 
-    def check_key_name_none(self):
+    def check_key_name_none(self):  #
         return self.key_name != None
 
-    def get_key_name(self):
+    def get_key_name(self):  #
         return self.key_name
 
-    def set_key_name(self, key):
+    def set_key_name(self, key):  #
         self.key_name = key
+        return self.key_name
 
-    def add_vertex(self, data: list) -> Vertex:
-        # TODO here the list of args needs to processed for to be inserted in to the graph
-        temp_dict = dict()
-        if (len(data)) % 2 == 0:
+    def add_vertex(self, data: list) -> Vertex:  #
+        if self.check_key_name_none():
 
-            for i in range(0, len(data), 2):
-                temp_dict[data[i]] = data[i + 1]
-        print(f"{temp_dict} => temp_dict")
+            temp_dict = dict()
+            if (len(data)) % 2 == 0:
 
-        if temp_dict.get(self.get_key_name()) != None:
+                for i in range(0, len(data), 2):
+                    temp_dict[data[i]] = data[i + 1]
+            print(f"{temp_dict} => temp_dict")
 
-            new_vertex: Vertex.Vertex = Vertex.Vertex(data)
-            self.vertices.append(new_vertex)
-            return new_vertex
+            if temp_dict.get(self.get_key_name()) != None:
+                new_vertex: Vertex.Vertex = Vertex.Vertex(temp_dict)
+                self.vertices.append(new_vertex)
+                print("added to list")
+                return new_vertex
+            else:
+                return None
+        else:
+            return None
 
     def remove_vertex(self, data: dict):
         targetVertex: Vertex
@@ -51,11 +57,11 @@ class graph:
                         v.remove_edge(e)
 
     def breadth_first_search(
-        self, start: Vertex.Vertex, visited_nodes: list[Vertex.Vertex]
+        self, start: str, visited_nodes: list[Vertex.Vertex]
     ) -> str:
         result = ""
         visited_queue: LinkedList = LinkedList()
-        visited_queue.add_last(start)
+        visited_queue.add_last(self.get_vertex_by_value(start))
         visited_queue.display()
         while not visited_queue.is_empty():
             current: Vertex.Vertex = visited_queue.remove_head()
@@ -86,34 +92,47 @@ class graph:
 
         return dfs(start, visitedNodes, result)
 
-    def add_edge(self, v1: Vertex.Vertex, v2: Vertex.Vertex, weight: int):
+    def add_edge(self, v1_name: Vertex.Vertex, v2_name: Vertex.Vertex, weight: int):  #
+        v1, v2 = self.get_vertex_by_value(v1_name), self.get_vertex_by_value(v2_name)
+        if v1 == None:
+            return f"{v1_name} Node not found"
+
+        if v2 == None:
+            return f"{v2_name} Node not found"
+
         if not self.is_weighted:
             weight = 0
         v1.add_edge(v2, weight)
         if not self.is_directed:
             v2.add_edge(v1, weight)
+        return "OK"
 
     def remove_edge(self, v1: Vertex.Vertex, v2: Vertex.Vertex):
         v1.remove_edge(v2)
 
-    def is_directed(self) -> bool:
+    def is_directed_graph(self) -> bool:
         return self.is_directed
 
-    def is_weighted(self) -> bool:
+    def is_weighted_graph(self) -> bool:
         return self.is_weighted
 
     def get_vertices(self) -> list[Vertex.Vertex]:
-        return self.vertices
+        return "\n".join(map(str, self.vertices))
 
-    def get_vertex_by_value(self, value: str):
-        for v in self.vertices:
-            if v.get_data() == value:
-                return v
+    def get_vertex_by_value(self, value: str):  #
+        if self.check_key_name_none:
+
+            for v in self.vertices:
+                if v.get_data().get(self.get_key_name()) == value:
+                    return v
+            return None
         return None
 
-    def print(self):
+    def print(self):  #
+        result = ""
         for v in self.vertices:
-            v.print(self.is_weighted)
+            result += v.print(self.is_weighted) + "\n"
+        return result
 
 
 # bus_network = graph(True, False)

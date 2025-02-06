@@ -5,10 +5,11 @@ import python_redis.protocols.keyval_protocol as keyval_protocol
 
 from python_redis.common import execute_task_hash_map, Message
 from python_redis import peer
-from icecream import ic
 from queue import Queue
 from python_redis.client import client
 import python_redis.models.keyval as keyval
+
+from icecream import ic
 
 default_listen_address: str = ":5001"
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
@@ -150,6 +151,10 @@ def main() -> None:
     try:
         server_thread = threading.Thread(target=server.start)
         server_thread.start()
+        clint = client.Client("127.0.0.1:5001")
+        # clint.set("jah", "kol")
+        # ic(clint.get("name"))
+        ic(clint.insert_vertex_to_graph())
         # ic(server.start())
         # Using IceCream to print the return value of start()
         # time.sleep(1)

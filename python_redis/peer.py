@@ -160,13 +160,16 @@ class Peer:
         #         raise ValueError("Invalid number of arguments for SET command")
         #     key, value = args
         #     return SetCommand(key, value)
-        func = execute_command_hash_map.get(command_name.lower().strip())
-        print(func, "is the function we have got")
-        if func != None:
-            return func(args)
-        # If no command matches, return None or raise an error
-        else:
-            raise ValueError(f"Unknown command: {command_name}")
+        try:
+            func = execute_command_hash_map.get(command_name.lower().strip())
+            print(func, "is the function we have got")
+            if func != None:
+                return func(args)
+            # If no command matches, return None or raise an error
+            else:
+                raise ValueError(f"Unknown command: {command_name}")
+        except Exception as e:
+            ic(e)
 
     def read_loop(self):
         # buf_size = 1024
@@ -214,7 +217,7 @@ class Peer:
                     print(f"Message queued: {message}")
 
             except ConnectionResetError as e:
-                print("connection is broken from the client")
+                print("connection is brOKen from the client")
                 break
             except Exception as e:
                 print(f"Error in read_loop: {e}")
