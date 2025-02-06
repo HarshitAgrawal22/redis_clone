@@ -10,11 +10,25 @@ class Vertex:
     def add_edge(self, endVertex: "Vertex", weight: int):
         self.edges.append(Edge(self, endVertex, weight))
 
-    def remove_edge(self, end_vertex: Edge):  # testing is required
+    def remove_edge_by_vertex(self, end_vertex: "Vertex", key: str):
+        self.edges = list(
+            filter(
+                lambda edge: edge.get_end().get_data().get(key)
+                != end_vertex.get_data().get(key),
+                self.edges,
+            )
+        )
+
+    def remove_edge(self, end_edge: Edge, key: str):  # testing is required
 
         self.edges = list(
-            filter(lambda edge: not edge.get_end() == (end_vertex), self.edges)
+            filter(
+                lambda edge: edge.get_end().get_data().get(key)
+                != end_edge.get_end().get_data().get(key),
+                self.edges,
+            )
         )
+        return True
 
     def get_data(self) -> dict:
         return self.data

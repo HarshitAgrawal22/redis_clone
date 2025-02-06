@@ -69,6 +69,8 @@ class Client:
                 "name  samosa sec l",
                 "name mayank sec i",
                 "name billa sec a",
+                "name uday sec z",
+                "name hrishika sec op",
             ]
             self.conn.send("gsetk name".encode("utf-8"))
             for i in data_arr:
@@ -78,7 +80,7 @@ class Client:
                 threading.Event().wait(0.1)
                 response = self.conn.recv(1024)
                 ic(response.decode("utf-8"))
-            self.bfs()
+
             # return response
         except Exception as e:
             print(e)
@@ -87,10 +89,10 @@ class Client:
         threading.Event().wait(0.1)
         try:
 
-            self.conn.send("gbfs harshit".encode("utf-8"))
+            self.conn.send("gdfs harshit".encode("utf-8"))
             threading.Event().wait(0.5)
             response = self.conn.recv(1024)
-            ic(response.decode("utf-8"))
+            print(response.decode("utf-8"))
         except Exception as e:
             print(e)
 
@@ -99,11 +101,62 @@ class Client:
         try:
 
             self.conn.send("gshow".encode("utf-8"))
-            threading.Event().wait(0.5)
+            threading.Event().wait(1)
             response = self.conn.recv(1024)
             print(response.decode("utf-8"))
         except Exception as e:
             print(e)
+
+    def add_edges_to_graph(self):
+        threading.Event().wait(0.1)
+
+        try:
+            lists = [
+                "harshit",
+                "hrishika",
+                "tiwari",
+                "samosa",
+                "mayank",
+                "billa",
+                "uday",
+            ]
+            for i in range(5):
+                threading.Event().wait(1)
+                self.conn.send(
+                    f"gadde {lists[i]} {lists[len( lists)-i-1]} 12".encode("utf-8")
+                )
+                threading.Event().wait(1)
+                response = self.conn.recv(1024)
+                print(response.decode("utf-8"))
+            self.conn.send(f"gadde hrishika harshit 12".encode("utf-8"))
+            threading.Event().wait(1)
+            self.conn.send(f"gadde tiwari uday 12".encode("utf-8"))
+            threading.Event().wait(1)
+            self.conn.send(f"gadde uday mayank 12".encode("utf-8"))
+            threading.Event().wait(1)
+            self.conn.send(f"gadde hrishika tiwari 12".encode("utf-8"))
+        except Exception as e:
+            print(e)
+
+    def remove_vertex(self):
+        threading.Event().wait(0.1)
+
+        self.conn.send("gremv sher".encode("utf-8"))
+        threading.Event().wait(1)
+        response = self.conn.recv(1024)
+        print(response.decode("utf-8"))
+        threading.Event().wait(0.1)
+        self.conn.send("gremv mayank".encode("utf-8"))
+
+    def remove_edge(self):
+        threading.Event().wait(0.1)
+
+        self.conn.send("greme harshit uday".encode("utf-8"))
+        threading.Event().wait(1)
+        response = self.conn.recv(1024)
+        print(response.decode("utf-8"))
+        threading.Event().wait(0.1)
+        self.conn.send("greme mayank tiwari".encode("utf-8"))
 
 
 def new_client(addr: str):

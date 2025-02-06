@@ -201,7 +201,7 @@ class Peer:
                 if not raw_data:
                     # self.del_chan.append(self)
                     print("Connection closed.")
-                    # break
+                    break
                     # todo: add the break command to it
 
                 # Decode raw data to string for RESP parsing

@@ -155,9 +155,14 @@ def main() -> None:
         # clint.set("jah", "kol")
         # ic(clint.get("name"))
         ic(clint.insert_vertex_to_graph())
-        ic(clint.show_graph())
-        ic(clint.bfs())
-        threading.Event().wait(1)
+        clint.add_edges_to_graph()
+        # ic(clint.bfs())
+
+        clint.show_graph()
+        clint.remove_edge()
+        clint.show_graph()
+        # ic(clint.show_graph())
+        # threading.Event().wait(1)
 
         # ic(server.start())
         # Using IceCream to print the return value of start()

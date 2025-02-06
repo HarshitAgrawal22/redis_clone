@@ -45,16 +45,25 @@ class graph:
             return None
 
     def remove_vertex(self, data: dict):
-        targetVertex: Vertex
+        targetVertex: Vertex = self.get_vertex_by_value(data)
+        if targetVertex == None:
+            return False
         for v in self.vertices:
-            if v.get_data().get(self.get_key_name()) == data.get(self.get_key_name()):
-                targetVertex = v
-                self.remove_edge(v)
+
+            if v.get_data().get(self.get_key_name()) == data:
+
+                # self.remove_edge(v)
                 self.vertices.remove(v)
+
             else:
                 for e in v.get_edges():
-                    if e.get_end() == targetVertex:
-                        v.remove_edge(e)
+                    if e.get_end().get_data().get(
+                        self.get_key_name()
+                    ) == targetVertex.get_data().get(self.get_key_name()):
+
+                        v.remove_edge(e, self.get_key_name())
+
+        return True
 
     def breadth_first_search(
         self, start: str, visited_nodes: list[Vertex.Vertex]
@@ -66,7 +75,7 @@ class graph:
         while not visited_queue.is_empty():
             current: Vertex.Vertex = visited_queue.remove_head()
             print(result)
-            result += f"{current.get_data()}\n"
+            result += f"{current.get_data()}" + "\n"
 
             for e in current.get_edges():
                 neighbor: Vertex.Vertex = e.get_end()
@@ -84,12 +93,12 @@ class graph:
         def dfs(
             start: Vertex.Vertex, visitedNodes: list[Vertex.Vertex], result: str
         ) -> str:
-            result += f"{start.get_data()}"
+            result += f"{start.get_data()}\n"
             for e in start.get_edges():
                 neighbor: Vertex.Vertex = e.get_end()
                 if neighbor not in visitedNodes:
                     visitedNodes.append(neighbor)
-                    dfs(neighbor, visitedNodes)
+                    result = dfs(neighbor, visitedNodes, result)
             return result
 
         return dfs(start, visitedNodes, result)
@@ -109,8 +118,11 @@ class graph:
             v2.add_edge(v1, weight)
         return "OK"
 
-    def remove_edge(self, v1: Vertex.Vertex, v2: Vertex.Vertex):
-        v1.remove_edge(v2)
+    def remove_edge(self, v1_data: Vertex.Vertex, v2_data: Vertex.Vertex):
+        v1 = self.get_vertex_by_value(v1_data)
+        v2 = self.get_vertex_by_value(v2_data)
+        if v1 != None and v2 != None:
+            v1.remove_edge_by_vertex(v2, self.get_key_name())
 
     def is_directed_graph(self) -> bool:
         return self.is_directed

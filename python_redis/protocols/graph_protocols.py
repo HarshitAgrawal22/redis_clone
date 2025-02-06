@@ -41,7 +41,7 @@ class GetKeyCommand(Command):  #
         print("Got command for getting key")
 
 
-class BFSCommand(Command):
+class BFSCommand(Command):  #
     def __init__(self, start):
         self.start = start
 
@@ -49,7 +49,7 @@ class BFSCommand(Command):
         return "got command for bfs"
 
 
-class DFSCommand(Command):
+class DFSCommand(Command):  #
     def __init__(self, start):
         self.start = start
 
@@ -78,7 +78,7 @@ class RemoveEdgeCommand(Command):
         self.v2 = v2
 
 
-class RemoveVertexCommand(Command):
+class RemoveVertexCommand(Command):  #
     def __init__(self, data):
         self.data = data
 
@@ -237,8 +237,11 @@ class GRAPH_TASKS:
     @staticmethod
     def task_remove_vertex_command(msg, server):
 
-        msg.conn_peer._graph.remove_vertex(msg.cmd.data)
-        msg.conn_peer.send("OK".encode("utf-8"))
+        (
+            msg.conn_peer.send("OK".encode("utf-8"))
+            if msg.conn_peer._graph.remove_vertex(msg.cmd.data)
+            else msg.conn_peer.send("Task Not Done".encode("utf-8"))
+        )
 
     @staticmethod
     def task_add_edge_command(msg, server):
@@ -252,11 +255,11 @@ class GRAPH_TASKS:
     @staticmethod
     def task_remove_edge_command(msg, server):
         try:
-            vertex = msg.conn_peer._graph.get_vertex_by_value(msg.cmd.v1)
-            vertex.remove_edge(msg.cmd.v2)
+            msg.conn_peer._graph.remove_edge(msg.cmd.v1, msg.cmd.v2)
+
             msg.conn_peer.send("OK".encode("utf-8"))
         except Exception as e:
-
+            print(e)
             msg.conn_peer.send("invalid Vertex data".encode("utf-8"))
 
     @staticmethod
