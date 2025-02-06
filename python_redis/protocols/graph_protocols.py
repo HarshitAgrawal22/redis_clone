@@ -215,6 +215,7 @@ class GRAPH_TASKS:
     @staticmethod
     def task_bfs_command(msg, server):
         value = msg.conn_peer._graph.breadth_first_search(msg.cmd.start, list())
+        ic(value)
         msg.conn_peer.send(f"{value}".encode("utf-8"))
 
     @staticmethod

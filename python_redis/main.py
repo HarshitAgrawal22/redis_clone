@@ -155,6 +155,10 @@ def main() -> None:
         # clint.set("jah", "kol")
         # ic(clint.get("name"))
         ic(clint.insert_vertex_to_graph())
+        ic(clint.show_graph())
+        ic(clint.bfs())
+        threading.Event().wait(1)
+
         # ic(server.start())
         # Using IceCream to print the return value of start()
         # time.sleep(1)
@@ -164,7 +168,6 @@ def main() -> None:
         #     if err := client_server.set(key=f"pakoda_{i}", value=f"aloo_{i}"):
         #         print(f"error= > {err}")
         #     try:
-        #         threading.Event.wait(1)
         #         value = client_server.get(key=f"pakoda_{i}")
 
         #         print(f"received value => { value}")

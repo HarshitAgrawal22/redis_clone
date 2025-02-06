@@ -63,7 +63,13 @@ class Client:
 
     def insert_vertex_to_graph(self):
         try:
-            data_arr = ["name harshit sec k", "name tiwari sec j", "name  samosa sec l"]
+            data_arr = [
+                "name harshit sec k",
+                "name tiwari sec j",
+                "name  samosa sec l",
+                "name mayank sec i",
+                "name billa sec a",
+            ]
             self.conn.send("gsetk name".encode("utf-8"))
             for i in data_arr:
                 threading.Event().wait(0.1)
@@ -72,7 +78,30 @@ class Client:
                 threading.Event().wait(0.1)
                 response = self.conn.recv(1024)
                 ic(response.decode("utf-8"))
-            return response
+            self.bfs()
+            # return response
+        except Exception as e:
+            print(e)
+
+    def bfs(self):
+        threading.Event().wait(0.1)
+        try:
+
+            self.conn.send("gbfs harshit".encode("utf-8"))
+            threading.Event().wait(0.5)
+            response = self.conn.recv(1024)
+            ic(response.decode("utf-8"))
+        except Exception as e:
+            print(e)
+
+    def show_graph(self):
+        threading.Event().wait(0.1)
+        try:
+
+            self.conn.send("gshow".encode("utf-8"))
+            threading.Event().wait(0.5)
+            response = self.conn.recv(1024)
+            print(response.decode("utf-8"))
         except Exception as e:
             print(e)
 

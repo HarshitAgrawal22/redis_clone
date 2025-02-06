@@ -65,7 +65,8 @@ class graph:
         visited_queue.display()
         while not visited_queue.is_empty():
             current: Vertex.Vertex = visited_queue.remove_head()
-            result += f"{current.get_data()}"
+            print(result)
+            result += f"{current.get_data()}\n"
 
             for e in current.get_edges():
                 neighbor: Vertex.Vertex = e.get_end()
@@ -78,6 +79,7 @@ class graph:
         self, start: Vertex.Vertex, visitedNodes: list[Vertex.Vertex]
     ):
         result = ""
+        start = self.get_vertex_by_value(start)
 
         def dfs(
             start: Vertex.Vertex, visitedNodes: list[Vertex.Vertex], result: str

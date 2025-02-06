@@ -201,7 +201,8 @@ class Peer:
                 if not raw_data:
                     # self.del_chan.append(self)
                     print("Connection closed.")
-                    break
+                    # break
+                    # todo: add the break command to it
 
                 # Decode raw data to string for RESP parsing
                 raw_str = raw_data.decode("utf-8")
@@ -217,7 +218,7 @@ class Peer:
                     print(f"Message queued: {message}")
 
             except ConnectionResetError as e:
-                print("connection is brOKen from the client")
+                print("connection is broKen from the client")
                 break
             except Exception as e:
                 print(f"Error in read_loop: {e}")

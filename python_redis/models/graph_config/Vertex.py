@@ -17,9 +17,12 @@ class Vertex:
         )
 
     def get_data(self) -> dict:
-        return f"{self.data}"
+        return self.data
 
     def get_edges(self) -> list:
+        return self.edges
+
+    def get_edges_str(self) -> list:
         return f'{self.data}-> {", ".join(map(str, self.edges))}'
 
     def print(self, show_weight: bool) -> str:
