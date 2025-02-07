@@ -1,126 +1,235 @@
-implemented code guidelines to prevent malicious timies
-(multiple timmy(hacker)) to enter in my code
 
-# Redis Hash Operations
+# Getting Started
 
-1. [Set a Field-Value Pair](#1-set-a-field-value-pair)
-2. [Set Multiple Field-Value Pairs](#2-set-multiple-field-value-pairs)
-3. [Get the Value of a Field](#3-get-the-value-of-a-field)
-4. [Get Multiple Field Values](#4-get-multiple-field-values)
-5. [Get All Fields and Values](#5-get-all-fields-and-values)
-6. [Get All Fields](#6-get-all-fields)
-7. [Get All Values](#7-get-all-values)
-8. [Check if a Field Exists](#8-check-if-a-field-exists)
-9. [Delete a Field](#9-delete-a-field)
-10. [Get the Number of Fields](#10-get-the-number-of-fields)
-11. [Increment the Value of a Field (Integer)](#11-increment-the-value-of-a-field-integer)
-12. [Increment the Value of a Field (Float)](#12-increment-the-value-of-a-field-float)
-13. [Get the Length of a Field’s Value](#13-get-the-length-of-a-fields-value)
-14. [Scan Fields and Values in Large Hashes](#14-scan-fields-and-values-in-large-hashes)
+Start Server by 
+``` 
+ python -m python_redis.main
+```
+Access the Server by tcp connection 
+
+```
+telnet localhost  5001 
+```
+- the commands can be directly written on the tcp connection and the output will be  seen on the tcp terminal 
+## About
+
+This project is a clone of redis in memory database with a bit better algorithms fully implemented in python
+
+### Data-Structures
+
+* **HashMap**
+  * stores data in key value pair format  
+  * can store object data with all attributes
+  * key can be checked if exists or not
+  * have more features like len, incryby and hdel
+  
+### Redis HashMap Operations
+
+
+- [1. Set a Field-Value Pair]()
+- [2. Set Multiple Field-Value Pairs]()
+- [3. Get the Value of a Field]()
+- [3. Get Multiple Field Values]()
+- [4. Get lenth of value of key]()
+- [5. Delete a Field]()
+- [6.  Get the Number of Fields]()
+- [7. Set multiple attributes of a object]()- 
+    
 
 Redis hashes are used to store field-value pairs within a key, making them ideal for representing objects or collections of related attributes. Here are the primary operations you can perform on hashes in Redis:
 
-## 1. Set a Field-Value Pair
+#### 1. Set a Field-Value Pair
 
-- **Command**: `HSET key field value`
-- **Description**: Sets the specified `field` in the hash stored at `key` to `value`. If the field already exists, it updates the value; otherwise, it creates the field.
-- **Example**:
+* **Command**: `HSET key value`
+* **Description**: Sets the specified  `key` to `value`. If the field already exists, it updates the value; otherwise, it creates the field.
+* **Example**:
+
   ```redis
-  HSET user:1000 name "John Doe"
+  HSET name John
   ```
 
-2. Set Multiple Field-Value Pairs
-   Command: HMSET key field1 value1 field2 value2 ...
-   Description: Sets multiple field-value pairs in the hash stored at key.
-   Example:
-   redis
-   Copy code
-   HMSET user:1000 age 30 country "USA"
-3. Get the Value of a Field
-   Command: HGET key field
-   Description: Retrieves the value associated with the specified field in the hash stored at key.
-   Example:
-   redis
-   Copy code
-   HGET user:1000 name
-4. Get Multiple Field Values
-   Command: HMGET key field1 field2 ...
-   Description: Retrieves the values associated with the specified fields in the hash stored at key.
-   Example:
-   redis
-   Copy code
-   HMGET user:1000 name age
-5. Get All Fields and Values
-   Command: HGETALL key
-   Description: Retrieves all fields and values in the hash stored at key.
-   Example:
-   redis
-   Copy code
-   HGETALL user:1000
-6. Get All Fields
-   Command: HKEYS key
-   Description: Retrieves all field names in the hash stored at key.
-   Example:
-   redis
-   Copy code
-   HKEYS user:1000
-7. Get All Values
-   Command: HVALS key
-   Description: Retrieves all values in the hash stored at key.
-   Example:
-   redis
-   Copy code
-   HVALS user:1000
-8. Check if a Field Exists
-   Command: HEXISTS key field
-   Description: Checks if the specified field exists in the hash stored at key.
-   Example:
-   redis
-   Copy code
-   HEXISTS user:1000 age
-   Output: Returns 1 if the field exists, 0 otherwise.
-9. Delete a Field
-   Command: HDEL key field [field ...]
-   Description: Deletes one or more specified fields from the hash stored at key.
-   Example:
-   redis
-   Copy code
-   HDEL user:1000 age
+#### 2. Set Multiple Field-Value Pairs
+
+* **Command**: `HMSET field1 value1 field2 value2`
+* **Description**: Sets multiple field-value pairs in the hash stored at key.
+* **Example**:
+
+   ```redis
+   HMSET user harshit age 30 country USA
+   ```
+
+#### 3. Get the Value of a Field
+
+* **Command**: HGET key field
+* **Description**: Retrieves the value associated with the specified field in the hash stored at key.
+* **Example**:
+
+   ```redis
+   HGET name
+   ```
+
+#### 3. Get Multiple Field Values
+
+* **Command**: HMGET key field1 field2 ...
+* **Description**: Retrieves the values associated with the specified fields in the hash stored at key.
+* **Example**:
+  
+   ``` rediss
+   HGETATTR user name age 
+   ```
+
+#### 4. Get All Fields and Values
+
+* **Command**: HSETM key value key2 value2
+* **Description**: Retrieves all fields and values in the hash stored at key.
+* **Example**:
+   ``` redis
+   HSETM name harshit age 20
+   ```
+
+#### 5. Delete a Field
+
+* **Command**: HDEL key 
+* **Description**: Deletes one or more specified fields from the hash stored at key.
+* **Example**:
+  ```   redis
+   HDEL age
+   ```
    Output: Returns the number of fields removed.
-10. Get the Number of Fields
-    Command: HLEN key
-    Description: Returns the number of fields in the hash stored at key.
-    Example:
-    redis
-    Copy code
-    HLEN user:1000
-11. Increment the Value of a Field (Integer)
-    Command: HINCRBY key field increment
-    Description: Increments the integer value of field by the specified increment. Useful for counters and numeric fields.
-    Example:
-    redis
-    Copy code
-    HINCRBY user:1000 age 1
-12. Increment the Value of a Field (Float)
-    Command: HINCRBYFLOAT key field increment
-    Description: Increments the floating-point value of field by the specified increment.
-    Example:
-    redis
-    Copy code
-    HINCRBYFLOAT user:1000 score 0.5
-13. Get the Length of a Field’s Value
-    Command: HSTRLEN key field
-    Description: Returns the length of the value associated with the specified field in bytes (useful for string fields).
-    Example:
-    redis
-    Copy code
-    HSTRLEN user:1000 name
-14. Scan Fields and Values in Large Hashes
-    Command: HSCAN key cursor [MATCH pattern] [COUNT count]
-    Description: Iterates over the fields in the hash, useful for handling large hashes without blocking the server. The command returns a new cursor and a subset of fields based on the specified pattern and count.
-    Example:
-    redis
-    Copy code
-    HSCAN user:1000 0 MATCH _name_ COUNT 10
+
+#### 6.  Get the Number of Fields
+
+* **Command**: HLEN key
+* **Description**: Returns the number of fields in the hash stored at key.
+* **Example**:
+  ```    redis
+    HLEN user
+    ```
+
+#### 7. Increment the Value of a Field (Integer)
+
+* **Command**: HINCRBY key field increment
+* **Description**: Increments the integer value of field by the specified increment. Useful for counters and numeric fields.
+* **Example**:
+   ``` redis
+    HINCRBY user age 1
+   ```
+
+
     Summary
     Redis hashes are versatile and efficient for storing and accessing related fields, making them ideal for representing objects and managing small datasets. These commands provide robust functionality for CRUD operations and manipulation within hash data structures in Redis.
+
+* **Graph**
+  * stores data in a graph with vertex and edges  
+  * graph is directed and weighted 
+  * have more features like bfs, dfs and dijkistra 
+  * data in each node is stored in dictionary format
+  
+### Redis Graph Operations
+
+- [1. Add vertex to graph]()
+- [2. Add edge to graph]()
+- [3. Get vertex by value]()
+- [3. Remove a vertex by value]()
+- [4. Remove edge by vertex values]()
+- [5. Get shortest distance between vertices by dijkista]()
+- [6. Display graph]()
+- [7. Get distance dict]()
+- [8. Get previous dict]()
+- [9. Get bfs of graph]()
+- [10. Get dfs of graph]()
+- [11. Get all edges of vertex]()
+- [12. Get set-key]() 
+   
+
+Redis hashes are used to store field-value pairs within a key, making them ideal for representing objects or collections of related attributes. Here are the primary operations you can perform on hashes in Redis:
+
+#### 1. Beadth First Search 
+
+* **Command**: `gbfs start-vertex`
+* **Description**: Will start to traverse the graph in bfs format starting from given vertex 
+* **Example**:
+
+  ```redis
+  gbfs start-vertex
+  ```
+
+#### 2.Depth First Search 
+
+
+* **Command**: `gdfs starting-vertex`
+* **Description**: Will start to traverse the graph in dfs format starting from given vertex 
+* **Example**:
+
+   ```redis
+   gdfs starting-vertex
+   ```
+
+#### 3. Get the Vertex by value
+
+* **Command**: ggetvv harshit
+* **Description**: Retrieves the vertex by the value
+* **Example**:
+
+   ```redis
+   ggetvv harshit
+   ```
+
+#### 3. Add Vertex to Graph
+
+* **Command**: gaddv name harshit age 20 sec k 
+* **Description**: Will add a new vertex to graph with this key-val pairs stored in a dictionary within the node
+* **Example**:
+  
+   ``` rediss
+   HGETATTR user name age 
+   ```
+
+#### 4.Add Edge to Graph
+
+* **Command**: gadde harshit tiwari 12
+* **Description**: Will add a edge between the nodes harshit and tiwari where harshit and tiwari are keys of nodes adn 12 is weight
+* **Example**:
+   ``` redis
+   gadde harshit tiwari 12
+   ```
+
+#### 5. Delete a Vertex
+
+* **Command**: gremv key
+* **Description**: will delete the vertex with given key
+* **Example**:
+  ```   redis
+   gremv harshit
+   ```
+   Output: Returns the number of fields removed.
+
+#### 6.  Remove a Edge between two Vertices
+
+* **Command**: greme v1 v2
+* **Description**: Will remove the edge between the two given nodes
+* **Example**:
+  ```    redis
+    greme harshit samosa
+    ```
+
+#### 7. Get shortest disance between two Vertices
+
+* **Command**: gdijdis v1
+* **Description**: will tell the shortest path length from given vertex to all other vertices
+* **Example**:
+   ``` redis
+    gdijdis harshit tiwari
+   ```
+#### 8. Get shortest path between two Vertices
+
+* **Command**: gdijpa v1 v2
+* **Description**: will give shortest path and shortest dstance between both vertices
+* **Example**:
+   ``` redis
+    gdispa samosa tiwari
+   ```
+
+
+    # Summary
+    Redis is versatile and efficient for storing and accessing related fields, making them ideal for representing objects and managing small datasets. These commands provide robust functionality for CRUD operations and manipulation within hash data structures in Redis.
