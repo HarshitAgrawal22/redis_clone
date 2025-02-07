@@ -235,19 +235,6 @@ Redis hashes are used to store field-value pairs within a key, making them ideal
   
 ### Redis Binary Search Tree Operations
 
-- [1. Add vertex to graph]()
-- [2. Add edge to graph]()
-- [3. Get vertex by value]()
-- [3. Remove a vertex by value]()
-- [4. Remove edge by vertex values]()
-- [5. Get shortest distance between vertices by dijkista]()
-- [6. Display graph]()
-- [7. Get distance dict]()
-- [8. Get previous dict]()
-- [9. Get bfs of graph]()
-- [10. Get dfs of graph]()
-- [11. Get all edges of vertex]()
-- [12. Get set-key]() 
    
 
 Redis hashes are used to store field-value pairs within a key, making them ideal for representing objects or collections of related attributes. Here are the primary operations you can perform on hashes in Redis:
