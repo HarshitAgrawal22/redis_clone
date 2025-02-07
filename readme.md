@@ -15,9 +15,9 @@ telnet localhost  5001
 
 This project is a clone of redis in memory database with a bit better algorithms fully implemented in python
 
-### Data-Structures
+## Data-Structures
 
-* **HashMap**
+### HashMap
   * stores data in key value pair format  
   * can store object data with all attributes
   * key can be checked if exists or not
@@ -95,7 +95,7 @@ Redis hashes are used to store field-value pairs within a key, making them ideal
   ```   redis
    HDEL age
    ```
-   Output: Returns the number of fields removed.
+  
 
 #### 6.  Get the Number of Fields
 
@@ -116,10 +116,7 @@ Redis hashes are used to store field-value pairs within a key, making them ideal
    ```
 
 
-    Summary
-    Redis hashes are versatile and efficient for storing and accessing related fields, making them ideal for representing objects and managing small datasets. These commands provide robust functionality for CRUD operations and manipulation within hash data structures in Redis.
-
-* **Graph**
+## Graph
   * stores data in a graph with vertex and edges  
   * graph is directed and weighted 
   * have more features like bfs, dfs and dijkistra 
@@ -182,10 +179,10 @@ Redis hashes are used to store field-value pairs within a key, making them ideal
 * **Example**:
   
    ``` rediss
-   HGETATTR user name age 
+   gaddv name harshit age 20 sec k 
    ```
 
-#### 4.Add Edge to Graph
+#### 4. Add Edge to Graph
 
 * **Command**: gadde harshit tiwari 12
 * **Description**: Will add a edge between the nodes harshit and tiwari where harshit and tiwari are keys of nodes adn 12 is weight
@@ -202,7 +199,7 @@ Redis hashes are used to store field-value pairs within a key, making them ideal
   ```   redis
    gremv harshit
    ```
-   Output: Returns the number of fields removed.
+   
 
 #### 6.  Remove a Edge between two Vertices
 
@@ -230,6 +227,99 @@ Redis hashes are used to store field-value pairs within a key, making them ideal
     gdispa samosa tiwari
    ```
 
+### Binary Search Tree
+  * stores data in a graph with vertex and edges  
+  * graph is directed and weighted 
+  * have more features like bfs, dfs and dijkistra 
+  * data in each node is stored in dictionary format
+  
+### Redis Binary Search Tree Operations
+
+- [1. Add vertex to graph]()
+- [2. Add edge to graph]()
+- [3. Get vertex by value]()
+- [3. Remove a vertex by value]()
+- [4. Remove edge by vertex values]()
+- [5. Get shortest distance between vertices by dijkista]()
+- [6. Display graph]()
+- [7. Get distance dict]()
+- [8. Get previous dict]()
+- [9. Get bfs of graph]()
+- [10. Get dfs of graph]()
+- [11. Get all edges of vertex]()
+- [12. Get set-key]() 
+   
+
+Redis hashes are used to store field-value pairs within a key, making them ideal for representing objects or collections of related attributes. Here are the primary operations you can perform on hashes in Redis:
+
+#### 1. Insert Node
+
+* **Command**: `tins key1 value1 key2 value2`
+* **Description**: Will add create a new node and add that to tree with name as main key
+* **Example**:
+
+  ```redis
+   tins name harshit sec k age 19  
+  ```
+
+#### 2 Set Key
+
+
+* **Command**: `tset key`
+* **Description**: will set tree key, according to this key the tree operations will be done 
+* **Example**:
+
+   ```redis
+   tset name
+   ```
+
+#### 3. Delete Key
+
+* **Command**: tdel key
+* **Description**: will search and delete the node with given key
+* **Example**:
+
+   ```redis
+   tdel samosa
+   ```
+
+#### 3. Pre-Traversal 
+
+* **Command**: tpre
+* **Description**:will return the pre trevarsal of tree
+* **Example**:
+  
+   ``` rediss
+   tpre
+   ```
+
+#### Post-traversal
+
+* **Command**: tpost
+* **Description**: Will return the post order traversal of tree
+* **Example**:
+   ``` redis
+   tpost
+   ```
+
+#### 5. In Order Traversal
+
+* **Command**:tin
+* **Description**: will return the inorder traversal of tree
+* **Example**:
+  ```   redis
+   tin
+   ```
+   
+
+#### 6. Display Tree
+
+* **Command**: tshow
+* **Description**: Will display the whole tree on tcp connection
+* **Example**:
+  ```    redis
+    tshow
+    ```
 
     # Summary
     Redis is versatile and efficient for storing and accessing related fields, making them ideal for representing objects and managing small datasets. These commands provide robust functionality for CRUD operations and manipulation within hash data structures in Redis.
