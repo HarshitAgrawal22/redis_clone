@@ -37,12 +37,12 @@ class graph:
 
                 for i in range(0, len(data), 2):
                     temp_dict[data[i]] = data[i + 1]
-            print(f"{temp_dict} => temp_dict")
+            # print(f"{temp_dict} => temp_dict")
 
             if temp_dict.get(self.get_key_name()) != None:
                 new_vertex: Vertex.Vertex = Vertex.Vertex(temp_dict)
                 self.vertices.append(new_vertex)
-                print("added to list")
+                # print("added to list")
                 return new_vertex
             else:
                 return None
@@ -79,7 +79,7 @@ class graph:
         visited_queue.display()
         while not visited_queue.is_empty():
             current: Vertex.Vertex = visited_queue.remove_head()
-            print(result)
+            s
             result += f"{current.get_data()}" + "\n"
 
             for e in current.get_edges():
@@ -170,8 +170,18 @@ class graph:
         if starting_vertex == None:
             return -1
         return self.dij.dijkistra_prev_dict(
-            self.dij.dijkistra_dicts(self, starting_vertex, self.get_key_name())
+            self.dij.dijkistra_dicts(self, starting_vertex, self.get_key_name()),
+            self.get_key_name(),
         )
+
+    def dijkistra_shortest_distance(self, v1_key: str, v2_key: str):
+        v1 = self.get_vertex_by_value(v1_key)
+        v2 = self.get_vertex_by_value(v2_key)
+        if v1 != None and v2 != None:
+
+            return self.dij.shortest_path_between(self, v1, v2, self.get_key_name())
+        else:
+            return -1
 
 
 # bus_network = graph(True, False)

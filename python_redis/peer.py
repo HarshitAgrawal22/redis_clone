@@ -41,7 +41,7 @@ class Peer:
         """Parses the raw RESP command bytes and returns a Command object if valid."""
 
         # Decode raw bytes to string without removing any characters
-        print(f"raw command => {raw} {type(raw)} ")
+        # print(f"raw command => {raw} {type(raw)} ")
         arr_len = len(holder_arr := raw.split())
         raw = f"*{arr_len}\r\n"
         for i in holder_arr:
@@ -49,10 +49,10 @@ class Peer:
             raw += f"${len(i)}\r\n{temp_str}"
             raw += "\r\n"
         raw = raw.encode("utf-8")
-        print(raw)
-        ic(raw)
+        # print(raw)
+        # ic(raw)
         raw = raw.decode("utf-8")
-        print("Decoded Command:", repr(raw))  # Debugging line
+        # print("Decoded Command:", repr(raw))  # Debugging line
 
         # Regular expressions for RESP patterns
         array_pattern = r"\*([0-9]+)\r\n"
@@ -67,7 +67,7 @@ class Peer:
         items = re.findall(bulk_string_pattern, raw)
 
         # Debugging output for items parsed
-        print(f"Found items: {items}")
+        # print(f"Found items: {items}")
 
         # Validate RESP format
         if len(items) != expected_items:
@@ -162,14 +162,14 @@ class Peer:
         #     return SetCommand(key, value)
         try:
             func = execute_command_hash_map.get(command_name.lower().strip())
-            print(func, "is the function we have got")
+            # print(func, "is the function we have got")
             if func != None:
                 return func(args)
             # If no command matches, return None or raise an error
             else:
                 raise ValueError(f"Unknown command: {command_name}")
         except Exception as e:
-            ic(e)
+            print(e)
 
     def read_loop(self):
         # buf_size = 1024
@@ -206,7 +206,7 @@ class Peer:
 
                 # Decode raw data to string for RESP parsing
                 raw_str = raw_data.decode("utf-8")
-                print("Decoded Command:", repr(raw_str))  # Debugging line
+                # print("Decoded Command:", repr(raw_str))
                 raw_str = raw_str.strip()
                 # Parse the command
                 command = self.parse_command(raw_str)
@@ -215,7 +215,7 @@ class Peer:
                 if command:
                     message = Message(cmd=command, conn_peer=self)
                     self.msg_chan.put(message)
-                    print(f"Message queued: {message}")
+                    # print(f"Message queued: {message}")
 
             except ConnectionResetError as e:
                 print("connection is broKen from the client")

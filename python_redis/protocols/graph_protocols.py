@@ -22,6 +22,16 @@ COMMAND_SET_KEY = "gsetk"
 COMMAND_GET_KEY = "ggetk"
 COMMAND_DIJKISTRA_DIST_DICT = "gdijdis"
 COMMAND_DIJKISTRA_PREV_DICT = "gdijprev"
+COMMAND_DIJKISTRA_SHORTEST_PATH = "gdijpa"
+
+
+class DijkistraShortestPathCommand(Command):
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+
+    def __str__(self):
+        return f"{self.start}"
 
 
 class DijkistraPrevDictionaryCommand(Command):
@@ -122,10 +132,22 @@ class GetEdgesByVertexCommand(Command):  #
         self.data = data
 
 
-def execute_dij_dicts_command(args):
+def execute_dij_shortest_path_command(args):
+    if len(args) != 2:
+        raise ValueError("wrong no. of args")
+    return DijkistraShortestPathCommand(*args)
+
+
+def execute_dij_dist_dict_command(args):
     if len(args) != 1:
         raise ValueError("wrong no. of args")
-    return DijkistraDictionaryCommand(args[0])
+    return DijkistraDistDictionaryCommand(args[0])
+
+
+def execute_dij_prev_dict_command(args):
+    if len(args) != 1:
+        raise ValueError("wrong no. of args")
+    return DijkistraPrevDictionaryCommand(args[0])
 
 
 def execute_set_key_command(args):
@@ -331,4 +353,13 @@ class GRAPH_TASKS:
 
         msg.conn_peer.send(
             f"{msg.conn_peer._graph.dijkistra_distance(msg.cmd.start)}".encode("utf-8")
+        )
+
+    @staticmethod
+    def task_dijkistra_shortest_path_command(msg, server):
+
+        msg.conn_peer.send(
+            f"{msg.conn_peer._graph.dijkistra_shortest_distance(msg.cmd.start,msg.cmd.end )}".encode(
+                "utf-8"
+            )
         )

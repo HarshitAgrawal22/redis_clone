@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING
 from queue import PriorityQueue
 from python_redis.models.graph_config.Vertex import Vertex
+from python_redis.models.service_ds.LinkedList import LinkedList
 from icecream import ic
 
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
@@ -49,10 +50,6 @@ class dijkistra:
             current: Vertex = queue.get().vertex
 
             for e in current.get_edges():
-                ic(dist_dict.get(current.get_data()[key]))
-                ic(type(dist_dict.get(current.get_data()[key])))
-                ic(e.get_weight())
-                ic(type(e.get_weight()))
 
                 alternative: int = (
                     dist_dict.get(current.get_data()[key]) + e.get_weight()
@@ -74,32 +71,52 @@ class dijkistra:
             result += f"{key}: {value if value !=9223372036854775807 else '∞'}\n"
         return result
 
-    def dijkistra_prev_dict(self, d: list[dict]):
+    def dijkistra_prev_dict(self, d: list[dict], key: str):
         result = "previous\n"
         for key, value in d[1].items():
             result += f"{key}: {value.get_data()}\n"
         return result
 
-    def shortest_path_between(self, g, starting_vertex: Vertex, target_vertex: Vertex):
+    def shortest_path_between(
+        self, g, starting_vertex: Vertex, target_vertex: Vertex, key: str
+    ):
         dijkistra_dictionaries: list[dict] = self.dijkistra_dicts(
-            g=g, starting_vertex=starting_vertex
+            g, starting_vertex, key
         )
         dist_dict: dict = dijkistra_dictionaries[0]
         prev_dict: dict[str, Vertex] = dijkistra_dictionaries[1]
-        distance = int(dist_dict.get(target_vertex.get_data()))
-        print(
-            "Shortest Distance Between "
-            + str(starting_vertex.get_data() + " and " + str(target_vertex.get_data()))
-        )
-        print(distance)
+        distance = int(dist_dict.get(target_vertex.get_data().get(key)))
+        # print(dist_dict)
+        # print(prev_dict)
 
-        path: list = list()
+        path: LinkedList = LinkedList()
         v: Vertex = target_vertex
 
         while v.get_data() != "null":
-            path.append(v)
-            v = prev_dict.get(v.get_data())
+            # ic(v.get_data())
+            # ic(type(v.get_data()))
+            path.add_head(v)
+
+            v = prev_dict.get(v.get_data().get(key))
 
         print("Shortest path:")
-        for pathVertex in path:
-            print(pathVertex.get_data())
+        result = ""
+        # result += (
+        #     "Shortest Distance Between "
+        #     + str(starting_vertex.get_data())
+        #     + " and "
+        #     + str(target_vertex.get_data())
+        #     + "\n"
+        # )
+        result += str(distance) + "\n"
+
+        while not path.is_empty():
+            if path.head.next != None:
+                result += str(path.remove_head().get_data().get(key)) + "-->"
+            else:
+                result += str(path.remove_head().get_data().get(key))
+
+        return result
+        # for pathVertex in path:
+        #     result += str(pathVertex.get_data().get(key)) + "<--"
+        # return reversed(result)

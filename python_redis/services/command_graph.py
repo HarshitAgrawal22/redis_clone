@@ -15,7 +15,9 @@ execute_task_graph = {
     graph_protocols.GetEdgesByVertexCommand: graph_protocols.GRAPH_TASKS.task_get_edges_by_vertex_command,
     graph_protocols.GetKeyCommand: graph_protocols.GRAPH_TASKS.task_get_key_command,
     graph_protocols.SetKeyCommand: graph_protocols.GRAPH_TASKS.task_set_key_command,
-    graph_protocols.DijkistraPrevDictionaryCommand: graph_protocols.GRAPH_TASKS.task_dijkistra_dist_dict_command,
+    graph_protocols.DijkistraDistDictionaryCommand: graph_protocols.GRAPH_TASKS.task_dijkistra_dist_dict_command,
+    graph_protocols.DijkistraPrevDictionaryCommand: graph_protocols.GRAPH_TASKS.task_dijkistra_prev_dict_command,
+    graph_protocols.DijkistraShortestPathCommand: graph_protocols.GRAPH_TASKS.task_dijkistra_shortest_path_command,
 }
 execute_command_graph = {
     graph_protocols.COMMAND_SET_KEY: graph_protocols.execute_set_key_command,
@@ -32,5 +34,7 @@ execute_command_graph = {
     graph_protocols.COMMAND_GET_VERTEX_BY_VALUE: graph_protocols.execute_get_vertex_by_value_command,
     graph_protocols.COMMAND_GET_VERTICES: graph_protocols.execute_get_vertices_command,
     graph_protocols.COMMAND_GET_VERTEX_EDGE: graph_protocols.execute_get_edges_by_vertex_command,
-    graph_protocols.COMMAND_DIJKISTRA_DICTS: graph_protocols.execute_dij_dicts_command,
+    graph_protocols.COMMAND_DIJKISTRA_DIST_DICT: graph_protocols.execute_dij_dist_dict_command,
+    graph_protocols.COMMAND_DIJKISTRA_PREV_DICT: graph_protocols.execute_dij_prev_dict_command,
+    graph_protocols.COMMAND_DIJKISTRA_SHORTEST_PATH: graph_protocols.execute_dij_shortest_path_command,
 }

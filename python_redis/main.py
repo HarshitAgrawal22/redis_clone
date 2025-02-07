@@ -72,7 +72,7 @@ class Server:
         func = execute_task_hash_map.get(type(msg.cmd))
         if func != None:
             data = func(msg, self)
-            ic(f"{data} is the data we got in return ")
+            # ic(f"{data} is the data we got in return ")
         else:
             print("Command not")
 
@@ -154,13 +154,14 @@ def main() -> None:
         clint = client.Client("127.0.0.1:5001")
         # clint.set("jah", "kol")
         # ic(clint.get("name"))
-        ic(clint.insert_vertex_to_graph())
+        (clint.insert_vertex_to_graph())
         clint.add_edges_to_graph()
         # ic(clint.bfs())
-        clint.dij()
-        # clint.show_graph()
-        # clint.remove_edge()
+        clint.dij_dis()
         clint.show_graph()
+        # clint.remove_edge()
+        # clint.show_graph()
+        # clint.dij_shortest_path()
         # ic(clint.show_graph())
         # threading.Event().wait(1)
 

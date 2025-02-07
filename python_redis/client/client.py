@@ -79,7 +79,7 @@ class Client:
                 self.conn.send(enc_mess)
                 threading.Event().wait(0.1)
                 response = self.conn.recv(1024)
-                ic(response.decode("utf-8"))
+                # ic(response.decode("utf-8"))
 
             # return response
         except Exception as e:
@@ -158,14 +158,26 @@ class Client:
         threading.Event().wait(0.1)
         self.conn.send("greme mayank tiwari".encode("utf-8"))
 
-    def dij(self):
+    def dij_dis(self):
         threading.Event().wait(0.1)
-        self.conn.send("gdij harshit".encode("utf-8"))
+        self.conn.send("gdijdis harshit".encode("utf-8"))
         threading.Event().wait(1)
         response = self.conn.recv(1024)
         print(response.decode("utf-8"))
         threading.Event().wait(0.1)
-        self.conn.send("greme mayank tiwari".encode("utf-8"))
+        threading.Event().wait(0.1)
+        self.conn.send("gdijprev harshit".encode("utf-8"))
+        # self.conn.send("greme mayank tiwari".encode("utf-8"))
+
+    def dij_shortest_path(self):
+        threading.Event().wait(0.1)
+
+        self.conn.send("gdijpa harshit tiwari".encode("utf-8"))
+        threading.Event().wait(1)
+        response = self.conn.recv(1024)
+        print(response.decode("utf-8"))
+        threading.Event().wait(0.1)
+        # self.conn.send("greme mayank tiwari".encode("utf-8"))
 
 
 def new_client(addr: str):
