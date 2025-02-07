@@ -36,7 +36,7 @@ This project is a clone of redis in memory database with a bit better algorithms
 - [7. Set multiple attributes of a object]()- 
     
 
-Redis hashes are used to store field-value pairs within a key, making them ideal for representing objects or collections of related attributes. Here are the primary operations you can perform on hashes in Redis:
+
 
 #### 1. Set a Field-Value Pair
 
@@ -139,7 +139,7 @@ Redis hashes are used to store field-value pairs within a key, making them ideal
 - [12. Get set-key]() 
    
 
-Redis hashes are used to store field-value pairs within a key, making them ideal for representing objects or collections of related attributes. Here are the primary operations you can perform on hashes in Redis:
+
 
 #### 1. Beadth First Search 
 
@@ -237,7 +237,7 @@ Redis hashes are used to store field-value pairs within a key, making them ideal
 
    
 
-Redis hashes are used to store field-value pairs within a key, making them ideal for representing objects or collections of related attributes. Here are the primary operations you can perform on hashes in Redis:
+
 
 #### 1. Insert Node
 
