@@ -20,10 +20,19 @@ COMMAND_GET_VERTICES = "ggetv"
 COMMAND_GET_VERTEX_EDGE = "ggetved"
 COMMAND_SET_KEY = "gsetk"
 COMMAND_GET_KEY = "ggetk"
-COMMAND_DIJKISTRA = "gdij"
+COMMAND_DIJKISTRA_DIST_DICT = "gdijdis"
+COMMAND_DIJKISTRA_PREV_DICT = "gdijprev"
 
 
-class DijkistraCommand(Command):
+class DijkistraPrevDictionaryCommand(Command):
+    def __init__(self, start):
+        self.start = start
+
+    def __str__(self):
+        return f"{self.start}"
+
+
+class DijkistraDistDictionaryCommand(Command):
     def __init__(self, start):
         self.start = start
 
@@ -72,7 +81,7 @@ class AddEdgeCommand(Command):  #
         self.weight = weight
 
 
-class RemoveEdgeCommand(Command):
+class RemoveEdgeCommand(Command):  #
     def __init__(self, v1, v2):
         self.v1 = v1
         self.v2 = v2
@@ -111,6 +120,12 @@ class GetVerticesCommand(Command):  #
 class GetEdgesByVertexCommand(Command):  #
     def __init__(self, data):
         self.data = data
+
+
+def execute_dij_dicts_command(args):
+    if len(args) != 1:
+        raise ValueError("wrong no. of args")
+    return DijkistraDictionaryCommand(args[0])
 
 
 def execute_set_key_command(args):
@@ -293,7 +308,7 @@ class GRAPH_TASKS:
     @staticmethod
     def task_get_vertices_command(msg, server):
 
-        msg.conn_peer.send(f"{msg.conn_peer._graph.get_vertices()}".encode("utf-8"))
+        msg.conn_peer.send(f"{msg.conn_peer._graph.get_vertices_str()}".encode("utf-8"))
 
     @staticmethod
     def task_get_edges_by_vertex_command(msg, server):
@@ -302,4 +317,18 @@ class GRAPH_TASKS:
             f"{msg.conn_peer._graph.get_vertex_by_value(msg.cmd.data).get_edges()}".encode(
                 "utf-8"
             )
+        )
+
+    @staticmethod
+    def task_dijkistra_prev_dict_command(msg, server):
+
+        msg.conn_peer.send(
+            f"{msg.conn_peer._graph.dijkistra_prev(msg.cmd.start)}".encode("utf-8")
+        )
+
+    @staticmethod
+    def task_dijkistra_dist_dict_command(msg, server):
+
+        msg.conn_peer.send(
+            f"{msg.conn_peer._graph.dijkistra_distance(msg.cmd.start)}".encode("utf-8")
         )

@@ -157,9 +157,9 @@ def main() -> None:
         ic(clint.insert_vertex_to_graph())
         clint.add_edges_to_graph()
         # ic(clint.bfs())
-
-        clint.show_graph()
-        clint.remove_edge()
+        clint.dij()
+        # clint.show_graph()
+        # clint.remove_edge()
         clint.show_graph()
         # ic(clint.show_graph())
         # threading.Event().wait(1)

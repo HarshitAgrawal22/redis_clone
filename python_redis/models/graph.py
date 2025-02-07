@@ -2,6 +2,10 @@ import threading
 from python_redis.models.service_ds.LinkedList import LinkedList, Node
 from python_redis.models.graph_config import Vertex, Edge, dijkistra
 
+from icecream import ic
+
+ic.configureOutput(prefix="DEBUG: ", includeContext=True)
+
 
 class graph:
     def __init__(self, is_weighted: int, is_directed: int):
@@ -9,6 +13,7 @@ class graph:
         self.is_directed: bool = is_directed
         self.is_weighted: bool = is_weighted
         self.key_name: str = None
+        self.dij: dijkistra.dijkistra = dijkistra.dijkistra()
 
     @staticmethod
     def new_graph():  #
@@ -104,6 +109,7 @@ class graph:
         return dfs(start, visitedNodes, result)
 
     def add_edge(self, v1_name: Vertex.Vertex, v2_name: Vertex.Vertex, weight: int):  #
+        weight = int(weight)
         v1, v2 = self.get_vertex_by_value(v1_name), self.get_vertex_by_value(v2_name)
         if v1 == None:
             return f"{v1_name} Node not found"
@@ -130,7 +136,10 @@ class graph:
     def is_weighted_graph(self) -> bool:
         return self.is_weighted
 
-    def get_vertices(self) -> list[Vertex.Vertex]:
+    def get_vertices(self):
+        return self.vertices
+
+    def get_vertices_str(self) -> list[Vertex.Vertex]:
         return "\n".join(map(str, self.vertices))
 
     def get_vertex_by_value(self, value: str):  #
@@ -147,6 +156,22 @@ class graph:
         for v in self.vertices:
             result += v.print(self.is_weighted) + "\n"
         return result
+
+    def dijkistra_distance(self, starting_vertex: Vertex):
+        starting_vertex = self.get_vertex_by_value(starting_vertex)
+        if starting_vertex == None:
+            return -1
+        return self.dij.dijkistra_distance_dict(
+            self.dij.dijkistra_dicts(self, starting_vertex, self.get_key_name())
+        )
+
+    def dijkistra_prev(self, starting_vertex: Vertex):
+        starting_vertex = self.get_vertex_by_value(starting_vertex)
+        if starting_vertex == None:
+            return -1
+        return self.dij.dijkistra_prev_dict(
+            self.dij.dijkistra_dicts(self, starting_vertex, self.get_key_name())
+        )
 
 
 # bus_network = graph(True, False)

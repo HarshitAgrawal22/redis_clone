@@ -1,7 +1,9 @@
 from typing import TYPE_CHECKING
 from queue import PriorityQueue
 from python_redis.models.graph_config.Vertex import Vertex
+from icecream import ic
 
+ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 if TYPE_CHECKING:
 
     from python_redis.models.graph_config.Edge import Edge
@@ -25,7 +27,7 @@ class QueueObject:
 
 class dijkistra:
 
-    def dijkistra_dicts(self, g, starting_vertex: Vertex) -> list[dict]:
+    def dijkistra_dicts(self, g, starting_vertex: Vertex, key: str) -> list[dict]:
 
         dist_dict: dict[str, int] = dict()
 
@@ -38,17 +40,25 @@ class dijkistra:
         for v in g.get_vertices():
 
             if v != starting_vertex:
-                dist_dict[v.get_data()] = 2**63 - 1
+                dist_dict[v.get_data()[key]] = 2**63 - 1
 
-            prev_dict[v.get_data()] = Vertex("null")
-        dist_dict[starting_vertex.get_data()] = 0
+            prev_dict[v.get_data()[key]] = Vertex("null")
+        dist_dict[starting_vertex.get_data()[key]] = 0
 
         while not queue.empty():
             current: Vertex = queue.get().vertex
 
             for e in current.get_edges():
-                alternative: int = dist_dict.get(current.get_data()) + e.get_weight()
-                neighborValue: str = e.get_end().get_data()
+                ic(dist_dict.get(current.get_data()[key]))
+                ic(type(dist_dict.get(current.get_data()[key])))
+                ic(e.get_weight())
+                ic(type(e.get_weight()))
+
+                alternative: int = (
+                    dist_dict.get(current.get_data()[key]) + e.get_weight()
+                )
+
+                neighborValue: str = e.get_end().get_data()[key]
 
                 if alternative < dist_dict.get(neighborValue):
                     dist_dict[neighborValue] = alternative
@@ -57,16 +67,18 @@ class dijkistra:
 
         return [dist_dict, prev_dict]
 
-    def dijkistra_result_printer(self, d: list[dict]):
+    def dijkistra_distance_dict(self, d: list[dict]):
 
-        print("distances")
-
+        result = "distances\n"
         for key, value in d[0].items():
-            print(f"{key}: {value}")
+            result += f"{key}: {value if value !=9223372036854775807 else '∞'}\n"
+        return result
 
-        print("previous")
+    def dijkistra_prev_dict(self, d: list[dict]):
+        result = "previous\n"
         for key, value in d[1].items():
-            print(f"{key}: {value.get_data()}")
+            result += f"{key}: {value.get_data()}\n"
+        return result
 
     def shortest_path_between(self, g, starting_vertex: Vertex, target_vertex: Vertex):
         dijkistra_dictionaries: list[dict] = self.dijkistra_dicts(

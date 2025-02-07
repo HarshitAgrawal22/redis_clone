@@ -158,6 +158,15 @@ class Client:
         threading.Event().wait(0.1)
         self.conn.send("greme mayank tiwari".encode("utf-8"))
 
+    def dij(self):
+        threading.Event().wait(0.1)
+        self.conn.send("gdij harshit".encode("utf-8"))
+        threading.Event().wait(1)
+        response = self.conn.recv(1024)
+        print(response.decode("utf-8"))
+        threading.Event().wait(0.1)
+        self.conn.send("greme mayank tiwari".encode("utf-8"))
+
 
 def new_client(addr: str):
     return Client(addr=addr)
