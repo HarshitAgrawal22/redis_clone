@@ -7,7 +7,6 @@ from icecream import ic
 from python_redis.protocols.keyval_protocol import (
     Command,
     CreateNewQueue,
-    COMMAND_CREATE_QUEUE,
 )
 from python_redis.models import sets, stacks, liststruc, tree, queuestruc, graph
 
@@ -75,8 +74,6 @@ class Peer:
         command_name: str
         # Extract command name and arguments
         command_name, *args = [item[1] for item in items]
-        if command_name.lower().strip() == COMMAND_CREATE_QUEUE:
-            return CreateNewQueue(key="queue needed ", peer=self)
         # check if the command is "hsetm" and requires more then 0 and even arguments
         # if command_name.lower().strip() == COMMAND_SET_MULTIPLE_KEY_VAL:
         #     if len(args) == 0:

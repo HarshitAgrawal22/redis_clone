@@ -108,7 +108,7 @@ class Server:
                 # del self.peers[this_peer]
                 # print(f"Deleted peer: {this_peer.Conn.getpeername()}")
             else:
-                threading.Event().wait(0.5)
+                threading.Event().wait(0.1)
                 # slight delay tp prevent busy waiting
                 # print("No new peer is received")
 
