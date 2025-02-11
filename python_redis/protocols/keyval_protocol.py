@@ -126,7 +126,7 @@ def execute_set_command(args):
     if len(args) != 2:
         raise ValueError("Invalid number of arguments for SET command")
     key, value = args
-    print(f"setting {key} { value}")
+    # print(f"setting {key} { value}")
     return SetCommand(key, value)
 
 
@@ -219,9 +219,9 @@ class HASHMAP_TASKS:
 
     @staticmethod
     def task_set_command(msg, server):
-        print(
-            f"Somebody wants to set a key into the hash table \nkey=>{msg.cmd.key}\nvalue =>{msg.cmd.value}"
-        )
+        # print(
+        #     f"Somebody wants to set a key into the hash table \nkey=>{msg.cmd.key}\nvalue =>{msg.cmd.value}"
+        # )
         # msg.conn_peer.send(
         #     f"key=>{msg.cmd.key}\nvalue =>{msg.cmd.value}".encode("utf-8")
         # )

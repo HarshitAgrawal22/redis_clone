@@ -79,7 +79,7 @@ class graph:
         visited_queue.display()
         while not visited_queue.is_empty():
             current: Vertex.Vertex = visited_queue.remove_head()
-            s
+
             result += f"{current.get_data()}" + "\n"
 
             for e in current.get_edges():

@@ -179,6 +179,34 @@ class Client:
         threading.Event().wait(0.1)
         # self.conn.send("greme mayank tiwari".encode("utf-8"))
 
+    def testing(self, i):
+
+        # import redis  # Official Redis client
+
+        # Connect to Redis (Assumes Redis is running on localhost:6379)
+        # client = redis.Redis(host="localhost", port=6379)
+
+        # Number of operations
+
+        # threading.Event().wait(0.1)
+
+        self.conn.send(f"hset key{i} value{i}".encode("utf-8"))
+        # threading.Event().wait(0.1)
+        # response = self.conn.recv(1024).decode("utf-8")
+        # print(response)
+
+        # client.set(f"key{i}", f"value{i}")
+        # threading.Event().wait(0.1)
+
+    # # Benchmark GET operation
+    # start_time = time.time()
+    # for i in range(NUM_REQUESTS):
+    #     client.get(f"key{i}")
+    # end_time = time.time()
+
+    # get_rps = NUM_REQUESTS / (end_time - start_time)
+    # print(f"GET Requests Per Second: {get_rps:.2f}")
+
 
 def new_client(addr: str):
     return Client(addr=addr)

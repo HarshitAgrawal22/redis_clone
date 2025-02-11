@@ -23,6 +23,21 @@ class Config:
 
 class Server:
     def __init__(self, config: Config):
+
+        self.config: Config = config
+        self.peers: Dict[peer.Peer, bool] = {}
+
+        self.listener: socket.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.add_peer_ch: list[peer.Peer] = []
+        self.del_peer_ch: list[peer.Peer] = []
+
+        self.quit_event = threading.Event()
+        self.msg_queue = Queue()
+        self.kv: keyval.KV = keyval.KV.NewKV()
+
+
+class Server:
+    def __init__(self, config: Config):
         # Server holds settings, a list of peers, a listener, and a channel for new peers.
         self.config: Config = config
         self.peers: Dict[peer.Peer, bool] = {}
@@ -99,16 +114,18 @@ class Server:
             if self.add_peer_ch:
                 peer = self.add_peer_ch.pop(0)
                 self.peers[peer] = True
-                print(
-                    f"Added new peer: {peer.Conn.getpeername()}"
-                )  # Added print statement
+                # print(
+                # f"Added new peer: {peer.Conn.getpeername()}"
+                # )
+                # Added print statement
                 # if self.del_peer_ch:
                 # this_peer = self.del_peer_ch.pop(0)
                 # ic(self.peers)
                 # del self.peers[this_peer]
                 # print(f"Deleted peer: {this_peer.Conn.getpeername()}")
             else:
-                threading.Event().wait(0.1)
+                # threading.Event().wait(0.1)
+                pass
                 # slight delay tp prevent busy waiting
                 # print("No new peer is received")
 
@@ -117,7 +134,7 @@ class Server:
         while not self.quit_event.is_set():
             try:
                 conn, addr = self.listener.accept()
-                print(f"Accepted a new connection from {addr}")  # Added print statement
+                # print(f"Accepted a new connection from {addr}")  # Added print statement
                 thread = threading.Thread(
                     target=self.handle_conn, args=(conn,), daemon=True
                 )
@@ -130,11 +147,13 @@ class Server:
         this_peer: peer.Peer = peer.Peer.newPeer(
             conn, self.msg_queue, self.del_peer_ch
         )  # here we are provinng the conn and msg_queue of server's to the Peer
-        print(f"Handling connection for peer: {this_peer}")
+
+        # print(f"Handling connection for peer: {this_peer}")
+
         # this_peer.test_protocol()
         self.add_peer_ch.append(this_peer)
         # added new peer to the add_peer_ch of server
-        ic(conn.getpeername())
+        # ic(conn.getpeername())
         # starting the peer's readloop on a seperate thread to isolate each peer;s connection from every other peer
         thread = threading.Thread(target=this_peer.read_loop)
         thread.start()
@@ -151,14 +170,49 @@ def main() -> None:
     try:
         server_thread = threading.Thread(target=server.start)
         server_thread.start()
-        clint = client.Client("127.0.0.1:5001")
-        # clint.set("jah", "kol")
+
+        NUM_REQUESTS = 10000
+        import time
+        from datetime import datetime
+
+        current_time = datetime.now().strftime("%H:%M:%S")
+
+        print("Current Time:", current_time)
+        clients: list[client.Client] = list()
+        # Benchmark SET operation
+        for i in range(NUM_REQUESTS):
+            clint = client.Client("127.0.0.1:5001")
+            clients.append(clint)
+            # clint.testing(i)
+            # threading.Event().wait(0.1)
+
+            # threading.Event().wait(0.1)
+            # response = self.conn.recv(1024)
+            # client.set(f"key{i}", f"value{i}")
+            # threading.Event().wait(0.1)
+
+        current_time = datetime.now().strftime("%H:%M:%S")
+        print("Done")
+
+        start_time2 = time.time()
+        print("Current Time:", current_time)
+        for i in range(NUM_REQUESTS):
+            clients[i].testing(i)
+        end_time2 = time.time()
+
+        # Get current time
+        current_time = datetime.now().strftime("%H:%M:%S")
+
+        print("Current Time:", current_time)
+
+        set_rps = NUM_REQUESTS / (end_time2 - start_time2)
+        print(f"SET Requests Per Second: {set_rps:.7f}")
         # ic(clint.get("name"))
-        (clint.insert_vertex_to_graph())
-        clint.add_edges_to_graph()
+        # (clint.insert_vertex_to_graph())
+        # clint.add_edges_to_graph()
         # ic(clint.bfs())
-        clint.dij_dis()
-        clint.show_graph()
+        # clint.dij_dis()
+        # clint.show_graph()
         # clint.remove_edge()
         # clint.show_graph()
         # clint.dij_shortest_path()
@@ -185,6 +239,8 @@ def main() -> None:
         print("server stopped")
         server.stop()
 
+
+# python -m python_redis.main
 
 if __name__ == "__main__":
     main()

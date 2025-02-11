@@ -74,6 +74,86 @@ class Peer:
         command_name: str
         # Extract command name and arguments
         command_name, *args = [item[1] for item in items]
+        try:
+            func = execute_command_hash_map.get(command_name.lower().strip())
+            # print(func, "is the function we have got")
+            if func != None:
+                return func(args)
+            # If no command matches, return None or raise an error
+            else:
+                raise ValueError(f"Unknown command: {command_name}")
+        except Exception as e:
+            print(e)
+
+    def read_loop(self):
+        # buf_size = 1024
+        # try:
+        #     while True:
+        #         # Receive data from the connection
+        #         data = self.Conn.recv(buf_size)
+        #         if not data:
+        #             # If data is empty, the connection has likely closed
+        #             break
+        #         # print(str(data.decode("utf-8")), len(str(data.decode("utf-8"))))
+        #         # Decode and print the received data
+        #         msg_buf = bytearray(data)
+        #         self.msg_chan.put(main.Message(data=msg_buf, conn_peer=self))
+
+        # except Exception as e:
+        #     print(f"Read loop error: {e}")
+        #     return e
+
+        # raw = raw.decode("utf-8")
+
+        """
+        Continuously reads from the socket and processes RESP messages.
+        """
+        while True:
+            try:
+                # Read data from the socket
+                raw_data: bytearray = self.Conn.recv(1024)
+                if not raw_data:
+                    # self.del_chan.append(self)
+                    # print("Connection closed.")
+                    break
+
+                # Decode raw data to string for RESP parsing
+                raw_str = raw_data.decode("utf-8")
+                # print("Decoded Command:", repr(raw_str))
+                raw_str = raw_str.strip()
+                # Parse the command
+                command = self.parse_command(raw_str)
+                # print("got till here")
+                # If a valid command is returned, add to message queue
+                if command:
+                    message = Message(cmd=command, conn_peer=self)
+                    self.msg_chan.put(message)
+                    # print(f"Message queued: {message}")
+
+            except ConnectionResetError as e:
+                # print("connection is broKen from the client")
+                break
+            except Exception as e:
+                print(f"Error in read_loop: {e}")
+                pass
+
+                # Exit loop on error
+
+    def send(self, msg: bytes) -> Optional[int]:
+        """
+        Sends a message to the peer's connection.
+
+        :param msg: The message to send, as bytes.
+        :return: The number of bytes sent, or None if an error occurred.
+        """
+        try:
+            # Send the message and return the number of bytes sent
+            bytes_sent = self.Conn.send(msg)
+            return bytes_sent
+        except socket.error as e:
+            print(f"Send error: {e}")
+            return None
+
         # check if the command is "hsetm" and requires more then 0 and even arguments
         # if command_name.lower().strip() == COMMAND_SET_MULTIPLE_KEY_VAL:
         #     if len(args) == 0:
@@ -157,83 +237,3 @@ class Peer:
         #         raise ValueError("Invalid number of arguments for SET command")
         #     key, value = args
         #     return SetCommand(key, value)
-        try:
-            func = execute_command_hash_map.get(command_name.lower().strip())
-            # print(func, "is the function we have got")
-            if func != None:
-                return func(args)
-            # If no command matches, return None or raise an error
-            else:
-                raise ValueError(f"Unknown command: {command_name}")
-        except Exception as e:
-            print(e)
-
-    def read_loop(self):
-        # buf_size = 1024
-        # try:
-        #     while True:
-        #         # Receive data from the connection
-        #         data = self.Conn.recv(buf_size)
-        #         if not data:
-        #             # If data is empty, the connection has likely closed
-        #             break
-        #         # print(str(data.decode("utf-8")), len(str(data.decode("utf-8"))))
-        #         # Decode and print the received data
-        #         msg_buf = bytearray(data)
-        #         self.msg_chan.put(main.Message(data=msg_buf, conn_peer=self))
-
-        # except Exception as e:
-        #     print(f"Read loop error: {e}")
-        #     return e
-
-        # raw = raw.decode("utf-8")
-
-        """
-        Continuously reads from the socket and processes RESP messages.
-        """
-        while True:
-            try:
-                # Read data from the socket
-                raw_data: bytearray = self.Conn.recv(1024)
-                if not raw_data:
-                    # self.del_chan.append(self)
-                    print("Connection closed.")
-                    break
-                    # todo: add the break command to it
-
-                # Decode raw data to string for RESP parsing
-                raw_str = raw_data.decode("utf-8")
-                # print("Decoded Command:", repr(raw_str))
-                raw_str = raw_str.strip()
-                # Parse the command
-                command = self.parse_command(raw_str)
-                # print("got till here")
-                # If a valid command is returned, add to message queue
-                if command:
-                    message = Message(cmd=command, conn_peer=self)
-                    self.msg_chan.put(message)
-                    # print(f"Message queued: {message}")
-
-            except ConnectionResetError as e:
-                print("connection is broKen from the client")
-                break
-            except Exception as e:
-                print(f"Error in read_loop: {e}")
-                pass
-
-                # Exit loop on error
-
-    def send(self, msg: bytes) -> Optional[int]:
-        """
-        Sends a message to the peer's connection.
-
-        :param msg: The message to send, as bytes.
-        :return: The number of bytes sent, or None if an error occurred.
-        """
-        try:
-            # Send the message and return the number of bytes sent
-            bytes_sent = self.Conn.send(msg)
-            return bytes_sent
-        except socket.error as e:
-            print(f"Send error: {e}")
-            return None
