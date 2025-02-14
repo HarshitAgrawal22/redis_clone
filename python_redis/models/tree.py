@@ -158,7 +158,7 @@ class bstree:
         def minValue(node: Node):
             minv = node.value
             while node.left != None:
-                minv = node.left.value[self.key]
+                minv = node.left.value
                 node = node.left
             return minv
 

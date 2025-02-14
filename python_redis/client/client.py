@@ -66,7 +66,7 @@ class Client:
             data_arr = [
                 "name harshit sec k",
                 "name tiwari sec j",
-                "name  samosa sec l",
+                "name samosa sec l",
                 "name mayank sec i",
                 "name billa sec a",
                 "name uday sec z",
@@ -206,6 +206,103 @@ class Client:
 
     # get_rps = NUM_REQUESTS / (end_time - start_time)
     # print(f"GET Requests Per Second: {get_rps:.2f}")
+
+    def benchmark(self):
+
+        NUM_REQUESTS = 10000
+        import time
+        from datetime import datetime
+
+        current_time = datetime.now().strftime("%H:%M:%S")
+
+        print("Current Time:", current_time)
+        clients: list[Client] = list()
+        # Benchmark SET operation
+        for i in range(NUM_REQUESTS):
+            print(i)
+            clint = Client("127.0.0.1:5001")
+            clients.append(clint)
+
+        current_time = datetime.now().strftime("%H:%M:%S")
+        print("Done")
+
+        start_time2 = time.time()
+        print("Current Time:", current_time)
+        for i in range(NUM_REQUESTS):
+            clients[i].testing(i)
+        end_time2 = time.time()
+
+        # Get current time
+        current_time = datetime.now().strftime("%H:%M:%S")
+
+        print("Current Time:", current_time)
+
+        set_rps = NUM_REQUESTS / (end_time2 - start_time2)
+        print(f"SET Requests Per Second: {set_rps:.7f}")
+
+    def test_tree(self):
+        threading.Event().wait(0.1)
+
+        self.conn.send("tset name".encode("utf-8"))
+        threading.Event().wait(1)
+        response = self.conn.recv(1024)
+        print(response.decode("utf-8"))
+        threading.Event().wait(0.1)
+        self.conn.send("tins name mayank sec k".encode("utf-8"))
+        threading.Event().wait(1)
+        self.conn.send("tins name hrishika sec l".encode("utf-8"))
+        threading.Event().wait(0.1)
+        self.conn.send("tins name ishika sec k".encode("utf-8"))
+        threading.Event().wait(1)
+        self.conn.send("tins name harshit sec l".encode("utf-8"))
+        threading.Event().wait(0.1)
+        self.conn.send("tins name samosa sec k".encode("utf-8"))
+        threading.Event().wait(1)
+        self.conn.send("tins name tiwari sec l".encode("utf-8"))
+        threading.Event().wait(0.1)
+        self.conn.send("tins name rohit sec k".encode("utf-8"))
+        threading.Event().wait(1)
+        self.conn.send("tins name shivam sec l".encode("utf-8"))
+        self.conn.send("tshow".encode("utf-8"))
+        print(self.conn.recv(1024))
+
+        threading.Event().wait(0.1)
+        self.conn.send("tdel mayank".encode("utf-8"))
+        print(self.conn.recv(1024))
+        threading.Event().wait(1)
+        self.conn.send("tdel hrishika".encode("utf-8"))
+        print(self.conn.recv(1024))
+        threading.Event().wait(0.1)
+        self.conn.send("tdel  ishika".encode("utf-8"))
+        print(self.conn.recv(1024))
+        threading.Event().wait(1)
+        self.conn.send("tdel  harshit".encode("utf-8"))
+        print(self.conn.recv(1024))
+        threading.Event().wait(0.1)
+        self.conn.send("tdel  samosa".encode("utf-8"))
+        print(self.conn.recv(1024))
+        threading.Event().wait(1)
+        self.conn.send("tdel  tiwari".encode("utf-8"))
+        print(self.conn.recv(1024))
+        threading.Event().wait(0.1)
+        self.conn.send("tdel  rohit".encode("utf-8"))
+        print(self.conn.recv(1024))
+        threading.Event().wait(1)
+        self.conn.send("tdel  shivam".encode("utf-8"))
+        self.conn.send("tshow".encode("utf-8"))
+
+        print(self.conn.recv(1024))
+        threading.Event().wait(1)
+        threading.Event().wait(0.1)
+        self.conn.send("tdel  rohit".encode("utf-8"))
+
+        self.conn.send("tshow".encode("utf-8"))
+        print(self.conn.recv(1024))
+        threading.Event().wait(1)
+        self.conn.send("tshow".encode("utf-8"))
+        print(self.conn.recv(1024))
+        threading.Event().wait(1)
+        print(self.conn.recv(1024))
 
 
 def new_client(addr: str):

@@ -9,19 +9,17 @@ class List_Struc:
 
     def rpush(self, data):
         self.storage.append(data)
-        print(self.storage)
 
     def lpush(self, data):
 
         self.storage.insert(0, data)
-        print(self.storage)
 
     def lpull(self):
-        print(self.storage)
+
         return self.storage.pop(0)
 
     def rpull(self):
-        print(self.storage)
+
         return self.storage.pop()
 
     def lrange(self, start, end):

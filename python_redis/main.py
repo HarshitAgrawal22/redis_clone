@@ -114,9 +114,7 @@ class Server:
             if self.add_peer_ch:
                 peer = self.add_peer_ch.pop(0)
                 self.peers[peer] = True
-                # print(
-                # f"Added new peer: {peer.Conn.getpeername()}"
-                # )
+                # print(f"Added new peer: {peer.Conn.getpeername()}")
                 # Added print statement
                 # if self.del_peer_ch:
                 # this_peer = self.del_peer_ch.pop(0)
@@ -170,43 +168,8 @@ def main() -> None:
     try:
         server_thread = threading.Thread(target=server.start)
         server_thread.start()
+        # client.Client("127.0.0.1:5001").test_tree()
 
-        NUM_REQUESTS = 10000
-        import time
-        from datetime import datetime
-
-        current_time = datetime.now().strftime("%H:%M:%S")
-
-        print("Current Time:", current_time)
-        clients: list[client.Client] = list()
-        # Benchmark SET operation
-        for i in range(NUM_REQUESTS):
-            clint = client.Client("127.0.0.1:5001")
-            clients.append(clint)
-            # clint.testing(i)
-            # threading.Event().wait(0.1)
-
-            # threading.Event().wait(0.1)
-            # response = self.conn.recv(1024)
-            # client.set(f"key{i}", f"value{i}")
-            # threading.Event().wait(0.1)
-
-        current_time = datetime.now().strftime("%H:%M:%S")
-        print("Done")
-
-        start_time2 = time.time()
-        print("Current Time:", current_time)
-        for i in range(NUM_REQUESTS):
-            clients[i].testing(i)
-        end_time2 = time.time()
-
-        # Get current time
-        current_time = datetime.now().strftime("%H:%M:%S")
-
-        print("Current Time:", current_time)
-
-        set_rps = NUM_REQUESTS / (end_time2 - start_time2)
-        print(f"SET Requests Per Second: {set_rps:.7f}")
         # ic(clint.get("name"))
         # (clint.insert_vertex_to_graph())
         # clint.add_edges_to_graph()
