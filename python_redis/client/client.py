@@ -12,6 +12,7 @@ class Client:
     def __init__(self, addr: str):
         self.addr: str = addr
         self.conn = socket.create_connection(
+            
             (self.addr.split(":")[0], int(self.addr.split(":")[1]))
         )
 
@@ -178,8 +179,10 @@ class Client:
         print(response.decode("utf-8"))
         threading.Event().wait(0.1)
         # self.conn.send("greme mayank tiwari".encode("utf-8"))
-
-    def testing(self, i):
+    def get_k(self, i):
+        self.conn.send(f"hget key{i}".encode("utf-8"))
+        # self.conn.recv(1024).decode("utf-8")
+    def set_k(self, i):
 
         # import redis  # Official Redis client
 
@@ -195,6 +198,10 @@ class Client:
         # response = self.conn.recv(1024).decode("utf-8")
         # print(response)
 
+        # self.conn.send(f"hget key{i}".encode("utf-8"))
+        # threading.Event().wait(0.1)
+        # response = self.conn.recv(1024).decode("utf-8")
+        # print(response)
         # client.set(f"key{i}", f"value{i}")
         # threading.Event().wait(0.1)
 
@@ -206,7 +213,62 @@ class Client:
 
     # get_rps = NUM_REQUESTS / (end_time - start_time)
     # print(f"GET Requests Per Second: {get_rps:.2f}")
-
+#
 
 def new_client(addr: str):
     return Client(addr=addr)
+NUM_REQUESTS = 28000
+import time
+from datetime import datetime
+
+# current_time = datetime.now().strftime("%H:%M:%S")
+
+# print("Current Time:", current_time)
+clients: list[Client] = list()
+        # Benchmark SET operation
+        
+for i in range(NUM_REQUESTS):
+    clint =Client("192.168.31.90:5001")
+    clients.append(clint)
+    # print(i)
+    # clint.testing(i)
+            # threading.Event().wait(0.1)
+
+            # threading.Event().wait(0.1)
+            # response = self.conn.recv(1024)
+            # client.set(f"key{i}", f"value{i}")
+            # threading.Event().wait(0.1)
+print("hset Command Benchmark")
+current_time = datetime.now().strftime("%H:%M:%S")
+
+print("Start Time:", current_time)
+
+
+start_time2 = time.time()
+for i in range(NUM_REQUESTS):
+    clients[i].set_k(i)
+end_time2 = time.time()
+        # Get current time
+current_time = datetime.now().strftime("%H:%M:%S")
+
+print("End Time:", current_time)
+set_rps = NUM_REQUESTS / (end_time2 - start_time2)
+print(f"SET Requests Per Second: {set_rps:.7f}")
+print("hget command Benchmark")
+
+current_time = datetime.now().strftime("%H:%M:%S")
+
+print("Start Time:", current_time)
+
+
+start_time2 = time.time()
+for i in range(NUM_REQUESTS):
+    clients[i].get_k(i)
+end_time2 = time.time()
+        # Get current time
+current_time = datetime.now().strftime("%H:%M:%S")
+
+print("End Time:", current_time)
+
+set_rps = NUM_REQUESTS / (end_time2 - start_time2)
+print(f"GET Requests Per Second: {set_rps:.7f}")
