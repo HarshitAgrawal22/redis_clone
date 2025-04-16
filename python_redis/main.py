@@ -45,8 +45,8 @@ class Server:
         self.listener: socket.socket = socket.socket(
             socket.AF_INET, socket.SOCK_STREAM
         )  # Network listener
-        self.add_peer_ch: list[peer.Peer] = []  # Channel to add peers to the server
         self.del_peer_ch: list[peer.Peer] = []
+        self.add_peer_ch: list[peer.Peer] = []  # Channel to add peers to the server
         # Channel to delete connection of a peer from the server
         self.quit_event = threading.Event()
         self.msg_queue = Queue()  # Queue to manage message for broadcasting
@@ -80,9 +80,9 @@ class Server:
 
     def handle_message(self, msg: Message):
 
-        if isinstance(msg.cmd, keyval_protocol.CreateNewQueue):
-            msg.conn_peer.storage_queue = Queue()
-            msg.conn_peer.send("OK".encode("utf-8"))
+        # if isinstance(msg.cmd, keyval_protocol.CreateNewQueue):
+        #     msg.conn_peer.storage_queue = Queue()
+        #     msg.conn_peer.send("OK".encode("utf-8"))
 
         func = execute_task_hash_map.get(type(msg.cmd))
         if func != None:
