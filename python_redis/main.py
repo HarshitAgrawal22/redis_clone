@@ -114,7 +114,7 @@ class Server:
             if self.add_peer_ch:
                 peer = self.add_peer_ch.pop(0)
                 self.peers[peer] = True
-                # print(f"Added new peer: {peer.Conn.getpeername()}")
+                print(f"Added new peer: {peer.Conn.getpeername()}")
                 # Added print statement
                 # if self.del_peer_ch:
                 # this_peer = self.del_peer_ch.pop(0)
@@ -207,3 +207,71 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
+# 🔧 1. Data Consistency
+# Problem: There may be data changes between sync intervals, leading to inconsistent or outdated snapshots in MongoDB.
+
+# Impact: A crash before a scheduled sync causes data loss.
+
+# Mitigation: Consider implementing a write-ahead log (WAL) or event queue to replay missed changes.
+
+# 🔃 2. Performance Overhead
+# Problem: Serializing and writing large data volumes to disk every 5 minutes may cause CPU or I/O bottlenecks.
+
+# Impact: Latency spikes or reduced responsiveness of your Redis clone.
+
+# Mitigation: Perform writes in a background thread/process and compress or diff the data before saving.
+
+# 📂 3. Data Modeling in MongoDB
+# Problem: Redis uses varied data structures (sets, lists, graphs, trees, etc.) that may not directly map to MongoDB documents.
+
+# Impact: Incorrect schema choices can lead to inefficient queries and storage.
+
+# Mitigation: Design schema per data type:
+
+# Store lists as arrays,
+
+# Sets as arrays with uniqueness enforced,
+
+# Graphs using reference documents,
+
+# Trees via nested documents or adjacency lists.
+
+# 🧵 4. Concurrency Issues
+# Problem: Reads/writes may happen during a sync operation.
+
+# Impact: May result in race conditions or corrupted snapshots.
+
+# Mitigation: Use locking mechanisms or snapshot copies to serialize state safely.
+
+# 🕒 5. Clock/Sync Timing
+# Problem: Scheduling syncs precisely every 5 minutes can be tricky across threads or async handlers.
+
+# Impact: Delays or overlapping writes.
+
+# Mitigation: Use a scheduler like APScheduler, threading.Timer, or asyncio.
+
+# 📈 6. Storage Growth and Cleanup
+# Problem: Without pruning, MongoDB may grow rapidly with old data or snapshots.
+
+# Impact: Increased disk usage and degraded performance.
+
+# Mitigation: Use TTL indexes or regularly purge obsolete data.
+
+# 🔁 7. Recovery Logic
+# Problem: On restart, recovering from MongoDB may involve rebuilding complex structures (e.g., trees, graphs).
+
+# Impact: Startup time becomes slow or error-prone.
+
+# Mitigation: Store metadata or version markers for each data structure to aid reconstruction.
+
+# ✅ Summary
+# Challenge	Risk	Recommendation
+# Data Loss	Mid-sync crash	Use WAL/event queue
+# CPU/I/O Overhead	Performance dips	Background writing & compression
+# Schema Mismatch	Inefficient data use	Tailored schema for each structure
+# Concurrency	Data race/corruption	Locking or consistent snapshot strategy
+# Timing Drift	Missed or overlapping writes	Reliable async scheduler
+# Storage Bloat	Disk overflow	TTL, cleanup jobs
+# Complex Recovery	Error-prone restarts	Store metadata with structure dumps

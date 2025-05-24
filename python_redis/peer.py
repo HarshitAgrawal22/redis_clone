@@ -69,12 +69,15 @@ class Peer:
         # print(f"Found items: {items}")
 
         # Validate RESP format
+
         if len(items) != expected_items:
             raise ValueError(f"RESP array length mismatch command:{raw}")
         command_name: str
         # Extract command name and arguments
         command_name, *args = [item[1] for item in items]
         try:
+            if command_name.lower().strip() == "kill":
+                self.Conn.close()
             func = execute_command_hash_map.get(command_name.lower().strip())
             # print(func, "is the function we have got")
             if func != None:
@@ -132,6 +135,9 @@ class Peer:
 
             except ConnectionResetError as e:
                 # print("connection is broKen from the client")
+                break
+            except OSError as e:
+                print(f"Error in read_loop: {e}")
                 break
             except Exception as e:
                 print(f"Error in read_loop: {e}")
