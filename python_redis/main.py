@@ -1,6 +1,7 @@
 import socket
 import threading
 from typing import Dict
+from python_redis.db import Database
 import python_redis.protocols.keyval_protocol as keyval_protocol
 
 from python_redis.common import execute_task_hash_map, Message
@@ -21,19 +22,19 @@ class Config:
         self.listen_address: str = listen_address
 
 
-class Server:
-    def __init__(self, config: Config):
+# class Server:
+#     def __init__(self, config: Config):
 
-        self.config: Config = config
-        self.peers: Dict[peer.Peer, bool] = {}
+#         self.config: Config = config
+#         self.peers: Dict[peer.Peer, bool] = {}
 
-        self.listener: socket.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.add_peer_ch: list[peer.Peer] = []
-        self.del_peer_ch: list[peer.Peer] = []
+#         self.listener: socket.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#         self.add_peer_ch: list[peer.Peer] = []
+#         self.del_peer_ch: list[peer.Peer] = []
 
-        self.quit_event = threading.Event()
-        self.msg_queue = Queue()
-        self.kv: keyval.KV = keyval.KV.NewKV()
+#         self.quit_event = threading.Event()
+#         self.msg_queue = Queue()
+#         self.kv: keyval.KV = keyval.KV.NewKV()
 
 
 class Server:
@@ -51,6 +52,8 @@ class Server:
         self.quit_event = threading.Event()
         self.msg_queue = Queue()  # Queue to manage message for broadcasting
         self.kv: keyval.KV = keyval.KV.NewKV()
+
+        self.physical_db: Database = Database.new_db("redis_db")
 
     @staticmethod
     def new_server(config: Config) -> "Server":
@@ -160,6 +163,8 @@ class Server:
         # stops the server gracefully
         self.quit_event.set()
         self.listener.close()
+        for peer in self.peers.keys():
+            Database.drop_peer_db(peer.DB_str)
         print("Server stopped")
 
 

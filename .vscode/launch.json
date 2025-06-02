@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Launch module python_redis.main",
+      "type": "python",
+      "request": "launch",
+      "module": "python_redis.main",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import socket
 from typing import Optional
 
+from python_redis.db import Database
 from python_redis.common import execute_command_hash_map, Message
 import re
 from icecream import ic
@@ -10,6 +11,10 @@ from python_redis.protocols.keyval_protocol import (
 )
 from python_redis.models import sets, stacks, liststruc, tree, queuestruc, graph
 
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from python_redis.db import Database
 # from main import Server, Config
 from queue import Queue
 
@@ -23,6 +28,17 @@ class Peer:
 
     def __init__(self, conn: socket.socket, msg_chan: Queue, del_chan: list["Peer"]):
         self.Conn: socket.socket = conn
+        self.DB_str: str = (
+            f"{self.Conn.getpeername()[0]}P{self.Conn.getpeername()[1]}".replace(
+                ".", "-"
+            )
+        )
+
+        ic(self.DB_str)
+
+        # self.db_conn_str = f"{self.Conn.raddr[0]}:{self.Conn.raddr[1]}"
+        # ic(self.db_conn_str)
+        # ic(self.Conn.raddr[0]  self.Conn.raddr[0])
         self.msg_chan: Queue = msg_chan
         self.del_chan: list[Peer] = del_chan
         self._queue: queuestruc.DataQueue = queuestruc.DataQueue.new_queue()
@@ -31,6 +47,8 @@ class Peer:
         self._stack: stacks.Stackstruc = stacks.Stackstruc.new_stack()
         self._sets: sets.Set = sets.Set.new_set()
         self._graph: graph.graph = graph.graph.new_graph()
+        self._db: Database = Database.new_db(self.DB_str)
+        self._db.new_collection("bhaang")
 
     @staticmethod
     def newPeer(conn: socket.socket, msg_chan: Queue, del_chan: list["Peer"]) -> "Peer":
@@ -134,10 +152,14 @@ class Peer:
                     # print(f"Message queued: {message}")
 
             except ConnectionResetError as e:
+                print(f"Error in read_loop: {e}")
+                Database.drop_peer_db(self.DB_str)
                 # print("connection is broKen from the client")
                 break
             except OSError as e:
                 print(f"Error in read_loop: {e}")
+                Database.drop_peer_db(self.DB_str)
+
                 break
             except Exception as e:
                 print(f"Error in read_loop: {e}")
@@ -243,3 +265,6 @@ class Peer:
         #         raise ValueError("Invalid number of arguments for SET command")
         #     key, value = args
         #     return SetCommand(key, value)
+
+
+# socat TCP4-LISTEN:12345,reuseaddr,fork TCP4:172.22.99.160:5001  this is the socat tool for proper working
