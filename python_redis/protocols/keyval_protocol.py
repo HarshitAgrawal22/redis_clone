@@ -228,7 +228,7 @@ class HASHMAP_TASKS:
         try:
             msg.conn_peer.send("OK".encode("utf-8"))
 
-            return server.kv.set(msg.cmd.key, msg.cmd.value)
+            return msg.conn_peer.kv.set(msg.cmd.key, msg.cmd.value)
         except Exception as e:
             print(f"got exception while sending SET message  {e}")
 
@@ -236,7 +236,7 @@ class HASHMAP_TASKS:
     def task_get_command(msg, server):
 
         try:
-            (value, isOK) = server.kv.get(msg.cmd.key)
+            (value, isOK) = msg.conn_peer.kv.get(msg.cmd.key)
 
             # if not OK:
             #     raise ValueError("response not OK ")
@@ -251,7 +251,7 @@ class HASHMAP_TASKS:
     def task_total_command(msg, server):
 
         try:
-            length: int = server.kv.total()
+            length: int = msg.conn_peer.kv.total()
 
             msg.conn_peer.send(f"{length}".encode("utf-8"))
         except Exception as e:
@@ -262,7 +262,7 @@ class HASHMAP_TASKS:
         try:
             ic(msg.cmd.key)
             ic(msg.cmd.attrs)
-            result = server.kv.get_attributes(msg.cmd.key, msg.cmd.attrs)
+            result = msg.conn_peer.kv.get_attributes(msg.cmd.key, msg.cmd.attrs)
             msg.conn_peer.send(f"{result}".encode("utf-8"))
         except Exception as e:
             print(f"got error in SET_MULTIPLE_ATTRIBUTES {e}")
@@ -272,7 +272,7 @@ class HASHMAP_TASKS:
         try:
             ic(msg.cmd.key)
             ic(msg.cmd.attrs)
-            server.kv.set_attributes(msg.cmd.key, msg.cmd.attrs)
+            msg.conn_peer.kv.set_attributes(msg.cmd.key, msg.cmd.attrs)
             msg.conn_peer.send("OK".encode("utf-8"))
         except Exception as e:
             print(f"got error in SET_MULTIPLE_ATTRIBUTES {e}")
@@ -281,7 +281,7 @@ class HASHMAP_TASKS:
     def task_set_multi_key_val_command(msg, server):
         try:
             ic(msg.cmd.args)
-            server.kv.set_multiple_pairs(msg.cmd.args)
+            msg.conn_peer.kv.set_multiple_pairs(msg.cmd.args)
 
             msg.conn_peer.send("OK".encode("utf-8"))
         except Exception as e:
@@ -292,7 +292,7 @@ class HASHMAP_TASKS:
     def task_get_multi_key_val_command(msg, server):
         try:
             ic(msg.cmd.keys)
-            result: str = server.kv.get_multiple_values(msg.cmd.keys)
+            result: str = msg.conn_peer.kv.get_multiple_values(msg.cmd.keys)
             msg.conn_peer.send(f"{result}".encode("utf-8"))
         except Exception as e:
             print(f"got error in CLIENT command: {e}")
@@ -304,7 +304,7 @@ class HASHMAP_TASKS:
     @staticmethod
     def task_increment_command(msg, server):
         try:
-            server.kv.increment(msg.cmd.key)
+            msg.conn_peer.kv.increment(msg.cmd.key)
             msg.conn_peer.send("OK".encode("utf-8"))
         except Exception as e:
             print(f"got error in CLIENT command: {e}")
@@ -312,7 +312,7 @@ class HASHMAP_TASKS:
     @staticmethod
     def task_delete_command(msg, server):
         try:
-            server.kv.delete_pair(msg.cmd.key)
+            msg.conn_peer.kv.delete_pair(msg.cmd.key)
             msg.conn_peer.send("OK".encode("utf-8"))
         except Exception as e:
             print(f"got error in CLIENT command: {e}")
@@ -329,7 +329,7 @@ class HASHMAP_TASKS:
     def task_check_command(msg, server):
         try:
 
-            result: list[bool] = server.kv.check(msg.cmd.keys)
+            result: list[bool] = msg.conn_peer.kv.check(msg.cmd.keys)
             data = "OK "
             for i in result:
                 data += f"{i} "

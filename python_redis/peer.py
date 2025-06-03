@@ -9,7 +9,7 @@ from python_redis.protocols.keyval_protocol import (
     Command,
     CreateNewQueue,
 )
-from python_redis.models import sets, stacks, liststruc, tree, queuestruc, graph
+from python_redis.models import sets, stacks, liststruc, tree, queuestruc, graph, keyval
 
 from typing import TYPE_CHECKING
 
@@ -49,6 +49,7 @@ class Peer:
         self._graph: graph.graph = graph.graph.new_graph()
         self._db: Database = Database.new_db(self.DB_str)
         self._db.new_collection("bhaang")
+        self.kv: keyval.KV = keyval.KV.NewKV(self.DB_str)
 
     @staticmethod
     def newPeer(conn: socket.socket, msg_chan: Queue, del_chan: list["Peer"]) -> "Peer":
@@ -170,7 +171,6 @@ class Peer:
     def send(self, msg: bytes) -> Optional[int]:
         """
         Sends a message to the peer's connection.
-
         :param msg: The message to send, as bytes.
         :return: The number of bytes sent, or None if an error occurred.
         """

@@ -51,7 +51,6 @@ class Server:
         # Channel to delete connection of a peer from the server
         self.quit_event = threading.Event()
         self.msg_queue = Queue()  # Queue to manage message for broadcasting
-        self.kv: keyval.KV = keyval.KV.NewKV()
 
         self.physical_db: Database = Database.new_db("redis_db")
 

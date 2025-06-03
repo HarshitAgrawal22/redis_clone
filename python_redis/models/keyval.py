@@ -3,7 +3,9 @@ from typing import Dict, Tuple, Optional
 
 
 class KV:
-    def __init__(self):  # Initialize an empty dictionary and an RLock for thread safety
+    def __init__(
+        self, Db_str
+    ):  # Initialize an empty dictionary and an RLock for thread safety
         self.data: Dict[str, bytes] = {}
         self.lock = threading.RLock()
 
@@ -97,8 +99,8 @@ class KV:
                 return e
 
     @staticmethod
-    def NewKV():
-        return KV()
+    def NewKV(DB_str):
+        return KV(DB_str)
 
 
 # In Redis, you can indeed implement queues, and while binary trees are not directly supported as a native data structure, you can achieve tree-like functionality using sorted sets and other structures. Here’s a closer loOK at how queues and tree structures can be achieved in Redis:
