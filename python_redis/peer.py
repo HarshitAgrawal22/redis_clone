@@ -48,8 +48,8 @@ class Peer:
         self._sets: sets.Set = sets.Set.new_set()
         self._graph: graph.graph = graph.graph.new_graph()
         self._db: Database = Database.new_db(self.DB_str)
-        self._db.new_collection("bhaang")
-        self.kv: keyval.KV = keyval.KV.NewKV(self.DB_str)
+        # self._db.new_collection("bhaang")
+        self.kv: keyval.KV = keyval.KV.NewKV(self.DB_str, self._db)
 
     @staticmethod
     def newPeer(conn: socket.socket, msg_chan: Queue, del_chan: list["Peer"]) -> "Peer":

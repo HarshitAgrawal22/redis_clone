@@ -1,13 +1,48 @@
 import threading
 from typing import Dict, Tuple, Optional
+from python_redis.db import Database
+import asyncio
+
+
+import asyncio
+
+
+async def periodic_task():
+    while True:
+        print("Task executed")
+        await asyncio.sleep(5)
+
+
+async def main():
+    # Run your main app logic alongside the periodic task
+    task = asyncio.create_task(periodic_task())
+    await your_main_server_loop()
+
+
+# Example placeholder for your actual server logic
+async def your_main_server_loop():
+    while True:
+        print("Main server running")
+        await asyncio.sleep(1)
+
+
+# Start event loop
+asyncio.run(main())
 
 
 class KV:
     def __init__(
-        self, Db_str
+        self, Db_str, db: Database
     ):  # Initialize an empty dictionary and an RLock for thread safety
         self.data: Dict[str, bytes] = {}
         self.lock = threading.RLock()
+        self.db: Database = db
+        self.db.new_collection("KV")
+
+    def periodic_update_db(self):
+        for i in enumerate(self.data):
+            print(i)
+        pass
 
     def LRU(self):
         with self.lock:
@@ -99,8 +134,8 @@ class KV:
                 return e
 
     @staticmethod
-    def NewKV(DB_str):
-        return KV(DB_str)
+    def NewKV(DB_str: str, db: Database):
+        return KV(DB_str, db)
 
 
 # In Redis, you can indeed implement queues, and while binary trees are not directly supported as a native data structure, you can achieve tree-like functionality using sorted sets and other structures. Here’s a closer loOK at how queues and tree structures can be achieved in Redis:
