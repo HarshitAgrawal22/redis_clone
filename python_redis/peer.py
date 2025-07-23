@@ -28,6 +28,7 @@ class Peer:
 
     def __init__(self, conn: socket.socket, msg_chan: Queue, del_chan: list["Peer"]):
         self.Conn: socket.socket = conn
+
         self.DB_str: str = (
             f"{self.Conn.getpeername()[0]}P{self.Conn.getpeername()[1]}".replace(
                 ".", "-"
@@ -48,7 +49,11 @@ class Peer:
         self._sets: sets.Set = sets.Set.new_set()
         self._graph: graph.graph = graph.graph.new_graph()
         self._db: Database = Database.new_db(self.DB_str)
-        # self._db.new_collection("bhaang")
+        # self._db.new_collection("bh# The code snippet you provided defines a class `Peer` in Python.
+        # The `a` variable is not explicitly defined or used within the
+        # class. It seems like there might be a typo or a missing part of
+        # the code where `a` should be referenced or utilized.
+        # aang")
         self.kv: keyval.KV = keyval.KV.NewKV(self.DB_str, self._db)
 
     @staticmethod
@@ -96,6 +101,7 @@ class Peer:
         command_name, *args = [item[1] for item in items]
         try:
             if command_name.lower().strip() == "kill":
+                self.kv.kill()
                 self.Conn.close()
             func = execute_command_hash_map.get(command_name.lower().strip())
             # print(func, "is the function we have got")

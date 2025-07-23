@@ -160,6 +160,8 @@ class Server:
 
     def stop(self) -> None:
         # stops the server gracefully
+        self.peers
+        map(lambda peer: peer.Conn.close(), self.peers)
         self.quit_event.set()
         self.listener.close()
         for peer in self.peers.keys():

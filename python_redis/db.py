@@ -7,9 +7,6 @@ client = MongoClient("mongodb://127.0.0.1:27017/")
 class Database:
     def __init__(self, db_name):
         self.db = client[db_name]
-        # collection.insert_one({"init": True})
-        # print("Inserted into:", Conn)
-        self.collection = None
 
     @staticmethod
     def new_db(db_name: str):
@@ -20,22 +17,22 @@ class Database:
         return self.collection
 
     def new_collection(self, name):
-        c = self.db[name]
-        # collection.insert_one(
-        #     {
-        #         "name": "Harsh",
-        #         "project": "Redis Clone",
-        #         "features": ["list", "set", "graph", "queue"],
-        #     }
-        # )
-        # Insert a single document
+        collection = self.db[name]
+
         data = {
-            "name": "Harsh",
+            "name": "Harshit",
             "project": "Redis Clone",
             "features": ["list", "set", "graph", "queue"],
         }
-        insert_result = c.insert_one(data)
+        insert_result = collection.insert_one(data)
         print(f"Inserted document with _id: {insert_result.inserted_id}")
+
+    def insert_element(self, name, item):
+        collection = self.db[name]
+
+        insert_result = collection.insert_one(item)
+        print(f"Inserted document with _id: {insert_result.inserted_id}")
+        return "yes"
 
     @staticmethod
     def drop_peer_db(Conn):

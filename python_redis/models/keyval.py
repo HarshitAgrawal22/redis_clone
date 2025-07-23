@@ -2,32 +2,30 @@ import threading
 from typing import Dict, Tuple, Optional
 from python_redis.db import Database
 import asyncio
+import time
 
 
-import asyncio
+# async def periodic_task():
+#     while True:
+#         print("Task executed")
+#         await asyncio.sleep(5)
 
 
-async def periodic_task():
-    while True:
-        print("Task executed")
-        await asyncio.sleep(5)
+# async def main():
+#     # Run your main app logic alongside the periodic task
+#     task = asyncio.create_task(periodic_task())
+#     await your_main_server_loop()
 
 
-async def main():
-    # Run your main app logic alongside the periodic task
-    task = asyncio.create_task(periodic_task())
-    await your_main_server_loop()
+# # Example placeholder for your actual server logic
+# async def your_main_server_loop():
+#     while True:
+#         print("Main server running")
+#         await asyncio.sleep(1)
 
 
-# Example placeholder for your actual server logic
-async def your_main_server_loop():
-    while True:
-        print("Main server running")
-        await asyncio.sleep(1)
-
-
-# Start event loop
-asyncio.run(main())
+# # Start event loop
+# asyncio.run(main())
 
 
 class KV:
@@ -38,11 +36,23 @@ class KV:
         self.lock = threading.RLock()
         self.db: Database = db
         self.db.new_collection("KV")
+        self.stop_event: threading.Event = threading.Event()
+        # self.periodic_update_db()
+        t = threading.Thread(target=self.periodic_update_db, args=())
+        t.start()
+
+    def kill(self):
+        self.stop_event.set()
 
     def periodic_update_db(self):
-        for i in enumerate(self.data):
-            print(i)
-        pass
+        while not self.stop_event.is_set():
+            temp_storage: list = list()
+            print(list(enumerate(self.data)))
+            time.sleep(5)
+            for item in enumerate(self.data):
+                temp_storage.append(item)
+
+            print("testing")
 
     def LRU(self):
         with self.lock:
@@ -53,6 +63,7 @@ class KV:
         with self.lock:
             try:
                 self.data[key] = val.encode("utf-8")
+                # self.periodic_update_db()
             except MemoryError:
                 print("System ran out of memory so deleting some key-val pair")
                 self.LRU()
