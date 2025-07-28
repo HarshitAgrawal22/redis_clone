@@ -1,19 +1,21 @@
 from pymongo import MongoClient
-
+from pymongo.collection import Collection
+from pymongo.results import InsertOneResult
 
 client = MongoClient("mongodb://127.0.0.1:27017/")
 
 
 class Database:
     def __init__(self, db_name):
-        self.db = client[db_name]
+        self.db :MongoClient = client[db_name]
+        self.collection : Collection = None
 
     @staticmethod
     def new_db(db_name: str):
         return Database(db_name)
 
     def new_connection(self, Conn: str):
-        self.collection = self.db[Conn]
+        self.collection  = self.db[Conn]
         return self.collection
 
     def new_collection(self, name):
@@ -28,12 +30,20 @@ class Database:
         print(f"Inserted document with _id: {insert_result.inserted_id}")
 
     def insert_element(self, name, item):
-        collection = self.db[name]
+        # collection = self.db[name]
 
-        insert_result = collection.insert_one(item)
+        insert_result = self.collection.insert_one(item)
         print(f"Inserted document with _id: {insert_result.inserted_id}")
         return "yes"
+    def update_element(self,key:str, value:str):
+        update_result = self.collection.update_one({"key":key}, {"key":key, "value":value})
+    
+    def delete_item(self, key :str):
+        
 
+        insert_result = self.collection.
+        print(f"Inserted document with _id: {insert_result.inserted_id}")
+        return "yes"
     @staticmethod
     def drop_peer_db(Conn):
         client.drop_database(Conn)

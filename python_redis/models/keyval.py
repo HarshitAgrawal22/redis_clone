@@ -35,7 +35,10 @@ class KV:
         self.data: Dict[str, bytes] = {}
         self.lock = threading.RLock()
         self.db: Database = db
-        self.db.new_collection("KV")
+        self.db.new_connection("KV")
+        # Track dirty keys for periodic updates
+        self.dirty_keys: set[str] = set()
+        # this is to stope the periodic update thread
         self.stop_event: threading.Event = threading.Event()
         # self.periodic_update_db()
         t = threading.Thread(target=self.periodic_update_db, args=())
@@ -46,6 +49,12 @@ class KV:
 
     def periodic_update_db(self):
         while not self.stop_event.is_set():
+            
+            for key in self.data.keys():
+                if self.data.get(key)==None:
+                    self.db.delete_item()
+                else:
+                    pass
             temp_storage: list = list()
             print(list(enumerate(self.data)))
             time.sleep(5)
@@ -63,6 +72,8 @@ class KV:
         with self.lock:
             try:
                 self.data[key] = val.encode("utf-8")
+                # Mark the key as dirty
+                self.dirty_keys.add(key) 
                 # self.periodic_update_db()
             except MemoryError:
                 print("System ran out of memory so deleting some key-val pair")
@@ -79,8 +90,11 @@ class KV:
     def set_attributes(self, key: str, attr: list):
         with self.lock:
             try:
+                
                 for i in range(0, len(attr), 2):
                     self.data[f"{key}_{attr[i]}"] = attr[i + 1].encode("utf-8")
+                    # Mark the key as dirty
+                    self.dirty_keys.add(f"{key}_{attr[i]}")
             except MemoryError:
                 print("System ran out of memory so deleting some key-val pair")
                 self.LRU()
@@ -97,6 +111,7 @@ class KV:
         # this may trigger a error so needed to be solved later on if needed
         for i in range(0, len(attrs), 2):
             self.set(attrs[i], attrs[i + 1])
+            self.dirty_keys.add(attrs[i])
 
     def get_multiple_values(self, keys: list[str]) -> str:
         with self.lock:
@@ -123,6 +138,7 @@ class KV:
             print(key)
             try:
                 del self.data[key]
+                self.dirty_keys.add(key)
                 return key
             except Exception as e:
                 print(f"Exception in delete pair: {e}")
@@ -139,6 +155,7 @@ class KV:
                 print(key)
                 self.data[key] = str(int(self.data.get(key)) + 1).encode("utf-8")
                 print(self.data[key])
+                self.dirty_keys.add(key)
                 return (self.data.get(key), self.data.get(key) is not None)
             except Exception as e:
                 print(f"Exception in increment method: {e}")
