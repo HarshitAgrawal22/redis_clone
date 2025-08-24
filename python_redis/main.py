@@ -1,7 +1,8 @@
 import socket
 import threading
 from typing import Dict
-from python_redis.db import Database
+
+
 import python_redis.protocols.keyval_protocol as keyval_protocol
 
 from python_redis.common import execute_task_hash_map, Message
@@ -52,8 +53,6 @@ class Server:
         self.quit_event = threading.Event()
         self.msg_queue = Queue()  # Queue to manage message for broadcasting
 
-        self.physical_db: Database = Database.new_db("redis_db")
-
     @staticmethod
     def new_server(config: Config) -> "Server":
         # Initializes the server instance with config settings
@@ -96,6 +95,7 @@ class Server:
         return None
 
     def loop(self) -> None:
+        print("loop started")
         # This loop waits for a peer in add_peer_ch and adds to the peers dict
         while not self.quit_event.is_set():
 
@@ -159,6 +159,8 @@ class Server:
         thread.start()
 
     def stop(self) -> None:
+        from python_redis.db import Database
+
         # stops the server gracefully
         self.peers
         map(lambda peer: peer.Conn.close(), self.peers)
@@ -166,7 +168,7 @@ class Server:
         self.listener.close()
         for peer in self.peers.keys():
             Database.drop_peer_db(peer.DB_str)
-        print("Server stopped")
+            print("Server stopped")
 
 
 def main() -> None:

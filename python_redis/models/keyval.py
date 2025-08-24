@@ -3,7 +3,9 @@ from typing import Dict, Tuple, Optional
 from python_redis.db import Database
 import asyncio
 import time
+from icecream import ic
 
+ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
 # async def periodic_task():
 #     while True:
@@ -34,34 +36,35 @@ class KV:
     ):  # Initialize an empty dictionary and an RLock for thread safety
         self.data: Dict[str, bytes] = {}
         self.lock = threading.RLock()
-        self.db: Database = db
-        self.db.new_connection("KV")
+        # self.db: Database = db
+        # self.db.new_connection("KV")
         # Track dirty keys for periodic updates
-        self.dirty_keys: set[str] = set()
+        # self.dirty_keys: set[str] = set()
         # this is to stope the periodic update thread
         self.stop_event: threading.Event = threading.Event()
         # self.periodic_update_db()
-        t = threading.Thread(target=self.periodic_update_db, args=())
-        t.start()
+        # t = threading.Thread(target=self.periodic_update_db, args=())
+        # t.start()
 
-    def kill(self):
-        self.stop_event.set()
+    # def kill(self):
+    #     self.stop_event.set()
 
-    def periodic_update_db(self):
-        while not self.stop_event.is_set():
-            
-            for key in self.data.keys():
-                if self.data.get(key)==None:
-                    self.db.delete_item()
-                else:
-                    pass
-            temp_storage: list = list()
-            print(list(enumerate(self.data)))
-            time.sleep(5)
-            for item in enumerate(self.data):
-                temp_storage.append(item)
+    # def periodic_update_db(self):
+    #     while not self.stop_event.is_set():
 
-            print("testing")
+    #         for key in self.data.keys():
+    #             ic(key)
+    #             if self.data.get(key) == None:
+    #                 self.db.delete_item(key)
+    #             else:
+    #                 self.db.insert_and_update_element(key, self.data.get(key))
+    #         temp_storage: list = list()
+    #         print(list(enumerate(self.data)))
+    #         time.sleep(5)
+    #         for item in enumerate(self.data):
+    #             temp_storage.append(item)
+
+    #         print("testing")
 
     def LRU(self):
         with self.lock:
@@ -73,7 +76,7 @@ class KV:
             try:
                 self.data[key] = val.encode("utf-8")
                 # Mark the key as dirty
-                self.dirty_keys.add(key) 
+
                 # self.periodic_update_db()
             except MemoryError:
                 print("System ran out of memory so deleting some key-val pair")
@@ -90,7 +93,7 @@ class KV:
     def set_attributes(self, key: str, attr: list):
         with self.lock:
             try:
-                
+
                 for i in range(0, len(attr), 2):
                     self.data[f"{key}_{attr[i]}"] = attr[i + 1].encode("utf-8")
                     # Mark the key as dirty
