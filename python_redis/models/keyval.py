@@ -7,28 +7,6 @@ from icecream import ic
 
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
-# async def periodic_task():
-#     while True:
-#         print("Task executed")
-#         await asyncio.sleep(5)
-
-
-# async def main():
-#     # Run your main app logic alongside the periodic task
-#     task = asyncio.create_task(periodic_task())
-#     await your_main_server_loop()
-
-
-# # Example placeholder for your actual server logic
-# async def your_main_server_loop():
-#     while True:
-#         print("Main server running")
-#         await asyncio.sleep(1)
-
-
-# # Start event loop
-# asyncio.run(main())
-
 
 class KV:
     def __init__(
@@ -36,35 +14,38 @@ class KV:
     ):  # Initialize an empty dictionary and an RLock for thread safety
         self.data: Dict[str, bytes] = {}
         self.lock = threading.RLock()
-        # self.db: Database = db
-        # self.db.new_connection("KV")
+        self.db: Database = db
+        self.db.new_collection("KV")
+
+        self.stop_event: threading.Event = threading.Event()
+        # self.periodic_update_db()
+        t = threading.Thread(target=self.periodic_update_db, args=())
+        t.start()
         # Track dirty keys for periodic updates
         # self.dirty_keys: set[str] = set()
         # this is to stope the periodic update thread
-        self.stop_event: threading.Event = threading.Event()
-        # self.periodic_update_db()
-        # t = threading.Thread(target=self.periodic_update_db, args=())
-        # t.start()
 
-    # def kill(self):
-    #     self.stop_event.set()
+    def kill(self):
+        self.db.log()
+        self.stop_event.set()
 
-    # def periodic_update_db(self):
-    #     while not self.stop_event.is_set():
+    def periodic_update_db(self):
+        while not self.stop_event.is_set():
+            # TODO: here for now the work is getting done by checking each and every key-val pair,
+            # TODO: need to implement dirty key concept
+            for key in self.data.keys():
+                ic(key)
+                if self.data.get(key) == None:
+                    self.db.delete_item(key)
+                else:
+                    self.db.insert_and_update_element(key, self.data.get(key))
+            temp_storage: list = list()
+            print(list(enumerate(self.data)))
+            time.sleep(5)
+            for item in enumerate(self.data):
+                temp_storage.append(item)
 
-    #         for key in self.data.keys():
-    #             ic(key)
-    #             if self.data.get(key) == None:
-    #                 self.db.delete_item(key)
-    #             else:
-    #                 self.db.insert_and_update_element(key, self.data.get(key))
-    #         temp_storage: list = list()
-    #         print(list(enumerate(self.data)))
-    #         time.sleep(5)
-    #         for item in enumerate(self.data):
-    #             temp_storage.append(item)
-
-    #         print("testing")
+            print("testing")
 
     def LRU(self):
         with self.lock:
@@ -74,8 +55,8 @@ class KV:
         # Acquire the lock for writing to ensure thread safety
         with self.lock:
             try:
+
                 self.data[key] = val.encode("utf-8")
-                # Mark the key as dirty
 
                 # self.periodic_update_db()
             except MemoryError:
@@ -96,8 +77,7 @@ class KV:
 
                 for i in range(0, len(attr), 2):
                     self.data[f"{key}_{attr[i]}"] = attr[i + 1].encode("utf-8")
-                    # Mark the key as dirty
-                    self.dirty_keys.add(f"{key}_{attr[i]}")
+
             except MemoryError:
                 print("System ran out of memory so deleting some key-val pair")
                 self.LRU()
@@ -114,7 +94,6 @@ class KV:
         # this may trigger a error so needed to be solved later on if needed
         for i in range(0, len(attrs), 2):
             self.set(attrs[i], attrs[i + 1])
-            self.dirty_keys.add(attrs[i])
 
     def get_multiple_values(self, keys: list[str]) -> str:
         with self.lock:
@@ -141,7 +120,7 @@ class KV:
             print(key)
             try:
                 del self.data[key]
-                self.dirty_keys.add(key)
+
                 return key
             except Exception as e:
                 print(f"Exception in delete pair: {e}")
@@ -158,7 +137,7 @@ class KV:
                 print(key)
                 self.data[key] = str(int(self.data.get(key)) + 1).encode("utf-8")
                 print(self.data[key])
-                self.dirty_keys.add(key)
+
                 return (self.data.get(key), self.data.get(key) is not None)
             except Exception as e:
                 print(f"Exception in increment method: {e}")

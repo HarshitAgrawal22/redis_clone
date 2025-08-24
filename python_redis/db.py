@@ -15,34 +15,35 @@ class Database:
     def new_db(db_name: str):
         return Database(db_name)
 
-    def new_connection(self, Conn: str):
+    def new_collection(self, Conn: str):
         self.collection = self.db[Conn]
+        # here we have created a collection
         return self.collection
 
-    def new_collection(self, name):
-        collection = self.db[name]
+    # def new_collection(self, name):
+    #     collection = self.db[name]
 
-        data = {
-            "name": "Harshit",
-            "project": "Redis Clone",
-            "features": ["list", "set", "graph", "queue"],
-        }
-        insert_result = collection.insert_one(data)
-        print(f"Inserted document with _id: {insert_result.inserted_id}")
+    #     data = {
+    #         "name": "Harshit",
+    #         "project": "Redis Clone",
+    #         "features": ["list", "set", "graph", "queue"],
+    #     }
+    #     insert_result = collection.insert_one(data)
+    #     print(f"Inserted document with _id: {insert_result.inserted_id}")
 
-    def insert_element(self, name, item):
-        # collection = self.db[name]
+    # def insert_element(self, name, item):
+    #     # collection = self.db[name]
 
-        insert_result = self.collection.insert_one(item)
-        print(f"Inserted document with _id: {insert_result.inserted_id}")
-        return "yes"
+    #     insert_result = self.collection.insert_one(item)
+    #     print(f"Inserted document with _id: {insert_result.inserted_id}")
+    #     return "yes"
 
     def log(self):
         ic(self.collection.find())
 
     def insert_and_update_element(self, key: str, value: str):
         update_result = self.collection.update_one(
-            {"key": key}, {"key": key, "value": value}, upsert=True
+            {"key": key}, {"$set": {"key": key, "value": value}}, upsert=True
         )
 
     def delete_item(self, key: str):
@@ -51,6 +52,7 @@ class Database:
         print(f"Inserted document with _id: {insert_result.inserted_id}")
         return "yes"
 
+    @staticmethod
     def drop_all_dbs():
         dbs = client.list_database_names()
 
@@ -65,6 +67,8 @@ class Database:
         client.drop_database(Conn)
 
 
+if __name__ == "__main__":
+    Database.drop_all_dbs()
 # # Insert One
 # collection.insert_one({"name": "Alice", "age": 25})
 
