@@ -23,21 +23,6 @@ class Config:
         self.listen_address: str = listen_address
 
 
-# class Server:
-#     def __init__(self, config: Config):
-
-#         self.config: Config = config
-#         self.peers: Dict[peer.Peer, bool] = {}
-
-#         self.listener: socket.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#         self.add_peer_ch: list[peer.Peer] = []
-#         self.del_peer_ch: list[peer.Peer] = []
-
-#         self.quit_event = threading.Event()
-#         self.msg_queue = Queue()
-#         self.kv: keyval.KV = keyval.KV.NewKV()
-
-
 class Server:
     def __init__(self, config: Config):
         # Server holds settings, a list of peers, a listener, and a channel for new peers.
@@ -95,10 +80,12 @@ class Server:
         return None
 
     def loop(self) -> None:
-        print("loop started")
+        # print("loop started")
         # This loop waits for a peer in add_peer_ch and adds to the peers dict
         while not self.quit_event.is_set():
+            # print("a iteration in loop ")
 
+            # print("", end="")
             if not self.msg_queue.empty():
                 # print("analyzing command")
                 msg: Message = self.msg_queue.get()
@@ -159,7 +146,7 @@ class Server:
         thread.start()
 
     def stop(self) -> None:
-        from python_redis.db import Database
+        from python_redis.db import HardDatabase
 
         # stops the server gracefully
         self.peers
@@ -167,7 +154,7 @@ class Server:
         self.quit_event.set()
         self.listener.close()
         for peer in self.peers.keys():
-            Database.drop_peer_db(peer.DB_str)
+            HardDatabase.drop_peer_db(peer.DB_str)
             print("Server stopped")
 
 
@@ -177,6 +164,7 @@ def main() -> None:
         server_thread = threading.Thread(target=server.start)
         server_thread.start()
         # client.Client("127.0.0.1:5001").test_tree()
+        # client.Client("127.0.0.1:5001").set("name", "HArshit")
 
         # ic(clint.get("name"))
         # (clint.insert_vertex_to_graph())

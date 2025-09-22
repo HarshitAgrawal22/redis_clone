@@ -1,49 +1,72 @@
 import threading
+from threading import RLock
 from typing import Dict, Tuple, Optional
-from python_redis.db import Database
-import asyncio
+from python_redis.db import *
+
+# import asyncio
 import time
 from icecream import ic
 
-ic.configureOutput(prefix="DEBUG: ", includeContext=True)
+
+# socat TCP4-LISTEN:12345,reuseaddr,fork TCP:172.25.128.1:5001,sourceport=40000
 
 
 class KV:
-    def __init__(
-        self, Db_str, db: Database
-    ):  # Initialize an empty dictionary and an RLock for thread safety
-        self.data: Dict[str, bytes] = {}
-        self.lock = threading.RLock()
-        self.db: Database = db
-        self.db.new_collection("KV")
+    def __init__(self, Db_str, db: HardDatabase):
+        # TODO: Here we wil need to add a backup storage which will have the incoming updates when the dictiony is geting synced with the hard db
+        ic.configureOutput(prefix="DEBUG: ", includeContext=True)
+        # Initialize an empty dictionary and an RLock for thread safety
 
+        self.data: Dict[str, bytes] = {}
+        self.lock: RLock = threading.RLock()
+
+        self.db: HardDatabase = db
+        self.collection: Collection
+        # has_collections: bool = db.list_collections(limit=1).alive
+        if not self.db.check_collection_exist("KV"):
+
+            self.collection: Collection = self.db.new_collection("KV")
+        else:
+            self.collection: Collection = self.db.new_collection("KV")
+            self.load_from_hard_db()
         self.stop_event: threading.Event = threading.Event()
+        self.dirty_keys: set[str] = set()
         # self.periodic_update_db()
-        t = threading.Thread(target=self.periodic_update_db, args=())
+        t = threading.Thread(target=self.periodic_update_db, args=(), daemon=True)
         t.start()
         # Track dirty keys for periodic updates
-        # self.dirty_keys: set[str] = set()
-        # this is to stope the periodic update thread
 
     def kill(self):
-        self.db.log()
+        # this is to stope the periodic update thread
+        self.db.log(self.collection)
+        self.dirty_keys.clear()
         self.stop_event.set()
+
+    def load_from_hard_db(self):
+        for record in self.db.load_from_db(self.collection):
+
+            self.data[record["key"]] = record["value"]
 
     def periodic_update_db(self):
         while not self.stop_event.is_set():
             # TODO: here for now the work is getting done by checking each and every key-val pair,
             # TODO: need to implement dirty key concept
-            for key in self.data.keys():
-                ic(key)
-                if self.data.get(key) == None:
-                    self.db.delete_item(key)
-                else:
-                    self.db.insert_and_update_element(key, self.data.get(key))
-            temp_storage: list = list()
-            print(list(enumerate(self.data)))
-            time.sleep(5)
-            for item in enumerate(self.data):
-                temp_storage.append(item)
+            with self.lock:
+                for key in self.dirty_keys:
+                    try:
+                        if self.data.get(key) == None:
+                            ic(self.db.delete_item(key, self.collection))
+                        else:
+                            self.db.insert_and_update_element(
+                                key, self.data.get(key), self.collection
+                            )
+                    except Exception:
+                        print(Exception)
+                temp_storage: list = list()
+                print(list(enumerate(self.data)))
+                time.sleep(5)
+                for item in enumerate(self.data):
+                    temp_storage.append(item)
 
             print("testing")
 
@@ -57,7 +80,7 @@ class KV:
             try:
 
                 self.data[key] = val.encode("utf-8")
-
+                self.dirty_keys.add(key)
                 # self.periodic_update_db()
             except MemoryError:
                 print("System ran out of memory so deleting some key-val pair")
@@ -68,7 +91,13 @@ class KV:
         with self.lock:
             # Return the value for the key if it exists, otherwise None and False
             print(key)
-            val = self.data.get(key).decode("utf-8")
+
+            val = (
+                self.data.get(key).decode("utf-8")
+                if self.data.get(key) != None
+                else None
+            )
+
             return (val, val is not None)
 
     def set_attributes(self, key: str, attr: list):
@@ -77,6 +106,7 @@ class KV:
 
                 for i in range(0, len(attr), 2):
                     self.data[f"{key}_{attr[i]}"] = attr[i + 1].encode("utf-8")
+                    self.dirty_keys.add(f"{key}_{attr[i]}")
 
             except MemoryError:
                 print("System ran out of memory so deleting some key-val pair")
@@ -86,6 +116,7 @@ class KV:
         with self.lock:
             result = ""
             for i in range(0, len(attr)):
+
                 value: bytes = self.data.get(f"{key}_{attr[i]}")
                 result += f"{value.decode('utf-8') if value!=None else value } "
             return result
@@ -94,6 +125,7 @@ class KV:
         # this may trigger a error so needed to be solved later on if needed
         for i in range(0, len(attrs), 2):
             self.set(attrs[i], attrs[i + 1])
+            self.dirty_keys.add(attrs[i])
 
     def get_multiple_values(self, keys: list[str]) -> str:
         with self.lock:
@@ -120,6 +152,7 @@ class KV:
             print(key)
             try:
                 del self.data[key]
+                self.dirty_keys.add(key)
 
                 return key
             except Exception as e:
@@ -136,6 +169,7 @@ class KV:
             try:
                 print(key)
                 self.data[key] = str(int(self.data.get(key)) + 1).encode("utf-8")
+                self.dirty_keys.add(key)
                 print(self.data[key])
 
                 return (self.data.get(key), self.data.get(key) is not None)

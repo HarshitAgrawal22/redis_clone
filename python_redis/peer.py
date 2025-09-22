@@ -1,7 +1,7 @@
 import socket
 from typing import Optional
 
-from python_redis.db import Database
+from python_redis.db import HardDatabase
 from python_redis.common import execute_command_hash_map, Message
 import re
 from icecream import ic
@@ -14,7 +14,7 @@ from python_redis.models import sets, stacks, liststruc, tree, queuestruc, graph
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from python_redis.db import Database
+    from python_redis.db import HardDatabase
 # from main import Server, Config
 from queue import Queue
 
@@ -48,7 +48,8 @@ class Peer:
         self._stack: stacks.Stackstruc = stacks.Stackstruc.new_stack()
         self._sets: sets.Set = sets.Set.new_set()
         self._graph: graph.graph = graph.graph.new_graph()
-        self._db: Database = Database.new_db(self.DB_str)
+        self._db: HardDatabase = HardDatabase.new_db(self.DB_str)
+
         # self._db.new_collection("bh# The code snippet you provided defines a class `Peer` in Python.
         # The `a` variable is not explicitly defined or used within the
         # class. It seems like there might be a typo or a missing part of
@@ -160,12 +161,12 @@ class Peer:
 
             except ConnectionResetError as e:
                 print(f"Error in read_loop: {e}")
-                Database.drop_peer_db(self.DB_str)
+                HardDatabase.drop_peer_db(self.DB_str)
                 # print("connection is broKen from the client")
                 break
             except OSError as e:
                 print(f"Error in read_loop: {e}")
-                Database.drop_peer_db(self.DB_str)
+                HardDatabase.drop_peer_db(self.DB_str)
 
                 break
             except Exception as e:
@@ -274,3 +275,6 @@ class Peer:
 
 
 # socat TCP4-LISTEN:12345,reuseaddr,fork TCP4:172.22.99.160:5001  this is the socat tool for proper working
+
+
+# socat TCP4-LISTEN:12345,reuseaddr,fork TCP:172.25.128.1:5001,sourceport=40000

@@ -1,56 +1,65 @@
 from pymongo import MongoClient
 from pymongo.collection import Collection
-from pymongo.results import InsertOneResult
+from pymongo.results import InsertOneResult, DeleteResult
 from icecream import ic
+from pymongo.database import Database
 
 client = MongoClient("mongodb://127.0.0.1:27017/")
 
+from icecream import ic
 
-class Database:
+default_listen_address: str = ":5001"
+ic.configureOutput(prefix="DEBUG: ", includeContext=True)
+
+
+class HardDatabase:
     def __init__(self, db_name):
-        self.db: MongoClient = client[db_name]
-        self.collection: Collection = None
+        self.db: Database = client[db_name]
+        # self.collection: Collection = None
 
     @staticmethod
     def new_db(db_name: str):
-        return Database(db_name)
+        return HardDatabase(db_name)
 
     def new_collection(self, Conn: str):
-        self.collection = self.db[Conn]
+
         # here we have created a collection
-        return self.collection
+        return self.db[Conn]
 
-    # def new_collection(self, name):
-    #     collection = self.db[name]
+    def check_db_existance(self, db_str: str) -> bool:
 
-    #     data = {
-    #         "name": "Harshit",
-    #         "project": "Redis Clone",
-    #         "features": ["list", "set", "graph", "queue"],
-    #     }
-    #     insert_result = collection.insert_one(data)
-    #     print(f"Inserted document with _id: {insert_result.inserted_id}")
+        return db_str in self.db.list_collection_names()
 
-    # def insert_element(self, name, item):
-    #     # collection = self.db[name]
+    def log(self, collection: Collection):
+        # ic(self.collection.find())
+        ic(collection.find())
 
-    #     insert_result = self.collection.insert_one(item)
-    #     print(f"Inserted document with _id: {insert_result.inserted_id}")
-    #     return "yes"
+    def insert_and_update_element(self, key: str, value: str, collection: Collection):
+        try:
+            update_result = collection.update_one(
+                {"key": key}, {"$set": {"key": key, "value": value}}, upsert=True
+            )
+            return True
+        except Exception as e:
+            ic(e)
+            return False
 
-    def log(self):
-        ic(self.collection.find())
+    def check_collection_exist(self, collection_name: str) -> bool:
+        # return self.db.list_collections(limit=1).alive
+        return self.db.list_collections(filter={"name": collection_name})
 
-    def insert_and_update_element(self, key: str, value: str):
-        update_result = self.collection.update_one(
-            {"key": key}, {"$set": {"key": key, "value": value}}, upsert=True
-        )
+    def delete_item(self, key: str, collection: Collection) -> bool:
+        try:
+            delete_result: DeleteResult = collection.delete_one({"key": key})
+            return delete_result.deleted_count == 1
 
-    def delete_item(self, key: str):
+        except:
+            return False
 
-        insert_result = self.collection.delete_one({"key": key})
-        print(f"Inserted document with _id: {insert_result.inserted_id}")
-        return "yes"
+    def load_from_db(self, collection: Collection):
+        print("this is the collection we have from hard database")
+        ic(collection.find())
+        return collection.find()
 
     @staticmethod
     def drop_all_dbs():
@@ -68,7 +77,7 @@ class Database:
 
 
 if __name__ == "__main__":
-    Database.drop_all_dbs()
+    HardDatabase.drop_all_dbs()
 # # Insert One
 # collection.insert_one({"name": "Alice", "age": 25})
 
