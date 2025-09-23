@@ -36,6 +36,9 @@ class HardDatabase:
 
     def insert_and_update_element(self, key: str, value: str, collection: Collection):
         try:
+            print(
+                f"Inserting data to mongodb=> Key:{key}, value: {value}, collection: {collection} "
+            )
             update_result = collection.update_one(
                 {"key": key}, {"$set": {"key": key, "value": value}}, upsert=True
             )
@@ -58,7 +61,9 @@ class HardDatabase:
 
     def load_from_db(self, collection: Collection):
         print("this is the collection we have from hard database")
-        ic(collection.find())
+        docs = list(collection.find())
+        ic(docs)
+
         return collection.find()
 
     @staticmethod

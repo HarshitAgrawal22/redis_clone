@@ -30,7 +30,8 @@ class KV:
             self.collection: Collection = self.db.new_collection("KV")
             self.load_from_hard_db()
         self.stop_event: threading.Event = threading.Event()
-        self.dirty_keys: set[str] = set()
+        self.dirty_keys: set[tuple[str, str]] = set()
+        # setter: set[tuple[str:str]] = set({{"name": "c"}, {"name": "c"}})
         # self.periodic_update_db()
         t = threading.Thread(target=self.periodic_update_db, args=(), daemon=True)
         t.start()
@@ -43,32 +44,41 @@ class KV:
         self.stop_event.set()
 
     def load_from_hard_db(self):
+        print("loading data from db")
         for record in self.db.load_from_db(self.collection):
-
+            ic(record["key"], record["value"])
             self.data[record["key"]] = record["value"]
 
     def periodic_update_db(self):
         while not self.stop_event.is_set():
             # TODO: here for now the work is getting done by checking each and every key-val pair,
             # TODO: need to implement dirty key concept
+
             with self.lock:
-                for key in self.dirty_keys:
+                dict_db_snapshot = dict(self.data)
+                dirty_keys_snapshots = set(self.dirty_keys)
+            if len(dirty_keys_snapshots) != 0:
+                synced_keys = set()
+                for key, operation in dirty_keys_snapshots:
                     try:
-                        if self.data.get(key) == None:
+                        # here is try catch because there can be a exception while having a transaction with db
+
+                        if dict_db_snapshot.get(key) == None:
+
                             ic(self.db.delete_item(key, self.collection))
+                            synced_keys.add(key)
+                            print(operation)
                         else:
                             self.db.insert_and_update_element(
-                                key, self.data.get(key), self.collection
+                                key, dict_db_snapshot.get(key), self.collection
                             )
+                            synced_keys.add(key)
                     except Exception:
                         print(Exception)
-                temp_storage: list = list()
-                print(list(enumerate(self.data)))
-                time.sleep(5)
-                for item in enumerate(self.data):
-                    temp_storage.append(item)
+                with self.lock:
+                    self.dirty_keys -= synced_keys
 
-            print("testing")
+            time.sleep(5)
 
     def LRU(self):
         with self.lock:
@@ -79,8 +89,14 @@ class KV:
         with self.lock:
             try:
 
+                (
+                    self.dirty_keys.add((key, "c"))
+                    if self.data.get(key) == None
+                    else self.dirty_keys.add((key, "u"))
+                )
+
                 self.data[key] = val.encode("utf-8")
-                self.dirty_keys.add(key)
+
                 # self.periodic_update_db()
             except MemoryError:
                 print("System ran out of memory so deleting some key-val pair")
@@ -105,8 +121,8 @@ class KV:
             try:
 
                 for i in range(0, len(attr), 2):
-                    self.data[f"{key}_{attr[i]}"] = attr[i + 1].encode("utf-8")
-                    self.dirty_keys.add(f"{key}_{attr[i]}")
+
+                    self.set(f"{key}_{attr[i]}", attr[i + 1])
 
             except MemoryError:
                 print("System ran out of memory so deleting some key-val pair")
@@ -125,7 +141,6 @@ class KV:
         # this may trigger a error so needed to be solved later on if needed
         for i in range(0, len(attrs), 2):
             self.set(attrs[i], attrs[i + 1])
-            self.dirty_keys.add(attrs[i])
 
     def get_multiple_values(self, keys: list[str]) -> str:
         with self.lock:
@@ -152,7 +167,7 @@ class KV:
             print(key)
             try:
                 del self.data[key]
-                self.dirty_keys.add(key)
+                self.dirty_keys.add((key, "d"))
 
                 return key
             except Exception as e:
