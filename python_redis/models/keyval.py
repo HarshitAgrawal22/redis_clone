@@ -65,7 +65,7 @@ class KV:
 
                         if dict_db_snapshot.get(key) == None:
 
-                            ic(self.db.delete_item(key, self.collection))
+                            ic(self.db.delete_key(key, self.collection))
                             synced_keys.add((key, operation))
                             print(operation)
                         else:

@@ -64,7 +64,7 @@ class HardDatabase:
         # return self.db.list_collections(limit=1).alive
         return self.db.list_collections(filter={"name": collection_name})
 
-    def delete_item(self, key: str, collection: Collection) -> bool:
+    def delete_key(self, key: str, collection: Collection) -> bool:
         try:
             delete_result: DeleteResult = collection.delete_one({"key": key})
             return delete_result.deleted_count == 1
