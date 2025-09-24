@@ -42,20 +42,20 @@ class Peer:
         # ic(self.Conn.raddr[0]  self.Conn.raddr[0])
         self.msg_chan: Queue = msg_chan
         self.del_chan: list[Peer] = del_chan
+        self._db: HardDatabase = HardDatabase.new_db(self.DB_str)
         self._queue: queuestruc.DataQueue = queuestruc.DataQueue.new_queue()
         self._tree: tree.bstree = tree.bstree.new_tree()
         self._list: list = liststruc.List_Struc.new_list()
         self._stack: stacks.Stackstruc = stacks.Stackstruc.new_stack()
-        self._sets: sets.Set = sets.Set.new_set()
+        self._sets: sets.Set = sets.Set.new_set(self._db)
         self._graph: graph.graph = graph.graph.new_graph()
-        self._db: HardDatabase = HardDatabase.new_db(self.DB_str)
 
         # self._db.new_collection("bh# The code snippet you provided defines a class `Peer` in Python.
         # The `a` variable is not explicitly defined or used within the
         # class. It seems like there might be a typo or a missing part of
         # the code where `a` should be referenced or utilized.
         # aang")
-        self.kv: keyval.KV = keyval.KV.NewKV(self.DB_str, self._db)
+        self.kv: keyval.KV = keyval.KV.NewKV(self._db)
 
     @staticmethod
     def newPeer(conn: socket.socket, msg_chan: Queue, del_chan: list["Peer"]) -> "Peer":

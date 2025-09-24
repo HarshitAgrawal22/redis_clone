@@ -34,15 +34,28 @@ class HardDatabase:
         # ic(self.collection.find())
         ic(collection.find())
 
-    def insert_and_update_element(self, key: str, value: str, collection: Collection):
+    def insert_and_update_item(self, item: str, collection: Collection):
         try:
             print(
-                f"Inserting data to mongodb=> Key:{key}, value: {value}, collection: {collection} "
+                f"Inserting data to mongodb=> Key:key, value: {item}, collection: {collection}"
             )
+            update_result = collection.update_one(
+                {"value": item}, {"$set": {"value": item}}, upsert=True
+            )
+            return True
+        except Exception as e:
+            ic(e)
+            return False
+
+    def insert_and_update_key_val(self, key: str, value: str, collection: Collection):
+        try:
+            # print(
+            # f"Inserting data to mongodb=> Key:{key}, value: {value}, collection: {collection} "
+            # )
             update_result = collection.update_one(
                 {"key": key}, {"$set": {"key": key, "value": value}}, upsert=True
             )
-            return True
+            return update_result.modified_count > 0
         except Exception as e:
             ic(e)
             return False
@@ -54,6 +67,14 @@ class HardDatabase:
     def delete_item(self, key: str, collection: Collection) -> bool:
         try:
             delete_result: DeleteResult = collection.delete_one({"key": key})
+            return delete_result.deleted_count == 1
+
+        except:
+            return False
+
+    def delete_item(self, value: str, collection: Collection) -> bool:
+        try:
+            delete_result: DeleteResult = collection.delete_one({"value": value})
             return delete_result.deleted_count == 1
 
         except:

@@ -1,3 +1,4 @@
+from __future__ import annotations
 from python_redis.protocols.command import Command
 from python_redis.services import (
     command_bst,
@@ -8,12 +9,16 @@ from python_redis.services import (
     command_sets,
     command_lists,
 )
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from python_redis.peer import Peer
 
 
 class Message:
-    def __init__(self, cmd: bytearray, conn_peer):
+    def __init__(self, cmd: bytearray, conn_peer: Peer):
         # this is the peer from/to this message is sent/received
-        self.conn_peer = conn_peer
+        self.conn_peer: Peer = conn_peer
         self.cmd: Command = cmd
 
     def __str__(self):

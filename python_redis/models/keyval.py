@@ -12,7 +12,7 @@ from icecream import ic
 
 
 class KV:
-    def __init__(self, Db_str, db: HardDatabase):
+    def __init__(self, db: HardDatabase):
         # TODO: Here we wil need to add a backup storage which will have the incoming updates when the dictiony is geting synced with the hard db
         ic.configureOutput(prefix="DEBUG: ", includeContext=True)
         # Initialize an empty dictionary and an RLock for thread safety
@@ -23,23 +23,24 @@ class KV:
         self.db: HardDatabase = db
         self.collection: Collection
         # has_collections: bool = db.list_collections(limit=1).alive
-        if not self.db.check_collection_exist("KV"):
+        if self.db.check_collection_exist("KV"):
 
             self.collection: Collection = self.db.new_collection("KV")
+            self.load_from_hard_db()
         else:
             self.collection: Collection = self.db.new_collection("KV")
-            self.load_from_hard_db()
+
         self.stop_event: threading.Event = threading.Event()
         self.dirty_keys: set[tuple[str, str]] = set()
         # setter: set[tuple[str:str]] = set({{"name": "c"}, {"name": "c"}})
         # self.periodic_update_db()
-        t = threading.Thread(target=self.periodic_update_db, args=(), daemon=True)
+        t = threading.Thread(target=self.periodic_db_sync, args=(), daemon=True)
         t.start()
         # Track dirty keys for periodic updates
 
     def kill(self):
         # this is to stope the periodic update thread
-        self.db.log(self.collection)
+        # self.db.log(self.collection)
         self.dirty_keys.clear()
         self.stop_event.set()
 
@@ -49,10 +50,9 @@ class KV:
             ic(record["key"], record["value"])
             self.data[record["key"]] = record["value"]
 
-    def periodic_update_db(self):
+    def periodic_db_sync(self):
         while not self.stop_event.is_set():
             # TODO: here for now the work is getting done by checking each and every key-val pair,
-            # TODO: need to implement dirty key concept
 
             with self.lock:
                 dict_db_snapshot = dict(self.data)
@@ -66,18 +66,21 @@ class KV:
                         if dict_db_snapshot.get(key) == None:
 
                             ic(self.db.delete_item(key, self.collection))
-                            synced_keys.add(key)
+                            synced_keys.add((key, operation))
                             print(operation)
                         else:
-                            self.db.insert_and_update_element(
+                            self.db.insert_and_update_key_val(
                                 key, dict_db_snapshot.get(key), self.collection
                             )
-                            synced_keys.add(key)
+                            synced_keys.add((key, operation))
                     except Exception:
                         print(Exception)
                 with self.lock:
-                    self.dirty_keys -= synced_keys
 
+                    ic(f"dirty keys before => {self.dirty_keys}")
+
+                    self.dirty_keys -= synced_keys
+                    ic(f"dirty keys after { self.dirty_keys}")
             time.sleep(5)
 
     def LRU(self):
@@ -193,8 +196,8 @@ class KV:
                 return e
 
     @staticmethod
-    def NewKV(DB_str: str, db: Database):
-        return KV(DB_str, db)
+    def NewKV(db: HardDatabase):
+        return KV(db)
 
 
 # In Redis, you can indeed implement queues, and while binary trees are not directly supported as a native data structure, you can achieve tree-like functionality using sorted sets and other structures. Here’s a closer loOK at how queues and tree structures can be achieved in Redis:
