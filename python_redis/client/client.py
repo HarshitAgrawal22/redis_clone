@@ -32,9 +32,11 @@ class Client:
 
         # message = f"*3\r\n${len('SET')}\r\nSET\r\n${len(key)}\r\n{key}\r\n${len(value)}\r\n{value}\r\n"
         lists = ["harshit", "hrishika", "tiwari", "samosa", "mayank", "billa", "uday"]
-
+        count: int = 0
         for i in lists:
-            message = f"hset name {i}"
+            count += 1
+            ic(self.get(f"name{count}"))
+            message = f"hset name{count} {i}"
 
             encoded_message = message.encode("utf-8")
             self.conn.send(encoded_message)

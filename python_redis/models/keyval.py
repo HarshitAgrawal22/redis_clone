@@ -1,58 +1,87 @@
 import threading
+from threading import RLock
 from typing import Dict, Tuple, Optional
-from python_redis.db import Database
-import asyncio
+from python_redis.db import *
+
+# import asyncio
 import time
+from icecream import ic
 
 
-# async def periodic_task():
-#     while True:
-#         print("Task executed")
-#         await asyncio.sleep(5)
-
-
-# async def main():
-#     # Run your main app logic alongside the periodic task
-#     task = asyncio.create_task(periodic_task())
-#     await your_main_server_loop()
-
-
-# # Example placeholder for your actual server logic
-# async def your_main_server_loop():
-#     while True:
-#         print("Main server running")
-#         await asyncio.sleep(1)
-
-
-# # Start event loop
-# asyncio.run(main())
+# socat TCP4-LISTEN:12345,reuseaddr,fork TCP:172.25.128.1:5001,sourceport=40000
 
 
 class KV:
-    def __init__(
-        self, Db_str, db: Database
-    ):  # Initialize an empty dictionary and an RLock for thread safety
+    def __init__(self, db: HardDatabase):
+        # TODO: Here we wil need to add a backup storage which will have the incoming updates when the dictiony is geting synced with the hard db
+        ic.configureOutput(prefix="DEBUG: ", includeContext=True)
+        # Initialize an empty dictionary and an RLock for thread safety
+
         self.data: Dict[str, bytes] = {}
-        self.lock = threading.RLock()
-        self.db: Database = db
-        self.db.new_collection("KV")
+        self.lock: RLock = threading.RLock()
+
+        self.db: HardDatabase = db
+        self.collection: Collection
+        # has_collections: bool = db.list_collections(limit=1).alive
+        if self.db.check_collection_exist("KV"):
+
+            self.collection: Collection = self.db.new_collection("KV")
+            self.load_from_hard_db()
+        else:
+            self.collection: Collection = self.db.new_collection("KV")
+
         self.stop_event: threading.Event = threading.Event()
+        self.dirty_keys: set[tuple[str, str]] = set()
+        # setter: set[tuple[str:str]] = set({{"name": "c"}, {"name": "c"}})
         # self.periodic_update_db()
-        t = threading.Thread(target=self.periodic_update_db, args=())
+        t = threading.Thread(target=self.periodic_db_sync, args=(), daemon=True)
         t.start()
+        # Track dirty keys for periodic updates
 
     def kill(self):
+        # this is to stope the periodic update thread
+        # self.db.log(self.collection)
+        self.dirty_keys.clear()
         self.stop_event.set()
 
-    def periodic_update_db(self):
-        while not self.stop_event.is_set():
-            temp_storage: list = list()
-            print(list(enumerate(self.data)))
-            time.sleep(5)
-            for item in enumerate(self.data):
-                temp_storage.append(item)
+    def load_from_hard_db(self):
+        print("loading data from db")
+        for record in self.db.load_from_db(self.collection):
+            ic(record["key"], record["value"])
+            self.data[record["key"]] = record["value"]
 
-            print("testing")
+    def periodic_db_sync(self):
+        while not self.stop_event.is_set():
+            # TODO: here for now the work is getting done by checking each and every key-val pair,
+
+            with self.lock:
+                dict_db_snapshot = dict(self.data)
+                dirty_keys_snapshots = set(self.dirty_keys)
+            if len(dirty_keys_snapshots) != 0:
+                synced_keys = set()
+                for key, operation in dirty_keys_snapshots:
+                    try:
+                        # here is try catch because there can be a exception while having a transaction with db
+
+                        if dict_db_snapshot.get(key) == None:
+
+                            ic(self.db.delete_item(key, self.collection))
+                            synced_keys.add((key, operation))
+                            print(operation)
+                        else:
+                            self.db.insert_and_update_key_val(
+                                key, dict_db_snapshot.get(key), self.collection
+                            )
+                            synced_keys.add((key, operation))
+                    except Exception:
+                        print(Exception)
+                with self.lock:
+
+                    ic(f"dirty keys before => {self.dirty_keys}")
+
+                    self.dirty_keys -= synced_keys
+                    ic(f"dirty keys after { self.dirty_keys}")
+            time.sleep(5)
 
     def LRU(self):
         with self.lock:
@@ -62,7 +91,15 @@ class KV:
         # Acquire the lock for writing to ensure thread safety
         with self.lock:
             try:
+
+                (
+                    self.dirty_keys.add((key, "c"))
+                    if self.data.get(key) == None
+                    else self.dirty_keys.add((key, "u"))
+                )
+
                 self.data[key] = val.encode("utf-8")
+
                 # self.periodic_update_db()
             except MemoryError:
                 print("System ran out of memory so deleting some key-val pair")
@@ -73,14 +110,23 @@ class KV:
         with self.lock:
             # Return the value for the key if it exists, otherwise None and False
             print(key)
-            val = self.data.get(key).decode("utf-8")
+
+            val = (
+                self.data.get(key).decode("utf-8")
+                if self.data.get(key) != None
+                else None
+            )
+
             return (val, val is not None)
 
     def set_attributes(self, key: str, attr: list):
         with self.lock:
             try:
+
                 for i in range(0, len(attr), 2):
-                    self.data[f"{key}_{attr[i]}"] = attr[i + 1].encode("utf-8")
+
+                    self.set(f"{key}_{attr[i]}", attr[i + 1])
+
             except MemoryError:
                 print("System ran out of memory so deleting some key-val pair")
                 self.LRU()
@@ -89,6 +135,7 @@ class KV:
         with self.lock:
             result = ""
             for i in range(0, len(attr)):
+
                 value: bytes = self.data.get(f"{key}_{attr[i]}")
                 result += f"{value.decode('utf-8') if value!=None else value } "
             return result
@@ -123,6 +170,8 @@ class KV:
             print(key)
             try:
                 del self.data[key]
+                self.dirty_keys.add((key, "d"))
+
                 return key
             except Exception as e:
                 print(f"Exception in delete pair: {e}")
@@ -138,15 +187,17 @@ class KV:
             try:
                 print(key)
                 self.data[key] = str(int(self.data.get(key)) + 1).encode("utf-8")
+                self.dirty_keys.add(key)
                 print(self.data[key])
+
                 return (self.data.get(key), self.data.get(key) is not None)
             except Exception as e:
                 print(f"Exception in increment method: {e}")
                 return e
 
     @staticmethod
-    def NewKV(DB_str: str, db: Database):
-        return KV(DB_str, db)
+    def NewKV(db: HardDatabase):
+        return KV(db)
 
 
 # In Redis, you can indeed implement queues, and while binary trees are not directly supported as a native data structure, you can achieve tree-like functionality using sorted sets and other structures. Here’s a closer loOK at how queues and tree structures can be achieved in Redis:

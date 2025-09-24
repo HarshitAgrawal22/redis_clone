@@ -1,44 +1,109 @@
 from pymongo import MongoClient
-
+from pymongo.collection import Collection
+from pymongo.results import InsertOneResult, DeleteResult
+from icecream import ic
+from pymongo.database import Database
 
 client = MongoClient("mongodb://127.0.0.1:27017/")
 
+from icecream import ic
 
-class Database:
+default_listen_address: str = ":5001"
+ic.configureOutput(prefix="DEBUG: ", includeContext=True)
+
+
+class HardDatabase:
     def __init__(self, db_name):
-        self.db = client[db_name]
+        self.db: Database = client[db_name]
+        # self.collection: Collection = None
 
     @staticmethod
     def new_db(db_name: str):
-        return Database(db_name)
+        return HardDatabase(db_name)
 
-    def new_connection(self, Conn: str):
-        self.collection = self.db[Conn]
-        return self.collection
+    def new_collection(self, Conn: str):
 
-    def new_collection(self, name):
-        collection = self.db[name]
+        # here we have created a collection
+        return self.db[Conn]
 
-        data = {
-            "name": "Harshit",
-            "project": "Redis Clone",
-            "features": ["list", "set", "graph", "queue"],
-        }
-        insert_result = collection.insert_one(data)
-        print(f"Inserted document with _id: {insert_result.inserted_id}")
+    def check_db_existance(self, db_str: str) -> bool:
 
-    def insert_element(self, name, item):
-        collection = self.db[name]
+        return db_str in self.db.list_collection_names()
 
-        insert_result = collection.insert_one(item)
-        print(f"Inserted document with _id: {insert_result.inserted_id}")
-        return "yes"
+    def log(self, collection: Collection):
+        # ic(self.collection.find())
+        ic(collection.find())
+
+    def insert_and_update_item(self, item: str, collection: Collection):
+        try:
+            print(
+                f"Inserting data to mongodb=> Key:key, value: {item}, collection: {collection}"
+            )
+            update_result = collection.update_one(
+                {"value": item}, {"$set": {"value": item}}, upsert=True
+            )
+            return True
+        except Exception as e:
+            ic(e)
+            return False
+
+    def insert_and_update_key_val(self, key: str, value: str, collection: Collection):
+        try:
+            # print(
+            # f"Inserting data to mongodb=> Key:{key}, value: {value}, collection: {collection} "
+            # )
+            update_result = collection.update_one(
+                {"key": key}, {"$set": {"key": key, "value": value}}, upsert=True
+            )
+            return update_result.modified_count > 0
+        except Exception as e:
+            ic(e)
+            return False
+
+    def check_collection_exist(self, collection_name: str) -> bool:
+        # return self.db.list_collections(limit=1).alive
+        return self.db.list_collections(filter={"name": collection_name})
+
+    def delete_item(self, key: str, collection: Collection) -> bool:
+        try:
+            delete_result: DeleteResult = collection.delete_one({"key": key})
+            return delete_result.deleted_count == 1
+
+        except:
+            return False
+
+    def delete_item(self, value: str, collection: Collection) -> bool:
+        try:
+            delete_result: DeleteResult = collection.delete_one({"value": value})
+            return delete_result.deleted_count == 1
+
+        except:
+            return False
+
+    def load_from_db(self, collection: Collection):
+        print("this is the collection we have from hard database")
+        docs = list(collection.find())
+        ic(docs)
+
+        return collection.find()
+
+    @staticmethod
+    def drop_all_dbs():
+        dbs = client.list_database_names()
+
+        # Drop all except system DBs
+        for db in dbs:
+            if db not in ["admin", "local", "config"]:
+                client.drop_database(db)
+                print(f"Dropped: {db}")
 
     @staticmethod
     def drop_peer_db(Conn):
         client.drop_database(Conn)
 
 
+if __name__ == "__main__":
+    HardDatabase.drop_all_dbs()
 # # Insert One
 # collection.insert_one({"name": "Alice", "age": 25})
 
@@ -54,3 +119,6 @@ class Database:
 
 # # Delete
 # collection.delete_one({"name": "Bob"})
+
+
+# Get list of all databases

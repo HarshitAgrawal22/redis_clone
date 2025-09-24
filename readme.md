@@ -8,9 +8,14 @@ Start Server by
 Access the Server by tcp connection 
 
 ```
-telnet localhost  5001 
+telnet localhost  12345
 ```
 - the commands can be directly written on the tcp connection and the output will be  seen on the tcp terminal 
+
+Mediator linux command for better use
+``` 
+ socat TCP4-LISTEN:12345,reuseaddr,fork TCP:172.25.128.1:5001,sourceport=40000
+```
 ## About
 
 This project is a clone of redis in memory database with a bit better algorithms fully implemented in python
