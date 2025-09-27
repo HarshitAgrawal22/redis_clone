@@ -45,9 +45,9 @@ class KV:
         self.stop_event.set()
 
     def load_from_hard_db(self):
-        print("loading data from db")
+        # print("loading data from db")
         for record in self.db.load_from_db(self.collection):
-            ic(record["key"], record["value"])
+            # ic(record["key"], record["value"])
             self.data[record["key"]] = record["value"]
 
     def periodic_db_sync(self):
@@ -78,10 +78,10 @@ class KV:
                         print(Exception)
                 with self.lock:
 
-                    ic(f"dirty keys before => {self.dirty_keys}")
+                    # ic(f"dirty keys before => {self.dirty_keys}")
 
                     self.dirty_keys -= synced_keys
-                    ic(f"dirty keys after { self.dirty_keys}")
+                    # ic(f"dirty keys after { self.dirty_keys}")
             time.sleep(5)
 
     def LRU(self):

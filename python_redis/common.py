@@ -14,6 +14,8 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from python_redis.peer import Peer
 
+SyncTime: int = 600
+
 
 class Message:
     def __init__(self, cmd: bytearray, conn_peer: Peer):

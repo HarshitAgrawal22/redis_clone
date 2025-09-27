@@ -36,7 +36,7 @@ class Set:
                 return "NOT FOUND"
 
     def load_from_hard_db(self):
-        print("loading data from db")
+        # print("loading data from db")
         for record in self.db.load_from_db(self.collection):
             # ic(record["key"], record["value"])
             # self.data[record["key"]] = record["value"]
@@ -71,8 +71,8 @@ class Set:
                     except Exception:
                         print(Exception)
                 with self.lock:
-                    ic(self.dirty_items)
-                    ic(synced_items)
+                    # ic(self.dirty_items)
+                    # ic(synced_items)
                     self.dirty_items -= synced_items
 
             time.sleep(5)

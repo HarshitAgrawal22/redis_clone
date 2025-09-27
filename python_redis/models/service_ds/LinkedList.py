@@ -15,7 +15,7 @@ class LinkedList:
 
     def show_head(self):
         if self.head == None:
-            return "empty"
+            return "Empty"
         else:
             return self.head.value
 

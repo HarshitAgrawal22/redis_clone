@@ -91,6 +91,17 @@ class HardDatabase:
         except:
             return False
 
+    def delete_dequeue_item(self, value: str, collection: Collection) -> bool:
+        try:
+            # delete_result: DeleteResult = collection.delete_one({"value": value})
+            delete_result: DeleteResult = collection.find_one_and_delete(
+                {}, sort=[("index", 1)]
+            )
+            return delete_result.deleted_count == 1
+
+        except:
+            return False
+
     def load_from_db(self, collection: Collection) -> Cursor:
         print("this is the collection we have from hard database")
         docs = list(collection.find())
@@ -115,6 +126,8 @@ class HardDatabase:
 
 if __name__ == "__main__":
     HardDatabase.drop_all_dbs()
+
+
 # # Insert One
 # collection.insert_one({"name": "Alice", "age": 25})
 
