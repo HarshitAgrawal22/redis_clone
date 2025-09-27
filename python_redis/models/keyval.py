@@ -53,6 +53,7 @@ class KV:
     def periodic_db_sync(self):
         while not self.stop_event.is_set():
             # TODO: here for now the work is getting done by checking each and every key-val pair,
+            # TODO: create copy only of the dirty keys
 
             with self.lock:
                 dict_db_snapshot = dict(self.data)

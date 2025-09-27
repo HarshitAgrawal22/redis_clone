@@ -83,6 +83,10 @@ class Server:
         # print("loop started")
         # This loop waits for a peer in add_peer_ch and adds to the peers dict
         while not self.quit_event.is_set():
+            # TODO: Check for peers which remain in self.peers
+            # TODO: Add pub/sub module
+
+            # ic(self.peers)
             # print("a iteration in loop ")
 
             # print("", end="")
@@ -105,11 +109,11 @@ class Server:
                 self.peers[peer] = True
                 print(f"Added new peer: {peer.Conn.getpeername()}")
                 # Added print statement
-                # if self.del_peer_ch:
-                # this_peer = self.del_peer_ch.pop(0)
-                # ic(self.peers)
-                # del self.peers[this_peer]
-                # print(f"Deleted peer: {this_peer.Conn.getpeername()}")
+                if self.del_peer_ch:
+                    this_peer = self.del_peer_ch.pop(0)
+                    # ic(self.peers)
+                    del self.peers[this_peer]
+                    print(f"Deleted peer: {this_peer.Conn.getpeername()}")
             else:
                 # threading.Event().wait(0.1)
                 pass
@@ -149,7 +153,7 @@ class Server:
         from python_redis.db import HardDatabase
 
         # stops the server gracefully
-        self.peers
+
         map(lambda peer: peer.Conn.close(), self.peers)
         self.quit_event.set()
         self.listener.close()

@@ -49,7 +49,7 @@ class Set:
         self.stop_event.set()
 
     def periodic_db_sync(self):
-        # TODO change variable names
+
         while not self.stop_event.is_set():
             with self.lock:
                 dirty_items_snapshots = set(self.dirty_items)

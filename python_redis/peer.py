@@ -26,7 +26,9 @@ class Peer:
             f"IP ->{self.Conn.getpeername()[0]}   port-> {self.Conn.getpeername()[1]}"
         )
 
-    def __init__(self, conn: socket.socket, msg_chan: Queue, del_chan: list["Peer"]):
+    def __init__(
+        self, conn: socket.socket, msg_chan: Queue, del_peer_chan: list["Peer"]
+    ):
         self.Conn: socket.socket = conn
 
         self.DB_str: str = (
@@ -37,33 +39,26 @@ class Peer:
 
         ic(self.DB_str)
 
-        # self.db_conn_str = f"{self.Conn.raddr[0]}:{self.Conn.raddr[1]}"
-        # ic(self.db_conn_str)
-        # ic(self.Conn.raddr[0]  self.Conn.raddr[0])
         self.msg_chan: Queue = msg_chan
-        self.del_chan: list[Peer] = del_chan
+        self.del_peer_chan: list[Peer] = del_peer_chan
         self._db: HardDatabase = HardDatabase.new_db(self.DB_str)
-        self._queue: queuestruc.DataQueue = queuestruc.DataQueue.new_queue()
+        self._queue: queuestruc.DataQueue = queuestruc.DataQueue.new_queue(self._db)
         self._tree: tree.bstree = tree.bstree.new_tree()
-        self._list: list = liststruc.List_Struc.new_list()
+        self._list: liststruc.List_Struc = liststruc.List_Struc.new_list(self._db)
         self._stack: stacks.Stackstruc = stacks.Stackstruc.new_stack()
         self._sets: sets.Set = sets.Set.new_set(self._db)
         self._graph: graph.graph = graph.graph.new_graph()
-
-        # self._db.new_collection("bh# The code snippet you provided defines a class `Peer` in Python.
-        # The `a` variable is not explicitly defined or used within the
-        # class. It seems like there might be a typo or a missing part of
-        # the code where `a` should be referenced or utilized.
-        # aang")
         self.kv: keyval.KV = keyval.KV.NewKV(self._db)
 
     @staticmethod
-    def newPeer(conn: socket.socket, msg_chan: Queue, del_chan: list["Peer"]) -> "Peer":
-        return Peer(conn, msg_chan, del_chan)
+    def newPeer(
+        conn: socket.socket, msg_chan: Queue, del_peer_chan: list["Peer"]
+    ) -> "Peer":
+        return Peer(conn, msg_chan, del_peer_chan)
 
     def parse_command(self, raw: str) -> Optional[Command]:
         """Parses the raw RESP command bytes and returns a Command object if valid."""
-
+        # TODO: learn what is RESP protocol
         # Decode raw bytes to string without removing any characters
         # print(f"raw command => {raw} {type(raw)} ")
         arr_len = len(holder_arr := raw.split())
@@ -102,8 +97,10 @@ class Peer:
         command_name, *args = [item[1] for item in items]
         try:
             if command_name.lower().strip() == "kill":
+                # TODO: move this kill command to a DS and make it work there only
                 self.kv.kill()
                 self.Conn.close()
+
             func = execute_command_hash_map.get(command_name.lower().strip())
             # print(func, "is the function we have got")
             if func != None:
@@ -150,13 +147,21 @@ class Peer:
                 raw_str = raw_data.decode("utf-8")
                 # print("Decoded Command:", repr(raw_str))
                 raw_str = raw_str.strip()
-                # Parse the command
-                command = self.parse_command(raw_str)
-                # print("got till here")
-                # If a valid command is returned, add to message queue
-                if command:
-                    message = Message(cmd=command, conn_peer=self)
-                    self.msg_chan.put(message)
+                ic(raw_str)
+                ic("\n" in raw_str)
+
+                if "\n" in raw_str:
+                    print("these are multiple commands we got")
+                    self.parse_command_batch(raw_str)
+                else:
+                    print("this is the single command")
+                    command = self.parse_command(raw_str)
+                    # print("got till here")
+                    # If a valid command is returned, add to message queue
+                    if command:
+                        message = Message(cmd=command, conn_peer=self)
+                        self.msg_chan.put(message)
+
                     # print(f"Message queued: {message}")
 
             except ConnectionResetError as e:
@@ -174,6 +179,19 @@ class Peer:
                 pass
 
                 # Exit loop on error
+
+    def parse_command_batch(self, buffer: str):
+        while "\n" in buffer:
+            line, buffer = buffer.split("\n", 1)
+
+            # Parse the command
+            # command = self.parse_command(raw_str)
+            command = self.parse_command(line)
+            # print("got till here")
+            # If a valid command is returned, add to message queue
+            if command:
+                message = Message(cmd=command, conn_peer=self)
+                self.msg_chan.put(message)
 
     def send(self, msg: bytes) -> Optional[int]:
         """
@@ -274,7 +292,8 @@ class Peer:
         #     return SetCommand(key, value)
 
 
-# socat TCP4-LISTEN:12345,reuseaddr,fork TCP4:172.22.99.160:5001  this is the socat tool for proper working
+# socat TCP4-LISTEN:12345,reuseaddr,fork TCP4:172.22.99.160:5001
+# this is the socat tool for proper working
 
 
 # socat TCP4-LISTEN:12345,reuseaddr,fork TCP:172.25.128.1:5001,sourceport=40000

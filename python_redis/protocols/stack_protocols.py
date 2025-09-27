@@ -1,3 +1,8 @@
+from __future__ import annotations
+from typing import Union, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from python_redis.common import Message
 from typing import Union
 from icecream import ic
 from .command import Command
@@ -52,16 +57,16 @@ class STACK_TASKS:
         print(self)
 
     @staticmethod
-    def task_push_command(msg, server):
+    def task_push_command(msg: Message, server):
         ic(msg.cmd.item)
         msg.conn_peer.send("OK".encode("utf-8"))
         return msg.conn_peer._stack.push(msg.cmd.item)
 
     @staticmethod
-    def task_pop_command(msg, server):
+    def task_pop_command(msg: Message, server):
         value = msg.conn_peer._stack.pop()
         msg.conn_peer.send(f"{value}".encode("utf-8"))
 
     @staticmethod
-    def task_peek_command(msg, server):
+    def task_peek_command(msg: Message, server):
         msg.conn_peer.send(f"{msg.conn_peer._stack.peek()}".encode("utf-8"))

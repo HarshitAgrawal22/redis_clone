@@ -35,16 +35,16 @@ class Client:
         count: int = 0
         for i in lists:
             count += 1
-            ic(self.get(f"name{count}"))
             message = f"hset name{count} {i}"
 
             encoded_message = message.encode("utf-8")
             self.conn.send(encoded_message)
 
-            threading.Event().wait(0.1)
+            # threading.Event().wait(0.1)
             response = self.conn.recv(1024)
             ic(response.decode("utf-8"))
-            threading.Event().wait(0.1)
+            ic(self.get(f"name{count}"))
+            # threading.Event().wait(0.1)
 
         return None
 
