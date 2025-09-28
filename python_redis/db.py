@@ -1,9 +1,10 @@
-from pymongo import MongoClient
+from pymongo import MongoClient, DESCENDING
 from pymongo.collection import Collection
 from pymongo.results import InsertOneResult, DeleteResult
 from icecream import ic
 from pymongo.database import Database
 from pymongo.cursor import Cursor
+
 
 client = MongoClient("mongodb://127.0.0.1:27017/")
 
@@ -96,6 +97,17 @@ class HardDatabase:
             # delete_result: DeleteResult = collection.delete_one({"value": value})
             delete_result: DeleteResult = collection.find_one_and_delete(
                 {}, sort=[("index", 1)]
+            )
+            return delete_result.deleted_count == 1
+
+        except:
+            return False
+
+    def delete_stack_item(self, value: str, collection: Collection) -> bool:
+        try:
+            # delete_result: DeleteResult = collection.delete_one({"value": value})
+            delete_result: DeleteResult = collection.find_one_and_delete(
+                {}, sort=[("index", DESCENDING)]
             )
             return delete_result.deleted_count == 1
 

@@ -15,9 +15,11 @@ execute_task_hash_map: dict = {
     keyval_protocol.SetMultipleAttributeCommand: keyval_protocol.HASHMAP_TASKS.task_set_multiple_attrs_command,
     keyval_protocol.SetMultipleKeyValCommand: keyval_protocol.HASHMAP_TASKS.task_set_multi_key_val_command,
     keyval_protocol.IncrementCommand: keyval_protocol.HASHMAP_TASKS.task_increment_command,
+    keyval_protocol.KillCommand: keyval_protocol.HASHMAP_TASKS.task_kill_command,
 }
 
 execute_command_hash_map: dict = {
+    keyval_protocol.COMMAND_KILL: keyval_protocol.execute_kill_command,
     keyval_protocol.COMMAND_SET: keyval_protocol.execute_set_command,
     keyval_protocol.COMMAND_DELETE: keyval_protocol.execute_delete_command,
     keyval_protocol.COMMAND_CHECK: keyval_protocol.execute_check_command,

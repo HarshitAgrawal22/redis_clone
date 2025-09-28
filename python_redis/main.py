@@ -156,7 +156,7 @@ class Server:
         # stops the server gracefully
         # TODO: figureout the server stopping problem
 
-        map(lambda peer: peer.close_connection(), self.peers)
+        map(lambda peer: peer.close_connection(), self.peers.keys())
         self.quit_event.set()
         self.listener.close()
         for peer in self.peers.keys():

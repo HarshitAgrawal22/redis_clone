@@ -38,12 +38,6 @@ class KV:
         t.start()
         # Track dirty keys for periodic updates
 
-    def kill(self):
-        # this is to stope the periodic update thread
-        # self.db.log(self.collection)
-        self.dirty_keys.clear()
-        self.stop_event.set()
-
     def load_from_hard_db(self):
         # print("loading data from db")
         for record in self.db.load_from_db(self.collection):

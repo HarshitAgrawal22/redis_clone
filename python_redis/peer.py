@@ -43,11 +43,11 @@ class Peer:
         self.del_peer_chan: list[Peer] = del_peer_chan
         self._db: HardDatabase = HardDatabase.new_db(self.DB_str)
         self._queue: queuestruc.DataQueue = queuestruc.DataQueue.new_queue(self._db)
-        self._tree: tree.bstree = tree.bstree.new_tree()
+        self._tree: tree.bstree = tree.bstree.new_tree(self._db)
         self._list: liststruc.List_Struc = liststruc.List_Struc.new_list(self._db)
-        self._stack: stacks.Stackstruc = stacks.Stackstruc.new_stack()
+        self._stack: stacks.Stackstruc = stacks.Stackstruc.new_stack(self._db)
         self._sets: sets.Set = sets.Set.new_set(self._db)
-        self._graph: graph.graph = graph.graph.new_graph()
+        self._graph: graph.graph = graph.graph.new_graph(self._db)
         self.kv: keyval.KV = keyval.KV.NewKV(self._db)
 
     @staticmethod
@@ -96,10 +96,10 @@ class Peer:
         # Extract command name and arguments
         command_name, *args = [item[1] for item in items]
         try:
-            if command_name.lower().strip() == "kill":
-                # TODO: move this kill command to a DS and make it work there only
-                self.kv.kill()
-                self.close_connection()
+            # if command_name.lower().strip() == "kill":
+            #     # TODO: move this kill command to a DS and make it work there only
+            #     self.kv.kill()
+            #     self.close_connection()
 
             func = execute_command_hash_map.get(command_name.lower().strip())
             # print(func, "is the function we have got")
@@ -112,25 +112,6 @@ class Peer:
             print(e)
 
     def read_loop(self):
-        # buf_size = 1024
-        # try:
-        #     while True:
-        #         # Receive data from the connection
-        #         data = self.Conn.recv(buf_size)
-        #         if not data:
-        #             # If data is empty, the connection has likely closed
-        #             break
-        #         # print(str(data.decode("utf-8")), len(str(data.decode("utf-8"))))
-        #         # Decode and print the received data
-        #         msg_buf = bytearray(data)
-        #         self.msg_chan.put(main.Message(data=msg_buf, conn_peer=self))
-
-        # except Exception as e:
-        #     print(f"Read loop error: {e}")
-        #     return e
-
-        # raw = raw.decode("utf-8")
-
         """
         Continuously reads from the socket and processes RESP messages.
         """

@@ -42,12 +42,6 @@ class Set:
             # self.data[record["key"]] = record["value"]
             self.storage.add(record["value"])
 
-    def kill(self):
-        # this is to stope the periodic update thread
-        # self.db.log(self.collection)
-        self.dirty_items.clear()
-        self.stop_event.set()
-
     def periodic_db_sync(self):
 
         while not self.stop_event.is_set():

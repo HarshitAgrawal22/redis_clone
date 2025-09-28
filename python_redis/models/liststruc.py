@@ -66,12 +66,6 @@ class List_Struc:
 
             time.sleep(5)
 
-    def kill(self):
-        # this is to stope the periodic update thread
-        # self.db.log(self.collection)
-        self.dirty_items.clear()
-        self.stop_event.set()
-
     def rpush(self, data):
         self.storage.append(data)
         self.db_right_index = self.db_right_index + 1

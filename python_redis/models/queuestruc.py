@@ -66,12 +66,6 @@ class DataQueue:
 
             time.sleep(5)
 
-    def kill(self):
-        # this is to stope the periodic update thread
-        # self.db.log(self.collection)
-        self.dirty_items.clear()
-        self.stop_event.set()
-
     def display(self):
         with self.lock:
 
