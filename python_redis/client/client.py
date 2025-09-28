@@ -32,32 +32,43 @@ class Client:
 
         # message = f"*3\r\n${len('SET')}\r\nSET\r\n${len(key)}\r\n{key}\r\n${len(value)}\r\n{value}\r\n"
         lists = ["harshit", "hrishika", "tiwari", "samosa", "mayank", "billa", "uday"]
-        count: int = 0
-        for i in lists:
-            count += 1
-            ic(self.get(f"name{count}"))
-            message = f"hset name{count} {i}"
+
+        for i in range(1000):
+
+            message = f"hset name{i} value{i}\r\n"
 
             encoded_message = message.encode("utf-8")
             self.conn.send(encoded_message)
 
-            threading.Event().wait(0.1)
+            # threading.Event().wait(0.1)
             response = self.conn.recv(1024)
-            ic(response.decode("utf-8"))
-            threading.Event().wait(0.1)
+            ic(f'Response =>  {response.decode("utf-8")}')
+            # ic(self.get(f"name{count}"))
+            # threading.Event().wait(0.1)
 
         return None
 
     def get(self, key: str):
 
-        message: str = f"hget {key}"
-        encoded_message = message.encode("utf-8")
+        # message: str = f"hget {key}"
+        # encoded_message = message.encode("utf-8")
 
         try:
+
+            for i in range(1000):
+
+                message = f"hget name{i}\r\n"
+
+                encoded_message = message.encode("utf-8")
+                self.conn.send(encoded_message)
+
+                # threading.Event().wait(0.1)
+                response = self.conn.recv(1024)
+                ic(f'value=> { response.decode("utf-8")}')
             # Send the message to the server
-            self.conn.send(encoded_message)
-            response = self.conn.recv(1024)
-            return response.decode("utf-8")
+            # self.conn.send(encoded_message)
+            # response = self.conn.recv(1024)
+            # return response.decode("utf-8")
         except Exception as e:
             print(e)
             # Close the connection

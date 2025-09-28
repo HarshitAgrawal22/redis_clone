@@ -1,10 +1,13 @@
 # this file contains all the protocols and Commands need for the server
-
+from __future__ import annotations
+from typing import Union, TYPE_CHECKING
 import re
 from typing import Union
 from icecream import ic
 from .command import Command
 
+if TYPE_CHECKING:
+    from python_redis.common import Message
 # from python_redis.common import Message
 
 # from main import Message, Server
@@ -15,7 +18,6 @@ COMMAND_SET = "hset"
 COMMAND_GET = "hget"
 COMMAND_HELLO = "hello"
 COMMAND_CLIENT = "client"
-COMMAND_QUIT = "shaanti"
 COMMAND_MULTIPLE_ATTRIBUTE_SET = "hsetattr"  # multiple attributes of a object where name of object will be key and attributes will be value
 COMMAND_MULTIPLE_ATTRIBUTE_GET = "hgetattr"
 COMMAND_SET_MULTIPLE_KEY_VAL = "hsetm"  # set multiple pairs in one command
@@ -24,6 +26,8 @@ COMMAND_CHECK = "hchec"  # check if a key exists
 COMMAND_DELETE = "hdel"  # delete a pair
 COMMAND_TOTAL = "hlen"  # total no. of keys and values on the database
 COMMAND_INCREMENT = "hincryby"  # HINCRBY user:1000 age 1
+COMMAND_QUIT = "shaanti"
+COMMAND_KILL = "kill"
 
 
 class CreateNewQueue(Command):
@@ -51,6 +55,14 @@ class GetCommand(Command):  #
 
     def __str__(self):
         return f"key:{self.key}"
+
+
+class KillCommand(Command):
+
+    def __init__(self):
+        pass
+
+    # here we are doing nothing
 
 
 class QuitCommand(Command):  #
@@ -136,6 +148,12 @@ def execute_get_command(args):
         raise ValueError("Invalid number of arguments for GET command")
     key = args[0]
     return GetCommand(key)
+
+
+def execute_kill_command(args):
+    if len(args) != 0:
+        raise ValueError("Invalid number of arguments for kill command")
+    return KillCommand()
 
 
 def execute_quit_command(args):
@@ -300,6 +318,13 @@ class HASHMAP_TASKS:
     @staticmethod
     def task_quit_command(msg, server):
         server.stop()
+
+    @staticmethod
+    def task_kill_command(msg: Message, server):
+        try:
+            msg.conn_peer.close_connection()
+        except Exception as e:
+            print(f"Exception while breaking connection=> {e}")
 
     @staticmethod
     def task_increment_command(msg, server):

@@ -1,6 +1,9 @@
 import threading
 from threading import RLock, Timer
 from typing import Tuple, Optional
+import time
+from icecream import ic
+from python_redis.db import *
 
 
 class Node:
@@ -17,14 +20,69 @@ class Node:
 # here we intent to store a object in the form of dictionary in the bst
 class bstree:
 
-    def __init__(self):
+    def __init__(self, db: HardDatabase):
         self.root: Node = None
         self.lock = threading.RLock()
         self.key: str = None
+        ic.configureOutput(prefix="DEBUG: ", includeContext=True)
+        self.db: HardDatabase = db
+        self.collection: Collection
+        if self.db.check_collection_exist("Tree"):
+
+            self.collection: Collection = self.db.new_collection("Tree")
+            self.load_from_hard_db()
+        else:
+            self.collection: Collection = self.db.new_collection("Tree")
+
+        self.lock: RLock = threading.RLock()
+        self.dirty_items: set[tuple[int, str, str]] = set()
+
+        self.stop_event: threading.Event = threading.Event()
+        t = threading.Thread(target=self.periodic_db_sync, args=(), daemon=True)
+        t.start()
+
+    def load_from_hard_db(self):
+        print("loading data from db")
+        for record in self.db.load_from_db(self.collection).sort("index", 1):
+            pass
+        # TODO: figure out the way to load data from db to DS
+        # self.ll.add_head(record["value"])
+
+    def periodic_db_sync(self):
+        # TODO change variable names
+        while not self.stop_event.is_set():
+            with self.lock:
+                dirty_items_snapshots = set(self.dirty_items)
+
+            if len(dirty_items_snapshots) != 0:
+                synced_items = set()
+                for index, item, operation in dirty_items_snapshots:
+
+                    try:
+                        # here is try catch because there can be a exception while having a transaction with db
+
+                        if operation == "d":
+
+                            ic(self.db.delete_dequeue_item(item, self.collection))
+                            synced_items.add((index, item, operation))
+                            print(operation)
+                        else:
+                            self.db.insert_and_update_ordered_items(
+                                item, index, self.collection
+                            )
+                            synced_items.add((index, item, operation))
+                    except Exception:
+                        print(Exception)
+                with self.lock:
+                    ic(self.dirty_items)
+                    ic(synced_items)
+                    self.dirty_items -= synced_items
+
+            time.sleep(5)
 
     @staticmethod
-    def new_tree():
-        return bstree()
+    def new_tree(db: HardDatabase):
+        return bstree(db)
 
     def check_key_None(self):
         return self.key != None
@@ -155,12 +213,18 @@ class bstree:
             return x
 
     def delete(self, key):
-        def minValue(node: Node):
-            minv = node.value
-            while node.left != None:
-                minv = node.left.value
-                node = node.left
-            return minv
+        # def minValue(node: Node):
+        #     minv = node.value
+        #     while node.left != None:
+        #         minv = node.left.value
+        #         node = node.left
+        #     return minv
+        def minValueNode(node: Node) -> Node:
+            current = node
+            # Keep moving left until we reach the smallest value
+            while current.left is not None:
+                current = current.left
+            return current
 
         def delete_node(key, root: Node):
             if root == None:
@@ -174,10 +238,11 @@ class bstree:
                 if root.left == None:
                     return root.right
                 elif root.right == None:
-                    return root.right
-
-                root.value = minValue(root.right)
-                root.right = delete_node(key, root.right)
+                    return root.left
+                succesor = minValueNode(root.right)
+                # root.value = minValue(root.right)
+                root.value = succesor.value
+                root.right = delete_node(succesor.value[self.key], root.right)
             return root
 
         with self.lock:

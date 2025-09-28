@@ -36,20 +36,14 @@ class Set:
                 return "NOT FOUND"
 
     def load_from_hard_db(self):
-        print("loading data from db")
+        # print("loading data from db")
         for record in self.db.load_from_db(self.collection):
             # ic(record["key"], record["value"])
             # self.data[record["key"]] = record["value"]
             self.storage.add(record["value"])
 
-    def kill(self):
-        # this is to stope the periodic update thread
-        # self.db.log(self.collection)
-        self.dirty_items.clear()
-        self.stop_event.set()
-
     def periodic_db_sync(self):
-        # TODO change variable names
+
         while not self.stop_event.is_set():
             with self.lock:
                 dirty_items_snapshots = set(self.dirty_items)
@@ -71,8 +65,8 @@ class Set:
                     except Exception:
                         print(Exception)
                 with self.lock:
-                    ic(self.dirty_items)
-                    ic(synced_items)
+                    # ic(self.dirty_items)
+                    # ic(synced_items)
                     self.dirty_items -= synced_items
 
             time.sleep(5)

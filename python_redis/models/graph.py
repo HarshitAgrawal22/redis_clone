@@ -1,23 +1,26 @@
 import threading
 from python_redis.models.service_ds.LinkedList import LinkedList, Node
 from python_redis.models.graph_config import Vertex, Edge, dijkistra
-
+from python_redis.db import *
 from icecream import ic
+import time
+from datetime import datetime
 
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
 
 class graph:
-    def __init__(self, is_weighted: int, is_directed: int):
+    def __init__(self, is_weighted: bool, is_directed: bool, db: HardDatabase):
         self.vertices: list[Vertex.Vertex] = list()
         self.is_directed: bool = is_directed
         self.is_weighted: bool = is_weighted
         self.key_name: str = None
         self.dij: dijkistra.dijkistra = dijkistra.dijkistra()
+        self.db: HardDatabase = db
 
     @staticmethod
-    def new_graph():  #
-        return graph(True, True)
+    def new_graph(db: HardDatabase):  #
+        return graph(True, True, db)
 
     def check_key_name_none(self):  #
         return self.key_name != None
@@ -136,10 +139,10 @@ class graph:
     def is_weighted_graph(self) -> bool:
         return self.is_weighted
 
-    def get_vertices(self):
+    def get_vertices(self) -> list[Vertex.Vertex]:
         return self.vertices
 
-    def get_vertices_str(self) -> list[Vertex.Vertex]:
+    def get_vertices_str(self) -> str:
         return "\n".join(map(str, self.vertices))
 
     def get_vertex_by_value(self, value: str):  #

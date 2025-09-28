@@ -27,13 +27,13 @@ class Server:
     def __init__(self, config: Config):
         # Server holds settings, a list of peers, a listener, and a channel for new peers.
         self.config: Config = config
-        self.peers: Dict[peer.Peer, bool] = {}
+        self.peers: Dict[peer.Peer, bool] = dict()
         # Dict to track connected peers with Peer as keys
         self.listener: socket.socket = socket.socket(
             socket.AF_INET, socket.SOCK_STREAM
         )  # Network listener
-        self.del_peer_ch: list[peer.Peer] = []
-        self.add_peer_ch: list[peer.Peer] = []  # Channel to add peers to the server
+        self.del_peer_ch: list[peer.Peer] = list()
+        self.add_peer_ch: list[peer.Peer] = list()  # Channel to add peers to the server
         # Channel to delete connection of a peer from the server
         self.quit_event = threading.Event()
         self.msg_queue = Queue()  # Queue to manage message for broadcasting
@@ -83,7 +83,12 @@ class Server:
         # print("loop started")
         # This loop waits for a peer in add_peer_ch and adds to the peers dict
         while not self.quit_event.is_set():
+            # TODO: Check for peers which remain in self.peers
+            # TODO: Add pub/sub module
+
+            # ic(self.peers)
             # print("a iteration in loop ")
+            print("", end="")
 
             # print("", end="")
             if not self.msg_queue.empty():
@@ -105,16 +110,16 @@ class Server:
                 self.peers[peer] = True
                 print(f"Added new peer: {peer.Conn.getpeername()}")
                 # Added print statement
-                # if self.del_peer_ch:
-                # this_peer = self.del_peer_ch.pop(0)
+            if self.del_peer_ch:
+                this_peer = self.del_peer_ch.pop(0)
                 # ic(self.peers)
-                # del self.peers[this_peer]
                 # print(f"Deleted peer: {this_peer.Conn.getpeername()}")
-            else:
-                # threading.Event().wait(0.1)
-                pass
-                # slight delay tp prevent busy waiting
-                # print("No new peer is received")
+                del self.peers[this_peer]
+            # else:
+            # threading.Event().wait(0.1)
+            # pass
+            # slight delay tp prevent busy waiting
+            # print("No new peer is received")
 
     def accept_loop(self) -> None:
         # Accepts incoming connections in a loop, handling each connection concurrently
@@ -149,8 +154,9 @@ class Server:
         from python_redis.db import HardDatabase
 
         # stops the server gracefully
-        self.peers
-        map(lambda peer: peer.Conn.close(), self.peers)
+        # TODO: figureout the server stopping problem
+
+        map(lambda peer: peer.close_connection(), self.peers.keys())
         self.quit_event.set()
         self.listener.close()
         for peer in self.peers.keys():
@@ -164,7 +170,14 @@ def main() -> None:
         server_thread = threading.Thread(target=server.start)
         server_thread.start()
         # client.Client("127.0.0.1:5001").test_tree()
-        # client.Client("127.0.0.1:5001").set("name", "HArshit")
+        # cl = client.Client("127.0.0.1:5001")
+        # thr = threading.Thread(target=cl.set, args=("name", "Harshit"))
+        # # cl.set("name", "HArshit")
+        # thr.start()
+
+        # threading.Thread(target=cl.get, args=("name",)).start()
+        # thread.start()
+        # cl.get("name")
 
         # ic(clint.get("name"))
         # (clint.insert_vertex_to_graph())

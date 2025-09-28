@@ -38,21 +38,16 @@ class KV:
         t.start()
         # Track dirty keys for periodic updates
 
-    def kill(self):
-        # this is to stope the periodic update thread
-        # self.db.log(self.collection)
-        self.dirty_keys.clear()
-        self.stop_event.set()
-
     def load_from_hard_db(self):
-        print("loading data from db")
+        # print("loading data from db")
         for record in self.db.load_from_db(self.collection):
-            ic(record["key"], record["value"])
+            # ic(record["key"], record["value"])
             self.data[record["key"]] = record["value"]
 
     def periodic_db_sync(self):
         while not self.stop_event.is_set():
             # TODO: here for now the work is getting done by checking each and every key-val pair,
+            # TODO: create copy only of the dirty keys
 
             with self.lock:
                 dict_db_snapshot = dict(self.data)
@@ -65,7 +60,7 @@ class KV:
 
                         if dict_db_snapshot.get(key) == None:
 
-                            ic(self.db.delete_item(key, self.collection))
+                            ic(self.db.delete_key(key, self.collection))
                             synced_keys.add((key, operation))
                             print(operation)
                         else:
@@ -77,10 +72,10 @@ class KV:
                         print(Exception)
                 with self.lock:
 
-                    ic(f"dirty keys before => {self.dirty_keys}")
+                    # ic(f"dirty keys before => {self.dirty_keys}")
 
                     self.dirty_keys -= synced_keys
-                    ic(f"dirty keys after { self.dirty_keys}")
+                    # ic(f"dirty keys after { self.dirty_keys}")
             time.sleep(5)
 
     def LRU(self):
