@@ -8,6 +8,7 @@ from .command import Command
 
 if TYPE_CHECKING:
     from python_redis.common import Message
+    from python_redis.main import Server
 # from python_redis.common import Message
 
 # from main import Message, Server
@@ -236,7 +237,7 @@ class HASHMAP_TASKS:
         print(self)
 
     @staticmethod
-    def task_set_command(msg, server):
+    def task_set_command(msg: Message, server):
         # print(
         #     f"Somebody wants to set a key into the hash table \nkey=>{msg.cmd.key}\nvalue =>{msg.cmd.value}"
         # )
@@ -316,7 +317,8 @@ class HASHMAP_TASKS:
             print(f"got error in CLIENT command: {e}")
 
     @staticmethod
-    def task_quit_command(msg, server):
+    def task_quit_command(msg: Message, server: Server):
+
         server.stop()
 
     @staticmethod

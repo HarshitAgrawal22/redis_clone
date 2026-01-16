@@ -17,8 +17,10 @@ ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
 class HardDatabase:
     def __init__(self, db_name):
-        self.db: Database = client[db_name]
-
+        try:
+            self.db: Database = client[db_name]
+        except Exception as e:
+            print(e)
         # self.collection: Collection = None
 
     @staticmethod
@@ -63,6 +65,9 @@ class HardDatabase:
         except Exception as e:
             ic(e)
             return False
+
+    def get_data_from_meta(self, ds, collection: Collection):
+        return collection.find_one({"key": ds})
 
     def insert_and_update_ordered_items(
         self, value: str, index: int, collection: Collection
@@ -120,6 +125,15 @@ class HardDatabase:
         ic(docs)
 
         return collection.find()
+
+    def insert_tree_node(self, node_val, collection):
+        pass
+
+    def update_tree_node(self, node_val, collection):
+        pass
+
+    def delete_tree_node(self, node_val, collection):
+        pass
 
     @staticmethod
     def drop_all_dbs():

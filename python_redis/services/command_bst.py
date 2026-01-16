@@ -10,8 +10,10 @@ execute_task_bst = {
     bst_protocols.PostOrderTraversalCommand: bst_protocols.TREE_TASKS.task_post_order_traversal_command,
     bst_protocols.InsertCommand: bst_protocols.TREE_TASKS.task_insert_command,
     bst_protocols.GetKeyCommand: bst_protocols.TREE_TASKS.task_get_key_command,
+    bst_protocols.UpsertCommand: bst_protocols.TREE_TASKS.task_upsert_node_values,
 }
 execute_command_bst = {
+    bst_protocols.COMMAND_UPSERT_NODE_KEY_VAL: bst_protocols.execute_upsert_key_val_command,
     bst_protocols.COMMAND_DELETE: bst_protocols.execute_delete_command,
     bst_protocols.COMMAND_IN_ORDER: bst_protocols.execute_in_order_traversal_command,
     bst_protocols.COMMAND_GET: bst_protocols.execute_get_command,

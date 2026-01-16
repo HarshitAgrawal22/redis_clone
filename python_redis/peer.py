@@ -38,9 +38,9 @@ class Peer:
         )
 
         ic(self.DB_str)
-        # TODO: here in it del_peer_chan can raise race condition so handle that and Chagpt told that the we are refencing the original server's del_peer_chan
-        self.msg_chan: Queue = msg_chan
-        self.del_peer_chan: list[Peer] = del_peer_chan
+        # TODO: here in it del_peer_chan can raise race condition so handle that and Chatgpt told that the we are refencing the original server's del_peer_chan
+        self.msg_chan: Queue[Message] = msg_chan
+        self.del_peer_chan: Queue[Peer] = del_peer_chan
         self._db: HardDatabase = HardDatabase.new_db(self.DB_str)
         self._queue: queuestruc.DataQueue = queuestruc.DataQueue.new_queue(self._db)
         self._tree: tree.bstree = tree.bstree.new_tree(self._db)
@@ -49,6 +49,7 @@ class Peer:
         self._sets: sets.Set = sets.Set.new_set(self._db)
         self._graph: graph.graph = graph.graph.new_graph(self._db)
         self.kv: keyval.KV = keyval.KV.NewKV(self._db)
+        self.meta_collection = self._db.new_collection("meta")
 
     @staticmethod
     def newPeer(
@@ -223,7 +224,7 @@ class Peer:
             self.Conn.close()
 
         # Step 3: Cleanup peer DB
-        self.del_peer_chan.append(self)
+        self.del_peer_chan.put(self)
         HardDatabase.drop_peer_db(self.DB_str)
 
         print(f"Closed connection for {self}")

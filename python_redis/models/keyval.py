@@ -72,10 +72,10 @@ class KV:
                         print(Exception)
                 with self.lock:
 
-                    # ic(f"dirty keys before => {self.dirty_keys}")
+                    ic(f"dirty keys before => {self.dirty_keys}")
 
                     self.dirty_keys -= synced_keys
-                    # ic(f"dirty keys after { self.dirty_keys}")
+                    ic(f"dirty keys after { self.dirty_keys}")
             time.sleep(5)
 
     def LRU(self):
