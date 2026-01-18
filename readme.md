@@ -1,8 +1,10 @@
 
 # Getting Started
 
-Start Server by 
-``` 
+Start Server by
+
+```
+
  python -m python_redis.main
 ```
 Access the Server by tcp connection 
