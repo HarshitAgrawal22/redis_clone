@@ -29,6 +29,15 @@ COMMAND_TOTAL = "hlen"  # total no. of keys and values on the database
 COMMAND_INCREMENT = "hincryby"  # HINCRBY user:1000 age 1
 COMMAND_QUIT = "shaanti"
 COMMAND_KILL = "kill"
+COMMAND_UNKNOWN_COMMAND = "ukc"
+
+
+class UnknownCommand(Command):
+    def __init__(self, command: str):
+        self.response = f"command:({ ", ".join(command) }) is unknown"
+
+    def __str__(self):
+        return self.response
 
 
 class CreateNewQueue(Command):
@@ -143,6 +152,12 @@ def execute_set_command(args):
     return SetCommand(key, value)
 
 
+def execute_unknown_command(args):
+    if len(args) < 0:
+        raise ValueError("Invalid Command not acceped")
+    return UnknownCommand(args)
+
+
 def execute_get_command(args):
     if len(args) != 1:
         print(f"{args} = args")
@@ -237,6 +252,13 @@ class HASHMAP_TASKS:
         print(self)
 
     @staticmethod
+    def task_unknown_command(msg: Message, server):
+        try:
+            msg.conn_peer.send(msg.cmd.response.encode("utf-8"))
+        except Exception as e:
+            print(f"got exception while processing unknown command:  {e}")
+
+    @staticmethod
     def task_set_command(msg: Message, server):
         # print(
         #     f"Somebody wants to set a key into the hash table \nkey=>{msg.cmd.key}\nvalue =>{msg.cmd.value}"
@@ -297,7 +319,7 @@ class HASHMAP_TASKS:
             print(f"got error in SET_MULTIPLE_ATTRIBUTES {e}")
 
     @staticmethod
-    def task_set_multi_key_val_command(msg, server):
+    def task_set_multi_key_val_command(msg: Message, server):
         try:
             ic(msg.cmd.args)
             msg.conn_peer.kv.set_multiple_pairs(msg.cmd.args)
@@ -324,12 +346,15 @@ class HASHMAP_TASKS:
     @staticmethod
     def task_kill_command(msg: Message, server):
         try:
+            print(str(f"Closed the connection from :{msg.conn_peer}"))
             msg.conn_peer.close_connection()
+            # raise OSError("breaking connection from client ")
+            
         except Exception as e:
             print(f"Exception while breaking connection=> {e}")
 
     @staticmethod
-    def task_increment_command(msg, server):
+    def task_increment_command(msg: Message, server):
         try:
             msg.conn_peer.kv.increment(msg.cmd.key)
             msg.conn_peer.send("OK".encode("utf-8"))
@@ -337,7 +362,7 @@ class HASHMAP_TASKS:
             print(f"got error in CLIENT command: {e}")
 
     @staticmethod
-    def task_delete_command(msg, server):
+    def task_delete_command(msg: Message, server):
         try:
             msg.conn_peer.kv.delete_pair(msg.cmd.key)
             msg.conn_peer.send("OK".encode("utf-8"))

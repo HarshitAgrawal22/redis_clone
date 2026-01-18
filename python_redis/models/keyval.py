@@ -13,7 +13,7 @@ from icecream import ic
 
 class KV:
     def __init__(self, db: HardDatabase):
-        # TODO: Here we wil need to add a backup storage which will have the incoming updates when the dictiony is geting synced with the hard db
+        # TODO:  Here we wil need to add a backup storage which will have the incoming updates when the dictiony is geting synced with the hard db
         ic.configureOutput(prefix="DEBUG: ", includeContext=True)
         # Initialize an empty dictionary and an RLock for thread safety
 

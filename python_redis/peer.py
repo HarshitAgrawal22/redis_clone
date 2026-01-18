@@ -63,7 +63,7 @@ class Peer:
         # Decode raw bytes to string without removing any characters
         # print(f"raw command => {raw} {type(raw)} ")
         arr_len = len(holder_arr := raw.split())
-        raw = f"*{arr_len}\r\n"
+        raw: str = f"*{arr_len}\r\n"
         for i in holder_arr:
             temp_str = i
             raw += f"${len(i)}\r\n{temp_str}"
@@ -97,18 +97,26 @@ class Peer:
         # Extract command name and arguments
         command_name, *args = [item[1] for item in items]
         try:
-            # if command_name.lower().strip() == "kill":
-            #     # TODO: move this kill command to a DS and make it work there only
-            #     self.kv.kill()
-            #     self.close_connection()
 
-            func = execute_command_hash_map.get(command_name.lower().strip())
+            func = (
+                resultfunc
+                if (
+                    resultfunc := execute_command_hash_map.get(
+                        command_name.lower().strip()
+                    )
+                )
+                != None
+                else execute_command_hash_map.get("ukc")
+            )
             # print(func, "is the function we have got")
+
             if func != None:
                 return func(args)
             # If no command matches, return None or raise an error
             else:
+
                 raise ValueError(f"Unknown command: {command_name}")
+
         except Exception as e:
             print(e)
 
@@ -152,25 +160,29 @@ class Peer:
                     command = self.parse_command(raw_str)
                     # print("got till here")
                     # If a valid command is returned, add to message queue
-                    if command:
+                    if command != None:
                         message = Message(cmd=command, conn_peer=self)
                         self.msg_chan.put(message)
 
                     # print(f"Message queued: {message}")
 
             except ConnectionResetError as e:
-                print(f"Error in read_loop: {e}")
-                HardDatabase.drop_peer_db(self.DB_str)
+                print(f"Connection reset Error in read_loop: {e}")
+                # HardDatabase.drop_peer_db(self.DB_str)
+                self.close_connection()
                 # print("connection is broKen from the client")
                 break
             except OSError as e:
-                print(f"Error in read_loop: {e}")
-                HardDatabase.drop_peer_db(self.DB_str)
+                print(f"OS Error in read_loop: {e}")
+                # HardDatabase.drop_peer_db(self.DB_str)
+                # self.close_connection()
 
                 break
             except Exception as e:
                 print(f"Error in read_loop: {e}")
-                pass
+                # self.close_connection()
+                # when nothing is passed from client side then in that case that raises a error (because of that self.close_connection() is commented)
+                break
 
                 # Exit loop on error
 
@@ -184,7 +196,7 @@ class Peer:
             command = self.parse_command(line)
             # print("got till here")
             # If a valid command is returned, add to message queue
-            if command:
+            if command != None:
                 message = Message(cmd=command, conn_peer=self)
                 self.msg_chan.put(message)
         # the last command wasn't getting processed in the while loop so that was handled here
@@ -193,7 +205,7 @@ class Peer:
             buffer = buffer.rstrip("\r")
             ic(buffer)
             command = self.parse_command(buffer)
-            if command:
+            if command != None:
                 message = Message(cmd=command, conn_peer=self)
                 self.msg_chan.put(message)
 
@@ -212,7 +224,9 @@ class Peer:
             return None
 
     def close_connection(self):
+
         try:
+            self.send("Bye! thanks for using redis".encode("utf-8"))
             # Step 1: Shutdown both send & receive
             self.Conn.shutdown(socket.SHUT_RDWR)
         except OSError as oe:
@@ -221,13 +235,15 @@ class Peer:
             pass
         finally:
             # Step 2: Close the socket
+
             self.Conn.close()
+            self.del_peer_chan.put(self)
 
-        # Step 3: Cleanup peer DB
-        self.del_peer_chan.put(self)
-        HardDatabase.drop_peer_db(self.DB_str)
+            # Step 3: Cleanup peer DB
 
-        print(f"Closed connection for {self}")
+            HardDatabase.drop_peer_db(self.DB_str)
+
+            # print(f"Closed connection for {self}")
 
     # check if the command is "hsetm" and requires more then 0 and even arguments
     # if command_name.lower().strip() == COMMAND_SET_MULTIPLE_KEY_VAL:

@@ -2,7 +2,9 @@ import socket
 import threading
 from typing import Dict
 
+# TODO: write middleware python application which will convert the normal logical commands to the RESP which this redis needs and then also return the result in Human readable form which will be generated from RESP result
 
+# TODO: add module for server's config
 import python_redis.protocols.keyval_protocol as keyval_protocol
 
 from python_redis.common import execute_task_hash_map, Message
@@ -35,14 +37,11 @@ class Server:
         self.listener: socket.socket = socket.socket(
             socket.AF_INET, socket.SOCK_STREAM
         )  # Network listener
-        self.del_peer_ch: Queue[peer.Peer] = (
-            # list()
-            Queue()  # TODO: Lists are not thread safe, so replace the lists with queue
-        )
+        self.del_peer_ch: Queue[peer.Peer] = Queue()
+
         # Channel to delete connection of a peer from the server
-        self.add_peer_ch: Queue[peer.Peer] = (
-            Queue()
-        )  # Channel to add peers to the server
+        self.add_peer_ch: Queue[peer.Peer] = Queue()
+
         self.quit_event = threading.Event()
         self.msg_queue = Queue()  # Queue to manage message for broadcasting
 
@@ -81,11 +80,11 @@ class Server:
         func = execute_task_hash_map.get(type(msg.cmd))
         if func != None:
             data = func(msg, self)
+            return None
             # ic(f"{data} is the data we got in return ")
         else:
             print("Invalid Command")
-
-        return str("killed a Peer")
+            return str("killed a Peer")
 
     def loop(self) -> None:
         # print("loop started")
@@ -95,10 +94,7 @@ class Server:
             # TODO: Add pub/sub module
 
             # ic(self.peers)
-            # print("a iteration in loop ")
-            # print("", end="")
 
-            # print("", end="")
             try:
                 msg = self.msg_queue.get(timeout=0.05)
                 err = self.handle_message(
@@ -106,75 +102,41 @@ class Server:
                 )  # TODO: check and add error in this function's response
                 if err:
                     print(f"Raw Message Error-> {err}")
-
-                # print(f"got exception while fetching msg->  {e}")
-
-                # if not self.msg_queue.empty():
-                # print("analyzing command")
-                # msg: Message = self.msg_queue.get(timeout=0.001)
-
-                # if msg.cmd.decode("utf-8") != "quit\r\n":
-                # print(raw_msg.decode("utf-8"))
-
-                # else:  # if we get quit message from any server then the server is stopped
-                # self.stop()
-                # this is for development phase only
+            except queue.Empty:
+                pass
 
                 # if self.add_peer_ch:
                 # peer = self.add_peer_ch.pop(0)
-
+            try:
                 peer = self.add_peer_ch.get_nowait()
                 with self.peers_lock:
                     self.peers[peer] = True
+                    ic(self.peers)
                 print(f"Added new peer: {peer.Conn.getpeername()}")
-
+            except queue.Empty:
+                pass
                 # Added print statement
                 # if self.del_peer_ch:
                 # this_peer = self.del_peer_ch.pop(0)
-
+            try:
                 this_peer = self.del_peer_ch.get_nowait()
-                # ic(self.peers)
-                # print(f"Deleted peer: {this_peer.Conn.getpeername()}")
                 with self.peers_lock:
+
                     # TODO: get how to configure peers lock
 
                     del self.peers[this_peer]
+                    # TODO : solve the race condition in del_peer_chan
+                    ic(self.peers)
+                    # this_peer.close_connection()
+                    ic(this_peer)
+
+                    # TODO : solve this getpeername error
             except queue.Empty:
                 pass
-            # else:
-            # threading.Event().wait(0.1)
-            # pass
-            # slight delay tp prevent busy waiting
-            # print("No new peer is received")
+                # ic(self.peers)
+
         print("Thanks For Using Redis")
 
-    #     Why this works
-
-    # msg_queue.get(timeout=0.05) blocks
-
-    # If no message arrives:
-
-    # Thread sleeps up to 50ms
-
-    # CPU usage drops to near-zero
-
-    # Peer queues are checked opportunistically
-
-    # 🧠 Important design rule
-
-    # At least one blocking operation must exist in every server loop.
-
-    # Otherwise, the loop will busy-spin.
-
-    # Redis achieves this via:
-
-    # epoll / event loop
-
-    # blocking socket reads
-
-    # In your threaded design:
-
-    # Queue.get(timeout=...) is the correct equivalent
     def accept_loop(self) -> None:
         # Accepts incoming connections in a loop, handling each connection concurrently
         while not self.quit_event.is_set():
@@ -189,6 +151,11 @@ class Server:
                 print(f"Accept error: {e}")
 
     def handle_conn(self, conn: socket.socket) -> None:
+        # TCP keep alive
+        conn.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+
+        # Windows-specific tuning
+        conn.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 30_000, 10_000))
         # Handles each new connection by creating a Peer instance
         this_peer: peer.Peer = peer.Peer.newPeer(
             conn, self.msg_queue, self.del_peer_ch
@@ -209,7 +176,6 @@ class Server:
         from python_redis.db import HardDatabase
 
         # stops the server gracefully
-        # TODO: figureout the server stopping problem
 
         map(lambda peer: peer.close_connection(), self.peers.keys())
         self.quit_event.set()
