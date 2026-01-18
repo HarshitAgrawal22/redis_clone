@@ -126,14 +126,14 @@ class HardDatabase:
 
         return collection.find()
 
-    def insert_tree_node(self, node_val, collection):
-        pass
+    # def insert_tree_node(self, node_val, collection):
+    #     pass
 
-    def update_tree_node(self, node_val, collection):
-        pass
+    # def update_tree_node(self, node_val, collection):
+    #     pass
 
-    def delete_tree_node(self, node_val, collection):
-        pass
+    # def delete_tree_node(self, node_val, collection):
+    #     pass
 
     @staticmethod
     def drop_all_dbs():

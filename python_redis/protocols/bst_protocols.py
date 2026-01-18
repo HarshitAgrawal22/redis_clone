@@ -3,7 +3,7 @@ from typing import Union, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from python_redis.common import Message
-from typing import Union
+# from typing import Union
 from icecream import ic
 from .command import Command
 

@@ -14,20 +14,20 @@ class LinkedList:
         self.tail: Node = None
 
     def show_head(self):
-        if self.head == None:
+        if self.head is None:
             return "Empty"
         else:
             return self.head.value
 
     def show_tail(self):
-        if self.head == None:
+        if self.head is None:
             return "Empty"
         else:
             return self.tail.value
 
     def add_head(self, data):
         temp: Node = Node(data)
-        if self.head == None:
+        if self.head is None:
             self.head = temp
             self.tail = temp
             return
@@ -37,7 +37,7 @@ class LinkedList:
 
     def add_last(self, data):
         temp: Node = Node(data)
-        if self.head == None:
+        if self.head is None:
             self.head = temp
             self.tail = temp
             return
@@ -46,10 +46,10 @@ class LinkedList:
         return
 
     def is_empty(self):
-        return self.head == None
+        return self.head is None
 
     def remove_head(self) -> int:
-        if self.head == None:
+        if self.head is None:
             print("Cant delete head its empty ")
             return -1
         temp = self.head.value
@@ -57,7 +57,7 @@ class LinkedList:
         return temp
 
     def remove_tail(self):
-        if self.head == None:
+        if self.head is None:
             print("list is empty ")
             return
 

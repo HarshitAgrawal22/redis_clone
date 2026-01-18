@@ -33,7 +33,7 @@ COMMAND_UNKNOWN_COMMAND = "ukc"
 
 
 class UnknownCommand(Command):
-    def __init__(self, command: str):
+    def __init__(self, command: tuple[str]):
         self.response = f"command:({ ", ".join(command) }) is unknown"
 
     def __str__(self):
@@ -153,8 +153,6 @@ def execute_set_command(args):
 
 
 def execute_unknown_command(args):
-    if len(args) < 0:
-        raise ValueError("Invalid Command not acceped")
     return UnknownCommand(args)
 
 
@@ -349,7 +347,6 @@ class HASHMAP_TASKS:
             print(str(f"Closed the connection from :{msg.conn_peer}"))
             msg.conn_peer.close_connection()
             # raise OSError("breaking connection from client ")
-            
         except Exception as e:
             print(f"Exception while breaking connection=> {e}")
 

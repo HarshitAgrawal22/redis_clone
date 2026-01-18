@@ -9,8 +9,9 @@ import python_redis.protocols.keyval_protocol as keyval_protocol
 
 from python_redis.common import execute_task_hash_map, Message
 from python_redis import peer
-from queue import Queue
-import queue
+from queue import Queue, Empty as EmptyQueue
+
+# import queue
 from python_redis.client import client
 import python_redis.models.keyval as keyval
 
@@ -83,7 +84,6 @@ class Server:
             return None
             # ic(f"{data} is the data we got in return ")
         else:
-            print("Invalid Command")
             return str("killed a Peer")
 
     def loop(self) -> None:
@@ -100,9 +100,9 @@ class Server:
                 err = self.handle_message(
                     msg
                 )  # TODO: check and add error in this function's response
-                if err:
+                if err != None:
                     print(f"Raw Message Error-> {err}")
-            except queue.Empty:
+            except EmptyQueue:
                 pass
 
                 # if self.add_peer_ch:
@@ -113,7 +113,7 @@ class Server:
                     self.peers[peer] = True
                     ic(self.peers)
                 print(f"Added new peer: {peer.Conn.getpeername()}")
-            except queue.Empty:
+            except EmptyQueue:
                 pass
                 # Added print statement
                 # if self.del_peer_ch:
@@ -127,11 +127,10 @@ class Server:
                     del self.peers[this_peer]
                     # TODO : solve the race condition in del_peer_chan
                     ic(self.peers)
-                    # this_peer.close_connection()
+
                     ic(this_peer)
 
-                    # TODO : solve this getpeername error
-            except queue.Empty:
+            except EmptyQueue:
                 pass
                 # ic(self.peers)
 

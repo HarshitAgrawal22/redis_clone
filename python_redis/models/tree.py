@@ -27,6 +27,7 @@ class AVLTree:
 
         if key < root.key:
             root.left = self.insert(root.left, key, value)
+        elif key > root.key:
             root.right = self.insert(root.right, key, value)
         else:
             # Equal keys are not allowed in BST
@@ -254,7 +255,7 @@ class bstree:
     def upsert_node_data(self, key: str, args: tuple[str]):
         def search(value, root: Node):
 
-            if root == None:
+            if root is None:
                 return root
             if root.value[self.key] == value:
                 return root
@@ -265,7 +266,7 @@ class bstree:
 
         if len(args) % 2 == 0:
             node: Node = search(key, self.root)
-            if node == None:
+            if node is None:
                 return "Invalid Key"
             for i in range(0, len(args), 2):
                 if args[i] == self.key:
@@ -279,7 +280,7 @@ class bstree:
 
         def traversal(node: Node):
 
-            if node == None:
+            if node is None:
                 return ""
             else:
                 map = f"{node.value}\n"
@@ -296,7 +297,7 @@ class bstree:
 
         def traversal(node: Node):
 
-            if node == None:
+            if node is None:
                 return ""
             else:
                 map = traversal(node.left)
@@ -313,7 +314,7 @@ class bstree:
 
         def traversal(node: Node):
 
-            if node == None:
+            if node is None:
                 return ""
             else:
                 map = traversal(node.left)
@@ -330,7 +331,7 @@ class bstree:
 
         def search(value, root: Node):
 
-            if root == None:
+            if root is None:
                 return "NOT FOUND"
             if root.value[self.key] == value:
                 return root.value
@@ -347,7 +348,7 @@ class bstree:
 
         def insert_node(value: dict, root: Node):
             print(value)
-            if root == None:
+            if root is None:
                 root = Node(value=value)
             # if root.value[self.key] == value[self.key]:
             #     print("here we are ")
@@ -381,7 +382,7 @@ class bstree:
 
     def display(self):
         def display_tree(root: Node, map: str, level: int):
-            if root == None:
+            if root is None:
                 return ""
             else:
                 level += 1
@@ -392,7 +393,7 @@ class bstree:
             return map
 
         with self.lock:
-            if self.root == None:
+            if self.root is None:
                 print("empty tree")
             print(x := display_tree(self.root, "", 0))
             return x
@@ -412,7 +413,7 @@ class bstree:
             return current
 
         def delete_node(key, root: Node):
-            if root == None:
+            if root is None:
                 return root
             if key < root.value[self.key]:
                 root.left = delete_node(key, root.left)
@@ -420,9 +421,9 @@ class bstree:
             elif key > root.value[self.key]:
                 root.right = delete_node(key, root.right)
             else:
-                if root.left == None:
+                if root.left is None:
                     return root.right
-                elif root.right == None:
+                elif root.right is None:
                     return root.left
                 succesor = minValueNode(root.right)
                 # root.value = minValue(root.right)
