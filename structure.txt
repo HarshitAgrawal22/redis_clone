@@ -1,0 +1,56 @@
+python_redis/
+│
+├── core/                         # Pure in-memory data structures (NO DB, NO sockets)
+│   ├── kv.py                     # Dict logic only
+│   ├── list_ds.py                # List logic only
+│   ├── set_ds.py                 # Set logic only
+│   ├── tree_ds.py                # BST / AVL logic only
+│   ├── graph_ds.py               # Graph logic only
+│   ├── queue_ds.py               # Queue logic only
+│   └── stack_ds.py               # Stack logic only
+│
+├── persistence/                  # Hard-disk layer (MongoDB only)
+│   ├── harddb.py                 # Your current db.py
+│   ├── kv_store.py               # KV persistence logic
+│   ├── list_store.py             # List persistence logic
+│   ├── tree_store.py             # Tree persistence logic
+│   ├── set_store.py              # Set persistence logic
+│   ├── graph_store.py             # Graph persistence logic
+│   └── queue_store.py             # Queue persistence logic
+│
+├── network/                      # Socket & connection lifecycle
+│   ├── server.py                 # Your current main.py Server class
+│   ├── peer.py                   # Your current peer.py
+│   └── connection.py             # Socket utilities (send/close/retry)
+│
+├── protocol/                     # RESP parsing only (NO execution)
+│   ├── parser.py                 # parse bytes → Command
+│   ├── keyval.py                 # was keyval_protocol.py
+│   ├── bst.py                    # was bst_protocols.py
+│   ├── list.py
+│   ├── queue.py
+│   ├── stack.py
+│   ├── set.py
+│   └── graph.py
+│
+├── execution/                    # Command routing & execution
+│   ├── dispatcher.py             # Your execute_*_hash_map logic
+│   └── handlers/
+│       ├── kv.py                 # Executes KV commands
+│       ├── list.py
+│       ├── tree.py
+│       ├── queue.py
+│       ├── stack.py
+│       ├── set.py
+│       └── graph.py
+│
+├── pubsub/                       # Pub/Sub engine
+│   └── broker.py
+│
+├── config/
+│   └── server_config.py
+│
+├── middleware/
+│   └── user_cmd_mw.py
+│
+└── main.py                       # Startup only
