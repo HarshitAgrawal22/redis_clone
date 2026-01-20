@@ -1,6 +1,6 @@
 from python_redis.models.service_ds.LinkedList import LinkedList, Node
 import threading
-from python_redis.db import *
+from python_redis.persistence.db import *
 from threading import RLock, Timer
 import time
 

@@ -1,7 +1,7 @@
 import socket
 from typing import Optional
 
-from python_redis.db import HardDatabase
+from python_redis.persistence.db import HardDatabase
 from python_redis.common import execute_command_hash_map, Message
 import re
 from icecream import ic
@@ -14,7 +14,7 @@ from python_redis.models import sets, stacks, liststruc, tree, queuestruc, graph
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from python_redis.db import HardDatabase
+    from python_redis.persistence.db import HardDatabase
 # from main import Server, Config
 from queue import Queue
 

@@ -1,9 +1,9 @@
 import threading
 from threading import RLock
 from typing import Dict, Tuple, Optional
-from python_redis.db import *
+from python_redis.persistence.db import *
 
-# import asyncio
+
 import time
 from icecream import ic
 
@@ -56,7 +56,7 @@ class KV:
                 synced_keys = set()
                 for key, operation in dirty_keys_snapshots:
                     try:
-                        # here is try catch because there can be a exception while having a transaction with db
+                        # ! here is try catch because there can be a exception while having a transaction with db
 
                         if dict_db_snapshot.get(key) == None:
 

@@ -1,9 +1,9 @@
 from __future__ import annotations
 from python_redis.protocols.command import Command
 from python_redis.services import (
+    command_stack,
     command_bst,
     command_graph,
-    command_stack,
     command_dict,
     command_queue,
     command_sets,

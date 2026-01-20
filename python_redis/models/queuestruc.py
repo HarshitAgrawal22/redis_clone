@@ -1,6 +1,6 @@
 import threading
 from threading import RLock, Timer
-from python_redis.db import *
+from python_redis.persistence.db import *
 from python_redis.models.service_ds.LinkedList import LinkedList, Node
 from icecream import ic
 import time

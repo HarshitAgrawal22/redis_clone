@@ -54,3 +54,7 @@ python_redis/
 │   └── user_cmd_mw.py
 │
 └── main.py                       # Startup only
+
+
+python3 -m venv venv
+source venv/bin/activate

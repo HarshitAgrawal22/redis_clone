@@ -8,7 +8,7 @@ from .command import Command
 
 if TYPE_CHECKING:
     from python_redis.common import Message
-    from python_redis.main import Server
+    from python_redis.network.Server import Server
 # from python_redis.common import Message
 
 # from main import Message, Server

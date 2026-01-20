@@ -5,7 +5,6 @@ from .command import Command
 if TYPE_CHECKING:
     from python_redis.common import Message
 
-# from main import Message, Server
 
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 COMMAND_BFS = "gbfs"
