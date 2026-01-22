@@ -1,13 +1,15 @@
 import socket
 import threading
+import time
 from typing import Dict
 
 # TODO: write middleware python application which will convert the normal logical commands to the RESP which this redis needs and then also return the result in Human readable form which will be generated from RESP result
 
 # TODO: add module for server's config
 
+from python_redis.Middleware.user_cmd_mw import SocketProxyMiddleware
 from python_redis.common import execute_task_hash_map, Message
-from python_redis import peer
+from python_redis.network import peer
 from queue import Queue, Empty as EmptyQueue
 from python_redis.network.Server import Server, Config
 
@@ -21,11 +23,20 @@ default_listen_address: str = ":5001"
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
 
-def main() -> None:
+def main() ->                                       None:
     server = Server.new_server(config=Config())
     try:
-        server_thread = threading.Thread(target=server.start)
+        server_thread:threading.Thread = threading.Thread(target=server.start)
         server_thread.start()
+        time.sleep(1)
+        proxy = SocketProxyMiddleware(
+            listen_host="127.0.0.1",
+            listen_port=6001,  # Telnet connects here
+            target_host="127.0.0.1",
+            target_port=5001,  # Your server
+        )
+        proxy.start()
+        
         # client.Client("127.0.0.1:5001").test_tree()
         # cl = client.Client("127.0.0.1:5001")
         # thr = threading.Thread(target=cl.set, args=("name", "Harshit"))

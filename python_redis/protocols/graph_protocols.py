@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import Union, TYPE_CHECKING
 from icecream import ic
 from .command import Command

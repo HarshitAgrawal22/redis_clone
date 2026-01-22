@@ -8,7 +8,7 @@ from typing import Dict
 import python_redis.protocols.keyval_protocol as keyval_protocol
 
 from python_redis.common import execute_task_hash_map, Message
-from python_redis import peer
+from python_redis.network import peer
 from queue import Queue, Empty as EmptyQueue
 
 # import queue
@@ -129,7 +129,7 @@ class Server:
                     # TODO: get how to configure peers lock
 
                     del self.peers[this_peer]
-                    # TODO : solve the race condition in del_peer_chan
+                    # TODO: solve the race condition in del_peer_chan
                     ic(self.peers)
 
                     ic(this_peer)
@@ -150,15 +150,20 @@ class Server:
                     target=self.handle_conn, args=(conn,), daemon=True
                 )
                 thread.start()
+            
+
+            except OSError:
+                break
             except Exception as e:
                 print(f"Accept error: {e}")
+        print("Stopped accept loop")
 
     def handle_conn(self, conn: socket.socket) -> None:
         # TCP keep alive
-        conn.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+        # conn.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
 
         # Windows-specific tuning
-        conn.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 30_000, 10_000))
+        # conn.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 30_000, 10_000))
         # Handles each new connection by creating a Peer instance
         this_peer: peer.Peer = peer.Peer.newPeer(
             conn, self.msg_queue, self.del_peer_ch
@@ -176,13 +181,14 @@ class Server:
         thread.start()
 
     def stop(self) -> None:
-        from python_redis.persistence.db import HardDatabase
+        
 
         # stops the server gracefully
 
-        map(lambda peer: peer.close_connection(), self.peers.keys())
+        for peer in list(self.peers):
+            peer.close_connection()
         self.quit_event.set()
         self.listener.close()
-        for peer in self.peers.keys():
-            HardDatabase.drop_peer_db(peer.DB_str)
-            print("Server stopped")
+        # raise Exception("Good Bye")
+        
+        # ! the server is not stopping gracefully 

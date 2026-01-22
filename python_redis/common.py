@@ -12,7 +12,7 @@ from python_redis.services import (
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from python_redis.peer import Peer
+    from python_redis.network.peer import Peer
 
 SyncTime: int = 600
 
@@ -25,6 +25,8 @@ class Message:
 
     def __str__(self):
         return f"conn_peer:{self.conn_peer}     cmd:{self.cmd}"
+
+
 
 
 execute_task_hash_map = {
@@ -65,3 +67,15 @@ Example: Redis allows pipelining, which sends multiple commands in a single netw
 5️⃣ Optimize Memory & Caching Strategy
 Use memory-efficient data structures (like struct for fixed-size storage).
 Implement lazy deletion or eviction policies to prevent memory bloat."""
+
+
+
+
+# TODO implement these response patterns 
+# | Prefix | Type          | Example                              |
+# | ------ | ------------- | ------------------------------------ |
+# | `+`    | Simple String | `+OK\r\n`                            |
+# | `-`    | Error         | `-ERR wrong number of arguments\r\n` |
+# | `:`    | Integer       | `:10\r\n`                            |
+# | `$`    | Bulk String   | `$5\r\nvalue\r\n`                    |
+# | `*`    | Array         | `*2\r\n$3\r\none\r\n$3\r\ntwo\r\n`   |
