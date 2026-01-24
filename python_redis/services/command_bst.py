@@ -1,5 +1,7 @@
 import python_redis.protocols.bst_protocols as bst_protocols
 
+import python_redis.Commands.tree as cmds
+
 execute_task_bst = {
     bst_protocols.SetKeyCommand: bst_protocols.TREE_TASKS.task_set_key_command,
     bst_protocols.DeleteCommand: bst_protocols.TREE_TASKS.task_delete_command,
@@ -13,14 +15,14 @@ execute_task_bst = {
     bst_protocols.UpsertCommand: bst_protocols.TREE_TASKS.task_upsert_node_values,
 }
 execute_command_bst = {
-    bst_protocols.COMMAND_UPSERT_NODE_KEY_VAL: bst_protocols.execute_upsert_key_val_command,
-    bst_protocols.COMMAND_DELETE: bst_protocols.execute_delete_command,
-    bst_protocols.COMMAND_IN_ORDER: bst_protocols.execute_in_order_traversal_command,
-    bst_protocols.COMMAND_GET: bst_protocols.execute_get_command,
-    bst_protocols.COMMAND_INSERT: bst_protocols.execute_insert_command,
-    bst_protocols.COMMAND_SEARCH: bst_protocols.execute_search_command,
-    bst_protocols.COMMAND_POST_ORDER: bst_protocols.execute_post_order_traversal_command,
-    bst_protocols.COMMAND_PRE_ORDER: bst_protocols.execute_pre_order_traversal_command,
-    bst_protocols.COMMAND_SHOW: bst_protocols.execute_display_command,
-    bst_protocols.COMMAND_SET: bst_protocols.execute_set_command,
+    cmds.COMMAND_UPSERT_NODE_KEY_VAL: bst_protocols.execute_upsert_key_val_command,
+    cmds.COMMAND_DELETE: bst_protocols.execute_delete_command,
+    cmds.COMMAND_IN_ORDER: bst_protocols.execute_in_order_traversal_command,
+    cmds.COMMAND_GET: bst_protocols.execute_get_command,
+    cmds.COMMAND_INSERT: bst_protocols.execute_insert_command,
+    cmds.COMMAND_SEARCH: bst_protocols.execute_search_command,
+    cmds.COMMAND_POST_ORDER: bst_protocols.execute_post_order_traversal_command,
+    cmds.COMMAND_PRE_ORDER: bst_protocols.execute_pre_order_traversal_command,
+    cmds.COMMAND_SHOW: bst_protocols.execute_display_command,
+    cmds.COMMAND_SET: bst_protocols.execute_set_command,
 }

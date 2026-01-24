@@ -36,8 +36,8 @@ python_redis/
 ├── execution/                    # Command routing & execution
 │   ├── dispatcher.py             # Your execute_*_hash_map logic
 │   └── handlers/
-│       ├── kv.py                 # Executes KV commands
-│       ├── list.py
+│       ├── kv.py                 # Executes KV commands 
+│       ├── list.py               # this will actually execute commands(which are static methods in classes )
 │       ├── tree.py
 │       ├── queue.py
 │       ├── stack.py

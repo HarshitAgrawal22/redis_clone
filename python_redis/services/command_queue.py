@@ -1,4 +1,5 @@
 import python_redis.protocols.queue_protocols as queue_protocols
+import python_redis.Commands.queuestruct as cmds
 
 execute_task_queue = {
     queue_protocols.DisplayCommand: queue_protocols.QUEUE_TASKS.task_display_command,
@@ -7,8 +8,8 @@ execute_task_queue = {
     queue_protocols.EnqueueCommand: queue_protocols.QUEUE_TASKS.task_enqueue_command,
 }
 execute_command_queue = {
-    queue_protocols.COMMAND_ENQUEUE: queue_protocols.execute_enqueue_command,
-    queue_protocols.COMMAND_DEQUEUE: queue_protocols.execute_dequeue_command,
-    queue_protocols.COMMAND_PEEK: queue_protocols.execute_peek_command,
-    queue_protocols.COMMAND_DISPLAY: queue_protocols.execute_display_command,
+    cmds.COMMAND_ENQUEUE: queue_protocols.execute_enqueue_command,
+    cmds.COMMAND_DEQUEUE: queue_protocols.execute_dequeue_command,
+    cmds.COMMAND_PEEK: queue_protocols.execute_peek_command,
+    cmds.COMMAND_DISPLAY: queue_protocols.execute_display_command,
 }

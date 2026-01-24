@@ -11,11 +11,6 @@ if TYPE_CHECKING:
 
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
-COMMAND_ADD = "fadd"
-COMMAND_REMOVE = "frem"
-COMMAND_CHECK = "fchec"
-COMMAND_DISPLAY = "fmem"
-
 
 class RemoveCommand(Command):
     def __init__(self, item):

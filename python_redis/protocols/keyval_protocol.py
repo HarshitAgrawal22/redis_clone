@@ -15,26 +15,10 @@ if TYPE_CHECKING:
 
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
-COMMAND_SET = "hset"
-COMMAND_GET = "hget"
-COMMAND_HELLO = "hello"
-COMMAND_CLIENT = "client"
-COMMAND_MULTIPLE_ATTRIBUTE_SET = "hsetattr"  # multiple attributes of a object where name of object will be key and attributes will be value
-COMMAND_MULTIPLE_ATTRIBUTE_GET = "hgetattr"
-COMMAND_SET_MULTIPLE_KEY_VAL = "hsetm"  # set multiple pairs in one command
-COMMAND_GET_MULTIPLE_VALUES = "hgetm"  # multiple keys will given to server and server will return all keys' values in same order
-COMMAND_CHECK = "hchec"  # check if a key exists
-COMMAND_DELETE = "hdel"  # delete a pair
-COMMAND_TOTAL = "hlen"  # total no. of keys and values on the database
-COMMAND_INCREMENT = "hincryby"  # HINCRBY user:1000 age 1
-COMMAND_QUIT = "shaanti"
-COMMAND_KILL = "kill"
-COMMAND_UNKNOWN_COMMAND = "ukc"
-
 
 class UnknownCommand(Command):
     def __init__(self, command: tuple[str]):
-        self.response = f"command:({ ", ".join(command) }) is unknown"
+        self.response = f"command:({ ', '.join(command) }) is unknown"
 
     def __str__(self):
         return self.response

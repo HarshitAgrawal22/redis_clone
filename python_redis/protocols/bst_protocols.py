@@ -10,17 +10,6 @@ from .command import Command
 
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
-COMMAND_INSERT = "tins"
-COMMAND_SET = "tset"
-COMMAND_GET = "tget"
-COMMAND_SEARCH = "tlook"
-COMMAND_DELETE = "tdel"
-COMMAND_PRE_ORDER = "tpre"
-COMMAND_POST_ORDER = "tpost"
-COMMAND_IN_ORDER = "tin"
-COMMAND_SHOW = "tshow"
-COMMAND_UPSERT_NODE_KEY_VAL = "tusr"
-
 
 class InsertCommand(Command):
     def __init__(self, data):

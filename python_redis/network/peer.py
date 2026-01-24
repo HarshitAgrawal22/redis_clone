@@ -59,10 +59,10 @@ class Peer:
 
     def parse_command(self, raw: str) -> Optional[Command]:
         """Parses the raw RESP command bytes and returns a Command object if valid."""
-        # TODO: learn what is RESP protocol
+        # TODO:DONE learn what is RESP protocol
         # Decode raw bytes to string without removing any characters
         # print(f"raw command => {raw} {type(raw)} ")
-        
+
         # ? this is the code which does all the RESP task
         # arr_len = len(holder_arr := raw.split())
         # raw: str = f"*{arr_len}\r\n"
@@ -74,12 +74,11 @@ class Peer:
         # # print(raw)
         ic(raw)
         # raw = raw.decode("utf-8")
-        
-        
-        
+
         # print("Decoded Command:", repr(raw))  # Debugging line
 
         # Regular expressions for RESP patterns
+        # TODO: Move this resp parsinng code to resp_parser.py(need to create that )
         array_pattern = r"\*([0-9]+)\r\n"
         bulk_string_pattern = r"\$([0-9]+)\r\n(.+?)\r\n"
 
@@ -138,9 +137,9 @@ class Peer:
                     # self.del_chan.append(self)
                     # print("Connection closed.")
                     break
-                # ! the parse command batch is now unconfigured 
+                # ! the parse command batch is now unconfigured
                 # Decode raw data to string for RESP parsing
-                
+
                 # print("Decoded Command:", repr(raw_str))
                 # raw_str = raw_str.strip()
                 # " " (space)
@@ -159,12 +158,12 @@ class Peer:
                 # ic("\n" in raw_str)
 
                 # if "\n" in raw_str:
-                    # print("these are multiple commands we got")
-                    # self.parse_command_batch(raw_str)
+                # print("these are multiple commands we got")
+                # self.parse_command_batch(raw_str)
                 else:
                     # print("this is the single command")
                     # command = self.parse_command(raw_str)
-                    
+
                     command = self.parse_command(raw_str)
                     # print("got till here")
                     # If a valid command is returned, add to message queue
@@ -188,6 +187,7 @@ class Peer:
                 break
             except Exception as e:
                 print(f"Error in read_loop: {e}")
+                self.send("-ERR invalid command format".encode("utf-8"))
                 # self.close_connection()
                 # when nothing is passed from client side then in that case that raises a error (because of that self.close_connection() is commented)
                 break

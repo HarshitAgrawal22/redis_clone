@@ -8,14 +8,6 @@ from .command import Command
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
 
-COMMAND_DISPLAY = "qdisp"
-
-COMMAND_DEQUEUE = "qdeq"
-
-COMMAND_PEEK = "qpeek"
-COMMAND_ENQUEUE = "qenq"
-
-
 class DisplayCommand(Command):
     def __init__(self):
         print("got the command to display")

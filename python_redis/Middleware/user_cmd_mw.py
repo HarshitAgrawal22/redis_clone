@@ -2,11 +2,13 @@ import socket
 import threading
 from icecream import ic
 from python_redis.protocols.resp_protocols.resp_decoder import RESP_Decoder
+
 BUFFER_SIZE = 4096
 
 # Maximum number of bytes to read at once from a socket
 
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
+
 
 class SocketProxyMiddleware:
     """
@@ -129,8 +131,8 @@ class SocketProxyMiddleware:
                         print(f"[Middleware] {direction}: <binary data>")
                 else:
                     text = data.decode("utf-8", errors="replace")
-                    data = RESP_Decoder.decode_resp(text)
-                    data.encode("utf-8")
+                    # data = RESP_Decoder.decode_resp(text)
+                    # data.encode("utf-8")
                 destination.sendall(data)
 
         except Exception as e:

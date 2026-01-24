@@ -1,0 +1,7 @@
+COMMAND_RPUSH = "rpush"
+COMMAND_LPUSH = "lpush"
+COMMAND_LPULL = "lpull"
+COMMAND_RPULL = "rpull"
+COMMAND_LRANGE = "lrang"
+COMMAND_SEARCH_INDEX = "si"
+COMMAND_RRANGE = "rrang"
