@@ -19,11 +19,7 @@ class Client:
         return f"addr:{self.addr}   conn:{self.conn}"
 
     def encode_resp_command(self, args: str) -> bytes:
-        """
-        Encode a command and its arguments into RESP format.
-        Example:
-            encode_resp_command("hget", "name")
-        """
+
         resp = f"*{len(args)}\r\n"
         for arg in args:
             resp += f"${len(arg)}\r\n{arg}\r\n"
@@ -44,12 +40,12 @@ class Client:
         # message = f"*3\r\n${len('SET')}\r\nSET\r\n${len(key)}\r\n{key}\r\n${len(value)}\r\n{value}\r\n"
         # lists = ["harshit", "hrishika", "tiwari", "samosa", "mayank", "billa", "uday"]
 
-        for i in range(1000):
+        for i in range(10):
 
             message = f"hset name{i} value{i}".split()
 
             # encoded_message = message.encode("utf-8")
-            self.conn.send(self.encode_resp_command(tuple(message)))
+            self.conn.send(self.encode_resp_command(message))
 
             # threading.Event().wait(0.1)
             response = self.conn.recv(1024)
@@ -66,7 +62,7 @@ class Client:
 
         try:
 
-            for i in range(1000):
+            for i in range(10):
 
                 message = f"hget name{i}".split()
 

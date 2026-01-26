@@ -50,7 +50,7 @@ def main() -> None:
 
         threading.Thread(target=cl.get, args=("name",)).start()
         # thread.start()
-        cl.get("name")
+        # cl.get("name")
 
         # ic(server.start())
         # Using IceCream to print the return value of start()
