@@ -2,11 +2,11 @@ from typing import Any, Tuple
 
 
 class RESP_Decoder:
-    def decode_resp(data: str, index: int = 0) -> Tuple[Any, int]:
+    def decode_resp(self, data: str, index: int = 0) -> Tuple[Any, int]:
         """
         Decodes a RESP value starting at data[index].
         Returns (decoded_value, new_index).
-        """ 
+        """
 
         prefix = data[index]
 
@@ -41,7 +41,7 @@ class RESP_Decoder:
             items = []
             pos = end + 2
             for _ in range(count):
-                value, pos = decode_resp(data, pos)
+                value, pos = self.decode_resp(data, pos)
                 items.append(value)
             return items, pos
 

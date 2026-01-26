@@ -7,15 +7,12 @@ from typing import Dict
 
 # TODO: add module for server's config
 
-from python_redis.Middleware.user_cmd_mw import SocketProxyMiddleware
-from python_redis.common import execute_task_hash_map, Message
-from python_redis.network import peer
-from queue import Queue, Empty as EmptyQueue
+from python_redis.middleware.user_cmd_mw import SocketProxyMiddleware
+
 from python_redis.network.Server import Server, Config
 
 # import queue
 from python_redis.client import client
-import python_redis.models.keyval as keyval
 
 from icecream import ic
 
@@ -42,28 +39,18 @@ def main() -> None:
             target_host="127.0.0.1",
             target_port=5001,  # Your server
         )
-        proxy.start()
-        # client.Client("127.0.0.1:5001").test_tree()
-        # cl = client.Client("127.0.0.1:5001")
-        # thr = threading.Thread(target=cl.set, args=("name", "Harshit"))
-        # # cl.set("name", "HArshit")
-        # thr.start()
+        proxy_thread = threading.Thread(target=proxy.start, daemon=True)
+        proxy_thread.start()
+        # proxy.start()
+        # client.Client("127.0.0.1:6001").test_tree()
+        cl = client.Client("127.0.0.1:5001")
+        thr = threading.Thread(target=cl.set, args=("name", "Harshit"))
+        # cl.set("name", "HArshit")
+        thr.start()
 
-        # threading.Thread(target=cl.get, args=("name",)).start()
+        threading.Thread(target=cl.get, args=("name",)).start()
         # thread.start()
-        # cl.get("name")
-
-        # ic(clint.get("name"))
-        # (clint.insert_vertex_to_graph())
-        # clint.add_edges_to_graph()
-        # ic(clint.bfs())
-        # clint.dij_dis()
-        # clint.show_graph()
-        # clint.remove_edge()
-        # clint.show_graph()
-        # clint.dij_shortest_path()
-        # ic(clint.show_graph())
-        # threading.Event().wait(1)
+        cl.get("name")
 
         # ic(server.start())
         # Using IceCream to print the return value of start()

@@ -1,4 +1,8 @@
-from python_redis.common import Message
+from python_redis.network.Message import Message
+from icecream import ic
+
+
+ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
 
 class TREE_TASKS:

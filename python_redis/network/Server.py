@@ -5,15 +5,10 @@ from typing import Dict
 # TODO: write middleware python application which will convert the normal logical commands to the RESP which this redis needs and then also return the result in Human readable form which will be generated from RESP result
 
 # TODO: add module for server's config
-import python_redis.protocols.keyval_protocol as keyval_protocol
-
-from python_redis.common import execute_task_hash_map, Message
+from python_redis.network.Message import Message
+from python_redis.common import execute_task_hash_map
 from python_redis.network import peer
 from queue import Queue, Empty as EmptyQueue
-
-# import queue
-from python_redis.client import client
-import python_redis.models.keyval as keyval
 
 from icecream import ic
 
@@ -150,7 +145,6 @@ class Server:
                     target=self.handle_conn, args=(conn,), daemon=True
                 )
                 thread.start()
-            
 
             except OSError:
                 break
@@ -181,7 +175,6 @@ class Server:
         thread.start()
 
     def stop(self) -> None:
-        
 
         # stops the server gracefully
 
@@ -190,5 +183,5 @@ class Server:
         self.quit_event.set()
         self.listener.close()
         # raise Exception("Good Bye")
-        
-        # ! the server is not stopping gracefully 
+
+        # ! the server is not stopping gracefully

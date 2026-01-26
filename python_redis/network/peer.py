@@ -2,7 +2,8 @@ import socket
 from typing import Optional
 
 from python_redis.persistence.db import HardDatabase
-from python_redis.common import execute_command_hash_map, Message
+from python_redis.common import execute_command_hash_map
+from python_redis.network.Message import Message
 import re
 from icecream import ic
 from python_redis.protocols.keyval_protocol import (
@@ -50,6 +51,7 @@ class Peer:
         self._graph: graph.graph = graph.graph.new_graph(self._db)
         self.kv: keyval.KV = keyval.KV.NewKV(self._db)
         self.meta_collection = self._db.new_collection("meta")
+        self.recv_buffer: str = str()
 
     @staticmethod
     def newPeer(
@@ -59,7 +61,7 @@ class Peer:
 
     def parse_command(self, raw: str) -> Optional[Command]:
         """Parses the raw RESP command bytes and returns a Command object if valid."""
-        # TODO:DONE learn what is RESP protocol
+        # TODO DONE learn what is RESP protocol
         # Decode raw bytes to string without removing any characters
         # print(f"raw command => {raw} {type(raw)} ")
 
@@ -124,6 +126,100 @@ class Peer:
         except Exception as e:
             print(e)
 
+    def extract_one_resp_command(self, buffer: str) -> tuple[str | None, str]:
+        """
+        Extracts exactly ONE complete RESP command from a buffer.
+
+        Parameters:
+            buffer: A string that may contain:
+                    - an incomplete RESP command
+                    - exactly one RESP command
+                    - multiple RESP commands concatenated
+
+        Returns:
+            (command, remaining_buffer)
+                command            → the full RESP command as a string
+                remaining_buffer   → leftover data after extracting one command
+
+            (None, buffer) if the buffer does NOT yet contain a full command
+        """
+
+        # RESP commands must start with '*' (array type)
+        # If buffer does not start with '*', protocol is invalid
+        if not buffer.startswith("*"):
+            raise ValueError("Invalid RESP start")
+
+        try:
+            # -----------------------------------------
+            # STEP 1: Read the RESP array length
+            # Example:
+            #   *2\r\n
+            #    ↑
+            #    number of elements (argc = 2)
+            # -----------------------------------------
+
+            # Find the end of the first line (*<count>\r\n)
+            line_end = buffer.find("\r\n")
+
+            # If we haven't received "\r\n" yet,
+            # the command is incomplete → wait for more data
+            if line_end == -1:
+                return None, buffer
+
+            # Extract number after '*'
+            # buffer[1:line_end] → "2"
+            argc = int(buffer[1:line_end])
+
+            # Move index to the first bulk string
+            # Skip "*<argc>\r\n"
+            idx = line_end + 2
+
+            # -----------------------------------------
+            # STEP 2: Parse each bulk string
+            # -----------------------------------------
+            for _ in range(argc):
+
+                # Each bulk string must start with '$'
+                if buffer[idx] != "$":
+                    raise ValueError("Invalid bulk string")
+
+                # Find end of "$<length>\r\n"
+                len_end = buffer.find("\r\n", idx)
+
+                # If length line is incomplete → wait
+                if len_end == -1:
+                    return None, buffer
+
+                # Extract the bulk string length
+                # Example: $4\r\n → strlen = 4
+                strlen = int(buffer[idx + 1 : len_end])
+
+                # Move index to the actual data
+                idx = len_end + 2
+
+                # Check if the buffer already contains:
+                # <data> + "\r\n"
+                if len(buffer) < idx + strlen + 2:
+                    # Not enough data yet → wait
+                    return None, buffer
+
+                # Skip over:
+                #   <data> + "\r\n"
+                idx += strlen + 2
+
+            # -----------------------------------------
+            # STEP 3: Full RESP command extracted
+            # -----------------------------------------
+
+            # buffer[:idx]     → one complete RESP command
+            # buffer[idx:]     → remaining data (next commands)
+            return buffer[:idx], buffer[idx:]
+
+        except Exception:
+            # Any parsing error:
+            # treat buffer as incomplete / invalid
+            return None, buffer
+
     def read_loop(self):
         """
         Continuously reads from the socket and processes RESP messages.
@@ -138,38 +234,22 @@ class Peer:
                     # print("Connection closed.")
                     break
                 # ! the parse command batch is now unconfigured
-                # Decode raw data to string for RESP parsing
 
-                # print("Decoded Command:", repr(raw_str))
-                # raw_str = raw_str.strip()
-                # " " (space)
-
-                # "\t" (tab)
-
-                # "\n" (newline / line feed)
-
-                # "\r" (carriage return)
-
-                # "\x0b" (vertical tab)
-
-                # "\x0c" (form feed)
-
-                # ic(raw_str)
-                # ic("\n" in raw_str)
-
-                # if "\n" in raw_str:
-                # print("these are multiple commands we got")
-                # self.parse_command_batch(raw_str)
                 else:
                     # print("this is the single command")
                     # command = self.parse_command(raw_str)
+                    self.recv_buffer += raw_str
+                    while True:
 
-                    command = self.parse_command(raw_str)
-                    # print("got till here")
-                    # If a valid command is returned, add to message queue
-                    if command != None:
-                        message = Message(cmd=command, conn_peer=self)
-                        self.msg_chan.put(message)
+                        command_str, remaining = self.extract_one_resp_command(raw_str)
+                        if command_str is None:
+                            break
+                        command = self.parse_command(command_str)
+                        # print("got till here")
+                        # If a valid command is returned, add to message queue
+                        if command != None:
+                            message = Message(cmd=command, conn_peer=self)
+                            self.msg_chan.put(message)
 
                     # print(f"Message queued: {message}")
 
@@ -194,28 +274,28 @@ class Peer:
 
                 # Exit loop on error
 
-    def parse_command_batch(self, buffer: str):
+    # def parse_command_batch(self, buffer: str):
 
-        while "\n" in buffer:
-            line, buffer = buffer.split("\n", 1)
-            ic(line)
-            # Parse the command
-            # command = self.parse_command(raw_str)
-            command = self.parse_command(line)
-            # print("got till here")
-            # If a valid command is returned, add to message queue
-            if command != None:
-                message = Message(cmd=command, conn_peer=self)
-                self.msg_chan.put(message)
-        # the last command wasn't getting processed in the while loop so that was handled here
+    #     while "\n" in buffer:
+    #         line, buffer = buffer.split("\n", 1)
+    #         ic(line)
+    #         # Parse the command
+    #         # command = self.parse_command(raw_str)
+    #         command = self.parse_command(line)
+    #         # print("got till here")
+    #         # If a valid command is returned, add to message queue
+    #         if command != None:
+    #             message = Message(cmd=command, conn_peer=self)
+    #             self.msg_chan.put(message)
+    #     # the last command wasn't getting processed in the while loop so that was handled here
 
-        if buffer.strip():
-            buffer = buffer.rstrip("\r")
-            ic(buffer)
-            command = self.parse_command(buffer)
-            if command != None:
-                message = Message(cmd=command, conn_peer=self)
-                self.msg_chan.put(message)
+    #     if buffer.strip():
+    #         buffer = buffer.rstrip("\r")
+    #         ic(buffer)
+    #         command = self.parse_command(buffer)
+    #         if command != None:
+    #             message = Message(cmd=command, conn_peer=self)
+    #             self.msg_chan.put(message)
 
     def send(self, msg: bytes) -> Optional[int]:
         """

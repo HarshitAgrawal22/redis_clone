@@ -18,6 +18,17 @@ class Client:
     def __str__(self):
         return f"addr:{self.addr}   conn:{self.conn}"
 
+    def encode_resp_command(self, args: str) -> bytes:
+        """
+        Encode a command and its arguments into RESP format.
+        Example:
+            encode_resp_command("hget", "name")
+        """
+        resp = f"*{len(args)}\r\n"
+        for arg in args:
+            resp += f"${len(arg)}\r\n{arg}\r\n"
+        return resp.encode("utf-8")
+
     def set(self, key: str, value: str):
         # try:
 
@@ -31,14 +42,14 @@ class Client:
         # RESP format for "*3\r\n$3\r\nSET\r\n$<key_length>\r\n<key>\r\n$<value_length>\r\n<value>\r\n"
 
         # message = f"*3\r\n${len('SET')}\r\nSET\r\n${len(key)}\r\n{key}\r\n${len(value)}\r\n{value}\r\n"
-        lists = ["harshit", "hrishika", "tiwari", "samosa", "mayank", "billa", "uday"]
+        # lists = ["harshit", "hrishika", "tiwari", "samosa", "mayank", "billa", "uday"]
 
         for i in range(1000):
 
-            message = f"hset name{i} value{i}\r\n"
+            message = f"hset name{i} value{i}".split()
 
-            encoded_message = message.encode("utf-8")
-            self.conn.send(encoded_message)
+            # encoded_message = message.encode("utf-8")
+            self.conn.send(self.encode_resp_command(tuple(message)))
 
             # threading.Event().wait(0.1)
             response = self.conn.recv(1024)
@@ -57,10 +68,10 @@ class Client:
 
             for i in range(1000):
 
-                message = f"hget name{i}\r\n"
+                message = f"hget name{i}".split()
 
-                encoded_message = message.encode("utf-8")
-                self.conn.send(encoded_message)
+                # encoded_message = message.encode("utf-8")
+                self.conn.send(self.encode_resp_command(message))
 
                 # threading.Event().wait(0.1)
                 response = self.conn.recv(1024)

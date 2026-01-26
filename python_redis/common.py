@@ -1,5 +1,3 @@
-from __future__ import annotations
-from python_redis.protocols.command import Command
 from python_redis.services import (
     command_stack,
     command_bst,
@@ -9,24 +7,8 @@ from python_redis.services import (
     command_sets,
     command_lists,
 )
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from python_redis.network.peer import Peer
 
 SyncTime: int = 600
-
-
-class Message:
-    def __init__(self, cmd: bytearray, conn_peer: Peer):
-        # this is the peer from/to this message is sent/received
-        self.conn_peer: Peer = conn_peer
-        self.cmd: Command = cmd
-
-    def __str__(self):
-        return f"conn_peer:{self.conn_peer}     cmd:{self.cmd}"
-
-
 
 
 execute_task_hash_map = {
@@ -69,9 +51,7 @@ Use memory-efficient data structures (like struct for fixed-size storage).
 Implement lazy deletion or eviction policies to prevent memory bloat."""
 
 
-
-
-# TODO implement these response patterns 
+# TODO implement these response patterns
 # | Prefix | Type          | Example                              |
 # | ------ | ------------- | ------------------------------------ |
 # | `+`    | Simple String | `+OK\r\n`                            |
