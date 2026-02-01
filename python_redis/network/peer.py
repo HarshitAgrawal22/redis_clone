@@ -49,6 +49,7 @@ class Peer:
         self.meta_collection = self._db.new_collection("meta")
         self.recv_buffer: str = str()
         self.resp_parser = RESP_Parser()
+        #TODO : here socket connection needs to be inittialized 
 
     @staticmethod
     def newPeer(
@@ -89,6 +90,7 @@ class Peer:
                         # If a valid command is returned, add to message queue
                         if command != None:
                             message = Message(cmd=command, conn_peer=self)
+                            # TODO: make updation here so that Message will get the connection from here to itself no the peer 
                             self.msg_chan.put(message)
 
                     # print(f"Message queued: {message}")
@@ -145,94 +147,3 @@ class Peer:
             HardDatabase.drop_peer_db(self.DB_str)
 
             # print(f"Closed connection for {self}")
-
-    # check if the command is "hsetm" and requires more then 0 and even arguments
-    # if command_name.lower().strip() == COMMAND_SET_MULTIPLE_KEY_VAL:
-    #     if len(args) == 0:
-    #         raise ValueError("No arguments given for SET MULTIPLE KEY VALUE PAIRS")
-    #     if len(args) % 2 != 0:
-    #         raise ValueError("Invalid Key Value pairs")
-    #     return SetMultipleKeyValCommand(args)
-
-    # check if the command is "getattr" and requires more than no arguments
-    # if command_name.lower().strip() == COMMAND_MULTIPLE_ATTRIBUTE_GET:
-    #     if len(args) == 0:
-    #         raise ValueError("No argument for SET MULTIPLE ATTRIBUTE command")
-    #     key: str = args[0]
-    #     attrs: tuple = args[1:]
-
-    #     return GetMultipleAttributeCommand(key=key, attrs=attrs)
-    # check if the command is "setattr" and requires more than no arguments
-    # if command_name.lower().strip() == COMMAND_MULTIPLE_ATTRIBUTE_SET:
-    #     if len(args) == 0:
-    #         raise ValueError("No argument for SET MULTIPLE ATTRIBUTE command")
-    #     key: str = args[0]
-    #     attrs: tuple = args[1:]
-
-    #     return SetMultipleAttributeCommand(key=key, attrs=attrs)
-    # check if the command is "total" and requires no argument
-    # if command_name.lower().strip() == COMMAND_TOTAL:
-    #     return TotalCommand("return total")
-
-    # check if the command is "increment" and requires exactly 1 argument
-    # if command_name.lower().strip() == COMMAND_INCREMENT:
-    #     if len(args) == 0:
-    #         raise ValueError("No key for INCREMENT command")
-    #     return IncrementCommand(args[0])
-
-    # check if the command is "hello" and requires exactly 1 argument
-    # if command_name.lower().strip() == COMMAND_GET_MULTIPLE_VALUES:
-    #     if len(args) == 0:
-    #         raise ValueError("No key given to get value")
-    #     return GetMultipleKeyValCommand(args)
-
-    # check if the command is "delete" and requires exactly 1 argument
-    # if command_name.lower().strip() == COMMAND_DELETE:
-    #     if len(args) == 0:
-    #         raise ValueError("No key given for DELETE command")
-    #     print(args)
-    #     return DeleteCommand(args[0])
-    # check if the command is "client" and requires exactly 1 argument
-    # if command_name.lower().strip() == COMMAND_CLIENT:
-    #     if len(args) == 0:
-    #         raise ValueError("No arguments for CLIENT command")
-    #     return ClientCommand(args[0])
-
-    # check if the command is "check" and requires exactly 1 argument
-    # if command_name.lower().strip() == COMMAND_CHECK:
-    #     if len(args) >= 1:
-    #         return CheckCommand(args)
-    #     raise ValueError("No arguments given for CHECK command")
-    # check if the command is "quit" and requires no argument
-    # if command_name.lower().strip() == COMMAND_QUIT:
-    #     if len(args) != 0:
-    #         print(f"{args} are args for quitting server")
-    #         raise ValueError("Invalid number of arguments for GET command")
-
-    #     return QuitCommand(want_to_quit=True)
-    # check if the command is "get" and requires exactly 1 argument
-    # if command_name.lower().strip() == COMMAND_GET:
-    #     if len(args) != 1:
-    #         print(f"{args} = args")
-    #         raise ValueError("Invalid number of arguments for GET command")
-    #     key = args[0]
-    #     return GetCommand(key)
-    # check if the command is "hello" and requires exactly 1 argument
-    # if command_name.lower().strip() == COMMAND_HELLO:
-    #     if len(args) != 1:
-    #         raise ValueError("Invalid number of arguments for SET command")
-    #     return HelloCommand(args[0])
-
-    # Check if the command is "set" and requires exactly 2 arguments
-    # if command_name.lower() == COMMAND_SET:
-    #     if len(args) != 2:
-    #         raise ValueError("Invalid number of arguments for SET command")
-    #     key, value = args
-    #     return SetCommand(key, value)
-
-
-# socat TCP4-LISTEN:12345,reuseaddr,fork TCP4:172.22.99.160:5001
-# this is the socat tool for proper working
-
-
-# socat TCP4-LISTEN:12345,reuseaddr,fork TCP:172.25.128.1:5001,sourceport=40000

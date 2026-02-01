@@ -1,0 +1,5 @@
+TODO > 1 : Create a CI/CD pipeline for code 
+TODO > 2 : write code for pub sub module 
+TODO > 3 : segregate send message function from peer to neetwork function 
+TODO > 4 : implement resp all the way in project 
+TODO > 5 : learn docker and host that on python anywhere

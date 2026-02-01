@@ -5,9 +5,11 @@ from python_redis.services import (
     command_dict,
     command_queue,
     command_sets,
-    command_lists,
+    command_lists
 )
 
+from python_redis.protocols.resp_protocols.resp_encoder import RESP_Encoder
+from python_redis.constants import CommandFormat
 SyncTime: int = 600
 
 
@@ -30,6 +32,13 @@ execute_command_hash_map = {
     **command_lists.execute_command_list,
 }
 
+message_format :dict[str:function]={
+    CommandFormat.error:RESP_Encoder.resp_error,
+    CommandFormat.simple_string:RESP_Encoder.resp_simple_string,
+    CommandFormat.bulk_string:RESP_Encoder.resp_bulk_string,
+    CommandFormat.array:RESP_Encoder.resp_array,
+    CommandFormat.integer:RESP_Encoder.resp_integer
+}
 
 """🚀 How to Optimize Performance?
 Here are some areas where you can improve the efficiency of your Redis clone:
@@ -51,11 +60,3 @@ Use memory-efficient data structures (like struct for fixed-size storage).
 Implement lazy deletion or eviction policies to prevent memory bloat."""
 
 
-# TODO implement these response patterns
-# | Prefix | Type          | Example                              |
-# | ------ | ------------- | ------------------------------------ |
-# | `+`    | Simple String | `+OK\r\n`                            |
-# | `-`    | Error         | `-ERR wrong number of arguments\r\n` |
-# | `:`    | Integer       | `:10\r\n`                            |
-# | `$`    | Bulk String   | `$5\r\nvalue\r\n`                    |
-# | `*`    | Array         | `*2\r\n$3\r\none\r\n$3\r\ntwo\r\n`   |

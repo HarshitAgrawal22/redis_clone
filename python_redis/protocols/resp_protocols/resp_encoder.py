@@ -20,3 +20,11 @@ class RESP_Encoder:
             out += f"${len(item)}\r\n{item}\r\n"
         return out.encode()
 
+# TODO implement these response patterns
+# | Prefix | Type          | Example                              |
+# | ------ | ------------- | ------------------------------------ |
+# | `+`   s | Simple String | `+OK\r\n`                            |
+# | `-`   e | Error         | `-ERR wrong number of arguments\r\n` |
+# | `:`   i | Integer       | `:10\r\n`                            |
+# | `$`   b | Bulk String   | `$5\r\nvalue\r\n`                    |
+# | `*`   a | Array         | `*2\r\n$3\r\none\r\n$3\r\ntwo\r\n`   |

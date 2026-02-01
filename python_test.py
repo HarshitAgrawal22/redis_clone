@@ -1,40 +1,20 @@
-# from icecream import ic
+from icecream import ic
 
-# setter: set[dict[str:str]] = set({("name", "c"), ("name", "c")})
-# print(setter)
+RESET = "\033[0m"
+RED = "\033[31m"
+GREEN = "\033[32m"
+YELLOW = "\033[33m"
 
-# mystr = "               herllo\r\n             "
-# print(mystr)
-# ic(mystr.strip(" "))
+def ic_ok(msg: str) -> None:
+    ic(f"{GREEN}OK: {msg}{RESET}")
 
-import threading
+def ic_warn(msg: str) -> None:
+    ic(f"{YELLOW}WARN: {msg}{RESET}")
 
-# import try:
-#     pass
-# except Exception as error:
-#     pass
+def ic_error(msg: str) -> None:
+    ic(f"{RED}ERROR: {msg}{RESET}")
 
-
-def func():
-    i = 0
-    while True:
-        i += 1
-        if i == 1000:
-            raise Exception("Bhaang")
-        print(i)
-
-
-def func2():
-    i = 0
-    while True:
-        i -= 1
-        if i == -1010:
-            raise Exception("Bhaang")
-        print(i)
-
-
-T1 = threading.Thread(target=func)
-T2 = threading.Thread(target=func2)
-
-T1.start()
-T2.start()
+ic.configureOutput(prefix="")
+ic_ok("Server started")
+ic_warn("High latency detected")
+ic_error("Connection dropped")
