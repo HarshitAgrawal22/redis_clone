@@ -15,5 +15,5 @@ RUN pip install --upgrade pip \
 COPY . .
 EXPOSE 6001 
 EXPOSE 5001
-
+RUN ls -R /app/python_redis
 CMD ["python" , "-m" , "python_redis.main"]
