@@ -86,7 +86,7 @@ class HASHMAP_TASKS:
         try:
             ic(msg.cmd.keys)
             result: str = msg.conn_peer.kv.get_multiple_values(msg.cmd.keys)
-            msg.conn_peer.socket_handler.send(f"{result}", "a")
+            msg.conn_peer.socket_handler.send(f"{result.split()}", "a")
         except Exception as e:
             print(f"got error in CLIENT command: {e}")
 

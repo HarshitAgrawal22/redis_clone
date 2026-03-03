@@ -21,3 +21,4 @@ source venv/bin/activate
 | `array`              | `*`         | `*<count>\r\n<elements>`    | `*2\r\n$4\r\nHGET\r\n$4\r\nname\r\n` | List of elements        | Commands, lists   |
 | `array (empty)`      | `*`         | `*0\r\n`                    | `*0\r\n`                             | Empty list              | Empty result      |
 | `array (null)`       | `*`         | `*-1\r\n`                   | `*-1\r\n`                            | Null array              | Missing data      |
+telnet switchback.proxy.rlwy.net 14454
