@@ -7,7 +7,7 @@ from pymongo.cursor import Cursor
 from python_redis import constants
 
 client = MongoClient(constants.MongoDBStr)
-
+print(constants.MongoDBStr)
 from icecream import ic
 
 
