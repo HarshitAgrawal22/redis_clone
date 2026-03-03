@@ -13,7 +13,7 @@ from python_redis.network.Server import Server, Config
 
 # import queue
 from python_redis.client import client
-
+import os
 from icecream import ic
 
 
@@ -33,9 +33,10 @@ def main() -> None:
         #     target_port=5001,  # Your server
         # )
         # proxy.start()
+        port :int = int(os.getenv("PORT", 6001))
         proxy = SocketProxyMiddleware(
             listen_host="0.0.0.0",
-            listen_port=6001,  # Telnet connects here
+            listen_port= port,  # Telnet connects here
             target_host="127.0.0.1",
             target_port=5001,  # Your server
         )
