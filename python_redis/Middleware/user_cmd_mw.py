@@ -130,7 +130,11 @@ class SocketProxyMiddleware:
                     except Exception:
                         print(f"[Middleware] {direction}: <binary data>")
                 else:
-                    text = data.decode("utf-8", errors="replace")
+                    text :str = data.decode("utf-8", errors="replace")
+                    text, number  = RESP_Decoder.decode_resp(text)
+                    # ic( RESP_Decoder.decode_resp(text, 0))
+                    ic(text)
+                    data= str(text).encode("utf-8")
                     # data = RESP_Decoder.decode_resp(text)
                     # data.encode("utf-8")
                 destination.sendall(data)

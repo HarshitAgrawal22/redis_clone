@@ -161,9 +161,6 @@ Your foundation is now solid.
 
 
 
-
-
-
 This behavior is normal TCP behavior on Windows, not a bug in your server.
 
 You are seeing a classic idle connection reset problem.

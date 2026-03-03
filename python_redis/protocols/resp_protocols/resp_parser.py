@@ -157,7 +157,8 @@ class RESP_Parser:
             # buffer[idx:]     → remaining data (next commands)
             return buffer[:idx], buffer[idx:]
 
-        except Exception:
+        except Exception as e:
+            ic(e)
             # Any parsing error:
             # treat buffer as incomplete / invalid
             return None, buffer

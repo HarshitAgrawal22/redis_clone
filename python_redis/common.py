@@ -1,3 +1,4 @@
+from typing import Callable
 from python_redis.services import (
     command_stack,
     command_bst,
@@ -10,7 +11,7 @@ from python_redis.services import (
 
 from python_redis.protocols.resp_protocols.resp_encoder import RESP_Encoder
 from python_redis.constants import CommandFormat
-SyncTime: int = 600
+
 
 
 execute_task_hash_map = {
@@ -32,14 +33,14 @@ execute_command_hash_map = {
     **command_lists.execute_command_list,
 }
 
-message_format :dict[str:function]={
+
+message_format :dict[str:Callable] = {
     CommandFormat.error:RESP_Encoder.resp_error,
     CommandFormat.simple_string:RESP_Encoder.resp_simple_string,
     CommandFormat.bulk_string:RESP_Encoder.resp_bulk_string,
     CommandFormat.array:RESP_Encoder.resp_array,
     CommandFormat.integer:RESP_Encoder.resp_integer
 }
-
 """🚀 How to Optimize Performance?
 Here are some areas where you can improve the efficiency of your Redis clone:
 

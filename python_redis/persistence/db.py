@@ -4,13 +4,13 @@ from pymongo.results import InsertOneResult, DeleteResult
 from icecream import ic
 from pymongo.database import Database
 from pymongo.cursor import Cursor
+from python_redis import constants
 
-
-client = MongoClient("mongodb://127.0.0.1:27017/")
+client = MongoClient(constants.MongoDBStr)
 
 from icecream import ic
 
-default_listen_address: str = ":5001"
+
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 # TODO implement pub/sub model to this project, the instructions are written at the bottom of this file
 
@@ -55,9 +55,7 @@ class HardDatabase:
 
     def insert_and_update_key_val(self, key: str, value: str, collection: Collection):
         try:
-            # print(
-            # f"Inserting data to mongodb=> Key:{key}, value: {value}, collection: {collection} "
-            # )
+            
             update_result = collection.update_one(
                 {"key": key}, {"$set": {"key": key, "value": value}}, upsert=True
             )
@@ -78,7 +76,7 @@ class HardDatabase:
         return update_result.modified_count > 0
 
     def check_collection_exist(self, collection_name: str) -> bool:
-        # return self.db.list_collections(limit=1).alive
+        
         return self.db.list_collections(filter={"name": collection_name})
 
     def delete_key(self, key: str, collection: Collection) -> bool:
@@ -125,16 +123,7 @@ class HardDatabase:
         ic(docs)
 
         return collection.find()
-
-    # def insert_tree_node(self, node_val, collection):
-    #     pass
-
-    # def update_tree_node(self, node_val, collection):
-    #     pass
-
-    # def delete_tree_node(self, node_val, collection):
-    #     pass
-
+    
     @staticmethod
     def drop_all_dbs():
         dbs = client.list_database_names()

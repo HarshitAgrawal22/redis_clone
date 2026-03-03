@@ -1,7 +1,8 @@
 import socket
+from python_redis.network.Connection import SocketConnection
 from python_redis.protocols.resp_protocols.resp_parser import RESP_Parser
 from python_redis.persistence.db import HardDatabase
-
+from python_redis.pubsub import broker
 from python_redis.network.Message import Message
 
 from icecream import ic
@@ -49,6 +50,8 @@ class Peer:
         self.meta_collection = self._db.new_collection("meta")
         self.recv_buffer: str = str()
         self.resp_parser = RESP_Parser()
+        self.socket_handler= SocketConnection(self.Conn)
+        self.broker:broker.PubSubBroker = broker.PubSubBroker() 
         #TODO : here socket connection needs to be inittialized 
 
     @staticmethod

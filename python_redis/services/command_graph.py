@@ -1,5 +1,5 @@
 import python_redis.protocols.graph_protocols as graph_protocols
-import python_redis.commands.granph as cmds
+import python_redis.commands.graph as cmds
 import python_redis.execution.Dispatchers.dispatch_graph as graph_dispatchers
 import python_redis.execution.graph_exe as graph_executer
 

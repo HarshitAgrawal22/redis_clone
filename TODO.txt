@@ -1,5 +1,23 @@
 TODO > 1 : Create a CI/CD pipeline for code 
 TODO > 2 : write code for pub sub module 
-TODO > 3 : segregate send message function from peer to neetwork function 
+TODO > 3 : segregate send message function from peer to network function 
 TODO > 4 : implement resp all the way in project 
-TODO > 5 : learn docker and host that on python anywhere
+TODO > 5 : learn docker and host that on python anywhere or any other platform
+TODO > 6 : Update readme.md by a lot better things
+TODO > 7 : Add Global Exception to the project
+TODO > 8 : Write test cases
+
+python3 -m venv venv
+source venv/bin/activate
+
+
+| Your Constant        | RESP Prefix | Format                      | Example (Raw RESP)                   | Human Meaning           | Used For          |
+| -------------------- | ----------- | --------------------------- | ------------------------------------ | ----------------------- | ----------------- |
+| `error`              | `-`         | `-<message>\r\n`            | `-ERR unknown command\r\n`           | Error message           | Command failures  |
+| `simple_string`      | `+`         | `+<string>\r\n`             | `+OK\r\n`                            | Simple success response | Acknowledgement   |
+| `bulk_string`        | `$`         | `$<length>\r\n<string>\r\n` | `$5\r\nhello\r\n`                    | Binary-safe string      | Actual values     |
+| `bulk_string (null)` | `$`         | `$-1\r\n`                   | `$-1\r\n`                            | Null value              | Missing key       |
+| `integer`            | `:`         | `:<number>\r\n`             | `:100\r\n`                           | Integer number          | Counters, lengths |
+| `array`              | `*`         | `*<count>\r\n<elements>`    | `*2\r\n$4\r\nHGET\r\n$4\r\nname\r\n` | List of elements        | Commands, lists   |
+| `array (empty)`      | `*`         | `*0\r\n`                    | `*0\r\n`                             | Empty list              | Empty result      |
+| `array (null)`       | `*`         | `*-1\r\n`                   | `*-1\r\n`                            | Null array              | Missing data      |

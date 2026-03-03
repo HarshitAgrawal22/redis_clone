@@ -9,10 +9,12 @@ from python_redis.network.Message import Message
 from python_redis.common import execute_task_hash_map
 from python_redis.network import peer
 from queue import Queue, Empty as EmptyQueue
-
+from python_redis import constants
 from icecream import ic
 
-default_listen_address: str = ":5001"
+default_listen_address: str = constants.ServerPort
+
+# default_listen_address: str = ":5001"
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
 
@@ -170,7 +172,7 @@ class Server:
         self.add_peer_ch.put(this_peer)
         # added new peer to the add_peer_ch of server
         # ic(conn.getpeername())
-        # starting the peer's readloop on a seperate thread to isolate each peer;s connection from every other peer
+        # starting the peer's readloop on a seperate thread to isolate each peers connection from every other peer
         thread = threading.Thread(target=this_peer.read_loop)
         thread.start()
 

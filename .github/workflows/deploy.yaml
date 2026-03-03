@@ -1,0 +1,22 @@
+name: Redis clone deploy file
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+env:
+  IMAGE_NAME: ghcr.io/harshitagrawal22/redis_clone
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    # series of steps
+    steps:
+      # step 1: Downloading repo into runner
+      - name: Checkout repositry
+        uses: action/checkout@v3
+
+    permissions:
+      contents: read
+      packages: write

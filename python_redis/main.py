@@ -16,7 +16,7 @@ from python_redis.client import client
 
 from icecream import ic
 
-default_listen_address: str = ":5001"
+
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
 
@@ -43,12 +43,12 @@ def main() -> None:
         proxy_thread.start()
         # proxy.start()
         # client.Client("127.0.0.1:6001").test_tree()
-        cl = client.Client("127.0.0.1:5001")
-        thr = threading.Thread(target=cl.set, args=("name", "Harshit"))
+        # cl = client.Client("127.0.0.1:5001")
+        # thr = threading.Thread(target=cl.set, args=("name", "Harshit"))
         # cl.set("name", "HArshit")
-        thr.start()
+        # thr.start()
 
-        threading.Thread(target=cl.get, args=("name",)).start()
+        # threading.Thread(target=cl.get, args=("name",)).start()
         # thread.start()
         # cl.get("name")
 
@@ -56,18 +56,6 @@ def main() -> None:
         # Using IceCream to print the return value of start()
         # time.sleep(1)
 
-        # for i in range(10):
-        #     client_server = client.Client("127.0.0.1:5001")
-        #     if err := client_server.set(key=f"pakoda_{i}", value=f"aloo_{i}"):
-        #         print(f"error= > {err}")
-        #     try:
-        #         value = client_server.get(key=f"pakoda_{i}")
-
-        #         print(f"received value => { value}")
-        #     except Exception as e:
-        #         print(e)
-        # time.sleep(1)
-        # print(server.kv.data)
     except KeyboardInterrupt:
         print("server stopped")
         server.stop()
