@@ -133,6 +133,7 @@ class Peer:
 
         try:
             self.send("Bye! thanks for using redis".encode("utf-8"))
+            self.socket_handler .send("Bye! thanks for using redis","a")
             # Step 1: Shutdown both send & receive
             self.Conn.shutdown(socket.SHUT_RDWR)
         except OSError as oe:
