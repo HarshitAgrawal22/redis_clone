@@ -6,7 +6,7 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1
 # Ensure output is printed immediately
 ENV PYTHONUNBUFFERED=1
-
+ENV PYTHONPATH=/app
 COPY req.txt req.txt
 
 RUN pip install --upgrade pip \
