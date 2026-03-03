@@ -34,6 +34,7 @@ def main() -> None:
         # )
         # proxy.start()
         port :int = int(os.getenv("PORT", 6001))
+        print( f"port=>{port} ")
         proxy = SocketProxyMiddleware(
             listen_host="0.0.0.0",
             listen_port= port,  # Telnet connects here
