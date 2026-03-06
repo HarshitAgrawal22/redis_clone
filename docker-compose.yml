@@ -21,6 +21,7 @@ services:
     ports:
       - "6001:6001"
       - "5001:5001"
+      - "5678:5678"
     networks:
       - redis_network
     depends_on:

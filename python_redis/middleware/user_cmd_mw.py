@@ -117,7 +117,7 @@ class SocketProxyMiddleware:
                 if direction == "CLIENT → SERVER":
                     try:
                         text = data.decode("utf-8", errors="replace")
-                        print(f"[Middleware] {direction}: {text.strip()}")
+                        ic(f"[Middleware] {direction}: {text.strip()}")
                         arr_len = len(holder_arr := text.split())
                         raw: str = f"*{arr_len}\r\n"
                         for i in holder_arr:
@@ -128,7 +128,7 @@ class SocketProxyMiddleware:
                         ic(raw)
                         data = raw
                     except Exception:
-                        print(f"[Middleware] {direction}: <binary data>")
+                        ic(f"[Middleware] {direction}: <binary data>")
                 else:
                     text :str = data.decode("utf-8", errors="replace")
                     text, number  = RESP_Decoder.decode_resp(text)
@@ -141,6 +141,7 @@ class SocketProxyMiddleware:
 
         except Exception as e:
             print(f"[Middleware] {direction} error: {e}")
+            destination.sendall(str(e).encode("utf-8"))
         finally:
             source.close()
             destination.close()

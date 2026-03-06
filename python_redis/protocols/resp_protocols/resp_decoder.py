@@ -19,6 +19,7 @@ class RESP_Decoder:
         # ERROR
         if prefix == "-":
             end = data.index("\r\n", index)
+            # return str(data[index + 1 : end])
             raise Exception(data[index + 1 : end])
 
         # INTEGER

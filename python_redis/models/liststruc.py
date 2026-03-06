@@ -116,7 +116,7 @@ class List_Struc:
 
     def search_index(self, index):
         if index < 0 or index > len(self.storage):
-            return "not valid index"
+            raise IndexError("ERR Not a Valid Index")
 
         else:
             return self.storage[index]

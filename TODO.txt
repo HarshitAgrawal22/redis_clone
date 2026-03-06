@@ -1,10 +1,9 @@
 TODO > 1 : Create a CI/CD pipeline for code (Done)
-TODO > 2 : write code for pub sub module 
 TODO > 3 : segregate send message function from peer to network function (Done)
 TODO > 4 : implement resp all the way in project 
 TODO > 5 : learn docker and host that on python anywhere or any other platform (Done)
 TODO > 6 : Update readme.md by a lot better things
-TODO > 7 : Add Global Exception to the project
+TODO > 7 : Add Global Exception to the project (Done)
 TODO > 8 : Write test cases
 
 python3 -m venv venv

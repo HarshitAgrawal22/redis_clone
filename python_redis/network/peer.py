@@ -2,12 +2,13 @@ import socket
 from python_redis.network.Connection import SocketConnection
 from python_redis.protocols.resp_protocols.resp_parser import RESP_Parser
 from python_redis.persistence.db import HardDatabase
-from python_redis.pubsub import broker
+
 from python_redis.network.Message import Message
 
 from icecream import ic
 
 from python_redis.models import sets, stacks, liststruc, tree, queuestruc, graph, keyval
+from python_redis.utils.exception_handler import GlobalExceptionHandler
 
 from typing import TYPE_CHECKING
 
@@ -34,7 +35,7 @@ class Peer:
                 ".", "-"
             )
         )
-
+        #TODO :here create a peer context so that peer's code can be cleaned 
         ic(self.DB_str)
         # TODO: here in it del_peer_chan can raise race condition so handle that and Chatgpt told that the we are refencing the original server's del_peer_chan
         self.msg_chan: Queue[Message] = msg_chan
@@ -51,7 +52,7 @@ class Peer:
         self.recv_buffer: str = str()
         self.resp_parser = RESP_Parser()
         self.socket_handler= SocketConnection(self.Conn)
-        self.broker:broker.PubSubBroker = broker.PubSubBroker() 
+        
         #TODO : here socket connection needs to be inittialized 
 
     @staticmethod
@@ -71,12 +72,12 @@ class Peer:
                 raw_str = raw_data.decode("utf-8")
                 if not raw_data:
                     # self.del_chan.append(self)
-                    # print("Connection closed.")
+                    
                     break
-                # ! the parse command batch is now unconfigured
+                
 
                 else:
-                    # print("this is the single command")
+                    
                     # command = self.parse_command(raw_str)
                     self.recv_buffer += raw_str
                     # TODO: solve the empty buffer exception problem 
@@ -88,13 +89,18 @@ class Peer:
                         if command_str is None:
                             break
                         self.recv_buffer = remaining
-                        command = self.resp_parser.parse_command(command_str)
-                        # print("got till here")
-                        # If a valid command is returned, add to message queue
-                        if command != None:
-                            message = Message(cmd=command, conn_peer=self)
-                            # TODO: make updation here so that Message will get the connection from here to itself no the peer 
-                            self.msg_chan.put(message)
+                        
+                        try:
+                            command = self.resp_parser.parse_command(command_str)
+                            
+                            # If a valid command is returned, add to message queue
+                            if command != None:
+                                message = Message(cmd=command, conn_peer=self)
+                                
+                                self.msg_chan.put(message)
+                        except Exception as parse_error:
+                            # Handle parsing errors with global exception handler
+                            GlobalExceptionHandler.handle_parsing_exception(parse_error, self)
 
                     # print(f"Message queued: {message}")
 
@@ -111,11 +117,10 @@ class Peer:
 
                 break
             except Exception as e:
-                print(f"Error in read_loop: {e}")
-                self.send("-ERR invalid command format".encode("utf-8"))
-                # self.close_connection()
-                # when nothing is passed from client side then in that case that raises a error (because of that self.close_connection() is commented)
-                break
+                # Global exception handler for any unhandled exception in read_loop
+                GlobalExceptionHandler.handle_exception(e, self, "read_loop")
+                # Note: Not breaking here to keep connection alive unless it's critical
+                # You can choose to break if you want to close connection on any error
 
                 # Exit loop on error
 
@@ -132,8 +137,8 @@ class Peer:
     def close_connection(self):
 
         try:
-            self.send("Bye! thanks for using redis".encode("utf-8"))
-            self.socket_handler .send("Bye! thanks for using redis","a")
+            # self.send("Bye! thanks for using redis".encode("utf-8"))
+            self.socket_handler.send("Bye! thanks for using redis".split(" "),"b")
             # Step 1: Shutdown both send & receive
             self.Conn.shutdown(socket.SHUT_RDWR)
         except OSError as oe:

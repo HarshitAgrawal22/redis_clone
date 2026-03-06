@@ -16,7 +16,7 @@ class SETS_TASKS:
     @staticmethod
     def task_display_command(msg: Message, server):
         value = msg.conn_peer._sets.display()
-        msg.conn_peer.socket_handler.send(f"{value}", "a")
+        msg.conn_peer.socket_handler.send(f"{value}".split(""), "a")
 
     @staticmethod
     def task_add_command(msg: Message, server):

@@ -1,6 +1,6 @@
 # official slim python image
 FROM python:3.12-slim
-
+RUN pip install debugpy
 WORKDIR /app
 # Prevent Python from writing pyc files
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -15,5 +15,7 @@ RUN pip install --upgrade pip \
 COPY . .
 EXPOSE 6001 
 EXPOSE 5001
+EXPOSE 5678
 RUN ls -R /app/python_redis
-CMD ["python" , "-m" , "python_redis.main"]
+# CMD ["python" , "-m" , "python_redis.main"]
+CMD ["python","-Xfrozen_modules=off", "-m", "debugpy", "--listen", "0.0.0.0:5678",  "-m", "python_redis.main"]

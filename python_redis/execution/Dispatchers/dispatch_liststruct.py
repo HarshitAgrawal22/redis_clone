@@ -42,7 +42,13 @@ class LISTS_TASKS:
 
     @staticmethod
     def task_search_index_command(msg: Message, server):
-
-        msg.conn_peer.socket_handler.send(
-            f"{ msg.conn_peer._list.search_index(int(msg.cmd.index[0]))}", "b"
-        )
+        
+        try:
+            value = msg.conn_peer._list.search_index(int(msg.cmd.index[0])) 
+            msg.conn_peer.socket_handler.send(
+            f"{value}", "b"
+            )
+        except Exception as e:
+            msg.conn_peer.socket_handler.send(
+            f"{str(e)}", "e"
+            )

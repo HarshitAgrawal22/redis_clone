@@ -11,6 +11,7 @@ from python_redis.network import peer
 from queue import Queue, Empty as EmptyQueue
 from python_redis import constants
 from icecream import ic
+from python_redis.utils.exception_handler import GlobalExceptionHandler
 
 default_listen_address: str = constants.ServerPort
 
@@ -36,7 +37,6 @@ class Server:
             socket.AF_INET, socket.SOCK_STREAM
         )  # Network listener
         self.del_peer_ch: Queue[peer.Peer] = Queue()
-
         # Channel to delete connection of a peer from the server
         self.add_peer_ch: Queue[peer.Peer] = Queue()
 
@@ -75,13 +75,18 @@ class Server:
         #     msg.conn_peer.storage_queue = Queue()
         #     msg.conn_peer.send("OK".encode("utf-8"))
 
-        func = execute_task_hash_map.get(type(msg.cmd))
-        if func != None:
-            data = func(msg, self)
-            return None
-            # ic(f"{data} is the data we got in return ")
-        else:
-            return str("killed a Peer")
+        try:
+            func = execute_task_hash_map.get(type(msg.cmd))
+            if func != None:
+                data = func(msg, self)
+                return None
+                # ic(f"{data} is the data we got in return ")
+            else:
+                return str("killed a Peer")
+        except Exception as e:
+            # Global exception handler - catch any unhandled exception during message handling
+            GlobalExceptionHandler.handle_message_exception(e, msg.conn_peer)
+            return f"Error: {str(e)}"
 
     def loop(self) -> None:
         # print("loop started")
@@ -98,11 +103,15 @@ class Server:
 
             try:
                 msg = self.msg_queue.get(timeout=0.05)
-                err = self.handle_message(
-                    msg
-                )  # TODO: check and add error in this function's response
-                if err != None:
-                    print(f"Raw Message Error-> {err}")
+                try:
+                    err = self.handle_message(
+                        msg
+                    )  # TODO: check and add error in this function's response
+                    if err != None:
+                        print(f"Raw Message Error-> {err}")
+                except Exception as e:
+                    # Global exception handler for message processing errors
+                    GlobalExceptionHandler.handle_message_exception(e, msg.conn_peer if hasattr(msg, 'conn_peer') else None)
             except EmptyQueue:
                 pass
 
