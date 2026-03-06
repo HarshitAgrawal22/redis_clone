@@ -1,0 +1,6 @@
+COMMAND_DISPLAY = "qdisp"
+
+COMMAND_DEQUEUE = "qdeq"
+
+COMMAND_PEEK = "qpeek"
+COMMAND_ENQUEUE = "qenq"

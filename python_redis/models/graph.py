@@ -1,7 +1,7 @@
 import threading
 from python_redis.models.service_ds.LinkedList import LinkedList, Node
 from python_redis.models.graph_config import Vertex, Edge, dijkistra
-from python_redis.db import *
+from python_redis.persistence.db import *
 from icecream import ic
 import time
 from datetime import datetime

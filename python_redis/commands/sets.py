@@ -1,0 +1,4 @@
+COMMAND_ADD = "fadd"
+COMMAND_REMOVE = "frem"
+COMMAND_CHECK = "fchec"
+COMMAND_DISPLAY = "fmem"

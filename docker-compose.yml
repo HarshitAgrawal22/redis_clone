@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:8
+    container_name: mongo_container
+    # command: mongod --bind_ip_all
+    ports: 
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - redis_network
+    restart: unless-stopped
+
+  redisclone:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: redis_container
+    ports:
+      - "6001:6001"
+      - "5001:5001"
+      - "5678:5678"
+    networks:
+      - redis_network
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+networks:
+  redis_network: 
+    driver: bridge
+
+volumes:
+  mongo_data:
+# docker compose down -v
+# docker compose up --build

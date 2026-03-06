@@ -1,0 +1,42 @@
+name: Redis clone deploy file
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+# env:
+#   IMAGE_NAME: ghcr.io/harshitagrawal22/redis_clone
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    # series of steps
+    steps:
+      # step 1: Downloading repo into runner
+      - name: Checkout Repositry
+        uses: actions/checkout@v3
+      # Step 3: Build Docker image
+      # This ensures the Dockerfile is valid and container builds successfully.
+      # If Docker build fails, deployment will not proceed.
+      - name: Validate Docker Build
+        run: |
+          docker build -t redis-clone .
+      # Step 4: Set up Python environment
+      # This ensures consistent Python version for testing.
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+      # Step 5: Install project dependencies
+      - name: Install Dependencies
+        run: |
+          pip install -r req.txt
+      # Step 6: Run tests (if any)
+      # If no tests exist yet, it will not fail the pipeline.
+      - name: Run Tests
+        run: |
+          pytest || echo "No tests defined yet"

@@ -3,13 +3,13 @@
 
 Start Server by
 
-```
+```python
 
  python -m python_redis.main
 ```
 Access the Server by tcp connection 
 
-```
+```bash
 telnet localhost  12345
 ```
 - the commands can be directly written on the tcp connection and the output will be  seen on the tcp terminal 

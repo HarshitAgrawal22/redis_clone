@@ -2,7 +2,7 @@ import threading
 from threading import RLock, Timer
 from icecream import ic
 import time
-from python_redis.db import *
+from python_redis.persistence.db import *
 
 
 class Set:

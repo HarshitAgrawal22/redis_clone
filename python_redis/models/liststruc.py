@@ -1,6 +1,6 @@
 import threading
 from threading import RLock, Timer
-from python_redis.db import *
+from python_redis.persistence.db import *
 from icecream import ic
 import time
 
@@ -116,7 +116,7 @@ class List_Struc:
 
     def search_index(self, index):
         if index < 0 or index > len(self.storage):
-            return "not valid index"
+            raise IndexError("ERR Not a Valid Index")
 
         else:
             return self.storage[index]

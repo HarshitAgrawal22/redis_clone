@@ -1,0 +1,3168 @@
+[
+    {
+        "label": "socket",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "socket",
+        "description": "socket",
+        "detail": "socket",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TYPE_CHECKING",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TYPE_CHECKING",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Tuple",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Tuple",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TYPE_CHECKING",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TYPE_CHECKING",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TYPE_CHECKING",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TYPE_CHECKING",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TYPE_CHECKING",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TYPE_CHECKING",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TYPE_CHECKING",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TYPE_CHECKING",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "threading",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "threading",
+        "description": "threading",
+        "detail": "threading",
+        "documentation": {}
+    },
+    {
+        "label": "RLock",
+        "importPath": "threading",
+        "description": "threading",
+        "isExtraImport": true,
+        "detail": "threading",
+        "documentation": {}
+    },
+    {
+        "label": "RLock",
+        "importPath": "threading",
+        "description": "threading",
+        "isExtraImport": true,
+        "detail": "threading",
+        "documentation": {}
+    },
+    {
+        "label": "Timer",
+        "importPath": "threading",
+        "description": "threading",
+        "isExtraImport": true,
+        "detail": "threading",
+        "documentation": {}
+    },
+    {
+        "label": "RLock",
+        "importPath": "threading",
+        "description": "threading",
+        "isExtraImport": true,
+        "detail": "threading",
+        "documentation": {}
+    },
+    {
+        "label": "Timer",
+        "importPath": "threading",
+        "description": "threading",
+        "isExtraImport": true,
+        "detail": "threading",
+        "documentation": {}
+    },
+    {
+        "label": "RLock",
+        "importPath": "threading",
+        "description": "threading",
+        "isExtraImport": true,
+        "detail": "threading",
+        "documentation": {}
+    },
+    {
+        "label": "Timer",
+        "importPath": "threading",
+        "description": "threading",
+        "isExtraImport": true,
+        "detail": "threading",
+        "documentation": {}
+    },
+    {
+        "label": "RLock",
+        "importPath": "threading",
+        "description": "threading",
+        "isExtraImport": true,
+        "detail": "threading",
+        "documentation": {}
+    },
+    {
+        "label": "Timer",
+        "importPath": "threading",
+        "description": "threading",
+        "isExtraImport": true,
+        "detail": "threading",
+        "documentation": {}
+    },
+    {
+        "label": "RLock",
+        "importPath": "threading",
+        "description": "threading",
+        "isExtraImport": true,
+        "detail": "threading",
+        "documentation": {}
+    },
+    {
+        "label": "Timer",
+        "importPath": "threading",
+        "description": "threading",
+        "isExtraImport": true,
+        "detail": "threading",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "ic",
+        "importPath": "icecream",
+        "description": "icecream",
+        "isExtraImport": true,
+        "detail": "icecream",
+        "documentation": {}
+    },
+    {
+        "label": "PriorityQueue",
+        "importPath": "queue",
+        "description": "queue",
+        "isExtraImport": true,
+        "detail": "queue",
+        "documentation": {}
+    },
+    {
+        "label": "Queue",
+        "importPath": "queue",
+        "description": "queue",
+        "isExtraImport": true,
+        "detail": "queue",
+        "documentation": {}
+    },
+    {
+        "label": "Empty",
+        "importPath": "queue",
+        "description": "queue",
+        "isExtraImport": true,
+        "detail": "queue",
+        "documentation": {}
+    },
+    {
+        "label": "Queue",
+        "importPath": "queue",
+        "description": "queue",
+        "isExtraImport": true,
+        "detail": "queue",
+        "documentation": {}
+    },
+    {
+        "label": "Vertex",
+        "importPath": "python_redis.models.graph_config.Vertex",
+        "description": "python_redis.models.graph_config.Vertex",
+        "isExtraImport": true,
+        "detail": "python_redis.models.graph_config.Vertex",
+        "documentation": {}
+    },
+    {
+        "label": "LinkedList",
+        "importPath": "python_redis.models.service_ds.LinkedList",
+        "description": "python_redis.models.service_ds.LinkedList",
+        "isExtraImport": true,
+        "detail": "python_redis.models.service_ds.LinkedList",
+        "documentation": {}
+    },
+    {
+        "label": "LinkedList",
+        "importPath": "python_redis.models.service_ds.LinkedList",
+        "description": "python_redis.models.service_ds.LinkedList",
+        "isExtraImport": true,
+        "detail": "python_redis.models.service_ds.LinkedList",
+        "documentation": {}
+    },
+    {
+        "label": "Node",
+        "importPath": "python_redis.models.service_ds.LinkedList",
+        "description": "python_redis.models.service_ds.LinkedList",
+        "isExtraImport": true,
+        "detail": "python_redis.models.service_ds.LinkedList",
+        "documentation": {}
+    },
+    {
+        "label": "LinkedList",
+        "importPath": "python_redis.models.service_ds.LinkedList",
+        "description": "python_redis.models.service_ds.LinkedList",
+        "isExtraImport": true,
+        "detail": "python_redis.models.service_ds.LinkedList",
+        "documentation": {}
+    },
+    {
+        "label": "Node",
+        "importPath": "python_redis.models.service_ds.LinkedList",
+        "description": "python_redis.models.service_ds.LinkedList",
+        "isExtraImport": true,
+        "detail": "python_redis.models.service_ds.LinkedList",
+        "documentation": {}
+    },
+    {
+        "label": "LinkedList",
+        "importPath": "python_redis.models.service_ds.LinkedList",
+        "description": "python_redis.models.service_ds.LinkedList",
+        "isExtraImport": true,
+        "detail": "python_redis.models.service_ds.LinkedList",
+        "documentation": {}
+    },
+    {
+        "label": "Node",
+        "importPath": "python_redis.models.service_ds.LinkedList",
+        "description": "python_redis.models.service_ds.LinkedList",
+        "isExtraImport": true,
+        "detail": "python_redis.models.service_ds.LinkedList",
+        "documentation": {}
+    },
+    {
+        "label": "Edge",
+        "importPath": "python_redis.models.graph_config.Edge",
+        "description": "python_redis.models.graph_config.Edge",
+        "isExtraImport": true,
+        "detail": "python_redis.models.graph_config.Edge",
+        "documentation": {}
+    },
+    {
+        "label": "Vertex",
+        "importPath": "python_redis.models.graph_config",
+        "description": "python_redis.models.graph_config",
+        "isExtraImport": true,
+        "detail": "python_redis.models.graph_config",
+        "documentation": {}
+    },
+    {
+        "label": "Edge",
+        "importPath": "python_redis.models.graph_config",
+        "description": "python_redis.models.graph_config",
+        "isExtraImport": true,
+        "detail": "python_redis.models.graph_config",
+        "documentation": {}
+    },
+    {
+        "label": "dijkistra",
+        "importPath": "python_redis.models.graph_config",
+        "description": "python_redis.models.graph_config",
+        "isExtraImport": true,
+        "detail": "python_redis.models.graph_config",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "python_redis.persistence.db",
+        "description": "python_redis.persistence.db",
+        "isExtraImport": true,
+        "detail": "python_redis.persistence.db",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "python_redis.persistence.db",
+        "description": "python_redis.persistence.db",
+        "isExtraImport": true,
+        "detail": "python_redis.persistence.db",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "python_redis.persistence.db",
+        "description": "python_redis.persistence.db",
+        "isExtraImport": true,
+        "detail": "python_redis.persistence.db",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "python_redis.persistence.db",
+        "description": "python_redis.persistence.db",
+        "isExtraImport": true,
+        "detail": "python_redis.persistence.db",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "python_redis.persistence.db",
+        "description": "python_redis.persistence.db",
+        "isExtraImport": true,
+        "detail": "python_redis.persistence.db",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "python_redis.persistence.db",
+        "description": "python_redis.persistence.db",
+        "isExtraImport": true,
+        "detail": "python_redis.persistence.db",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "python_redis.persistence.db",
+        "description": "python_redis.persistence.db",
+        "isExtraImport": true,
+        "detail": "python_redis.persistence.db",
+        "documentation": {}
+    },
+    {
+        "label": "HardDatabase",
+        "importPath": "python_redis.persistence.db",
+        "description": "python_redis.persistence.db",
+        "isExtraImport": true,
+        "detail": "python_redis.persistence.db",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "MongoClient",
+        "importPath": "pymongo",
+        "description": "pymongo",
+        "isExtraImport": true,
+        "detail": "pymongo",
+        "documentation": {}
+    },
+    {
+        "label": "DESCENDING",
+        "importPath": "pymongo",
+        "description": "pymongo",
+        "isExtraImport": true,
+        "detail": "pymongo",
+        "documentation": {}
+    },
+    {
+        "label": "Collection",
+        "importPath": "pymongo.collection",
+        "description": "pymongo.collection",
+        "isExtraImport": true,
+        "detail": "pymongo.collection",
+        "documentation": {}
+    },
+    {
+        "label": "InsertOneResult",
+        "importPath": "pymongo.results",
+        "description": "pymongo.results",
+        "isExtraImport": true,
+        "detail": "pymongo.results",
+        "documentation": {}
+    },
+    {
+        "label": "DeleteResult",
+        "importPath": "pymongo.results",
+        "description": "pymongo.results",
+        "isExtraImport": true,
+        "detail": "pymongo.results",
+        "documentation": {}
+    },
+    {
+        "label": "Database",
+        "importPath": "pymongo.database",
+        "description": "pymongo.database",
+        "isExtraImport": true,
+        "detail": "pymongo.database",
+        "documentation": {}
+    },
+    {
+        "label": "Cursor",
+        "importPath": "pymongo.cursor",
+        "description": "pymongo.cursor",
+        "isExtraImport": true,
+        "detail": "pymongo.cursor",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "python_redis.protocols.bst_protocols",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "python_redis.protocols.keyval_protocol",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "Command",
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "isExtraImport": true,
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "CreateNewQueue",
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "isExtraImport": true,
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "python_redis.protocols.graph_protocols",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "python_redis.protocols.list_protocols",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "python_redis.protocols.queue_protocols",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "python_redis.protocols.queue_protocols",
+        "description": "python_redis.protocols.queue_protocols",
+        "detail": "python_redis.protocols.queue_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "python_redis.protocols.sets_protocols",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "python_redis.protocols.sets_protocols",
+        "description": "python_redis.protocols.sets_protocols",
+        "detail": "python_redis.protocols.sets_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "python_redis.protocols.stack_protocols",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "python_redis.protocols.stack_protocols",
+        "description": "python_redis.protocols.stack_protocols",
+        "detail": "python_redis.protocols.stack_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "Command",
+        "importPath": "python_redis.protocols.command",
+        "description": "python_redis.protocols.command",
+        "isExtraImport": true,
+        "detail": "python_redis.protocols.command",
+        "documentation": {}
+    },
+    {
+        "label": "command_bst",
+        "importPath": "python_redis.services",
+        "description": "python_redis.services",
+        "isExtraImport": true,
+        "detail": "python_redis.services",
+        "documentation": {}
+    },
+    {
+        "label": "command_graph",
+        "importPath": "python_redis.services",
+        "description": "python_redis.services",
+        "isExtraImport": true,
+        "detail": "python_redis.services",
+        "documentation": {}
+    },
+    {
+        "label": "command_stack",
+        "importPath": "python_redis.services",
+        "description": "python_redis.services",
+        "isExtraImport": true,
+        "detail": "python_redis.services",
+        "documentation": {}
+    },
+    {
+        "label": "command_dict",
+        "importPath": "python_redis.services",
+        "description": "python_redis.services",
+        "isExtraImport": true,
+        "detail": "python_redis.services",
+        "documentation": {}
+    },
+    {
+        "label": "command_queue",
+        "importPath": "python_redis.services",
+        "description": "python_redis.services",
+        "isExtraImport": true,
+        "detail": "python_redis.services",
+        "documentation": {}
+    },
+    {
+        "label": "command_sets",
+        "importPath": "python_redis.services",
+        "description": "python_redis.services",
+        "isExtraImport": true,
+        "detail": "python_redis.services",
+        "documentation": {}
+    },
+    {
+        "label": "command_lists",
+        "importPath": "python_redis.services",
+        "description": "python_redis.services",
+        "isExtraImport": true,
+        "detail": "python_redis.services",
+        "documentation": {}
+    },
+    {
+        "label": "execute_task_hash_map",
+        "importPath": "python_redis.common",
+        "description": "python_redis.common",
+        "isExtraImport": true,
+        "detail": "python_redis.common",
+        "documentation": {}
+    },
+    {
+        "label": "Message",
+        "importPath": "python_redis.common",
+        "description": "python_redis.common",
+        "isExtraImport": true,
+        "detail": "python_redis.common",
+        "documentation": {}
+    },
+    {
+        "label": "execute_command_hash_map",
+        "importPath": "python_redis.common",
+        "description": "python_redis.common",
+        "isExtraImport": true,
+        "detail": "python_redis.common",
+        "documentation": {}
+    },
+    {
+        "label": "Message",
+        "importPath": "python_redis.common",
+        "description": "python_redis.common",
+        "isExtraImport": true,
+        "detail": "python_redis.common",
+        "documentation": {}
+    },
+    {
+        "label": "peer",
+        "importPath": "python_redis",
+        "description": "python_redis",
+        "isExtraImport": true,
+        "detail": "python_redis",
+        "documentation": {}
+    },
+    {
+        "label": "client",
+        "importPath": "python_redis.client",
+        "description": "python_redis.client",
+        "isExtraImport": true,
+        "detail": "python_redis.client",
+        "documentation": {}
+    },
+    {
+        "label": "python_redis.models.keyval",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "python_redis.models.keyval",
+        "description": "python_redis.models.keyval",
+        "detail": "python_redis.models.keyval",
+        "documentation": {}
+    },
+    {
+        "label": "sets",
+        "importPath": "python_redis.models",
+        "description": "python_redis.models",
+        "isExtraImport": true,
+        "detail": "python_redis.models",
+        "documentation": {}
+    },
+    {
+        "label": "stacks",
+        "importPath": "python_redis.models",
+        "description": "python_redis.models",
+        "isExtraImport": true,
+        "detail": "python_redis.models",
+        "documentation": {}
+    },
+    {
+        "label": "liststruc",
+        "importPath": "python_redis.models",
+        "description": "python_redis.models",
+        "isExtraImport": true,
+        "detail": "python_redis.models",
+        "documentation": {}
+    },
+    {
+        "label": "tree",
+        "importPath": "python_redis.models",
+        "description": "python_redis.models",
+        "isExtraImport": true,
+        "detail": "python_redis.models",
+        "documentation": {}
+    },
+    {
+        "label": "queuestruc",
+        "importPath": "python_redis.models",
+        "description": "python_redis.models",
+        "isExtraImport": true,
+        "detail": "python_redis.models",
+        "documentation": {}
+    },
+    {
+        "label": "graph",
+        "importPath": "python_redis.models",
+        "description": "python_redis.models",
+        "isExtraImport": true,
+        "detail": "python_redis.models",
+        "documentation": {}
+    },
+    {
+        "label": "keyval",
+        "importPath": "python_redis.models",
+        "description": "python_redis.models",
+        "isExtraImport": true,
+        "detail": "python_redis.models",
+        "documentation": {}
+    },
+    {
+        "label": "Client",
+        "kind": 6,
+        "importPath": "python_redis.client.client",
+        "description": "python_redis.client.client",
+        "peekOfCode": "class Client:\n    def __init__(self, addr: str):\n        self.addr: str = addr\n        self.conn = socket.create_connection(\n            (self.addr.split(\":\")[0], int(self.addr.split(\":\")[1]))\n        )\n    def __str__(self):\n        return f\"addr:{self.addr}   conn:{self.conn}\"\n    def set(self, key: str, value: str):\n        # try:",
+        "detail": "python_redis.client.client",
+        "documentation": {}
+    },
+    {
+        "label": "new_client",
+        "kind": 2,
+        "importPath": "python_redis.client.client",
+        "description": "python_redis.client.client",
+        "peekOfCode": "def new_client(addr: str):\n    return Client(addr=addr)",
+        "detail": "python_redis.client.client",
+        "documentation": {}
+    },
+    {
+        "label": "QueueObject",
+        "kind": 6,
+        "importPath": "python_redis.models.graph_config.dijkistra",
+        "description": "python_redis.models.graph_config.dijkistra",
+        "peekOfCode": "class QueueObject:\n    def __init__(self, vertex: Vertex, priority: int):\n        self.vertex: Vertex = vertex\n        self.priority: int = priority\n    def __lt__(self, other: \"QueueObject\") -> bool:\n        \"\"\"Defines comparison for priority queue based on priority.\"\"\"\n        return self.priority < other.priority\n    def __eq__(self, other: object) -> bool:\n        \"\"\"Defines equality based on priority.\"\"\"\n        if not isinstance(other, QueueObject):",
+        "detail": "python_redis.models.graph_config.dijkistra",
+        "documentation": {}
+    },
+    {
+        "label": "dijkistra",
+        "kind": 6,
+        "importPath": "python_redis.models.graph_config.dijkistra",
+        "description": "python_redis.models.graph_config.dijkistra",
+        "peekOfCode": "class dijkistra:\n    def dijkistra_dicts(self, g, starting_vertex: Vertex, key: str) -> list[dict]:\n        dist_dict: dict[str, int] = dict()\n        prev_dict: dict[str, Vertex] = dict()\n        queue: PriorityQueue[QueueObject] = PriorityQueue()\n        queue.put(QueueObject(starting_vertex, 0))\n        for v in g.get_vertices():\n            if v != starting_vertex:\n                dist_dict[v.get_data()[key]] = 2**63 - 1\n            prev_dict[v.get_data()[key]] = Vertex(\"null\")",
+        "detail": "python_redis.models.graph_config.dijkistra",
+        "documentation": {}
+    },
+    {
+        "label": "Edge",
+        "kind": 6,
+        "importPath": "python_redis.models.graph_config.Edge",
+        "description": "python_redis.models.graph_config.Edge",
+        "peekOfCode": "class Edge:\n    # it is just an entity to store the edge with its details we need\n    def __init__(self, startV, endV, inputWeight):\n        self.start: Vertex = startV  # the node from where the edge is starting\n        self.end: Vertex = endV  # to where the edge will be ending\n        self.weight: int = inputWeight  # weight of the edge\n    def get_start(self):\n        return self.start\n    def get_end(self):\n        return self.end",
+        "detail": "python_redis.models.graph_config.Edge",
+        "documentation": {}
+    },
+    {
+        "label": "Vertex",
+        "kind": 6,
+        "importPath": "python_redis.models.graph_config.Vertex",
+        "description": "python_redis.models.graph_config.Vertex",
+        "peekOfCode": "class Vertex:\n    def __init__(self, data: dict):\n        self.data: dict = data\n        self.edges: list[Edge] = list()\n    def add_edge(self, endVertex: \"Vertex\", weight: int):\n        self.edges.append(Edge(self, endVertex, weight))\n    def remove_edge_by_vertex(self, end_vertex: \"Vertex\", key: str):\n        self.edges = list(\n            filter(\n                lambda edge: edge.get_end().get_data().get(key)",
+        "detail": "python_redis.models.graph_config.Vertex",
+        "documentation": {}
+    },
+    {
+        "label": "Node",
+        "kind": 6,
+        "importPath": "python_redis.models.service_ds.LinkedList",
+        "description": "python_redis.models.service_ds.LinkedList",
+        "peekOfCode": "class Node:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n    def __str__(self):\n        return str(self.value)\nclass LinkedList:\n    def __init__(self):\n        self.head: Node = None\n        self.tail: Node = None",
+        "detail": "python_redis.models.service_ds.LinkedList",
+        "documentation": {}
+    },
+    {
+        "label": "LinkedList",
+        "kind": 6,
+        "importPath": "python_redis.models.service_ds.LinkedList",
+        "description": "python_redis.models.service_ds.LinkedList",
+        "peekOfCode": "class LinkedList:\n    def __init__(self):\n        self.head: Node = None\n        self.tail: Node = None\n    def show_head(self):\n        if self.head is None:\n            return \"Empty\"\n        else:\n            return self.head.value\n    def show_tail(self):",
+        "detail": "python_redis.models.service_ds.LinkedList",
+        "documentation": {}
+    },
+    {
+        "label": "graph",
+        "kind": 6,
+        "importPath": "python_redis.models.graph",
+        "description": "python_redis.models.graph",
+        "peekOfCode": "class graph:\n    def __init__(self, is_weighted: bool, is_directed: bool, db: HardDatabase):\n        self.vertices: list[Vertex.Vertex] = list()\n        self.is_directed: bool = is_directed\n        self.is_weighted: bool = is_weighted\n        self.key_name: str = None\n        self.dij: dijkistra.dijkistra = dijkistra.dijkistra()\n        self.db: HardDatabase = db\n    @staticmethod\n    def new_graph(db: HardDatabase):  #",
+        "detail": "python_redis.models.graph",
+        "documentation": {}
+    },
+    {
+        "label": "KV",
+        "kind": 6,
+        "importPath": "python_redis.models.keyval",
+        "description": "python_redis.models.keyval",
+        "peekOfCode": "class KV:\n    def __init__(self, db: HardDatabase):\n        # TODO:  Here we wil need to add a backup storage which will have the incoming updates when the dictiony is geting synced with the hard db\n        ic.configureOutput(prefix=\"DEBUG: \", includeContext=True)\n        # Initialize an empty dictionary and an RLock for thread safety\n        self.data: Dict[str, bytes] = {}\n        self.lock: RLock = threading.RLock()\n        self.db: HardDatabase = db\n        self.collection: Collection\n        # has_collections: bool = db.list_collections(limit=1).alive",
+        "detail": "python_redis.models.keyval",
+        "documentation": {}
+    },
+    {
+        "label": "List_Struc",
+        "kind": 6,
+        "importPath": "python_redis.models.liststruc",
+        "description": "python_redis.models.liststruc",
+        "peekOfCode": "class List_Struc:\n    def __init__(self, db: HardDatabase):\n        ic.configureOutput(prefix=\"DEBUG: \", includeContext=True)\n        self.storage: list = list()\n        self.db: HardDatabase = db\n        self.lock = threading.RLock()\n        self.collection: Collection\n        self.db_left_index = 0\n        self.db_right_index = 0\n        if self.db.check_collection_exist(\"List\"):",
+        "detail": "python_redis.models.liststruc",
+        "documentation": {}
+    },
+    {
+        "label": "DataQueue",
+        "kind": 6,
+        "importPath": "python_redis.models.queuestruc",
+        "description": "python_redis.models.queuestruc",
+        "peekOfCode": "class DataQueue:\n    def __init__(self, db: HardDatabase):\n        self.ll: LinkedList = LinkedList()\n        self.lock = threading.RLock()\n        ic.configureOutput(prefix=\"DEBUG: \", includeContext=True)\n        self.db: HardDatabase = db\n        self.collection: Collection\n        if self.db.check_collection_exist(\"Queue\"):\n            self.collection: Collection = self.db.new_collection(\"Queue\")\n            self.load_from_hard_db()",
+        "detail": "python_redis.models.queuestruc",
+        "documentation": {}
+    },
+    {
+        "label": "Set",
+        "kind": 6,
+        "importPath": "python_redis.models.sets",
+        "description": "python_redis.models.sets",
+        "peekOfCode": "class Set:\n    def __init__(self, db: HardDatabase):\n        ic.configureOutput(prefix=\"DEBUG: \", includeContext=True)\n        self.db: HardDatabase = db\n        self.storage: set[str] = set()\n        self.collection: Collection\n        if self.db.check_collection_exist(\"Set\"):\n            self.collection: Collection = self.db.new_collection(\"Set\")\n            self.load_from_hard_db()\n        else:",
+        "detail": "python_redis.models.sets",
+        "documentation": {}
+    },
+    {
+        "label": "Stackstruc",
+        "kind": 6,
+        "importPath": "python_redis.models.stacks",
+        "description": "python_redis.models.stacks",
+        "peekOfCode": "class Stackstruc:\n    def __init__(self, db: HardDatabase):\n        self.lock = threading.RLock()\n        self.ll: LinkedList = LinkedList()\n        self.db: HardDatabase = db\n        self.collection: Collection\n        if self.db.check_collection_exist(\"Stack\"):\n            self.collection: Collection = self.db.new_collection(\"Stack\")\n            self.load_from_hard_db()\n        else:",
+        "detail": "python_redis.models.stacks",
+        "documentation": {}
+    },
+    {
+        "label": "Node_AVL",
+        "kind": 6,
+        "importPath": "python_redis.models.tree",
+        "description": "python_redis.models.tree",
+        "peekOfCode": "class Node_AVL:\n    def __init__(self, key: int, value: dict) -> None:\n        self.key: int = key\n        self.value = value\n        self.left: Optional[Node_AVL] = None\n        self.right: Optional[Node_AVL] = None\n        self.height: int = 1  # height of the node\nclass AVLTree:\n    def insert(self, root: Optional[Node_AVL], key: int, value: dict) -> Node_AVL:\n        \"\"\"Insert a key into the AVL tree and return the new root.\"\"\"",
+        "detail": "python_redis.models.tree",
+        "documentation": {}
+    },
+    {
+        "label": "AVLTree",
+        "kind": 6,
+        "importPath": "python_redis.models.tree",
+        "description": "python_redis.models.tree",
+        "peekOfCode": "class AVLTree:\n    def insert(self, root: Optional[Node_AVL], key: int, value: dict) -> Node_AVL:\n        \"\"\"Insert a key into the AVL tree and return the new root.\"\"\"\n        # 1️⃣ Perform standard BST insertion\n        if root is None:\n            return Node_AVL(key, value)\n        if key < root.key:\n            root.left = self.insert(root.left, key, value)\n        elif key > root.key:\n            root.right = self.insert(root.right, key, value)",
+        "detail": "python_redis.models.tree",
+        "documentation": {}
+    },
+    {
+        "label": "Node",
+        "kind": 6,
+        "importPath": "python_redis.models.tree",
+        "description": "python_redis.models.tree",
+        "peekOfCode": "class Node:\n    def __init__(self, value):\n        self.value: dict = value\n        self.right: Node = None\n        self.left: Node = None\n    def __str__(self):\n        return f\"value stored on this node is:{self.value}\"\n# here we intent to store a object in the form of dictionary in the bst\nclass bstree:\n    def __init__(self, db: HardDatabase):",
+        "detail": "python_redis.models.tree",
+        "documentation": {}
+    },
+    {
+        "label": "bstree",
+        "kind": 6,
+        "importPath": "python_redis.models.tree",
+        "description": "python_redis.models.tree",
+        "peekOfCode": "class bstree:\n    def __init__(self, db: HardDatabase):\n        self.root: Node = None\n        self.lock = threading.RLock()\n        self.key: str = None\n        ic.configureOutput(prefix=\"DEBUG: \", includeContext=True)\n        self.db: HardDatabase = db\n        self.meta_collection = self.db.new_collection(\"meta\")\n        self.collection: Collection\n        if self.db.check_collection_exist(\"Tree\"):",
+        "detail": "python_redis.models.tree",
+        "documentation": {}
+    },
+    {
+        "label": "HardDatabase",
+        "kind": 6,
+        "importPath": "python_redis.persistence.db",
+        "description": "python_redis.persistence.db",
+        "peekOfCode": "class HardDatabase:\n    def __init__(self, db_name):\n        try:\n            self.db: Database = client[db_name]\n        except Exception as e:\n            print(e)\n        # self.collection: Collection = None\n    @staticmethod\n    def new_db(db_name: str):\n        return HardDatabase(db_name)",
+        "detail": "python_redis.persistence.db",
+        "documentation": {}
+    },
+    {
+        "label": "client",
+        "kind": 5,
+        "importPath": "python_redis.persistence.db",
+        "description": "python_redis.persistence.db",
+        "peekOfCode": "client = MongoClient(\"mongodb://127.0.0.1:27017/\")\nfrom icecream import ic\ndefault_listen_address: str = \":5001\"\nic.configureOutput(prefix=\"DEBUG: \", includeContext=True)\n# TODO implement pub/sub model to this project, the instructions are written at the bottom of this file\nclass HardDatabase:\n    def __init__(self, db_name):\n        try:\n            self.db: Database = client[db_name]\n        except Exception as e:",
+        "detail": "python_redis.persistence.db",
+        "documentation": {}
+    },
+    {
+        "label": "InsertCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "class InsertCommand(Command):\n    def __init__(self, data):\n        self.item: tuple = data\n    def __str__(self):\n        return f\"data for insertion is {self.item}\"\nclass UpsertCommand(Command):\n    def __init__(self, key, itemspairs):\n        self.key = key\n        self.items = itemspairs\n    def __str__(self):",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "UpsertCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "class UpsertCommand(Command):\n    def __init__(self, key, itemspairs):\n        self.key = key\n        self.items = itemspairs\n    def __str__(self):\n        return f\"Got Data for Upsertion\"\nclass DisplayCommand(Command):\n    def __init__(self):\n        print(\"got command to display tree\")\nclass SearchCommand(Command):",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "DisplayCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "class DisplayCommand(Command):\n    def __init__(self):\n        print(\"got command to display tree\")\nclass SearchCommand(Command):\n    def __init__(self, key):\n        self.key = key\n    def __str__(self):\n        return f\"data to search {self.key}\"\nclass DeleteCommand(Command):\n    def __init__(self, key):",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "SearchCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "class SearchCommand(Command):\n    def __init__(self, key):\n        self.key = key\n    def __str__(self):\n        return f\"data to search {self.key}\"\nclass DeleteCommand(Command):\n    def __init__(self, key):\n        self.key = key\n    def __str__(self):\n        return f\"data to delete is {self.key}\"",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "DeleteCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "class DeleteCommand(Command):\n    def __init__(self, key):\n        self.key = key\n    def __str__(self):\n        return f\"data to delete is {self.key}\"\nclass SetKeyCommand(Command):\n    def __init__(self, key):\n        self.key = key\nclass GetKeyCommand(Command):\n    def __init__(self):",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "SetKeyCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "class SetKeyCommand(Command):\n    def __init__(self, key):\n        self.key = key\nclass GetKeyCommand(Command):\n    def __init__(self):\n        print(\"got command to get key \")\nclass PreOrderTraversalCommand(Command):\n    def __init__(self):\n        print(\"got command for pre order \")\n    def __str__(self):",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "GetKeyCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "class GetKeyCommand(Command):\n    def __init__(self):\n        print(\"got command to get key \")\nclass PreOrderTraversalCommand(Command):\n    def __init__(self):\n        print(\"got command for pre order \")\n    def __str__(self):\n        return f\"got order to print preorder traversal\"\nclass PostOrderTraversalCommand(Command):\n    def __init__(self):",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "PreOrderTraversalCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "class PreOrderTraversalCommand(Command):\n    def __init__(self):\n        print(\"got command for pre order \")\n    def __str__(self):\n        return f\"got order to print preorder traversal\"\nclass PostOrderTraversalCommand(Command):\n    def __init__(self):\n        print(\"got command for post order \")\n    def __str__(self):\n        return f\"got order to print postorder traversal\"",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "PostOrderTraversalCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "class PostOrderTraversalCommand(Command):\n    def __init__(self):\n        print(\"got command for post order \")\n    def __str__(self):\n        return f\"got order to print postorder traversal\"\nclass InOrderTraversalCommand(Command):\n    def __init__(self):\n        print(\"got command for in order \")\n    def __str__(self):\n        return f\"got order to print inorder traversal\"",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "InOrderTraversalCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "class InOrderTraversalCommand(Command):\n    def __init__(self):\n        print(\"got command for in order \")\n    def __str__(self):\n        return f\"got order to print inorder traversal\"\ndef execute_insert_command(args):\n    if len(args) <= 0:\n        raise ValueError(\"not enough args\")\n    return InsertCommand(args)\ndef execute_upsert_key_val_command(args):",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "TREE_TASKS",
+        "kind": 6,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "class TREE_TASKS:\n    def __init__(self):\n        print(self)\n    @staticmethod\n    def task_set_key_command(msg: Message, server):\n        value = msg.conn_peer._tree.set_key(msg.cmd.key)\n        msg.conn_peer.send(f\"OK\".encode(\"utf-8\"))\n    @staticmethod\n    def task_get_key_command(msg: Message, server):\n        value = msg.conn_peer._tree.get_key()",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_insert_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "def execute_insert_command(args):\n    if len(args) <= 0:\n        raise ValueError(\"not enough args\")\n    return InsertCommand(args)\ndef execute_upsert_key_val_command(args):\n    if len(args) < 3:\n        raise ValueError(\"Not Enough Argument to perform upsert node operation\")\n    return UpsertCommand(args[0], args[1:])\ndef execute_search_command(args):\n    if len(args) <= 0:",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_upsert_key_val_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "def execute_upsert_key_val_command(args):\n    if len(args) < 3:\n        raise ValueError(\"Not Enough Argument to perform upsert node operation\")\n    return UpsertCommand(args[0], args[1:])\ndef execute_search_command(args):\n    if len(args) <= 0:\n        raise ValueError(\"not enough Arguments to process\")\n    return SearchCommand(args[0])\ndef execute_pre_order_traversal_command(args):\n    if len(args) != 0:",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_search_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "def execute_search_command(args):\n    if len(args) <= 0:\n        raise ValueError(\"not enough Arguments to process\")\n    return SearchCommand(args[0])\ndef execute_pre_order_traversal_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for pre order traversal command\")\n    return PreOrderTraversalCommand()\ndef execute_post_order_traversal_command(args):\n    if len(args) != 0:",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_pre_order_traversal_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "def execute_pre_order_traversal_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for pre order traversal command\")\n    return PreOrderTraversalCommand()\ndef execute_post_order_traversal_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for post order traversal command\")\n    return PostOrderTraversalCommand()\ndef execute_in_order_traversal_command(args):\n    if len(args) != 0:",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_post_order_traversal_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "def execute_post_order_traversal_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for post order traversal command\")\n    return PostOrderTraversalCommand()\ndef execute_in_order_traversal_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for in order traversal command\")\n    return InOrderTraversalCommand()\ndef execute_display_command(args):\n    if len(args) != 0:",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_in_order_traversal_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "def execute_in_order_traversal_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for in order traversal command\")\n    return InOrderTraversalCommand()\ndef execute_display_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for push command\")\n    return DisplayCommand()\ndef execute_delete_command(args):\n    if len(args) != 1:",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_display_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "def execute_display_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for push command\")\n    return DisplayCommand()\ndef execute_delete_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for pop command\")\n    return DeleteCommand(args[0])\ndef execute_set_command(args):\n    if len(args) != 1:",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_delete_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "def execute_delete_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for pop command\")\n    return DeleteCommand(args[0])\ndef execute_set_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for pop command\")\n    return SetKeyCommand(args[0])\ndef execute_get_command(args):\n    if len(args) != 0:",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_set_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "def execute_set_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for pop command\")\n    return SetKeyCommand(args[0])\ndef execute_get_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for pop command\")\n    return GetKeyCommand()\nclass TREE_TASKS:\n    def __init__(self):",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_get_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "def execute_get_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for pop command\")\n    return GetKeyCommand()\nclass TREE_TASKS:\n    def __init__(self):\n        print(self)\n    @staticmethod\n    def task_set_key_command(msg: Message, server):\n        value = msg.conn_peer._tree.set_key(msg.cmd.key)",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_INSERT",
+        "kind": 5,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "COMMAND_INSERT = \"tins\"\nCOMMAND_SET = \"tset\"\nCOMMAND_GET = \"tget\"\nCOMMAND_SEARCH = \"tlook\"\nCOMMAND_DELETE = \"tdel\"\nCOMMAND_PRE_ORDER = \"tpre\"\nCOMMAND_POST_ORDER = \"tpost\"\nCOMMAND_IN_ORDER = \"tin\"\nCOMMAND_SHOW = \"tshow\"\nCOMMAND_UPSERT_NODE_KEY_VAL = \"tusr\"",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_SET",
+        "kind": 5,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "COMMAND_SET = \"tset\"\nCOMMAND_GET = \"tget\"\nCOMMAND_SEARCH = \"tlook\"\nCOMMAND_DELETE = \"tdel\"\nCOMMAND_PRE_ORDER = \"tpre\"\nCOMMAND_POST_ORDER = \"tpost\"\nCOMMAND_IN_ORDER = \"tin\"\nCOMMAND_SHOW = \"tshow\"\nCOMMAND_UPSERT_NODE_KEY_VAL = \"tusr\"\nclass InsertCommand(Command):",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_GET",
+        "kind": 5,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "COMMAND_GET = \"tget\"\nCOMMAND_SEARCH = \"tlook\"\nCOMMAND_DELETE = \"tdel\"\nCOMMAND_PRE_ORDER = \"tpre\"\nCOMMAND_POST_ORDER = \"tpost\"\nCOMMAND_IN_ORDER = \"tin\"\nCOMMAND_SHOW = \"tshow\"\nCOMMAND_UPSERT_NODE_KEY_VAL = \"tusr\"\nclass InsertCommand(Command):\n    def __init__(self, data):",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_SEARCH",
+        "kind": 5,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "COMMAND_SEARCH = \"tlook\"\nCOMMAND_DELETE = \"tdel\"\nCOMMAND_PRE_ORDER = \"tpre\"\nCOMMAND_POST_ORDER = \"tpost\"\nCOMMAND_IN_ORDER = \"tin\"\nCOMMAND_SHOW = \"tshow\"\nCOMMAND_UPSERT_NODE_KEY_VAL = \"tusr\"\nclass InsertCommand(Command):\n    def __init__(self, data):\n        self.item: tuple = data",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_DELETE",
+        "kind": 5,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "COMMAND_DELETE = \"tdel\"\nCOMMAND_PRE_ORDER = \"tpre\"\nCOMMAND_POST_ORDER = \"tpost\"\nCOMMAND_IN_ORDER = \"tin\"\nCOMMAND_SHOW = \"tshow\"\nCOMMAND_UPSERT_NODE_KEY_VAL = \"tusr\"\nclass InsertCommand(Command):\n    def __init__(self, data):\n        self.item: tuple = data\n    def __str__(self):",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_PRE_ORDER",
+        "kind": 5,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "COMMAND_PRE_ORDER = \"tpre\"\nCOMMAND_POST_ORDER = \"tpost\"\nCOMMAND_IN_ORDER = \"tin\"\nCOMMAND_SHOW = \"tshow\"\nCOMMAND_UPSERT_NODE_KEY_VAL = \"tusr\"\nclass InsertCommand(Command):\n    def __init__(self, data):\n        self.item: tuple = data\n    def __str__(self):\n        return f\"data for insertion is {self.item}\"",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_POST_ORDER",
+        "kind": 5,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "COMMAND_POST_ORDER = \"tpost\"\nCOMMAND_IN_ORDER = \"tin\"\nCOMMAND_SHOW = \"tshow\"\nCOMMAND_UPSERT_NODE_KEY_VAL = \"tusr\"\nclass InsertCommand(Command):\n    def __init__(self, data):\n        self.item: tuple = data\n    def __str__(self):\n        return f\"data for insertion is {self.item}\"\nclass UpsertCommand(Command):",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_IN_ORDER",
+        "kind": 5,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "COMMAND_IN_ORDER = \"tin\"\nCOMMAND_SHOW = \"tshow\"\nCOMMAND_UPSERT_NODE_KEY_VAL = \"tusr\"\nclass InsertCommand(Command):\n    def __init__(self, data):\n        self.item: tuple = data\n    def __str__(self):\n        return f\"data for insertion is {self.item}\"\nclass UpsertCommand(Command):\n    def __init__(self, key, itemspairs):",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_SHOW",
+        "kind": 5,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "COMMAND_SHOW = \"tshow\"\nCOMMAND_UPSERT_NODE_KEY_VAL = \"tusr\"\nclass InsertCommand(Command):\n    def __init__(self, data):\n        self.item: tuple = data\n    def __str__(self):\n        return f\"data for insertion is {self.item}\"\nclass UpsertCommand(Command):\n    def __init__(self, key, itemspairs):\n        self.key = key",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_UPSERT_NODE_KEY_VAL",
+        "kind": 5,
+        "importPath": "python_redis.protocols.bst_protocols",
+        "description": "python_redis.protocols.bst_protocols",
+        "peekOfCode": "COMMAND_UPSERT_NODE_KEY_VAL = \"tusr\"\nclass InsertCommand(Command):\n    def __init__(self, data):\n        self.item: tuple = data\n    def __str__(self):\n        return f\"data for insertion is {self.item}\"\nclass UpsertCommand(Command):\n    def __init__(self, key, itemspairs):\n        self.key = key\n        self.items = itemspairs",
+        "detail": "python_redis.protocols.bst_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "Command",
+        "kind": 6,
+        "importPath": "python_redis.protocols.command",
+        "description": "python_redis.protocols.command",
+        "peekOfCode": "class Command:\n    pass",
+        "detail": "python_redis.protocols.command",
+        "documentation": {}
+    },
+    {
+        "label": "DijkistraShortestPathCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "class DijkistraShortestPathCommand(Command):\n    def __init__(self, start, end):\n        self.start = start\n        self.end = end\n    def __str__(self):\n        return f\"{self.start}\"\nclass DijkistraPrevDictionaryCommand(Command):\n    def __init__(self, start):\n        self.start = start\n    def __str__(self):",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "DijkistraPrevDictionaryCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "class DijkistraPrevDictionaryCommand(Command):\n    def __init__(self, start):\n        self.start = start\n    def __str__(self):\n        return f\"{self.start}\"\nclass DijkistraDistDictionaryCommand(Command):\n    def __init__(self, start):\n        self.start = start\n    def __str__(self):\n        return f\"{self.start}\"",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "DijkistraDistDictionaryCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "class DijkistraDistDictionaryCommand(Command):\n    def __init__(self, start):\n        self.start = start\n    def __str__(self):\n        return f\"{self.start}\"\nclass SetKeyCommand(Command):  #\n    def __init__(self, key):\n        self.key = key\nclass GetKeyCommand(Command):  #\n    def __init__(self):",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "SetKeyCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "class SetKeyCommand(Command):  #\n    def __init__(self, key):\n        self.key = key\nclass GetKeyCommand(Command):  #\n    def __init__(self):\n        print(\"Got command for getting key\")\nclass BFSCommand(Command):  #\n    def __init__(self, start):\n        self.start = start\n    def __str__(self):",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "GetKeyCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "class GetKeyCommand(Command):  #\n    def __init__(self):\n        print(\"Got command for getting key\")\nclass BFSCommand(Command):  #\n    def __init__(self, start):\n        self.start = start\n    def __str__(self):\n        return \"got command for bfs\"\nclass DFSCommand(Command):  #\n    def __init__(self, start):",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "BFSCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "class BFSCommand(Command):  #\n    def __init__(self, start):\n        self.start = start\n    def __str__(self):\n        return \"got command for bfs\"\nclass DFSCommand(Command):  #\n    def __init__(self, start):\n        self.start = start\n    def __str__(self):\n        return \"got command for dfs\"",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "DFSCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "class DFSCommand(Command):  #\n    def __init__(self, start):\n        self.start = start\n    def __str__(self):\n        return \"got command for dfs\"\nclass AddVertexCommand(Command):  #\n    def __init__(self, data):\n        self.data = data\n    def __str__(self):\n        return str(self.data)",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "AddVertexCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "class AddVertexCommand(Command):  #\n    def __init__(self, data):\n        self.data = data\n    def __str__(self):\n        return str(self.data)\nclass AddEdgeCommand(Command):  #\n    def __init__(self, v1, v2, weight):\n        self.v1 = v1\n        self.v2 = v2\n        self.weight = weight",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "AddEdgeCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "class AddEdgeCommand(Command):  #\n    def __init__(self, v1, v2, weight):\n        self.v1 = v1\n        self.v2 = v2\n        self.weight = weight\nclass RemoveEdgeCommand(Command):  #\n    def __init__(self, v1, v2):\n        self.v1 = v1\n        self.v2 = v2\nclass RemoveVertexCommand(Command):  #",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "RemoveEdgeCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "class RemoveEdgeCommand(Command):  #\n    def __init__(self, v1, v2):\n        self.v1 = v1\n        self.v2 = v2\nclass RemoveVertexCommand(Command):  #\n    def __init__(self, data):\n        self.data = data\nclass IsDirectedCommand(Command):  #\n    def __init__(self):\n        pass",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "RemoveVertexCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "class RemoveVertexCommand(Command):  #\n    def __init__(self, data):\n        self.data = data\nclass IsDirectedCommand(Command):  #\n    def __init__(self):\n        pass\nclass IsWeightedCommand(Command):  #\n    def __init__(self):\n        pass\nclass DisplayCommand(Command):  #",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "IsDirectedCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "class IsDirectedCommand(Command):  #\n    def __init__(self):\n        pass\nclass IsWeightedCommand(Command):  #\n    def __init__(self):\n        pass\nclass DisplayCommand(Command):  #\n    def __init__(self):\n        pass\nclass GetVertexCommand(Command):  #",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "IsWeightedCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "class IsWeightedCommand(Command):  #\n    def __init__(self):\n        pass\nclass DisplayCommand(Command):  #\n    def __init__(self):\n        pass\nclass GetVertexCommand(Command):  #\n    def __init__(self, data):\n        self.data = data\nclass GetVerticesCommand(Command):  #",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "DisplayCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "class DisplayCommand(Command):  #\n    def __init__(self):\n        pass\nclass GetVertexCommand(Command):  #\n    def __init__(self, data):\n        self.data = data\nclass GetVerticesCommand(Command):  #\n    def __init__(self):\n        pass\nclass GetEdgesByVertexCommand(Command):  #",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "GetVertexCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "class GetVertexCommand(Command):  #\n    def __init__(self, data):\n        self.data = data\nclass GetVerticesCommand(Command):  #\n    def __init__(self):\n        pass\nclass GetEdgesByVertexCommand(Command):  #\n    def __init__(self, data):\n        self.data = data\ndef execute_dij_shortest_path_command(args):",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "GetVerticesCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "class GetVerticesCommand(Command):  #\n    def __init__(self):\n        pass\nclass GetEdgesByVertexCommand(Command):  #\n    def __init__(self, data):\n        self.data = data\ndef execute_dij_shortest_path_command(args):\n    if len(args) != 2:\n        raise ValueError(\"wrong no. of args\")\n    return DijkistraShortestPathCommand(*args)",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "GetEdgesByVertexCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "class GetEdgesByVertexCommand(Command):  #\n    def __init__(self, data):\n        self.data = data\ndef execute_dij_shortest_path_command(args):\n    if len(args) != 2:\n        raise ValueError(\"wrong no. of args\")\n    return DijkistraShortestPathCommand(*args)\ndef execute_dij_dist_dict_command(args):\n    if len(args) != 1:\n        raise ValueError(\"wrong no. of args\")",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "GRAPH_TASKS",
+        "kind": 6,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "class GRAPH_TASKS:\n    def __init__(self):\n        print(self)\n    @staticmethod\n    def task_set_key_command(msg: Message, server):\n        value = msg.conn_peer._graph.set_key_name(msg.cmd.key)\n        msg.conn_peer.send(f\"{value}\".encode(\"utf-8\"))\n    @staticmethod\n    def task_get_key_command(msg: Message, server):\n        value = msg.conn_peer._graph.get_key_name()",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_dij_shortest_path_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "def execute_dij_shortest_path_command(args):\n    if len(args) != 2:\n        raise ValueError(\"wrong no. of args\")\n    return DijkistraShortestPathCommand(*args)\ndef execute_dij_dist_dict_command(args):\n    if len(args) != 1:\n        raise ValueError(\"wrong no. of args\")\n    return DijkistraDistDictionaryCommand(args[0])\ndef execute_dij_prev_dict_command(args):\n    if len(args) != 1:",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_dij_dist_dict_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "def execute_dij_dist_dict_command(args):\n    if len(args) != 1:\n        raise ValueError(\"wrong no. of args\")\n    return DijkistraDistDictionaryCommand(args[0])\ndef execute_dij_prev_dict_command(args):\n    if len(args) != 1:\n        raise ValueError(\"wrong no. of args\")\n    return DijkistraPrevDictionaryCommand(args[0])\ndef execute_set_key_command(args):\n    if len(args) != 1:",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_dij_prev_dict_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "def execute_dij_prev_dict_command(args):\n    if len(args) != 1:\n        raise ValueError(\"wrong no. of args\")\n    return DijkistraPrevDictionaryCommand(args[0])\ndef execute_set_key_command(args):\n    if len(args) != 1:\n        raise ValueError(\"not enough args\")\n    return SetKeyCommand(args[0])\ndef execute_get_key_command(args):\n    if len(args) != 0:",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_set_key_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "def execute_set_key_command(args):\n    if len(args) != 1:\n        raise ValueError(\"not enough args\")\n    return SetKeyCommand(args[0])\ndef execute_get_key_command(args):\n    if len(args) != 0:\n        raise ValueError(\"not enough args\")\n    return GetKeyCommand()\ndef execute_add_vertex_command(args):\n    if len(args) <= 0:",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_get_key_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "def execute_get_key_command(args):\n    if len(args) != 0:\n        raise ValueError(\"not enough args\")\n    return GetKeyCommand()\ndef execute_add_vertex_command(args):\n    if len(args) <= 0:\n        raise ValueError(\"not enough args\")\n    return AddVertexCommand(args)\ndef execute_get_vertex_by_value_command(args):\n    if len(args) != 1:",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_add_vertex_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "def execute_add_vertex_command(args):\n    if len(args) <= 0:\n        raise ValueError(\"not enough args\")\n    return AddVertexCommand(args)\ndef execute_get_vertex_by_value_command(args):\n    if len(args) != 1:\n        raise ValueError(\"not enough arguments\")\n    return GetVertexCommand(args[0])\ndef execute_depth_first_search_command(args):\n    if len(args) != 1:",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_get_vertex_by_value_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "def execute_get_vertex_by_value_command(args):\n    if len(args) != 1:\n        raise ValueError(\"not enough arguments\")\n    return GetVertexCommand(args[0])\ndef execute_depth_first_search_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for pre order traversal command\")\n    return DFSCommand(args[0])\ndef execute_breadth_first_search_command(args):\n    if len(args) != 1:",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_depth_first_search_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "def execute_depth_first_search_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for pre order traversal command\")\n    return DFSCommand(args[0])\ndef execute_breadth_first_search_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for post order traversal command\")\n    return BFSCommand(args[0])\ndef execute_get_vertices_command(args):\n    if len(args) != 0:",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_breadth_first_search_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "def execute_breadth_first_search_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for post order traversal command\")\n    return BFSCommand(args[0])\ndef execute_get_vertices_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for in order traversal command\")\n    return GetVerticesCommand()\ndef execute_display_command(args):\n    if len(args) != 0:",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_get_vertices_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "def execute_get_vertices_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for in order traversal command\")\n    return GetVerticesCommand()\ndef execute_display_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for push command\")\n    return DisplayCommand()\ndef execute_remove_vertex_by_value_command(args):\n    if len(args) != 1:",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_display_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "def execute_display_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for push command\")\n    return DisplayCommand()\ndef execute_remove_vertex_by_value_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for pop command\")\n    return RemoveVertexCommand(args[0])\ndef execute_add_edge_command(args):\n    if len(args) != 3:",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_remove_vertex_by_value_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "def execute_remove_vertex_by_value_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for pop command\")\n    return RemoveVertexCommand(args[0])\ndef execute_add_edge_command(args):\n    if len(args) != 3:\n        raise ValueError(\"invalid no. args for add edge command\")\n    return AddEdgeCommand(*args)\ndef execute_remove_edge_command(args):\n    if len(args) != 2:",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_add_edge_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "def execute_add_edge_command(args):\n    if len(args) != 3:\n        raise ValueError(\"invalid no. args for add edge command\")\n    return AddEdgeCommand(*args)\ndef execute_remove_edge_command(args):\n    if len(args) != 2:\n        raise ValueError(\"invalid no. args for pop command\")\n    return RemoveEdgeCommand(args[0], args[1])\ndef execute_get_edges_by_vertex_command(args):\n    if len(args) != 1:",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_remove_edge_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "def execute_remove_edge_command(args):\n    if len(args) != 2:\n        raise ValueError(\"invalid no. args for pop command\")\n    return RemoveEdgeCommand(args[0], args[1])\ndef execute_get_edges_by_vertex_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for pop command\")\n    return GetEdgesByVertexCommand(args[0])\ndef execute_is_weighted_command(args):\n    if len(args) != 0:",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_get_edges_by_vertex_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "def execute_get_edges_by_vertex_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for pop command\")\n    return GetEdgesByVertexCommand(args[0])\ndef execute_is_weighted_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for pop command\")\n    return IsWeightedCommand()\ndef execute_is_directed_command(args):\n    if len(args) != 0:",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_is_weighted_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "def execute_is_weighted_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for pop command\")\n    return IsWeightedCommand()\ndef execute_is_directed_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for pop command\")\n    return IsDirectedCommand()\nclass GRAPH_TASKS:\n    def __init__(self):",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_is_directed_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "def execute_is_directed_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for pop command\")\n    return IsDirectedCommand()\nclass GRAPH_TASKS:\n    def __init__(self):\n        print(self)\n    @staticmethod\n    def task_set_key_command(msg: Message, server):\n        value = msg.conn_peer._graph.set_key_name(msg.cmd.key)",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_BFS",
+        "kind": 5,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "COMMAND_BFS = \"gbfs\"\nCOMMAND_DFS = \"gdfs\"\nCOMMAND_ADD_VERTEX = \"gaddv\"\nCOMMAND_ADD_EDGE = \"gadde\"\nCOMMAND_REMOVE_EDGE = \"greme\"\nCOMMAND_REMOVE_VERTEX = \"gremv\"\nCOMMAND_IS_DIRECTED = \"gisdir\"\nCOMMAND_IS_WEIGHTED = \"gisweig\"\nCOMMAND_SHOW = \"gshow\"\nCOMMAND_GET_VERTEX_BY_VALUE = \"ggetvv\"",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_DFS",
+        "kind": 5,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "COMMAND_DFS = \"gdfs\"\nCOMMAND_ADD_VERTEX = \"gaddv\"\nCOMMAND_ADD_EDGE = \"gadde\"\nCOMMAND_REMOVE_EDGE = \"greme\"\nCOMMAND_REMOVE_VERTEX = \"gremv\"\nCOMMAND_IS_DIRECTED = \"gisdir\"\nCOMMAND_IS_WEIGHTED = \"gisweig\"\nCOMMAND_SHOW = \"gshow\"\nCOMMAND_GET_VERTEX_BY_VALUE = \"ggetvv\"\nCOMMAND_GET_VERTICES = \"ggetv\"",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_ADD_VERTEX",
+        "kind": 5,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "COMMAND_ADD_VERTEX = \"gaddv\"\nCOMMAND_ADD_EDGE = \"gadde\"\nCOMMAND_REMOVE_EDGE = \"greme\"\nCOMMAND_REMOVE_VERTEX = \"gremv\"\nCOMMAND_IS_DIRECTED = \"gisdir\"\nCOMMAND_IS_WEIGHTED = \"gisweig\"\nCOMMAND_SHOW = \"gshow\"\nCOMMAND_GET_VERTEX_BY_VALUE = \"ggetvv\"\nCOMMAND_GET_VERTICES = \"ggetv\"\nCOMMAND_GET_VERTEX_EDGE = \"ggetved\"",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_ADD_EDGE",
+        "kind": 5,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "COMMAND_ADD_EDGE = \"gadde\"\nCOMMAND_REMOVE_EDGE = \"greme\"\nCOMMAND_REMOVE_VERTEX = \"gremv\"\nCOMMAND_IS_DIRECTED = \"gisdir\"\nCOMMAND_IS_WEIGHTED = \"gisweig\"\nCOMMAND_SHOW = \"gshow\"\nCOMMAND_GET_VERTEX_BY_VALUE = \"ggetvv\"\nCOMMAND_GET_VERTICES = \"ggetv\"\nCOMMAND_GET_VERTEX_EDGE = \"ggetved\"\nCOMMAND_SET_KEY = \"gsetk\"",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_REMOVE_EDGE",
+        "kind": 5,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "COMMAND_REMOVE_EDGE = \"greme\"\nCOMMAND_REMOVE_VERTEX = \"gremv\"\nCOMMAND_IS_DIRECTED = \"gisdir\"\nCOMMAND_IS_WEIGHTED = \"gisweig\"\nCOMMAND_SHOW = \"gshow\"\nCOMMAND_GET_VERTEX_BY_VALUE = \"ggetvv\"\nCOMMAND_GET_VERTICES = \"ggetv\"\nCOMMAND_GET_VERTEX_EDGE = \"ggetved\"\nCOMMAND_SET_KEY = \"gsetk\"\nCOMMAND_GET_KEY = \"ggetk\"",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_REMOVE_VERTEX",
+        "kind": 5,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "COMMAND_REMOVE_VERTEX = \"gremv\"\nCOMMAND_IS_DIRECTED = \"gisdir\"\nCOMMAND_IS_WEIGHTED = \"gisweig\"\nCOMMAND_SHOW = \"gshow\"\nCOMMAND_GET_VERTEX_BY_VALUE = \"ggetvv\"\nCOMMAND_GET_VERTICES = \"ggetv\"\nCOMMAND_GET_VERTEX_EDGE = \"ggetved\"\nCOMMAND_SET_KEY = \"gsetk\"\nCOMMAND_GET_KEY = \"ggetk\"\nCOMMAND_DIJKISTRA_DIST_DICT = \"gdijdis\"",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_IS_DIRECTED",
+        "kind": 5,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "COMMAND_IS_DIRECTED = \"gisdir\"\nCOMMAND_IS_WEIGHTED = \"gisweig\"\nCOMMAND_SHOW = \"gshow\"\nCOMMAND_GET_VERTEX_BY_VALUE = \"ggetvv\"\nCOMMAND_GET_VERTICES = \"ggetv\"\nCOMMAND_GET_VERTEX_EDGE = \"ggetved\"\nCOMMAND_SET_KEY = \"gsetk\"\nCOMMAND_GET_KEY = \"ggetk\"\nCOMMAND_DIJKISTRA_DIST_DICT = \"gdijdis\"\nCOMMAND_DIJKISTRA_PREV_DICT = \"gdijprev\"",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_IS_WEIGHTED",
+        "kind": 5,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "COMMAND_IS_WEIGHTED = \"gisweig\"\nCOMMAND_SHOW = \"gshow\"\nCOMMAND_GET_VERTEX_BY_VALUE = \"ggetvv\"\nCOMMAND_GET_VERTICES = \"ggetv\"\nCOMMAND_GET_VERTEX_EDGE = \"ggetved\"\nCOMMAND_SET_KEY = \"gsetk\"\nCOMMAND_GET_KEY = \"ggetk\"\nCOMMAND_DIJKISTRA_DIST_DICT = \"gdijdis\"\nCOMMAND_DIJKISTRA_PREV_DICT = \"gdijprev\"\nCOMMAND_DIJKISTRA_SHORTEST_PATH = \"gdijpa\"",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_SHOW",
+        "kind": 5,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "COMMAND_SHOW = \"gshow\"\nCOMMAND_GET_VERTEX_BY_VALUE = \"ggetvv\"\nCOMMAND_GET_VERTICES = \"ggetv\"\nCOMMAND_GET_VERTEX_EDGE = \"ggetved\"\nCOMMAND_SET_KEY = \"gsetk\"\nCOMMAND_GET_KEY = \"ggetk\"\nCOMMAND_DIJKISTRA_DIST_DICT = \"gdijdis\"\nCOMMAND_DIJKISTRA_PREV_DICT = \"gdijprev\"\nCOMMAND_DIJKISTRA_SHORTEST_PATH = \"gdijpa\"\nclass DijkistraShortestPathCommand(Command):",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_GET_VERTEX_BY_VALUE",
+        "kind": 5,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "COMMAND_GET_VERTEX_BY_VALUE = \"ggetvv\"\nCOMMAND_GET_VERTICES = \"ggetv\"\nCOMMAND_GET_VERTEX_EDGE = \"ggetved\"\nCOMMAND_SET_KEY = \"gsetk\"\nCOMMAND_GET_KEY = \"ggetk\"\nCOMMAND_DIJKISTRA_DIST_DICT = \"gdijdis\"\nCOMMAND_DIJKISTRA_PREV_DICT = \"gdijprev\"\nCOMMAND_DIJKISTRA_SHORTEST_PATH = \"gdijpa\"\nclass DijkistraShortestPathCommand(Command):\n    def __init__(self, start, end):",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_GET_VERTICES",
+        "kind": 5,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "COMMAND_GET_VERTICES = \"ggetv\"\nCOMMAND_GET_VERTEX_EDGE = \"ggetved\"\nCOMMAND_SET_KEY = \"gsetk\"\nCOMMAND_GET_KEY = \"ggetk\"\nCOMMAND_DIJKISTRA_DIST_DICT = \"gdijdis\"\nCOMMAND_DIJKISTRA_PREV_DICT = \"gdijprev\"\nCOMMAND_DIJKISTRA_SHORTEST_PATH = \"gdijpa\"\nclass DijkistraShortestPathCommand(Command):\n    def __init__(self, start, end):\n        self.start = start",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_GET_VERTEX_EDGE",
+        "kind": 5,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "COMMAND_GET_VERTEX_EDGE = \"ggetved\"\nCOMMAND_SET_KEY = \"gsetk\"\nCOMMAND_GET_KEY = \"ggetk\"\nCOMMAND_DIJKISTRA_DIST_DICT = \"gdijdis\"\nCOMMAND_DIJKISTRA_PREV_DICT = \"gdijprev\"\nCOMMAND_DIJKISTRA_SHORTEST_PATH = \"gdijpa\"\nclass DijkistraShortestPathCommand(Command):\n    def __init__(self, start, end):\n        self.start = start\n        self.end = end",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_SET_KEY",
+        "kind": 5,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "COMMAND_SET_KEY = \"gsetk\"\nCOMMAND_GET_KEY = \"ggetk\"\nCOMMAND_DIJKISTRA_DIST_DICT = \"gdijdis\"\nCOMMAND_DIJKISTRA_PREV_DICT = \"gdijprev\"\nCOMMAND_DIJKISTRA_SHORTEST_PATH = \"gdijpa\"\nclass DijkistraShortestPathCommand(Command):\n    def __init__(self, start, end):\n        self.start = start\n        self.end = end\n    def __str__(self):",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_GET_KEY",
+        "kind": 5,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "COMMAND_GET_KEY = \"ggetk\"\nCOMMAND_DIJKISTRA_DIST_DICT = \"gdijdis\"\nCOMMAND_DIJKISTRA_PREV_DICT = \"gdijprev\"\nCOMMAND_DIJKISTRA_SHORTEST_PATH = \"gdijpa\"\nclass DijkistraShortestPathCommand(Command):\n    def __init__(self, start, end):\n        self.start = start\n        self.end = end\n    def __str__(self):\n        return f\"{self.start}\"",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_DIJKISTRA_DIST_DICT",
+        "kind": 5,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "COMMAND_DIJKISTRA_DIST_DICT = \"gdijdis\"\nCOMMAND_DIJKISTRA_PREV_DICT = \"gdijprev\"\nCOMMAND_DIJKISTRA_SHORTEST_PATH = \"gdijpa\"\nclass DijkistraShortestPathCommand(Command):\n    def __init__(self, start, end):\n        self.start = start\n        self.end = end\n    def __str__(self):\n        return f\"{self.start}\"\nclass DijkistraPrevDictionaryCommand(Command):",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_DIJKISTRA_PREV_DICT",
+        "kind": 5,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "COMMAND_DIJKISTRA_PREV_DICT = \"gdijprev\"\nCOMMAND_DIJKISTRA_SHORTEST_PATH = \"gdijpa\"\nclass DijkistraShortestPathCommand(Command):\n    def __init__(self, start, end):\n        self.start = start\n        self.end = end\n    def __str__(self):\n        return f\"{self.start}\"\nclass DijkistraPrevDictionaryCommand(Command):\n    def __init__(self, start):",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_DIJKISTRA_SHORTEST_PATH",
+        "kind": 5,
+        "importPath": "python_redis.protocols.graph_protocols",
+        "description": "python_redis.protocols.graph_protocols",
+        "peekOfCode": "COMMAND_DIJKISTRA_SHORTEST_PATH = \"gdijpa\"\nclass DijkistraShortestPathCommand(Command):\n    def __init__(self, start, end):\n        self.start = start\n        self.end = end\n    def __str__(self):\n        return f\"{self.start}\"\nclass DijkistraPrevDictionaryCommand(Command):\n    def __init__(self, start):\n        self.start = start",
+        "detail": "python_redis.protocols.graph_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "UnknownCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "class UnknownCommand(Command):\n    def __init__(self, command: tuple[str]):\n        self.response = f\"command:({ \", \".join(command) }) is unknown\"\n    def __str__(self):\n        return self.response\nclass CreateNewQueue(Command):\n    def __init__(self, key: str, peer):\n        self.key = key\n        self.peer = peer\n    def __str__(self):",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "CreateNewQueue",
+        "kind": 6,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "class CreateNewQueue(Command):\n    def __init__(self, key: str, peer):\n        self.key = key\n        self.peer = peer\n    def __str__(self):\n        return f\"command to create a new Queue for {self.peer} \"\nclass SetCommand(Command):  #\n    def __init__(self, key: bytearray, value: bytearray):\n        self.key: bytearray = key\n        self.value: bytearray = value",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "SetCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "class SetCommand(Command):  #\n    def __init__(self, key: bytearray, value: bytearray):\n        self.key: bytearray = key\n        self.value: bytearray = value\n    def __str__(self):\n        return f\"key:{self.key}  value:{self.value}\"\nclass GetCommand(Command):  #\n    def __init__(self, key: bytearray):\n        self.key: bytearray = key\n        # self.value: bytearray",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "GetCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "class GetCommand(Command):  #\n    def __init__(self, key: bytearray):\n        self.key: bytearray = key\n        # self.value: bytearray\n    def __str__(self):\n        return f\"key:{self.key}\"\nclass KillCommand(Command):\n    def __init__(self):\n        pass\n    # here we are doing nothing",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "KillCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "class KillCommand(Command):\n    def __init__(self):\n        pass\n    # here we are doing nothing\nclass QuitCommand(Command):  #\n    def __init__(self, want_to_quit: bool):\n        self.want_to_quit: bool = want_to_quit\n    def __str__(self):\n        return \"Got Order to Quit Server\"\nclass ClientCommand(Command):  #",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "QuitCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "class QuitCommand(Command):  #\n    def __init__(self, want_to_quit: bool):\n        self.want_to_quit: bool = want_to_quit\n    def __str__(self):\n        return \"Got Order to Quit Server\"\nclass ClientCommand(Command):  #\n    def __init__(self, value: str):\n        self.string: str = value\nclass HelloCommand(Command):  #\n    def __init__(self, value: str):",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "ClientCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "class ClientCommand(Command):  #\n    def __init__(self, value: str):\n        self.string: str = value\nclass HelloCommand(Command):  #\n    def __init__(self, value: str):\n        self.value: str = value\n    def __str__(self):\n        return \"hello from peer\"\nclass SetMultipleAttributeCommand(Command):\n    def __init__(self, key: str, attrs: dict):",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "HelloCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "class HelloCommand(Command):  #\n    def __init__(self, value: str):\n        self.value: str = value\n    def __str__(self):\n        return \"hello from peer\"\nclass SetMultipleAttributeCommand(Command):\n    def __init__(self, key: str, attrs: dict):\n        self.attrs: list = attrs\n        self.key: str = key\n    def __str__(self):",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "SetMultipleAttributeCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "class SetMultipleAttributeCommand(Command):\n    def __init__(self, key: str, attrs: dict):\n        self.attrs: list = attrs\n        self.key: str = key\n    def __str__(self):\n        return f\"{self.key}:{self.attrs}\"\nclass GetMultipleAttributeCommand(Command):\n    def __init__(self, key: str, attrs: list):\n        self.attrs: list = attrs\n        self.key: str = key",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "GetMultipleAttributeCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "class GetMultipleAttributeCommand(Command):\n    def __init__(self, key: str, attrs: list):\n        self.attrs: list = attrs\n        self.key: str = key\n    def __str__(self):\n        return f\"{self.key}:{self.attrs}\"\nclass SetMultipleKeyValCommand(Command):  #\n    def __init__(self, pairs: list):\n        self.args = pairs\nclass GetMultipleKeyValCommand(Command):  #",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "SetMultipleKeyValCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "class SetMultipleKeyValCommand(Command):  #\n    def __init__(self, pairs: list):\n        self.args = pairs\nclass GetMultipleKeyValCommand(Command):  #\n    def __init__(self, keys: list[str]):\n        self.keys: list[str] = keys\nclass CheckCommand(Command):  #\n    def __init__(self, keys: list[str]):\n        self.keys: list[str] = keys\nclass DeleteCommand(Command):  #",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "GetMultipleKeyValCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "class GetMultipleKeyValCommand(Command):  #\n    def __init__(self, keys: list[str]):\n        self.keys: list[str] = keys\nclass CheckCommand(Command):  #\n    def __init__(self, keys: list[str]):\n        self.keys: list[str] = keys\nclass DeleteCommand(Command):  #\n    def __init__(self, key: str):\n        self.key: str = key\nclass TotalCommand(Command):  #",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "CheckCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "class CheckCommand(Command):  #\n    def __init__(self, keys: list[str]):\n        self.keys: list[str] = keys\nclass DeleteCommand(Command):  #\n    def __init__(self, key: str):\n        self.key: str = key\nclass TotalCommand(Command):  #\n    def __init__(self, cmd):\n        self.cmd: str = cmd\nclass IncrementCommand(Command):  #",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "DeleteCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "class DeleteCommand(Command):  #\n    def __init__(self, key: str):\n        self.key: str = key\nclass TotalCommand(Command):  #\n    def __init__(self, cmd):\n        self.cmd: str = cmd\nclass IncrementCommand(Command):  #\n    def __init__(self, key):\n        self.key: str = key\ndef execute_set_command(args):",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "TotalCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "class TotalCommand(Command):  #\n    def __init__(self, cmd):\n        self.cmd: str = cmd\nclass IncrementCommand(Command):  #\n    def __init__(self, key):\n        self.key: str = key\ndef execute_set_command(args):\n    if len(args) != 2:\n        raise ValueError(\"Invalid number of arguments for SET command\")\n    key, value = args",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "IncrementCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "class IncrementCommand(Command):  #\n    def __init__(self, key):\n        self.key: str = key\ndef execute_set_command(args):\n    if len(args) != 2:\n        raise ValueError(\"Invalid number of arguments for SET command\")\n    key, value = args\n    # print(f\"setting {key} { value}\")\n    return SetCommand(key, value)\ndef execute_unknown_command(args):",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "HASHMAP_TASKS",
+        "kind": 6,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "class HASHMAP_TASKS:\n    def __init__(self):\n        print(self)\n    @staticmethod\n    def task_unknown_command(msg: Message, server):\n        try:\n            msg.conn_peer.send(msg.cmd.response.encode(\"utf-8\"))\n        except Exception as e:\n            print(f\"got exception while processing unknown command:  {e}\")\n    @staticmethod",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "execute_set_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "def execute_set_command(args):\n    if len(args) != 2:\n        raise ValueError(\"Invalid number of arguments for SET command\")\n    key, value = args\n    # print(f\"setting {key} { value}\")\n    return SetCommand(key, value)\ndef execute_unknown_command(args):\n    return UnknownCommand(args)\ndef execute_get_command(args):\n    if len(args) != 1:",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "execute_unknown_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "def execute_unknown_command(args):\n    return UnknownCommand(args)\ndef execute_get_command(args):\n    if len(args) != 1:\n        print(f\"{args} = args\")\n        raise ValueError(\"Invalid number of arguments for GET command\")\n    key = args[0]\n    return GetCommand(key)\ndef execute_kill_command(args):\n    if len(args) != 0:",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "execute_get_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "def execute_get_command(args):\n    if len(args) != 1:\n        print(f\"{args} = args\")\n        raise ValueError(\"Invalid number of arguments for GET command\")\n    key = args[0]\n    return GetCommand(key)\ndef execute_kill_command(args):\n    if len(args) != 0:\n        raise ValueError(\"Invalid number of arguments for kill command\")\n    return KillCommand()",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "execute_kill_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "def execute_kill_command(args):\n    if len(args) != 0:\n        raise ValueError(\"Invalid number of arguments for kill command\")\n    return KillCommand()\ndef execute_quit_command(args):\n    if len(args) != 0:\n        print(f\"{args} are args for quitting server\")\n        raise ValueError(\"Invalid number of arguments for GET command\")\n    return QuitCommand(want_to_quit=True)\ndef execute_hello_command(args):",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "execute_quit_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "def execute_quit_command(args):\n    if len(args) != 0:\n        print(f\"{args} are args for quitting server\")\n        raise ValueError(\"Invalid number of arguments for GET command\")\n    return QuitCommand(want_to_quit=True)\ndef execute_hello_command(args):\n    if len(args) != 1:\n        raise ValueError(\"Invalid number of arguments for SET command\")\n    return HelloCommand(args[0])\ndef execute_check_command(args):",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "execute_hello_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "def execute_hello_command(args):\n    if len(args) != 1:\n        raise ValueError(\"Invalid number of arguments for SET command\")\n    return HelloCommand(args[0])\ndef execute_check_command(args):\n    if len(args) >= 1:\n        return CheckCommand(args)\n    raise ValueError(\"No arguments given for CHECK command\")\ndef execute_client_command(args):\n    if len(args) == 0:",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "execute_check_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "def execute_check_command(args):\n    if len(args) >= 1:\n        return CheckCommand(args)\n    raise ValueError(\"No arguments given for CHECK command\")\ndef execute_client_command(args):\n    if len(args) == 0:\n        raise ValueError(\"No arguments for CLIENT command\")\n    return ClientCommand(args[0])\ndef execute_delete_command(args):\n    if len(args) == 0:",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "execute_client_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "def execute_client_command(args):\n    if len(args) == 0:\n        raise ValueError(\"No arguments for CLIENT command\")\n    return ClientCommand(args[0])\ndef execute_delete_command(args):\n    if len(args) == 0:\n        raise ValueError(\"No key given for DELETE command\")\n    return DeleteCommand(args[0])\ndef execute_get_multiple_values_command(args):\n    if len(args) == 0:",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "execute_delete_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "def execute_delete_command(args):\n    if len(args) == 0:\n        raise ValueError(\"No key given for DELETE command\")\n    return DeleteCommand(args[0])\ndef execute_get_multiple_values_command(args):\n    if len(args) == 0:\n        raise ValueError(\"No key given to get value\")\n    return GetMultipleKeyValCommand(args)\ndef execute_incry_command(args):\n    if len(args) == 0:",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "execute_get_multiple_values_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "def execute_get_multiple_values_command(args):\n    if len(args) == 0:\n        raise ValueError(\"No key given to get value\")\n    return GetMultipleKeyValCommand(args)\ndef execute_incry_command(args):\n    if len(args) == 0:\n        raise ValueError(\"No key for INCREMENT command\")\n    return IncrementCommand(args[0])\ndef execute_total_command(args):\n    return TotalCommand(\"return total\")",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "execute_incry_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "def execute_incry_command(args):\n    if len(args) == 0:\n        raise ValueError(\"No key for INCREMENT command\")\n    return IncrementCommand(args[0])\ndef execute_total_command(args):\n    return TotalCommand(\"return total\")\ndef execute_multiple_attrs_set_command(args):\n    if len(args) == 0:\n        raise ValueError(\"No argument for SET MULTIPLE ATTRIBUTE command\")\n    key: str = args[0]",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "execute_total_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "def execute_total_command(args):\n    return TotalCommand(\"return total\")\ndef execute_multiple_attrs_set_command(args):\n    if len(args) == 0:\n        raise ValueError(\"No argument for SET MULTIPLE ATTRIBUTE command\")\n    key: str = args[0]\n    attrs: tuple = args[1:]\n    return SetMultipleAttributeCommand(key=key, attrs=attrs)\ndef execute_multiple_attrs_get_command(args):\n    if len(args) == 0:",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "execute_multiple_attrs_set_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "def execute_multiple_attrs_set_command(args):\n    if len(args) == 0:\n        raise ValueError(\"No argument for SET MULTIPLE ATTRIBUTE command\")\n    key: str = args[0]\n    attrs: tuple = args[1:]\n    return SetMultipleAttributeCommand(key=key, attrs=attrs)\ndef execute_multiple_attrs_get_command(args):\n    if len(args) == 0:\n        raise ValueError(\"No argument for SET MULTIPLE ATTRIBUTE command\")\n    key: str = args[0]",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "execute_multiple_attrs_get_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "def execute_multiple_attrs_get_command(args):\n    if len(args) == 0:\n        raise ValueError(\"No argument for SET MULTIPLE ATTRIBUTE command\")\n    key: str = args[0]\n    attrs: tuple = args[1:]\n    return GetMultipleAttributeCommand(key=key, attrs=attrs)\ndef execute_set_multi_key_val_command(args):\n    if len(args) == 0:\n        raise ValueError(\"No arguments given for SET MULTIPLE KEY VALUE PAIRS\")\n    if len(args) % 2 != 0:",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "execute_set_multi_key_val_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "def execute_set_multi_key_val_command(args):\n    if len(args) == 0:\n        raise ValueError(\"No arguments given for SET MULTIPLE KEY VALUE PAIRS\")\n    if len(args) % 2 != 0:\n        raise ValueError(\"Invalid Key Value pairs\")\n    return SetMultipleKeyValCommand(args)\nclass HASHMAP_TASKS:\n    def __init__(self):\n        print(self)\n    @staticmethod",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_SET",
+        "kind": 5,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "COMMAND_SET = \"hset\"\nCOMMAND_GET = \"hget\"\nCOMMAND_HELLO = \"hello\"\nCOMMAND_CLIENT = \"client\"\nCOMMAND_MULTIPLE_ATTRIBUTE_SET = \"hsetattr\"  # multiple attributes of a object where name of object will be key and attributes will be value\nCOMMAND_MULTIPLE_ATTRIBUTE_GET = \"hgetattr\"\nCOMMAND_SET_MULTIPLE_KEY_VAL = \"hsetm\"  # set multiple pairs in one command\nCOMMAND_GET_MULTIPLE_VALUES = \"hgetm\"  # multiple keys will given to server and server will return all keys' values in same order\nCOMMAND_CHECK = \"hchec\"  # check if a key exists\nCOMMAND_DELETE = \"hdel\"  # delete a pair",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_GET",
+        "kind": 5,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "COMMAND_GET = \"hget\"\nCOMMAND_HELLO = \"hello\"\nCOMMAND_CLIENT = \"client\"\nCOMMAND_MULTIPLE_ATTRIBUTE_SET = \"hsetattr\"  # multiple attributes of a object where name of object will be key and attributes will be value\nCOMMAND_MULTIPLE_ATTRIBUTE_GET = \"hgetattr\"\nCOMMAND_SET_MULTIPLE_KEY_VAL = \"hsetm\"  # set multiple pairs in one command\nCOMMAND_GET_MULTIPLE_VALUES = \"hgetm\"  # multiple keys will given to server and server will return all keys' values in same order\nCOMMAND_CHECK = \"hchec\"  # check if a key exists\nCOMMAND_DELETE = \"hdel\"  # delete a pair\nCOMMAND_TOTAL = \"hlen\"  # total no. of keys and values on the database",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_HELLO",
+        "kind": 5,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "COMMAND_HELLO = \"hello\"\nCOMMAND_CLIENT = \"client\"\nCOMMAND_MULTIPLE_ATTRIBUTE_SET = \"hsetattr\"  # multiple attributes of a object where name of object will be key and attributes will be value\nCOMMAND_MULTIPLE_ATTRIBUTE_GET = \"hgetattr\"\nCOMMAND_SET_MULTIPLE_KEY_VAL = \"hsetm\"  # set multiple pairs in one command\nCOMMAND_GET_MULTIPLE_VALUES = \"hgetm\"  # multiple keys will given to server and server will return all keys' values in same order\nCOMMAND_CHECK = \"hchec\"  # check if a key exists\nCOMMAND_DELETE = \"hdel\"  # delete a pair\nCOMMAND_TOTAL = \"hlen\"  # total no. of keys and values on the database\nCOMMAND_INCREMENT = \"hincryby\"  # HINCRBY user:1000 age 1",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_CLIENT",
+        "kind": 5,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "COMMAND_CLIENT = \"client\"\nCOMMAND_MULTIPLE_ATTRIBUTE_SET = \"hsetattr\"  # multiple attributes of a object where name of object will be key and attributes will be value\nCOMMAND_MULTIPLE_ATTRIBUTE_GET = \"hgetattr\"\nCOMMAND_SET_MULTIPLE_KEY_VAL = \"hsetm\"  # set multiple pairs in one command\nCOMMAND_GET_MULTIPLE_VALUES = \"hgetm\"  # multiple keys will given to server and server will return all keys' values in same order\nCOMMAND_CHECK = \"hchec\"  # check if a key exists\nCOMMAND_DELETE = \"hdel\"  # delete a pair\nCOMMAND_TOTAL = \"hlen\"  # total no. of keys and values on the database\nCOMMAND_INCREMENT = \"hincryby\"  # HINCRBY user:1000 age 1\nCOMMAND_QUIT = \"shaanti\"",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_MULTIPLE_ATTRIBUTE_SET",
+        "kind": 5,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "COMMAND_MULTIPLE_ATTRIBUTE_SET = \"hsetattr\"  # multiple attributes of a object where name of object will be key and attributes will be value\nCOMMAND_MULTIPLE_ATTRIBUTE_GET = \"hgetattr\"\nCOMMAND_SET_MULTIPLE_KEY_VAL = \"hsetm\"  # set multiple pairs in one command\nCOMMAND_GET_MULTIPLE_VALUES = \"hgetm\"  # multiple keys will given to server and server will return all keys' values in same order\nCOMMAND_CHECK = \"hchec\"  # check if a key exists\nCOMMAND_DELETE = \"hdel\"  # delete a pair\nCOMMAND_TOTAL = \"hlen\"  # total no. of keys and values on the database\nCOMMAND_INCREMENT = \"hincryby\"  # HINCRBY user:1000 age 1\nCOMMAND_QUIT = \"shaanti\"\nCOMMAND_KILL = \"kill\"",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_MULTIPLE_ATTRIBUTE_GET",
+        "kind": 5,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "COMMAND_MULTIPLE_ATTRIBUTE_GET = \"hgetattr\"\nCOMMAND_SET_MULTIPLE_KEY_VAL = \"hsetm\"  # set multiple pairs in one command\nCOMMAND_GET_MULTIPLE_VALUES = \"hgetm\"  # multiple keys will given to server and server will return all keys' values in same order\nCOMMAND_CHECK = \"hchec\"  # check if a key exists\nCOMMAND_DELETE = \"hdel\"  # delete a pair\nCOMMAND_TOTAL = \"hlen\"  # total no. of keys and values on the database\nCOMMAND_INCREMENT = \"hincryby\"  # HINCRBY user:1000 age 1\nCOMMAND_QUIT = \"shaanti\"\nCOMMAND_KILL = \"kill\"\nCOMMAND_UNKNOWN_COMMAND = \"ukc\"",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_SET_MULTIPLE_KEY_VAL",
+        "kind": 5,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "COMMAND_SET_MULTIPLE_KEY_VAL = \"hsetm\"  # set multiple pairs in one command\nCOMMAND_GET_MULTIPLE_VALUES = \"hgetm\"  # multiple keys will given to server and server will return all keys' values in same order\nCOMMAND_CHECK = \"hchec\"  # check if a key exists\nCOMMAND_DELETE = \"hdel\"  # delete a pair\nCOMMAND_TOTAL = \"hlen\"  # total no. of keys and values on the database\nCOMMAND_INCREMENT = \"hincryby\"  # HINCRBY user:1000 age 1\nCOMMAND_QUIT = \"shaanti\"\nCOMMAND_KILL = \"kill\"\nCOMMAND_UNKNOWN_COMMAND = \"ukc\"\nclass UnknownCommand(Command):",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_GET_MULTIPLE_VALUES",
+        "kind": 5,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "COMMAND_GET_MULTIPLE_VALUES = \"hgetm\"  # multiple keys will given to server and server will return all keys' values in same order\nCOMMAND_CHECK = \"hchec\"  # check if a key exists\nCOMMAND_DELETE = \"hdel\"  # delete a pair\nCOMMAND_TOTAL = \"hlen\"  # total no. of keys and values on the database\nCOMMAND_INCREMENT = \"hincryby\"  # HINCRBY user:1000 age 1\nCOMMAND_QUIT = \"shaanti\"\nCOMMAND_KILL = \"kill\"\nCOMMAND_UNKNOWN_COMMAND = \"ukc\"\nclass UnknownCommand(Command):\n    def __init__(self, command: tuple[str]):",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_CHECK",
+        "kind": 5,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "COMMAND_CHECK = \"hchec\"  # check if a key exists\nCOMMAND_DELETE = \"hdel\"  # delete a pair\nCOMMAND_TOTAL = \"hlen\"  # total no. of keys and values on the database\nCOMMAND_INCREMENT = \"hincryby\"  # HINCRBY user:1000 age 1\nCOMMAND_QUIT = \"shaanti\"\nCOMMAND_KILL = \"kill\"\nCOMMAND_UNKNOWN_COMMAND = \"ukc\"\nclass UnknownCommand(Command):\n    def __init__(self, command: tuple[str]):\n        self.response = f\"command:({ \", \".join(command) }) is unknown\"",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_DELETE",
+        "kind": 5,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "COMMAND_DELETE = \"hdel\"  # delete a pair\nCOMMAND_TOTAL = \"hlen\"  # total no. of keys and values on the database\nCOMMAND_INCREMENT = \"hincryby\"  # HINCRBY user:1000 age 1\nCOMMAND_QUIT = \"shaanti\"\nCOMMAND_KILL = \"kill\"\nCOMMAND_UNKNOWN_COMMAND = \"ukc\"\nclass UnknownCommand(Command):\n    def __init__(self, command: tuple[str]):\n        self.response = f\"command:({ \", \".join(command) }) is unknown\"\n    def __str__(self):",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_TOTAL",
+        "kind": 5,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "COMMAND_TOTAL = \"hlen\"  # total no. of keys and values on the database\nCOMMAND_INCREMENT = \"hincryby\"  # HINCRBY user:1000 age 1\nCOMMAND_QUIT = \"shaanti\"\nCOMMAND_KILL = \"kill\"\nCOMMAND_UNKNOWN_COMMAND = \"ukc\"\nclass UnknownCommand(Command):\n    def __init__(self, command: tuple[str]):\n        self.response = f\"command:({ \", \".join(command) }) is unknown\"\n    def __str__(self):\n        return self.response",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_INCREMENT",
+        "kind": 5,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "COMMAND_INCREMENT = \"hincryby\"  # HINCRBY user:1000 age 1\nCOMMAND_QUIT = \"shaanti\"\nCOMMAND_KILL = \"kill\"\nCOMMAND_UNKNOWN_COMMAND = \"ukc\"\nclass UnknownCommand(Command):\n    def __init__(self, command: tuple[str]):\n        self.response = f\"command:({ \", \".join(command) }) is unknown\"\n    def __str__(self):\n        return self.response\nclass CreateNewQueue(Command):",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_QUIT",
+        "kind": 5,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "COMMAND_QUIT = \"shaanti\"\nCOMMAND_KILL = \"kill\"\nCOMMAND_UNKNOWN_COMMAND = \"ukc\"\nclass UnknownCommand(Command):\n    def __init__(self, command: tuple[str]):\n        self.response = f\"command:({ \", \".join(command) }) is unknown\"\n    def __str__(self):\n        return self.response\nclass CreateNewQueue(Command):\n    def __init__(self, key: str, peer):",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_KILL",
+        "kind": 5,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "COMMAND_KILL = \"kill\"\nCOMMAND_UNKNOWN_COMMAND = \"ukc\"\nclass UnknownCommand(Command):\n    def __init__(self, command: tuple[str]):\n        self.response = f\"command:({ \", \".join(command) }) is unknown\"\n    def __str__(self):\n        return self.response\nclass CreateNewQueue(Command):\n    def __init__(self, key: str, peer):\n        self.key = key",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_UNKNOWN_COMMAND",
+        "kind": 5,
+        "importPath": "python_redis.protocols.keyval_protocol",
+        "description": "python_redis.protocols.keyval_protocol",
+        "peekOfCode": "COMMAND_UNKNOWN_COMMAND = \"ukc\"\nclass UnknownCommand(Command):\n    def __init__(self, command: tuple[str]):\n        self.response = f\"command:({ \", \".join(command) }) is unknown\"\n    def __str__(self):\n        return self.response\nclass CreateNewQueue(Command):\n    def __init__(self, key: str, peer):\n        self.key = key\n        self.peer = peer",
+        "detail": "python_redis.protocols.keyval_protocol",
+        "documentation": {}
+    },
+    {
+        "label": "RPushCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "class RPushCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass LPushCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass RPullCommand(Command):\n    def __init__(self):\n        print(\"got command to rpull\")\nclass LPullCommand(Command):",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "LPushCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "class LPushCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass RPullCommand(Command):\n    def __init__(self):\n        print(\"got command to rpull\")\nclass LPullCommand(Command):\n    def __init__(self):\n        print(\"got command to rpull\")\nclass LRangeCommand(Command):",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "RPullCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "class RPullCommand(Command):\n    def __init__(self):\n        print(\"got command to rpull\")\nclass LPullCommand(Command):\n    def __init__(self):\n        print(\"got command to rpull\")\nclass LRangeCommand(Command):\n    def __init__(self, start: int, end: int):\n        self.start: int = start\n        self.end: int = end",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "LPullCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "class LPullCommand(Command):\n    def __init__(self):\n        print(\"got command to rpull\")\nclass LRangeCommand(Command):\n    def __init__(self, start: int, end: int):\n        self.start: int = start\n        self.end: int = end\nclass RRangeCommand(Command):\n    def __init__(self, start: int, end: int):\n        self.start: int = start",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "LRangeCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "class LRangeCommand(Command):\n    def __init__(self, start: int, end: int):\n        self.start: int = start\n        self.end: int = end\nclass RRangeCommand(Command):\n    def __init__(self, start: int, end: int):\n        self.start: int = start\n        self.end: int = end\nclass SearchIndexCommand(Command):\n    def __init__(self, index):",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "RRangeCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "class RRangeCommand(Command):\n    def __init__(self, start: int, end: int):\n        self.start: int = start\n        self.end: int = end\nclass SearchIndexCommand(Command):\n    def __init__(self, index):\n        self.index: int = index\ndef execute_rpush_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for push command\")",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "SearchIndexCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "class SearchIndexCommand(Command):\n    def __init__(self, index):\n        self.index: int = index\ndef execute_rpush_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for push command\")\n    return RPushCommand(args[0])\ndef execute_lpush_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for push command\")",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "LISTS_TASKS",
+        "kind": 6,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "class LISTS_TASKS:\n    def __init__(self):\n        print(self)\n    @staticmethod\n    def task_rrange_command(msg: Message, server):\n        value = msg.conn_peer._list.rrange(msg.cmd.start, msg.cmd.end)\n        msg.conn_peer.send(f\"{value}\".encode(\"utf-8\"))\n    @staticmethod\n    def task_lrange_command(msg: Message, server):\n        value = msg.conn_peer._list.lrange(msg.cmd.start, msg.cmd.end)",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "str_to_int",
+        "kind": 2,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "def str_to_int(string):\n    return int(string)\nclass RPushCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass LPushCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass RPullCommand(Command):\n    def __init__(self):",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_rpush_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "def execute_rpush_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for push command\")\n    return RPushCommand(args[0])\ndef execute_lpush_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for push command\")\n    return LPushCommand(args[0])\ndef execute_rpull_command(args):\n    if len(args) != 0:",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_lpush_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "def execute_lpush_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for push command\")\n    return LPushCommand(args[0])\ndef execute_rpull_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for pop command\")\n    return RPullCommand()\ndef execute_lpull_command(args):\n    if len(args) != 0:",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_rpull_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "def execute_rpull_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for pop command\")\n    return RPullCommand()\ndef execute_lpull_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for pop command\")\n    return LPullCommand()\ndef execute_lrange_command(args):\n    if len(args) != 2:",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_lpull_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "def execute_lpull_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for pop command\")\n    return LPullCommand()\ndef execute_lrange_command(args):\n    if len(args) != 2:\n        raise ValueError(\"invalid no. args for peek command\")\n    args = tuple(map(str_to_int, args))\n    return LRangeCommand(start=args[0], end=args[1])\ndef execute_rrange_command(args):",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_lrange_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "def execute_lrange_command(args):\n    if len(args) != 2:\n        raise ValueError(\"invalid no. args for peek command\")\n    args = tuple(map(str_to_int, args))\n    return LRangeCommand(start=args[0], end=args[1])\ndef execute_rrange_command(args):\n    if len(args) != 2:\n        raise ValueError(\"invalid no. args for peek command\")\n    args = tuple(map(str_to_int, args))\n    return RRangeCommand(start=args[0], end=args[1])",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_rrange_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "def execute_rrange_command(args):\n    if len(args) != 2:\n        raise ValueError(\"invalid no. args for peek command\")\n    args = tuple(map(str_to_int, args))\n    return RRangeCommand(start=args[0], end=args[1])\ndef execute_search_index_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for peek command\")\n    return SearchIndexCommand(args)\nclass LISTS_TASKS:",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_search_index_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "def execute_search_index_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for peek command\")\n    return SearchIndexCommand(args)\nclass LISTS_TASKS:\n    def __init__(self):\n        print(self)\n    @staticmethod\n    def task_rrange_command(msg: Message, server):\n        value = msg.conn_peer._list.rrange(msg.cmd.start, msg.cmd.end)",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_RPUSH",
+        "kind": 5,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "COMMAND_RPUSH = \"rpush\"\nCOMMAND_LPUSH = \"lpush\"\nCOMMAND_LPULL = \"lpull\"\nCOMMAND_RPULL = \"rpull\"\nCOMMAND_LRANGE = \"lrang\"\nCOMMAND_SEARCH_INDEX = \"si\"\nCOMMAND_RRANGE = \"rrang\"\ndef str_to_int(string):\n    return int(string)\nclass RPushCommand(Command):",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_LPUSH",
+        "kind": 5,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "COMMAND_LPUSH = \"lpush\"\nCOMMAND_LPULL = \"lpull\"\nCOMMAND_RPULL = \"rpull\"\nCOMMAND_LRANGE = \"lrang\"\nCOMMAND_SEARCH_INDEX = \"si\"\nCOMMAND_RRANGE = \"rrang\"\ndef str_to_int(string):\n    return int(string)\nclass RPushCommand(Command):\n    def __init__(self, item):",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_LPULL",
+        "kind": 5,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "COMMAND_LPULL = \"lpull\"\nCOMMAND_RPULL = \"rpull\"\nCOMMAND_LRANGE = \"lrang\"\nCOMMAND_SEARCH_INDEX = \"si\"\nCOMMAND_RRANGE = \"rrang\"\ndef str_to_int(string):\n    return int(string)\nclass RPushCommand(Command):\n    def __init__(self, item):\n        self.item = item",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_RPULL",
+        "kind": 5,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "COMMAND_RPULL = \"rpull\"\nCOMMAND_LRANGE = \"lrang\"\nCOMMAND_SEARCH_INDEX = \"si\"\nCOMMAND_RRANGE = \"rrang\"\ndef str_to_int(string):\n    return int(string)\nclass RPushCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass LPushCommand(Command):",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_LRANGE",
+        "kind": 5,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "COMMAND_LRANGE = \"lrang\"\nCOMMAND_SEARCH_INDEX = \"si\"\nCOMMAND_RRANGE = \"rrang\"\ndef str_to_int(string):\n    return int(string)\nclass RPushCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass LPushCommand(Command):\n    def __init__(self, item):",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_SEARCH_INDEX",
+        "kind": 5,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "COMMAND_SEARCH_INDEX = \"si\"\nCOMMAND_RRANGE = \"rrang\"\ndef str_to_int(string):\n    return int(string)\nclass RPushCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass LPushCommand(Command):\n    def __init__(self, item):\n        self.item = item",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_RRANGE",
+        "kind": 5,
+        "importPath": "python_redis.protocols.list_protocols",
+        "description": "python_redis.protocols.list_protocols",
+        "peekOfCode": "COMMAND_RRANGE = \"rrang\"\ndef str_to_int(string):\n    return int(string)\nclass RPushCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass LPushCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass RPullCommand(Command):",
+        "detail": "python_redis.protocols.list_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "DisplayCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.queue_protocols",
+        "description": "python_redis.protocols.queue_protocols",
+        "peekOfCode": "class DisplayCommand(Command):\n    def __init__(self):\n        print(\"got the command to display\")\nclass DequeueCommand(Command):\n    def __init__(self):\n        print(\"got command to dequeue\")\nclass PeekCommand(Command):\n    def __init__(self):\n        print(\"got command to dequeue\")\n    def __str__(self) -> str:",
+        "detail": "python_redis.protocols.queue_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "DequeueCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.queue_protocols",
+        "description": "python_redis.protocols.queue_protocols",
+        "peekOfCode": "class DequeueCommand(Command):\n    def __init__(self):\n        print(\"got command to dequeue\")\nclass PeekCommand(Command):\n    def __init__(self):\n        print(\"got command to dequeue\")\n    def __str__(self) -> str:\n        return self.id\nclass EnqueueCommand(Command):\n    def __init__(self, item):",
+        "detail": "python_redis.protocols.queue_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "PeekCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.queue_protocols",
+        "description": "python_redis.protocols.queue_protocols",
+        "peekOfCode": "class PeekCommand(Command):\n    def __init__(self):\n        print(\"got command to dequeue\")\n    def __str__(self) -> str:\n        return self.id\nclass EnqueueCommand(Command):\n    def __init__(self, item):\n        self.item = item\n    def __str__(self) -> str:\n        return self.id",
+        "detail": "python_redis.protocols.queue_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "EnqueueCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.queue_protocols",
+        "description": "python_redis.protocols.queue_protocols",
+        "peekOfCode": "class EnqueueCommand(Command):\n    def __init__(self, item):\n        self.item = item\n    def __str__(self) -> str:\n        return self.id\ndef execute_enqueue_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for push command\")\n    return EnqueueCommand(args[0])\ndef execute_dequeue_command(args):",
+        "detail": "python_redis.protocols.queue_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "QUEUE_TASKS",
+        "kind": 6,
+        "importPath": "python_redis.protocols.queue_protocols",
+        "description": "python_redis.protocols.queue_protocols",
+        "peekOfCode": "class QUEUE_TASKS:\n    def __init__(self):\n        print(self)\n    @staticmethod\n    def task_enqueue_command(msg, server):\n        ic(msg.cmd.item)\n        msg.conn_peer.send(\"OK\".encode(\"utf-8\"))\n        return msg.conn_peer._queue.enqueue(msg.cmd.item)\n    @staticmethod\n    def task_peek_command(msg, server):",
+        "detail": "python_redis.protocols.queue_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_enqueue_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.queue_protocols",
+        "description": "python_redis.protocols.queue_protocols",
+        "peekOfCode": "def execute_enqueue_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for push command\")\n    return EnqueueCommand(args[0])\ndef execute_dequeue_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for pop command\")\n    return DequeueCommand()\ndef execute_display_command(args):\n    if len(args) != 0:",
+        "detail": "python_redis.protocols.queue_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_dequeue_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.queue_protocols",
+        "description": "python_redis.protocols.queue_protocols",
+        "peekOfCode": "def execute_dequeue_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for pop command\")\n    return DequeueCommand()\ndef execute_display_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for peek command\")\n    return DisplayCommand()\ndef execute_peek_command(args):\n    if len(args) != 0:",
+        "detail": "python_redis.protocols.queue_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_display_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.queue_protocols",
+        "description": "python_redis.protocols.queue_protocols",
+        "peekOfCode": "def execute_display_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for peek command\")\n    return DisplayCommand()\ndef execute_peek_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for peek command\")\n    return PeekCommand()\nclass QUEUE_TASKS:\n    def __init__(self):",
+        "detail": "python_redis.protocols.queue_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_peek_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.queue_protocols",
+        "description": "python_redis.protocols.queue_protocols",
+        "peekOfCode": "def execute_peek_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for peek command\")\n    return PeekCommand()\nclass QUEUE_TASKS:\n    def __init__(self):\n        print(self)\n    @staticmethod\n    def task_enqueue_command(msg, server):\n        ic(msg.cmd.item)",
+        "detail": "python_redis.protocols.queue_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_DISPLAY",
+        "kind": 5,
+        "importPath": "python_redis.protocols.queue_protocols",
+        "description": "python_redis.protocols.queue_protocols",
+        "peekOfCode": "COMMAND_DISPLAY = \"qdisp\"\nCOMMAND_DEQUEUE = \"qdeq\"\nCOMMAND_PEEK = \"qpeek\"\nCOMMAND_ENQUEUE = \"qenq\"\nclass DisplayCommand(Command):\n    def __init__(self):\n        print(\"got the command to display\")\nclass DequeueCommand(Command):\n    def __init__(self):\n        print(\"got command to dequeue\")",
+        "detail": "python_redis.protocols.queue_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_DEQUEUE",
+        "kind": 5,
+        "importPath": "python_redis.protocols.queue_protocols",
+        "description": "python_redis.protocols.queue_protocols",
+        "peekOfCode": "COMMAND_DEQUEUE = \"qdeq\"\nCOMMAND_PEEK = \"qpeek\"\nCOMMAND_ENQUEUE = \"qenq\"\nclass DisplayCommand(Command):\n    def __init__(self):\n        print(\"got the command to display\")\nclass DequeueCommand(Command):\n    def __init__(self):\n        print(\"got command to dequeue\")\nclass PeekCommand(Command):",
+        "detail": "python_redis.protocols.queue_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_PEEK",
+        "kind": 5,
+        "importPath": "python_redis.protocols.queue_protocols",
+        "description": "python_redis.protocols.queue_protocols",
+        "peekOfCode": "COMMAND_PEEK = \"qpeek\"\nCOMMAND_ENQUEUE = \"qenq\"\nclass DisplayCommand(Command):\n    def __init__(self):\n        print(\"got the command to display\")\nclass DequeueCommand(Command):\n    def __init__(self):\n        print(\"got command to dequeue\")\nclass PeekCommand(Command):\n    def __init__(self):",
+        "detail": "python_redis.protocols.queue_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_ENQUEUE",
+        "kind": 5,
+        "importPath": "python_redis.protocols.queue_protocols",
+        "description": "python_redis.protocols.queue_protocols",
+        "peekOfCode": "COMMAND_ENQUEUE = \"qenq\"\nclass DisplayCommand(Command):\n    def __init__(self):\n        print(\"got the command to display\")\nclass DequeueCommand(Command):\n    def __init__(self):\n        print(\"got command to dequeue\")\nclass PeekCommand(Command):\n    def __init__(self):\n        print(\"got command to dequeue\")",
+        "detail": "python_redis.protocols.queue_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "RemoveCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.sets_protocols",
+        "description": "python_redis.protocols.sets_protocols",
+        "peekOfCode": "class RemoveCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass AddCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass DisplayCommand(Command):\n    def __init__(self):\n        print(\"got the command to display items\")\nclass CheckCommand(Command):",
+        "detail": "python_redis.protocols.sets_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "AddCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.sets_protocols",
+        "description": "python_redis.protocols.sets_protocols",
+        "peekOfCode": "class AddCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass DisplayCommand(Command):\n    def __init__(self):\n        print(\"got the command to display items\")\nclass CheckCommand(Command):\n    def __init__(self, item):\n        self.item = item\ndef execute_add_command(args):",
+        "detail": "python_redis.protocols.sets_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "DisplayCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.sets_protocols",
+        "description": "python_redis.protocols.sets_protocols",
+        "peekOfCode": "class DisplayCommand(Command):\n    def __init__(self):\n        print(\"got the command to display items\")\nclass CheckCommand(Command):\n    def __init__(self, item):\n        self.item = item\ndef execute_add_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for push command\")\n    return AddCommand(args[0])",
+        "detail": "python_redis.protocols.sets_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "CheckCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.sets_protocols",
+        "description": "python_redis.protocols.sets_protocols",
+        "peekOfCode": "class CheckCommand(Command):\n    def __init__(self, item):\n        self.item = item\ndef execute_add_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for push command\")\n    return AddCommand(args[0])\ndef execute_check_command(args):\n    if len(args) < 1:\n        raise ValueError(\"invalid no. args for check command\")",
+        "detail": "python_redis.protocols.sets_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "SETS_TASKS",
+        "kind": 6,
+        "importPath": "python_redis.protocols.sets_protocols",
+        "description": "python_redis.protocols.sets_protocols",
+        "peekOfCode": "class SETS_TASKS:\n    def __init__(self):\n        print(self)\n    @staticmethod\n    def tesk_check_command(msg: Message, server):\n        value = msg.conn_peer._sets.check(msg.cmd.item)\n        msg.conn_peer.send(f\"{value}\".encode(\"utf-8\"))\n    @staticmethod\n    def task_display_command(msg: Message, server):\n        value = msg.conn_peer._sets.display()",
+        "detail": "python_redis.protocols.sets_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_add_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.sets_protocols",
+        "description": "python_redis.protocols.sets_protocols",
+        "peekOfCode": "def execute_add_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for push command\")\n    return AddCommand(args[0])\ndef execute_check_command(args):\n    if len(args) < 1:\n        raise ValueError(\"invalid no. args for check command\")\n    return CheckCommand(args)\ndef execute_remove_command(args):\n    if len(args) != 1:",
+        "detail": "python_redis.protocols.sets_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_check_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.sets_protocols",
+        "description": "python_redis.protocols.sets_protocols",
+        "peekOfCode": "def execute_check_command(args):\n    if len(args) < 1:\n        raise ValueError(\"invalid no. args for check command\")\n    return CheckCommand(args)\ndef execute_remove_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for pop command\")\n    return RemoveCommand(args[0])\ndef execute_display_command(args):\n    if len(args) != 0:",
+        "detail": "python_redis.protocols.sets_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_remove_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.sets_protocols",
+        "description": "python_redis.protocols.sets_protocols",
+        "peekOfCode": "def execute_remove_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for pop command\")\n    return RemoveCommand(args[0])\ndef execute_display_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for peek command\")\n    return DisplayCommand()\nclass SETS_TASKS:\n    def __init__(self):",
+        "detail": "python_redis.protocols.sets_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_display_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.sets_protocols",
+        "description": "python_redis.protocols.sets_protocols",
+        "peekOfCode": "def execute_display_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for peek command\")\n    return DisplayCommand()\nclass SETS_TASKS:\n    def __init__(self):\n        print(self)\n    @staticmethod\n    def tesk_check_command(msg: Message, server):\n        value = msg.conn_peer._sets.check(msg.cmd.item)",
+        "detail": "python_redis.protocols.sets_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_ADD",
+        "kind": 5,
+        "importPath": "python_redis.protocols.sets_protocols",
+        "description": "python_redis.protocols.sets_protocols",
+        "peekOfCode": "COMMAND_ADD = \"fadd\"\nCOMMAND_REMOVE = \"frem\"\nCOMMAND_CHECK = \"fchec\"\nCOMMAND_DISPLAY = \"fmem\"\nclass RemoveCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass AddCommand(Command):\n    def __init__(self, item):\n        self.item = item",
+        "detail": "python_redis.protocols.sets_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_REMOVE",
+        "kind": 5,
+        "importPath": "python_redis.protocols.sets_protocols",
+        "description": "python_redis.protocols.sets_protocols",
+        "peekOfCode": "COMMAND_REMOVE = \"frem\"\nCOMMAND_CHECK = \"fchec\"\nCOMMAND_DISPLAY = \"fmem\"\nclass RemoveCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass AddCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass DisplayCommand(Command):",
+        "detail": "python_redis.protocols.sets_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_CHECK",
+        "kind": 5,
+        "importPath": "python_redis.protocols.sets_protocols",
+        "description": "python_redis.protocols.sets_protocols",
+        "peekOfCode": "COMMAND_CHECK = \"fchec\"\nCOMMAND_DISPLAY = \"fmem\"\nclass RemoveCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass AddCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass DisplayCommand(Command):\n    def __init__(self):",
+        "detail": "python_redis.protocols.sets_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_DISPLAY",
+        "kind": 5,
+        "importPath": "python_redis.protocols.sets_protocols",
+        "description": "python_redis.protocols.sets_protocols",
+        "peekOfCode": "COMMAND_DISPLAY = \"fmem\"\nclass RemoveCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass AddCommand(Command):\n    def __init__(self, item):\n        self.item = item\nclass DisplayCommand(Command):\n    def __init__(self):\n        print(\"got the command to display items\")",
+        "detail": "python_redis.protocols.sets_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "PushCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.stack_protocols",
+        "description": "python_redis.protocols.stack_protocols",
+        "peekOfCode": "class PushCommand(Command):\n    def __init__(self, item):\n        self.item = item\n    def __str__(self):\n        return f\"{self.item} is pushed to the stack\"\nclass PopCommand(Command):\n    def __init__(self):\n        print(\"commanded to pop a item from stack \")\nclass PeekCommand(Command):\n    def __init__(self):",
+        "detail": "python_redis.protocols.stack_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "PopCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.stack_protocols",
+        "description": "python_redis.protocols.stack_protocols",
+        "peekOfCode": "class PopCommand(Command):\n    def __init__(self):\n        print(\"commanded to pop a item from stack \")\nclass PeekCommand(Command):\n    def __init__(self):\n        print(\"got the command to peek \")\ndef execute_push_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for push command\")\n    return PushCommand(args[0])",
+        "detail": "python_redis.protocols.stack_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "PeekCommand",
+        "kind": 6,
+        "importPath": "python_redis.protocols.stack_protocols",
+        "description": "python_redis.protocols.stack_protocols",
+        "peekOfCode": "class PeekCommand(Command):\n    def __init__(self):\n        print(\"got the command to peek \")\ndef execute_push_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for push command\")\n    return PushCommand(args[0])\ndef execute_pop_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for pop command\")",
+        "detail": "python_redis.protocols.stack_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "STACK_TASKS",
+        "kind": 6,
+        "importPath": "python_redis.protocols.stack_protocols",
+        "description": "python_redis.protocols.stack_protocols",
+        "peekOfCode": "class STACK_TASKS:\n    def __init__(self):\n        print(self)\n    @staticmethod\n    def task_push_command(msg: Message, server):\n        ic(msg.cmd.item)\n        msg.conn_peer.send(\"OK\".encode(\"utf-8\"))\n        return msg.conn_peer._stack.push(msg.cmd.item)\n    @staticmethod\n    def task_pop_command(msg: Message, server):",
+        "detail": "python_redis.protocols.stack_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_push_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.stack_protocols",
+        "description": "python_redis.protocols.stack_protocols",
+        "peekOfCode": "def execute_push_command(args):\n    if len(args) != 1:\n        raise ValueError(\"invalid no. args for push command\")\n    return PushCommand(args[0])\ndef execute_pop_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for pop command\")\n    return PopCommand()\ndef execute_peek_command(args):\n    if len(args) != 0:",
+        "detail": "python_redis.protocols.stack_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_pop_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.stack_protocols",
+        "description": "python_redis.protocols.stack_protocols",
+        "peekOfCode": "def execute_pop_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for pop command\")\n    return PopCommand()\ndef execute_peek_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for peek command\")\n    return PeekCommand()\nclass STACK_TASKS:\n    def __init__(self):",
+        "detail": "python_redis.protocols.stack_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_peek_command",
+        "kind": 2,
+        "importPath": "python_redis.protocols.stack_protocols",
+        "description": "python_redis.protocols.stack_protocols",
+        "peekOfCode": "def execute_peek_command(args):\n    if len(args) != 0:\n        raise ValueError(\"invalid no. args for peek command\")\n    return PeekCommand()\nclass STACK_TASKS:\n    def __init__(self):\n        print(self)\n    @staticmethod\n    def task_push_command(msg: Message, server):\n        ic(msg.cmd.item)",
+        "detail": "python_redis.protocols.stack_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_PUSH",
+        "kind": 5,
+        "importPath": "python_redis.protocols.stack_protocols",
+        "description": "python_redis.protocols.stack_protocols",
+        "peekOfCode": "COMMAND_PUSH = \"spush\"  # push a element to the stack\nCOMMAND_POP = \"spop\"  # pop a element from the stack\nCOMMAND_PEEK = \"speek\"  # will show the element which will be poped next\nclass PushCommand(Command):\n    def __init__(self, item):\n        self.item = item\n    def __str__(self):\n        return f\"{self.item} is pushed to the stack\"\nclass PopCommand(Command):\n    def __init__(self):",
+        "detail": "python_redis.protocols.stack_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_POP",
+        "kind": 5,
+        "importPath": "python_redis.protocols.stack_protocols",
+        "description": "python_redis.protocols.stack_protocols",
+        "peekOfCode": "COMMAND_POP = \"spop\"  # pop a element from the stack\nCOMMAND_PEEK = \"speek\"  # will show the element which will be poped next\nclass PushCommand(Command):\n    def __init__(self, item):\n        self.item = item\n    def __str__(self):\n        return f\"{self.item} is pushed to the stack\"\nclass PopCommand(Command):\n    def __init__(self):\n        print(\"commanded to pop a item from stack \")",
+        "detail": "python_redis.protocols.stack_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "COMMAND_PEEK",
+        "kind": 5,
+        "importPath": "python_redis.protocols.stack_protocols",
+        "description": "python_redis.protocols.stack_protocols",
+        "peekOfCode": "COMMAND_PEEK = \"speek\"  # will show the element which will be poped next\nclass PushCommand(Command):\n    def __init__(self, item):\n        self.item = item\n    def __str__(self):\n        return f\"{self.item} is pushed to the stack\"\nclass PopCommand(Command):\n    def __init__(self):\n        print(\"commanded to pop a item from stack \")\nclass PeekCommand(Command):",
+        "detail": "python_redis.protocols.stack_protocols",
+        "documentation": {}
+    },
+    {
+        "label": "execute_task_bst",
+        "kind": 5,
+        "importPath": "python_redis.services.command_bst",
+        "description": "python_redis.services.command_bst",
+        "peekOfCode": "execute_task_bst = {\n    bst_protocols.SetKeyCommand: bst_protocols.TREE_TASKS.task_set_key_command,\n    bst_protocols.DeleteCommand: bst_protocols.TREE_TASKS.task_delete_command,\n    bst_protocols.DisplayCommand: bst_protocols.TREE_TASKS.task_display_command,\n    bst_protocols.SearchCommand: bst_protocols.TREE_TASKS.task_search_node_command,\n    bst_protocols.InOrderTraversalCommand: bst_protocols.TREE_TASKS.task_in_order_traversal_command,\n    bst_protocols.PreOrderTraversalCommand: bst_protocols.TREE_TASKS.task_pre_order_traversal_command,\n    bst_protocols.PostOrderTraversalCommand: bst_protocols.TREE_TASKS.task_post_order_traversal_command,\n    bst_protocols.InsertCommand: bst_protocols.TREE_TASKS.task_insert_command,\n    bst_protocols.GetKeyCommand: bst_protocols.TREE_TASKS.task_get_key_command,",
+        "detail": "python_redis.services.command_bst",
+        "documentation": {}
+    },
+    {
+        "label": "execute_command_bst",
+        "kind": 5,
+        "importPath": "python_redis.services.command_bst",
+        "description": "python_redis.services.command_bst",
+        "peekOfCode": "execute_command_bst = {\n    bst_protocols.COMMAND_UPSERT_NODE_KEY_VAL: bst_protocols.execute_upsert_key_val_command,\n    bst_protocols.COMMAND_DELETE: bst_protocols.execute_delete_command,\n    bst_protocols.COMMAND_IN_ORDER: bst_protocols.execute_in_order_traversal_command,\n    bst_protocols.COMMAND_GET: bst_protocols.execute_get_command,\n    bst_protocols.COMMAND_INSERT: bst_protocols.execute_insert_command,\n    bst_protocols.COMMAND_SEARCH: bst_protocols.execute_search_command,\n    bst_protocols.COMMAND_POST_ORDER: bst_protocols.execute_post_order_traversal_command,\n    bst_protocols.COMMAND_PRE_ORDER: bst_protocols.execute_pre_order_traversal_command,\n    bst_protocols.COMMAND_SHOW: bst_protocols.execute_display_command,",
+        "detail": "python_redis.services.command_bst",
+        "documentation": {}
+    },
+    {
+        "label": "execute_task_graph",
+        "kind": 5,
+        "importPath": "python_redis.services.command_graph",
+        "description": "python_redis.services.command_graph",
+        "peekOfCode": "execute_task_graph = {\n    graph_protocols.AddEdgeCommand: graph_protocols.GRAPH_TASKS.task_add_edge_command,\n    graph_protocols.AddVertexCommand: graph_protocols.GRAPH_TASKS.task_add_vertex_command,\n    graph_protocols.RemoveEdgeCommand: graph_protocols.GRAPH_TASKS.task_remove_edge_command,\n    graph_protocols.RemoveVertexCommand: graph_protocols.GRAPH_TASKS.task_remove_vertex_command,\n    graph_protocols.BFSCommand: graph_protocols.GRAPH_TASKS.task_bfs_command,\n    graph_protocols.DFSCommand: graph_protocols.GRAPH_TASKS.task_dfs_command,\n    graph_protocols.IsDirectedCommand: graph_protocols.GRAPH_TASKS.task_is_directed_command,\n    graph_protocols.IsWeightedCommand: graph_protocols.GRAPH_TASKS.task_is_weighted_command,\n    graph_protocols.DisplayCommand: graph_protocols.GRAPH_TASKS.task_display_command,",
+        "detail": "python_redis.services.command_graph",
+        "documentation": {}
+    },
+    {
+        "label": "execute_command_graph",
+        "kind": 5,
+        "importPath": "python_redis.services.command_graph",
+        "description": "python_redis.services.command_graph",
+        "peekOfCode": "execute_command_graph = {\n    graph_protocols.COMMAND_SET_KEY: graph_protocols.execute_set_key_command,\n    graph_protocols.COMMAND_GET_KEY: graph_protocols.execute_get_key_command,\n    graph_protocols.COMMAND_BFS: graph_protocols.execute_breadth_first_search_command,\n    graph_protocols.COMMAND_DFS: graph_protocols.execute_depth_first_search_command,\n    graph_protocols.COMMAND_ADD_VERTEX: graph_protocols.execute_add_vertex_command,\n    graph_protocols.COMMAND_ADD_EDGE: graph_protocols.execute_add_edge_command,\n    graph_protocols.COMMAND_REMOVE_VERTEX: graph_protocols.execute_remove_vertex_by_value_command,\n    graph_protocols.COMMAND_REMOVE_EDGE: graph_protocols.execute_remove_edge_command,\n    graph_protocols.COMMAND_IS_WEIGHTED: graph_protocols.execute_is_weighted_command,",
+        "detail": "python_redis.services.command_graph",
+        "documentation": {}
+    },
+    {
+        "label": "execute_task_list",
+        "kind": 5,
+        "importPath": "python_redis.services.command_lists",
+        "description": "python_redis.services.command_lists",
+        "peekOfCode": "execute_task_list = {\n    list_protocols.LPullCommand: list_protocols.LISTS_TASKS.task_lpull_command,\n    list_protocols.LPushCommand: list_protocols.LISTS_TASKS.task_lpush_command,\n    list_protocols.RPullCommand: list_protocols.LISTS_TASKS.task_rpull_command,\n    list_protocols.RPushCommand: list_protocols.LISTS_TASKS.task_rpush_command,\n    list_protocols.SearchIndexCommand: list_protocols.LISTS_TASKS.task_search_index_command,\n    list_protocols.LRangeCommand: list_protocols.LISTS_TASKS.task_lrange_command,\n    list_protocols.RRangeCommand: list_protocols.LISTS_TASKS.task_rrange_command,\n}\nexecute_command_list = {",
+        "detail": "python_redis.services.command_lists",
+        "documentation": {}
+    },
+    {
+        "label": "execute_command_list",
+        "kind": 5,
+        "importPath": "python_redis.services.command_lists",
+        "description": "python_redis.services.command_lists",
+        "peekOfCode": "execute_command_list = {\n    list_protocols.COMMAND_LPULL: list_protocols.execute_lpull_command,\n    list_protocols.COMMAND_LPUSH: list_protocols.execute_lpush_command,\n    list_protocols.COMMAND_LRANGE: list_protocols.execute_lrange_command,\n    list_protocols.COMMAND_RRANGE: list_protocols.execute_rrange_command,\n    list_protocols.COMMAND_RPULL: list_protocols.execute_rpull_command,\n    list_protocols.COMMAND_RPUSH: list_protocols.execute_rpush_command,\n    list_protocols.COMMAND_SEARCH_INDEX: list_protocols.execute_search_index_command,\n}",
+        "detail": "python_redis.services.command_lists",
+        "documentation": {}
+    },
+    {
+        "label": "execute_task_queue",
+        "kind": 5,
+        "importPath": "python_redis.services.command_queue",
+        "description": "python_redis.services.command_queue",
+        "peekOfCode": "execute_task_queue = {\n    queue_protocols.DisplayCommand: queue_protocols.QUEUE_TASKS.task_display_command,\n    queue_protocols.DequeueCommand: queue_protocols.QUEUE_TASKS.task_dequeue_command,\n    queue_protocols.PeekCommand: queue_protocols.QUEUE_TASKS.task_peek_command,\n    queue_protocols.EnqueueCommand: queue_protocols.QUEUE_TASKS.task_enqueue_command,\n}\nexecute_command_queue = {\n    queue_protocols.COMMAND_ENQUEUE: queue_protocols.execute_enqueue_command,\n    queue_protocols.COMMAND_DEQUEUE: queue_protocols.execute_dequeue_command,\n    queue_protocols.COMMAND_PEEK: queue_protocols.execute_peek_command,",
+        "detail": "python_redis.services.command_queue",
+        "documentation": {}
+    },
+    {
+        "label": "execute_command_queue",
+        "kind": 5,
+        "importPath": "python_redis.services.command_queue",
+        "description": "python_redis.services.command_queue",
+        "peekOfCode": "execute_command_queue = {\n    queue_protocols.COMMAND_ENQUEUE: queue_protocols.execute_enqueue_command,\n    queue_protocols.COMMAND_DEQUEUE: queue_protocols.execute_dequeue_command,\n    queue_protocols.COMMAND_PEEK: queue_protocols.execute_peek_command,\n    queue_protocols.COMMAND_DISPLAY: queue_protocols.execute_display_command,\n}",
+        "detail": "python_redis.services.command_queue",
+        "documentation": {}
+    },
+    {
+        "label": "execute_task_sets",
+        "kind": 5,
+        "importPath": "python_redis.services.command_sets",
+        "description": "python_redis.services.command_sets",
+        "peekOfCode": "execute_task_sets = {\n    sets_protocols.DisplayCommand: sets_protocols.SETS_TASKS.task_display_command,\n    sets_protocols.RemoveCommand: sets_protocols.SETS_TASKS.task_remove_command,\n    sets_protocols.AddCommand: sets_protocols.SETS_TASKS.task_add_command,\n    sets_protocols.CheckCommand: sets_protocols.SETS_TASKS.tesk_check_command,\n}\nexecute_command_sets = {\n    sets_protocols.COMMAND_DISPLAY: sets_protocols.execute_display_command,\n    sets_protocols.COMMAND_CHECK: sets_protocols.execute_check_command,\n    sets_protocols.COMMAND_ADD: sets_protocols.execute_add_command,",
+        "detail": "python_redis.services.command_sets",
+        "documentation": {}
+    },
+    {
+        "label": "execute_command_sets",
+        "kind": 5,
+        "importPath": "python_redis.services.command_sets",
+        "description": "python_redis.services.command_sets",
+        "peekOfCode": "execute_command_sets = {\n    sets_protocols.COMMAND_DISPLAY: sets_protocols.execute_display_command,\n    sets_protocols.COMMAND_CHECK: sets_protocols.execute_check_command,\n    sets_protocols.COMMAND_ADD: sets_protocols.execute_add_command,\n    sets_protocols.COMMAND_REMOVE: sets_protocols.execute_remove_command,\n}",
+        "detail": "python_redis.services.command_sets",
+        "documentation": {}
+    },
+    {
+        "label": "execute_task_stack",
+        "kind": 5,
+        "importPath": "python_redis.services.command_stack",
+        "description": "python_redis.services.command_stack",
+        "peekOfCode": "execute_task_stack = {\n    stack_protocols.PushCommand: stack_protocols.STACK_TASKS.task_push_command,\n    stack_protocols.PopCommand: stack_protocols.STACK_TASKS.task_pop_command,\n    stack_protocols.PeekCommand: stack_protocols.STACK_TASKS.task_peek_command,\n}\nexecute_command_stack = {\n    stack_protocols.COMMAND_PUSH: stack_protocols.execute_push_command,\n    stack_protocols.COMMAND_POP: stack_protocols.execute_pop_command,\n    stack_protocols.COMMAND_PEEK: stack_protocols.execute_peek_command,\n}",
+        "detail": "python_redis.services.command_stack",
+        "documentation": {}
+    },
+    {
+        "label": "execute_command_stack",
+        "kind": 5,
+        "importPath": "python_redis.services.command_stack",
+        "description": "python_redis.services.command_stack",
+        "peekOfCode": "execute_command_stack = {\n    stack_protocols.COMMAND_PUSH: stack_protocols.execute_push_command,\n    stack_protocols.COMMAND_POP: stack_protocols.execute_pop_command,\n    stack_protocols.COMMAND_PEEK: stack_protocols.execute_peek_command,\n}",
+        "detail": "python_redis.services.command_stack",
+        "documentation": {}
+    },
+    {
+        "label": "Message",
+        "kind": 6,
+        "importPath": "python_redis.common",
+        "description": "python_redis.common",
+        "peekOfCode": "class Message:\n    def __init__(self, cmd: bytearray, conn_peer: Peer):\n        # this is the peer from/to this message is sent/received\n        self.conn_peer: Peer = conn_peer\n        self.cmd: Command = cmd\n    def __str__(self):\n        return f\"conn_peer:{self.conn_peer}     cmd:{self.cmd}\"\nexecute_task_hash_map = {\n    **command_graph.execute_task_graph,\n    **command_bst.execute_task_bst,",
+        "detail": "python_redis.common",
+        "documentation": {}
+    },
+    {
+        "label": "execute_task_hash_map",
+        "kind": 5,
+        "importPath": "python_redis.common",
+        "description": "python_redis.common",
+        "peekOfCode": "execute_task_hash_map = {\n    **command_graph.execute_task_graph,\n    **command_bst.execute_task_bst,\n    **command_lists.execute_task_list,\n    **command_dict.execute_task_hash_map,\n    **command_stack.execute_task_stack,\n    **command_queue.execute_task_queue,\n    **command_sets.execute_task_sets,\n}\nexecute_command_hash_map = {",
+        "detail": "python_redis.common",
+        "documentation": {}
+    },
+    {
+        "label": "execute_command_hash_map",
+        "kind": 5,
+        "importPath": "python_redis.common",
+        "description": "python_redis.common",
+        "peekOfCode": "execute_command_hash_map = {\n    **command_graph.execute_command_graph,\n    **command_bst.execute_command_bst,\n    **command_dict.execute_command_hash_map,\n    **command_stack.execute_command_stack,\n    **command_queue.execute_command_queue,\n    **command_sets.execute_command_sets,\n    **command_lists.execute_command_list,\n}\n\"\"\"🚀 How to Optimize Performance?",
+        "detail": "python_redis.common",
+        "documentation": {}
+    },
+    {
+        "label": "Config",
+        "kind": 6,
+        "importPath": "python_redis.main",
+        "description": "python_redis.main",
+        "peekOfCode": "class Config:\n    def __init__(self, listen_address: str = default_listen_address):\n        # It holds data like \"ListenAddress,\" specifying where the server listens for connections\n        self.listen_address: str = listen_address\nclass Server:\n    def __init__(self, config: Config):\n        # Server holds settings, a list of peers, a listener, and a channel for new peers.\n        self.config: Config = config\n        self.peers_lock: threading.RLock = threading.RLock()  # ✅ ADD THIS\n        self.peers: Dict[peer.Peer, bool] = dict()",
+        "detail": "python_redis.main",
+        "documentation": {}
+    },
+    {
+        "label": "Server",
+        "kind": 6,
+        "importPath": "python_redis.main",
+        "description": "python_redis.main",
+        "peekOfCode": "class Server:\n    def __init__(self, config: Config):\n        # Server holds settings, a list of peers, a listener, and a channel for new peers.\n        self.config: Config = config\n        self.peers_lock: threading.RLock = threading.RLock()  # ✅ ADD THIS\n        self.peers: Dict[peer.Peer, bool] = dict()\n        # Dict to track connected peers with Peer as keys\n        self.listener: socket.socket = socket.socket(\n            socket.AF_INET, socket.SOCK_STREAM\n        )  # Network listener",
+        "detail": "python_redis.main",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "python_redis.main",
+        "description": "python_redis.main",
+        "peekOfCode": "def main() -> None:\n    server = Server.new_server(config=Config())\n    try:\n        server_thread = threading.Thread(target=server.start)\n        server_thread.start()\n        # client.Client(\"127.0.0.1:5001\").test_tree()\n        # cl = client.Client(\"127.0.0.1:5001\")\n        # thr = threading.Thread(target=cl.set, args=(\"name\", \"Harshit\"))\n        # # cl.set(\"name\", \"HArshit\")\n        # thr.start()",
+        "detail": "python_redis.main",
+        "documentation": {}
+    },
+    {
+        "label": "Peer",
+        "kind": 6,
+        "importPath": "python_redis.peer",
+        "description": "python_redis.peer",
+        "peekOfCode": "class Peer:\n    def __str__(self):\n        return (\n            f\"IP ->{self.Conn.getpeername()[0]}   port-> {self.Conn.getpeername()[1]}\"\n        )\n    def __init__(\n        self, conn: socket.socket, msg_chan: Queue, del_peer_chan: list[\"Peer\"]\n    ):\n        self.Conn: socket.socket = conn\n        self.DB_str: str = (",
+        "detail": "python_redis.peer",
+        "documentation": {}
+    },
+    {
+        "label": "func",
+        "kind": 2,
+        "importPath": "python_test",
+        "description": "python_test",
+        "peekOfCode": "def func():\n    i = 0\n    while True:\n        i += 1\n        if i == 1000:\n            raise Exception(\"Bhaang\")\n        print(i)\ndef func2():\n    i = 0\n    while True:",
+        "detail": "python_test",
+        "documentation": {}
+    },
+    {
+        "label": "func2",
+        "kind": 2,
+        "importPath": "python_test",
+        "description": "python_test",
+        "peekOfCode": "def func2():\n    i = 0\n    while True:\n        i -= 1\n        if i == -1010:\n            raise Exception(\"Bhaang\")\n        print(i)\nT1 = threading.Thread(target=func)\nT2 = threading.Thread(target=func2)\nT1.start()",
+        "detail": "python_test",
+        "documentation": {}
+    },
+    {
+        "label": "T1",
+        "kind": 5,
+        "importPath": "python_test",
+        "description": "python_test",
+        "peekOfCode": "T1 = threading.Thread(target=func)\nT2 = threading.Thread(target=func2)\nT1.start()\nT2.start()",
+        "detail": "python_test",
+        "documentation": {}
+    },
+    {
+        "label": "T2",
+        "kind": 5,
+        "importPath": "python_test",
+        "description": "python_test",
+        "peekOfCode": "T2 = threading.Thread(target=func2)\nT1.start()\nT2.start()",
+        "detail": "python_test",
+        "documentation": {}
+    }
+]

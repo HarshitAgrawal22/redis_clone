@@ -1,30 +1,17 @@
-from __future__ import annotations
-from python_redis.protocols.command import Command
+from typing import Callable
 from python_redis.services import (
+    command_stack,
     command_bst,
     command_graph,
-    command_stack,
     command_dict,
     command_queue,
     command_sets,
-    command_lists,
+    command_lists
 )
-from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
-    from python_redis.peer import Peer
+from python_redis.protocols.resp_protocols.resp_encoder import RESP_Encoder
+from python_redis.constants import CommandFormat
 
-SyncTime: int = 600
-
-
-class Message:
-    def __init__(self, cmd: bytearray, conn_peer: Peer):
-        # this is the peer from/to this message is sent/received
-        self.conn_peer: Peer = conn_peer
-        self.cmd: Command = cmd
-
-    def __str__(self):
-        return f"conn_peer:{self.conn_peer}     cmd:{self.cmd}"
 
 
 execute_task_hash_map = {
@@ -47,6 +34,13 @@ execute_command_hash_map = {
 }
 
 
+message_format :dict[str:Callable] = {
+    CommandFormat.error:RESP_Encoder.resp_error,
+    CommandFormat.simple_string:RESP_Encoder.resp_simple_string,
+    CommandFormat.bulk_string:RESP_Encoder.resp_bulk_string,
+    CommandFormat.array:RESP_Encoder.resp_array,
+    CommandFormat.integer:RESP_Encoder.resp_integer
+}
 """🚀 How to Optimize Performance?
 Here are some areas where you can improve the efficiency of your Redis clone:
 
@@ -65,3 +59,5 @@ Example: Redis allows pipelining, which sends multiple commands in a single netw
 5️⃣ Optimize Memory & Caching Strategy
 Use memory-efficient data structures (like struct for fixed-size storage).
 Implement lazy deletion or eviction policies to prevent memory bloat."""
+
+
