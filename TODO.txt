@@ -21,3 +21,36 @@ source venv/bin/activate
 | `array (empty)`      | `*`         | `*0\r\n`                    | `*0\r\n`                             | Empty list              | Empty result      |
 | `array (null)`       | `*`         | `*-1\r\n`                   | `*-1\r\n`                            | Null array              | Missing data      |
 telnet switchback.proxy.rlwy.net 14454
+
+
+
+
+
+
+Verified 
+
+Keyval:-
+    setm 
+    set
+    get
+    getm 
+    HLEN
+    hello
+    check
+    client
+    hdel
+    hincryby
+    hgetattr 
+    hsetttr
+    kill
+    shaanti
+
+liststruc: all are working fine
+
+queue: all are working fine
+
+sets: all are working fine
+
+stack: all are working fine 
+
+tree: 

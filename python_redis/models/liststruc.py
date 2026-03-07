@@ -112,7 +112,7 @@ class List_Struc:
             result = ""
             for i in range(end, start, -1):
                 result += f"{self.storage[i]} "
-            return result
+            return result.strip()
 
     def search_index(self, index):
         if index < 0 or index > len(self.storage):

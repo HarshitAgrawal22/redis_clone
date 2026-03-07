@@ -134,7 +134,7 @@ class KV:
 
                 value: bytes = self.data.get(f"{key}_{attr[i]}")
                 result += f"{value.decode('utf-8') if value!=None else value } "
-            return result
+            return result.strip()
 
     def set_multiple_pairs(self, attrs: list):
         # this may trigger a error so needed to be solved later on if needed
@@ -148,7 +148,7 @@ class KV:
                 # print(f"value of {i} => {self.data.get(i)}")
                 value: bytes = self.data.get(i)
                 result += f"{value.decode('utf-8') if value!= None else value} "
-            return result
+            return result.strip()
 
     def check(self, keys: list[bool]):
 
