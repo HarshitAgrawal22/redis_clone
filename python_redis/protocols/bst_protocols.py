@@ -15,9 +15,9 @@ class InsertCommand(Command):
 
 
 class UpsertCommand(Command):
-    def __init__(self, key, itemspairs):
-        self.key = key
+    def __init__(self,itemspairs):
         self.items = itemspairs
+        
 
     def __str__(self):
         return f"Got Data for Upsertion"

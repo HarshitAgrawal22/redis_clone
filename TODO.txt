@@ -54,3 +54,13 @@ sets: all are working fine
 stack: all are working fine 
 
 tree: 
+    "tins"  ok 
+    "tset"  ok
+    "tget"  ok 
+    "tlook" ok 
+    "tdel"  ok
+    "tpre"  ok
+    "tpost" ok
+    "tin"   ok
+    "tshow" ok 
+    "tusr"  

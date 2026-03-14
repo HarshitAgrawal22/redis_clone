@@ -121,7 +121,7 @@ class Server:
                 peer = self.add_peer_ch.get_nowait()
                 with self.peers_lock:
                     self.peers[peer] = True
-                    ic(self.peers)
+                    # ic(self.peers)
                 print(f"Added new peer: {peer.Conn.getpeername()}")
             except EmptyQueue:
                 pass

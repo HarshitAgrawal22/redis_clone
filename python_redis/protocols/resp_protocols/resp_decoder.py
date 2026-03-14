@@ -10,7 +10,7 @@ class RESP_Decoder:
         """
 
         prefix = data[index]
-        print(prefix)
+        
         # SIMPLE STRING
         if prefix == "+":
             end = data.index("\r\n", index)

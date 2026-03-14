@@ -131,6 +131,7 @@ class SocketProxyMiddleware:
                         ic(f"[Middleware] {direction}: <binary data>")
                 else:
                     text :str = data.decode("utf-8", errors="replace")
+                    ic(f"response from server {text}")
                     text, number  = RESP_Decoder.decode_resp(text)
                     # ic( RESP_Decoder.decode_resp(text, 0))
                     ic(text)
