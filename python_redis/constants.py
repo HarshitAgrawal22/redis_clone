@@ -1,7 +1,7 @@
 import os
 
 ServerPort= ":5001"
-SyncTime: int = 600
+SyncTime: int = 6
 # MongoDBStr :str = "mongodb://127.0.0.1:27017/"
 MongoDBStr :str ="mongodb://mongodb:27017"
 # MongoDBStr:str=os.getenv("MONGO_URL")

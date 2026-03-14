@@ -11,6 +11,8 @@ services:
       - mongo_data:/data/db
     networks:
       - redis_network
+    logging:
+      driver: "none"
     restart: unless-stopped
 
   redisclone:

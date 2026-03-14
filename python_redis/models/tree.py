@@ -5,6 +5,7 @@ import time
 from icecream import ic
 from python_redis.persistence.db import *
 import json
+from python_redis.constants import SyncTime
 
 
 class Node_AVL:
@@ -212,16 +213,17 @@ class bstree:
             if len(dirty_keys_snapshots) != 0:
                 synced_keys = set()
                 for key_value, operation in dirty_keys_snapshots:
-                    node_value = json.loads(key_value)
+                    
                     try:
                         # here is try catch because there can be a exception while having a transaction with db
 
                         if operation == "d":
-
+                            ic(key_value, self.collection)
                             ic(self.db.delete_key(key_value, self.collection))
                             synced_keys.add((key_value, operation))
-                            print(operation)
+                            ic(operation)
                         else:
+                            node_value = json.loads(key_value)
                             self.db.insert_and_update_key_val(
                                 node_value[self.key], key_value, self.collection
                             )
@@ -235,7 +237,7 @@ class bstree:
 
                     self.dirty_items -= synced_keys
                     # ic(f"dirty keys after { self.dirty_keys}")
-            time.sleep(5)
+            time.sleep(SyncTime)
 
     @staticmethod
     def new_tree(db: HardDatabase):
@@ -252,7 +254,8 @@ class bstree:
     def get_key(self):
         return self.key
 
-    def upsert_node_data(self, key: str, args: tuple[str]):
+    def upsert_node_data(self, args: tuple[str]):
+        ic( args)
         def search(value, root: Node):
 
             if root is None:
@@ -263,20 +266,33 @@ class bstree:
                 return search(value, root.right)
             else:
                 return search(value, root.left)
-
+        ic(len(args))
         if len(args) % 2 == 0:
-            node: Node = search(key, self.root)
+            temp_dict:dict[str:str]= dict()
+            for i in range(0, len(args), 2):
+                # if args[i] == self.key:
+                #     return "Invalid Key"
+                # node.value[args[i]] = args[i + 1]
+                ic(args[i], args[i+1])
+                temp_dict[args[i]]= args[i+1]
+            ic(temp_dict)
+            ic(temp_dict.get(self.key))
+            if (key:= temp_dict.get(self.key))  == None:
+                return "invalid key"
+            ic(key)
+            node: Node = search( key , self.root)
+            ic(node)
             if node is None:
                 return "Invalid Key"
-            for i in range(0, len(args), 2):
-                if args[i] == self.key:
-                    return "Invalid Key"
-                node.value[args[i]] = args[i + 1]
+            
+            ic(node)
+            node.value= temp_dict 
+            self.dirty_items.add((json.dumps(temp_dict), "u"))
             return "Ok"
         else:
             return "Invalid pairs"
 
-    def pre_order_traversal(self):
+    def pre_order_traversal(self)-> str:
 
         def traversal(node: Node):
 
@@ -292,7 +308,7 @@ class bstree:
         with self.lock:
             return traversal(self.root)
 
-    def post_order_traversal(self):
+    def post_order_traversal(self)->str:
         print("post order traversal ")
 
         def traversal(node: Node):
@@ -309,7 +325,7 @@ class bstree:
 
             return traversal(self.root)
 
-    def in_order_traversal(self):
+    def in_order_traversal(self)-> str:
         print("in order traversal ")
 
         def traversal(node: Node):
@@ -367,10 +383,11 @@ class bstree:
 
                 for i in range(0, len(value), 2):
                     temp_dict[value[i]] = value[i + 1]
-            print(f"{temp_dict} => temp_dict")
+            # print(f"{temp_dict} => temp_dict")
             self.dirty_items.add((json.dumps(temp_dict), "c"))
             if temp_dict.get(self.get_key()) != None:
                 self.root = insert_node(temp_dict, self.root)
+                
                 # self.display()
 
                 return "OK"
@@ -399,12 +416,7 @@ class bstree:
             return x
 
     def delete(self, key):
-        # def minValue(node: Node):
-        #     minv = node.value
-        #     while node.left != None:
-        #         minv = node.left.value
-        #         node = node.left
-        #     return minv
+        
         def minValueNode(node: Node) -> Node:
             current = node
             # Keep moving left until we reach the smallest value
@@ -426,7 +438,6 @@ class bstree:
                 elif root.right is None:
                     return root.left
                 succesor = minValueNode(root.right)
-                # root.value = minValue(root.right)
                 root.value = succesor.value
                 root.right = delete_node(succesor.value[self.key], root.right)
             return root
@@ -434,20 +445,7 @@ class bstree:
 
         with self.lock:
             self.root = delete_node(key, self.root)
-            self.display()
+            self.dirty_items.add((key, "d"))
+            
 
 
-# Data Structure	Common Use Cases
-# Strings	Caching, counters, serialized data.
-# Lists	Queues, logs, timelines.
-# Sets	Unique items, set operations.
-# Sorted Sets	Leaderboards, rankings, time-series data.
-# Hashes	User profiles, JSON-like data.
-# Bitmaps	Tracking true/false states.
-# HyperLogLogs	Cardinality estimation.
-# Streams	Event sourcing, real-time analytics.
-# Geospatial	Location-based queries.
-# Redis's flexible data structures make it suitable for a wide range of applications, from caching and messaging to advanced analytics and real-time data processing.
-
-
-# python -m http.server 8080

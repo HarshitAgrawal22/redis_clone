@@ -10,7 +10,7 @@ def execute_insert_command(args):
 def execute_upsert_key_val_command(args):
     if len(args) < 3:
         raise ValueError("Not Enough Argument to perform upsert node operation")
-    return UpsertCommand(args[0], args[1:])
+    return UpsertCommand( args)
 
 
 def execute_search_command(args):
