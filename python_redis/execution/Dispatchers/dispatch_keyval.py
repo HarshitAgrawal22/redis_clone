@@ -56,7 +56,9 @@ class HASHMAP_TASKS:
             ic(msg.cmd.key)
             ic(msg.cmd.attrs)
             result = msg.conn_peer.kv.get_attributes(msg.cmd.key, msg.cmd.attrs)
-            msg.conn_peer.socket_handler.send(f"{result}", "a")
+            final_response= result.split(" ")
+            ic(final_response)
+            msg.conn_peer.socket_handler.send(final_response, "a")
         except Exception as e:
             print(f"got error in SET_MULTIPLE_ATTRIBUTES {e}")
 
@@ -86,7 +88,7 @@ class HASHMAP_TASKS:
         try:
             ic(msg.cmd.keys)
             result: str = msg.conn_peer.kv.get_multiple_values(msg.cmd.keys)
-            msg.conn_peer.socket_handler.send(f"{result.split()}", "a")
+            msg.conn_peer.socket_handler.send(result.split(" "), "a")
         except Exception as e:
             print(f"got error in CLIENT command: {e}")
 
@@ -136,7 +138,7 @@ class HASHMAP_TASKS:
             data = "OK "
             for i in result:
                 data += f"{i} "
-            msg.conn_peer.socket_handler.send(data, "a")
+            msg.conn_peer.socket_handler.send(data.split(), "a")
 
         except Exception as e:
             print(f"got error while CHECK command: {e}")
@@ -145,6 +147,6 @@ class HASHMAP_TASKS:
     def task_hello_command(msg: Message, server):
         spec = dict({"server": "redis"})
         try:
-            msg.conn_peer.socket_handler.send(f"{spec}", "b")
+            msg.conn_peer.socket_handler.send(list( spec), "a")
         except:
             print("got error while sending specs")

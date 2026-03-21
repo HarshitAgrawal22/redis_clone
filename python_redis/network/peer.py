@@ -30,8 +30,13 @@ class Peer:
     ):
         self.Conn: socket.socket = conn
 
+        # self.DB_str: str = (
+        #     f"{self.Conn.getpeername()[0]}P{self.Conn.getpeername()[1]}".replace(
+        #         ".", "-"
+        #     )
+        # )
         self.DB_str: str = (
-            f"{self.Conn.getpeername()[0]}P{self.Conn.getpeername()[1]}".replace(
+            f"IP{self.Conn.getpeername()[0]}".replace(
                 ".", "-"
             )
         )
@@ -99,6 +104,7 @@ class Peer:
                                 
                                 self.msg_chan.put(message)
                         except Exception as parse_error:
+                            
                             # Handle parsing errors with global exception handler
                             GlobalExceptionHandler.handle_parsing_exception(parse_error, self)
 
@@ -138,7 +144,7 @@ class Peer:
 
         try:
             # self.send("Bye! thanks for using redis".encode("utf-8"))
-            self.socket_handler.send("Bye! thanks for using redis".split(" "),"b")
+            self.socket_handler.send("Bye! thanks for using redis","b")
             # Step 1: Shutdown both send & receive
             self.Conn.shutdown(socket.SHUT_RDWR)
         except OSError as oe:

@@ -11,12 +11,12 @@ class LISTS_TASKS:
     @staticmethod
     def task_rrange_command(msg: Message, server):
         value = msg.conn_peer._list.rrange(msg.cmd.start, msg.cmd.end)
-        msg.conn_peer.socket_handler.send(f"{value}", "b")
+        msg.conn_peer.socket_handler.send(value.split(" "), "a")
 
     @staticmethod
     def task_lrange_command(msg: Message, server):
         value = msg.conn_peer._list.lrange(msg.cmd.start, msg.cmd.end)
-        msg.conn_peer.socket_handler.send(f"{value}","b")
+        msg.conn_peer.socket_handler.send(value.split(" "),"a")
 
     @staticmethod
     def task_rpush_command(msg: Message, server):

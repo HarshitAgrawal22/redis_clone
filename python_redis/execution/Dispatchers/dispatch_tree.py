@@ -23,27 +23,31 @@ class TREE_TASKS:
     @staticmethod
     def task_upsert_node_values(msg: Message, server):
         msg.conn_peer.socket_handler.send(
-            f"{msg.conn_peer._tree.upsert_node_data(msg.cmd.key, msg.cmd.items)}", "s"
+            f"{msg.conn_peer._tree.upsert_node_data(msg.cmd.items)}", "s"
         )
 
     @staticmethod
     def task_pre_order_traversal_command(msg: Message, server):
-
+        result_arr:list[str] =msg.conn_peer._tree.pre_order_traversal().split("\n")
+        result_arr= result_arr[:-1]
         msg.conn_peer.socket_handler.send(
-            f"{msg.conn_peer._tree.pre_order_traversal()}", "a"
+            result_arr , "a"
         )
 
     @staticmethod
     def task_post_order_traversal_command(msg: Message, server):
+        result_arr=msg.conn_peer._tree.post_order_traversal().split("\n")
+        result_arr= result_arr[:-1]
         msg.conn_peer.socket_handler.send(
-            f"{msg.conn_peer._tree.post_order_traversal()}", "a"
+            result_arr , "a"
         )
 
     @staticmethod
     def task_in_order_traversal_command(msg: Message, server):
-
+        result_arr=msg.conn_peer._tree.in_order_traversal().split("\n")
+        result_arr= result_arr[:-1]
         msg.conn_peer.socket_handler.send(
-            f"{msg.conn_peer._tree.in_order_traversal()}", "a"
+            result_arr  , "a"
         )
 
     @staticmethod

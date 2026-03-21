@@ -118,9 +118,9 @@ class HardDatabase:
             return False
 
     def load_from_db(self, collection: Collection) -> Cursor:
-        print("this is the collection we have from hard database")
-        docs = list(collection.find())
-        ic(docs)
+        # print("this is the collection we have from hard database")
+        # docs = list(collection.find())
+        # ic(docs)
 
         return collection.find()
 
