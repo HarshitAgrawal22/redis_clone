@@ -16,6 +16,7 @@ class graph:
         self.is_weighted: bool = is_weighted
         self.key_name: str = None
         self.dij: dijkistra.dijkistra = dijkistra.dijkistra()
+        #! the architecture fails here in terms of SOC
         self.db: HardDatabase = db
 
     @staticmethod

@@ -21,4 +21,4 @@ class Edge:
         return self.weight
 
     def __str__(self):
-        return f"end->{self.end}({self.weight})"
+        return f"start->({self.start}):end->({self.end})-[{self.weight}]"

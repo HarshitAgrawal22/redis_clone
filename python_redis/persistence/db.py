@@ -123,7 +123,7 @@ class HardDatabase:
         ic(docs)
 
         return collection.find()
-    
+
     @staticmethod
     def drop_all_dbs():
         dbs = client.list_database_names()

@@ -93,10 +93,10 @@ class Server:
         # This loop waits for a peer in add_peer_ch and adds to the peers dict
         while not self.quit_event.is_set():
             # TODO: Check for peers which remain in self.peers
-            # TODO: Add pub/sub module
+            
             # ! this can create problem here
             # ? solve the problem here
-            # // @param harhsit is wrong here
+            # // @param harshit is wrong here
             # * this is high lighted
 
             # ic(self.peers)

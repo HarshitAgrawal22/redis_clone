@@ -3,8 +3,7 @@ from threading import RLock, Timer
 from icecream import ic
 import time
 from python_redis.persistence.db import *
-
-
+from python_redis.constants import SyncTime
 class Set:
     def __init__(self, db: HardDatabase):
         ic.configureOutput(prefix="DEBUG: ", includeContext=True)
@@ -69,7 +68,7 @@ class Set:
                     # ic(synced_items)
                     self.dirty_items -= synced_items
 
-            time.sleep(5)
+            time.sleep(SyncTime)
 
     @staticmethod
     def new_set(db: HardDatabase):

@@ -190,10 +190,10 @@ class bstree:
                 pre_order_insertion(avl_root.right)
 
         pre_order_insertion(root)
-        ic(root)
-        bal_tree.preorder(root)
-        print("inorder")
-        bal_tree.inorder(root)
+        # ic(root)
+        # bal_tree.preorder(root)
+        # print("inorder")
+        # bal_tree.inorder(root)
 
         # root_key = db.bst_meta.find_one({"_id": "metadata"})["root_key"]
         # preorder_traversal(db, root_key)
@@ -203,9 +203,7 @@ class bstree:
 
     def periodic_db_sync(self):
         while not self.stop_event.is_set():
-            # TODO: here for now the work is getting done by checking each and every key-val pair,
-            # TODO: create copy only of the dirty keys
-
+            
             with self.lock:
                 # dict_db_snapshot = dict(self.data)
                 dirty_keys_snapshots = set(self.dirty_items)

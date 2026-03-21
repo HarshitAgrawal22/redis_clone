@@ -7,9 +7,6 @@ ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
 class GRAPH_TASKS:
 
-    def __init__(self):
-        print(self)
-
     @staticmethod
     def task_set_key_command(msg: Message, server):
         value = msg.conn_peer._graph.set_key_name(msg.cmd.key)
