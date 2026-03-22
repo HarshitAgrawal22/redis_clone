@@ -1,10 +1,10 @@
 import time
 from icecream import ic
-from redis_clone.python_redis.constants import SyncTime
-from redis_clone.python_redis.persistence.db import *
-from redis_clone.python_redis.models.graph_config import Vertex, Edge
+from python_redis.constants import SyncTime
+from python_redis.persistence.db import *
+from python_redis.models.graph_config import Vertex, Edge
 import threading
-# TODO: create persistence for graph 
+# TODO: create persistence for graph
 # ? figure out how to store in db
 
 
@@ -27,7 +27,7 @@ class VerticesStore:
         return f"{start}->{end}({weight})"
     
     
-    def add_edge(self, start_vertex_key: Vertex, end_vertex_key: Vertex, weight: int):
+    def add_edge(self, start_vertex_key: Vertex.Vertex, end_vertex_key: Vertex.Vertex, weight: int):
         temp_dict = dict({
             "start_vertex": start_vertex_key.data,
             "end_vertex": end_vertex_key.data,  
@@ -35,18 +35,18 @@ class VerticesStore:
         })
         self.dirty_edges.add((self.create_key(start_vertex_key.data, end_vertex_key.data, weight), temp_dict, "c"))
     
-    def remove_edge(self, start_vertex_key: Vertex, end_vertex_key: Vertex,weight: int):
+    def remove_edge(self, start_vertex: Vertex.Vertex, end_vertex: Vertex.Vertex,weight: int):
         temp_dict = dict({
-            "start_vertex": start_vertex_key.data,
-            "end_vertex": end_vertex_key.data,  
+            "start_vertex": start_vertex.data,
+            "end_vertex": end_vertex.data,  
             "weight": weight
         })
-        self.dirty_edges.add((self.create_key(start_vertex_key.data, end_vertex_key.data, weight), temp_dict, "d"))
+        self.dirty_edges.add((self.create_key(start_vertex.data, end_vertex.data, weight), temp_dict, "d"))
     
     
     def periodic_db_sync(self):
         # * here now we have composite key and data dict can be stored in value
-        while not self.stop_event.is_set():
+        while not self.stop_event.is_set(): 
             with self.lock:
                 dirty_items_snapshots = set(self.dirty_keys)
 
@@ -94,12 +94,15 @@ class GraphStore:
     def update_is_weighted(self, is_weighted: bool):
         self.db.insert_and_update_key_val("GraphIsWeighted", is_weighted, self.meta_collection)
     
+    def add_edge(self,start: Vertex.Vertex, end: Vertex.Vertex, weight: int ):
+        self.vertices_store.add_edge(start, end, weight)
+    def remove_edge(self, start :Vertex.Vertex, end:Vertex.Vertex):
+        self.vertices_store.remove_edge(start, end, 90)
     def periodic_db_sync(self):
 
         while not self.stop_event.is_set():
             with self.lock:
                 dirty_items_snapshots = set(self.dirty_keys)
-
             if len(dirty_items_snapshots) != 0:
                 synced_items = set()
                 for item, operation in dirty_items_snapshots:

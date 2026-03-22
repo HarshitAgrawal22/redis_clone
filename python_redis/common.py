@@ -34,7 +34,7 @@ execute_command_hash_map = {
 }
 
 
-message_format :dict[str:Callable] = {
+message_format :dict[str :Callable] = {
     CommandFormat.error:RESP_Encoder.resp_error,
     CommandFormat.simple_string:RESP_Encoder.resp_simple_string,
     CommandFormat.bulk_string:RESP_Encoder.resp_bulk_string,

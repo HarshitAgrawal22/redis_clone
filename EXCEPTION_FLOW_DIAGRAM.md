@@ -55,13 +55,13 @@
 └─────────────────────────────────────────────────────────────────┘
                                ↓
 ┌─────────────────────────────────────────────────────────────────┐
-│              GlobalExceptionHandler.handle_exception()           │
+│              GlobalExceptionHandler.handle_exception()          │
 │  ┌────────────────────────────────────────────────────────────┐ │
-│  │  1. Extract exception type and message                      │ │
-│  │  2. Build comprehensive error message                       │ │
-│  │  3. Log full traceback to console                           │ │
-│  │  4. Format RESP error response                              │ │
-│  │  5. Send error to client via peer.send()                    │ │
+│  │  1. Extract exception type and message                     │ │
+│  │  2. Build comprehensive error message                      │ │
+│  │  3. Log full traceback to console                          │ │
+│  │  4. Format RESP error response                             │ │
+│  │  5. Send error to client via peer.send()                   │ │
 │  └────────────────────────────────────────────────────────────┘ │
 └─────────────────────────────────────────────────────────────────┘
                                ↓

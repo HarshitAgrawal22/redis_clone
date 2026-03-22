@@ -2,6 +2,7 @@ import threading
 from python_redis.models.service_ds.LinkedList import LinkedList, Node
 from python_redis.models.graph_config import Vertex, Edge, dijkistra
 from python_redis.persistence.db import *
+from python_redis.persistence.graph_store import GraphStore
 from icecream import ic
 import time
 from datetime import datetime
@@ -11,29 +12,31 @@ ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
 class graph:
     def __init__(self, is_weighted: bool, is_directed: bool, db: HardDatabase):
+        #! the architecture fails here in terms of SOC
         self.vertices: list[Vertex.Vertex] = list()
         self.is_directed: bool = is_directed
         self.is_weighted: bool = is_weighted
         self.key_name: str = None
         self.dij: dijkistra.dijkistra = dijkistra.dijkistra()
-        #! the architecture fails here in terms of SOC
         self.db: HardDatabase = db
+        self.store: GraphStore = GraphStore(db)
 
     @staticmethod
-    def new_graph(db: HardDatabase):  #
+    def new_graph(db: HardDatabase): 
         return graph(True, True, db)
 
-    def check_key_name_none(self):  #
+    def check_key_name_none(self):  
         return self.key_name != None
 
-    def get_key_name(self):  #
+    def get_key_name(self):  
         return self.key_name
 
-    def set_key_name(self, key):  #
+    def set_key_name(self, key):  
         self.key_name = key
+        self.store.update_key_name(key)
         return self.key_name
 
-    def add_vertex(self, data: list) -> Vertex:  #
+    def add_vertex(self, data: list) -> Vertex:  
         if self.check_key_name_none():
 
             temp_dict = dict()
@@ -46,7 +49,7 @@ class graph:
             if temp_dict.get(self.get_key_name()) != None:
                 new_vertex: Vertex.Vertex = Vertex.Vertex(temp_dict)
                 self.vertices.append(new_vertex)
-                # print("added to list")
+                
                 return new_vertex
             else:
                 return None
@@ -112,7 +115,7 @@ class graph:
 
         return dfs(start, visitedNodes, result)
 
-    def add_edge(self, v1_name: Vertex.Vertex, v2_name: Vertex.Vertex, weight: int):  #
+    def add_edge(self, v1_name: Vertex.Vertex, v2_name: Vertex.Vertex, weight: int):  
         weight = int(weight)
         v1, v2 = self.get_vertex_by_value(v1_name), self.get_vertex_by_value(v2_name)
         if v1 == None:
@@ -124,8 +127,10 @@ class graph:
         if not self.is_weighted:
             weight = 0
         v1.add_edge(v2, weight)
+        self.store.add_edge(v1, v2, weight)
         if not self.is_directed:
             v2.add_edge(v1, weight)
+            self.store.add_edge(v2, v1, weight)
         return "OK"
 
     def remove_edge(self, v1_data: Vertex.Vertex, v2_data: Vertex.Vertex):
@@ -133,6 +138,7 @@ class graph:
         v2 = self.get_vertex_by_value(v2_data)
         if v1 != None and v2 != None:
             v1.remove_edge_by_vertex(v2, self.get_key_name())
+            self.store.remove_edge(v1, v2)
 
     def is_directed_graph(self) -> bool:
         return self.is_directed
@@ -146,16 +152,15 @@ class graph:
     def get_vertices_str(self) -> str:
         return "\n".join(map(str, self.vertices))
 
-    def get_vertex_by_value(self, value: str):  #
+    def get_vertex_by_value(self, value: str):  
         if self.check_key_name_none:
-
             for v in self.vertices:
                 if v.get_data().get(self.get_key_name()) == value:
                     return v
             return None
         return None
 
-    def print(self):  #
+    def print(self):  
         result = ""
         for v in self.vertices:
             result += v.print(self.is_weighted) + "\n"

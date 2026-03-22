@@ -10,12 +10,12 @@ class GRAPH_TASKS:
     @staticmethod
     def task_set_key_command(msg: Message, server):
         value = msg.conn_peer._graph.set_key_name(msg.cmd.key)
-        msg.conn_peer.send(f"{value}".encode("utf-8"))
+        msg.conn_peer.socket_handler.send(f"{value}", "s")
 
     @staticmethod
     def task_get_key_command(msg: Message, server):
         value = msg.conn_peer._graph.get_key_name()
-        msg.conn_peer.send(f"{value}".encode("utf-8"))
+        msg.conn_peer.socket_handler.send(f"{value}", "s")
 
     @staticmethod
     def task_bfs_command(msg: Message, server):
@@ -34,27 +34,25 @@ class GRAPH_TASKS:
         vertex = msg.conn_peer._graph.add_vertex(msg.cmd.data)
 
         (
-            msg.conn_peer.send("OK".encode("utf-8"))
+            msg.conn_peer.socket_handler.send("OK", "s")
             if vertex != None
-            else msg.conn_peer.send("Task Not Done".encode("utf-8"))
+            else msg.conn_peer.socket_handler.send("Task Not Done", "s")
         )
 
     @staticmethod
     def task_remove_vertex_command(msg: Message, server):
 
         (
-            msg.conn_peer.send("OK".encode("utf-8"))
+            msg.conn_peer.socket_handler.send("OK","s")
             if msg.conn_peer._graph.remove_vertex(msg.cmd.data)
-            else msg.conn_peer.send("Task Not Done".encode("utf-8"))
+            else msg.conn_peer.socket_handler.send("Task Not Done","s")
         )
 
     @staticmethod
     def task_add_edge_command(msg: Message, server):
 
-        msg.conn_peer.send(
-            f"{msg.conn_peer._graph.add_edge(msg.cmd.v1, msg.cmd.v2, msg.cmd.weight)}".encode(
-                "utf-8"
-            )
+        msg.conn_peer.socket_handler.send(
+            f"{msg.conn_peer._graph.add_edge(msg.cmd.v1, msg.cmd.v2, msg.cmd.weight)}","s"
         )
 
     @staticmethod
@@ -62,16 +60,16 @@ class GRAPH_TASKS:
         try:
             msg.conn_peer._graph.remove_edge(msg.cmd.v1, msg.cmd.v2)
 
-            msg.conn_peer.send("OK".encode("utf-8"))
+            msg.conn_peer.socket_handler.send("OK", "s")
         except Exception as e:
             print(e)
-            msg.conn_peer.send("invalid Vertex data".encode("utf-8"))
+            msg.conn_peer.send("invalid Vertex data", "s")
 
     @staticmethod
     def task_get_vertex_by_value_command(msg: Message, server):
         vertex = msg.conn_peer._graph.get_vertex_by_value(msg.cmd.data)
+        
         if vertex != None:
-
             msg.conn_peer.send(f"{vertex.data}".encode("utf-8"))
         else:
             msg.conn_peer.send(f"vertex not found".encode("utf-8"))
