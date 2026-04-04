@@ -24,6 +24,8 @@ services:
       - "6001:6001"
       - "5001:5001"
       - "5678:5678"
+    volumes: # volume is only for development purpose only 
+      - .:/app 
     networks:
       - redis_network
     depends_on:

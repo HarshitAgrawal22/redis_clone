@@ -18,7 +18,7 @@ class KV:
         # Initialize an empty dictionary and an RLock for thread safety
 
         self.data: Dict[str, bytes] = dict()
-        self.store:KV_store = KV_store(db, self.data)
+        # self.store:KV_store = KV_store(db, self.data)
         self.lock: RLock = threading.RLock()
 
         self.db: HardDatabase = db
@@ -27,14 +27,14 @@ class KV:
         if self.db.check_collection_exist("KV"):
 
             self.collection: Collection = self.db.new_collection("KV")
+            ic(self.collection)
             self.load_from_hard_db()
         else:
             self.collection: Collection = self.db.new_collection("KV")
 
         self.stop_event: threading.Event = threading.Event()
         self.dirty_keys: set[tuple[str, str]] = set()
-        # setter: set[tuple[str:str]] = set({{"name": "c"}, {"name": "c"}})
-        # self.periodic_update_db()
+        
         t = threading.Thread(target=self.periodic_db_sync, args=(), daemon=True)
         t.start()
         # Track dirty keys for periodic updates
@@ -42,7 +42,6 @@ class KV:
     def load_from_hard_db(self):
         # print("loading data from db")
         for record in self.db.load_from_db(self.collection):
-            # ic(record["key"], record["value"])
             self.data[record["key"]] = record["value"]
 
     def periodic_db_sync(self):
@@ -89,14 +88,13 @@ class KV:
             try:
 
                 (
-                    self.store.dirty_keys.add((key, "c"))
+                    self.dirty_keys.add((key, "c"))
                     if self.data.get(key) == None
-                    else self.store.dirty_keys.add((key, "u"))
+                    else self.dirty_keys.add((key, "u"))
                 )
 
                 self.data[key] = val.encode("utf-8")
 
-                # self.periodic_update_db()
             except MemoryError:
                 print("System ran out of memory so deleting some key-val pair")
                 self.LRU()
@@ -166,7 +164,7 @@ class KV:
             print(key)
             try:
                 del self.data[key]
-                self.store.dirty_keys.add((key, "d"))
+                self.dirty_keys.add((key, "d"))
 
                 return key
             except Exception as e:
@@ -183,7 +181,7 @@ class KV:
             try:
                 print(key)
                 self.data[key] = str(int(self.data.get(key)) + 1).encode("utf-8")
-                self.store.dirty_keys.add(key)
+                self.dirty_keys.add(key)
                 # print(self.data[key])
 
                 return (self.data.get(key), self.data.get(key) is not None)

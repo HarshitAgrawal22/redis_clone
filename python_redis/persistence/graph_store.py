@@ -11,14 +11,25 @@ import threading
 
 # (there will be a collection of vertices and a collection of edges, and value of is_directed, graphkey and is_weighted will be stored in meta collection)
 class VerticesStore:
-    
+    # this store will keep track of the edges 
     def __init__(self, db: HardDatabase):
         
         self.db: HardDatabase = db
+        self.lock: threading.RLock = threading.RLock()
         self.storage: dict[str, dict] = dict()
+        self.collection: Collection
+        if self.db.check_collection_exist("Edge"):
+            self.collection = self.db.new_collection("Edge")
+            self.load_from_hard_db()
+        
+        else:
+            self.collection= self.db.new_collection("Edge")
+
         self.dirty_edges: set[tuple[str, dict, str]] = set() # [start_key, end_key, weight, operation]
-    
-    
+        edge_thread = threading.Thread(target= self.periodic_db_sync, args= (), daemon=True)
+        edge_thread.start()
+        self.stop_event : threading.Event= threading.Event()
+
     def load_from_hard_db(self):
         for record in self.db.load_from_db(self.collection):
             pass
@@ -33,7 +44,7 @@ class VerticesStore:
             "end_vertex": end_vertex_key.data,  
             "weight": weight
         })
-        self.dirty_edges.add((self.create_key(start_vertex_key.data, end_vertex_key.data, weight), temp_dict, "c"))
+        self.dirty_edges.add((self.create_key(start_vertex_key.data, end_vertex_key.data, weight), str(temp_dict), "c"))
     
     def remove_edge(self, start_vertex: Vertex.Vertex, end_vertex: Vertex.Vertex,weight: int):
         temp_dict = dict({
@@ -41,7 +52,7 @@ class VerticesStore:
             "end_vertex": end_vertex.data,  
             "weight": weight
         })
-        self.dirty_edges.add((self.create_key(start_vertex.data, end_vertex.data, weight), temp_dict, "d"))
+        self.dirty_edges.add((self.create_key(start_vertex.data, end_vertex.data, weight), str( temp_dict), "d"))
     
     
     def periodic_db_sync(self):
@@ -49,7 +60,7 @@ class VerticesStore:
         while not self.stop_event.is_set(): 
             with self.lock:
                 dirty_items_snapshots = set(self.dirty_keys)
-
+                ic(dirty_items_snapshots)
             if len(dirty_items_snapshots) != 0:
                 synced_items = set()
                 for item, operation in dirty_items_snapshots:
@@ -82,6 +93,8 @@ class GraphStore:
         else: 
             self.collection: Collection = self.db.new_collection("GRAPH")
         self.stop_event: threading.Event = threading.Event()
+        
+        
         # t = threading.Thread(target=self.periodic_db_sync, args=(), daemon=True)
         # t.start()
 
@@ -96,6 +109,7 @@ class GraphStore:
     
     def add_edge(self,start: Vertex.Vertex, end: Vertex.Vertex, weight: int ):
         self.vertices_store.add_edge(start, end, weight)
+        
     def remove_edge(self, start :Vertex.Vertex, end:Vertex.Vertex):
         self.vertices_store.remove_edge(start, end, 90)
     def periodic_db_sync(self):

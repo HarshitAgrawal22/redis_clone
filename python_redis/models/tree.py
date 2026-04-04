@@ -146,11 +146,11 @@ class bstree:
         if self.db.check_collection_exist("Tree"):
 
             self.collection: Collection = self.db.new_collection("Tree")
-            self.dirty_items: set[tuple[int, str, str]] = set()
+            
             self.load_from_hard_db()
         else:
             self.collection: Collection = self.db.new_collection("Tree")
-            self.dirty_items: set[tuple[int, str, str]] = set()
+        self.dirty_items: set[tuple[int, str, str]] = set()
 
         self.lock: RLock = threading.RLock()
 

@@ -6,7 +6,7 @@ from python_redis.persistence.db import HardDatabase
 from python_redis.network.Message import Message
 
 from icecream import ic
-
+import hashlib
 from python_redis.models import sets, stacks, liststruc, tree, queuestruc, graph, keyval
 from python_redis.utils.exception_handler import GlobalExceptionHandler
 
@@ -14,7 +14,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from python_redis.persistence.db import HardDatabase
-# from main import Server, Config
+
 from queue import Queue
 
 
@@ -30,18 +30,14 @@ class Peer:
     ):
         self.Conn: socket.socket = conn
 
-        # self.DB_str: str = (
-        #     f"{self.Conn.getpeername()[0]}P{self.Conn.getpeername()[1]}".replace(
-        #         ".", "-"
-        #     )
-        # )
-        self.DB_str: str = (
-            f"IP{self.Conn.getpeername()[0]}".replace(
-                ".", "-"
-            )
-        )
+        
+        
+        raw :str = f"IP{self.Conn.getpeername()[0]}".replace(".", "-")
+        
+        
+        self.DB_str: str = hashlib.sha256(raw.encode()).hexdigest()[:16]
         #TODO :here create a peer context so that peer's code can be cleaned 
-        ic(self.DB_str)
+        ic( self.DB_str)
         # TODO: here in it del_peer_chan can raise race condition so handle that and Chatgpt told that the we are refencing the original server's del_peer_chan
         self.msg_chan: Queue[Message] = msg_chan
         self.del_peer_chan: Queue[Peer] = del_peer_chan
@@ -161,4 +157,3 @@ class Peer:
             #  sudo service mongod start
             HardDatabase.drop_peer_db(self.DB_str)
 
-            # print(f"Closed connection for {self}")

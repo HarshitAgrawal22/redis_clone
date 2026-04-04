@@ -33,7 +33,7 @@ class graph:
 
     def set_key_name(self, key):  
         self.key_name = key
-        self.store.update_key_name(key)
+        self.store.update_key_name(key )
         return self.key_name
 
     def add_vertex(self, data: list) -> Vertex:  
