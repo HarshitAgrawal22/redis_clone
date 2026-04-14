@@ -18,4 +18,5 @@ EXPOSE 5001
 EXPOSE 5678
 RUN ls -R /app/python_redis
 # CMD ["python" , "-m" , "python_redis.main"]
+# CMD ["python", "-Xfrozen_modules=off", "-m", "debugpy","--listen", "0.0.0.0:5678","-m", "python_redis.main"]
 CMD ["python","-Xfrozen_modules=off", "-m", "debugpy", "--listen", "0.0.0.0:5678",  "-m", "python_redis.main"]
