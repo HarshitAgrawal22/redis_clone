@@ -6,7 +6,7 @@ from python_redis.models.graph_config import Vertex, Edge
 import threading
 # TODO: create persistence for graph
 # ? figure out how to store in db
-
+# ! important 
 
 
 # (there will be a collection of vertices and a collection of edges, and value of is_directed, graphkey and is_weighted will be stored in meta collection)

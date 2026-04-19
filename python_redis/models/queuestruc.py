@@ -89,10 +89,3 @@ class DataQueue:
     def new_queue(db: HardDatabase):
         return DataQueue(db)
 
-
-# hset name harshit
-# hset billo rani
-# gsek name
-# gaddv name harshit age 20
-# gaddv name shivam age 20
-# gadde harshit shivam 15
