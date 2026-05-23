@@ -160,7 +160,7 @@ class graph:
             return None
         return None
 
-    def print(self):  
+    def print(self):     
         result = ""
         for v in self.vertices:
             result += v.print(self.is_weighted) + "\n"
@@ -192,39 +192,3 @@ class graph:
         else:
             return -1
 
-
-# bus_network = graph(True, False)
-# mathura: Vertex.Vertex = bus_network.add_vertex("Mathura")
-# Agra: Vertex.Vertex = bus_network.add_vertex("Agra")
-# bus_network.add_edge(mathura, Agra, 65)
-# bus_network.print()
-# print("bfs")
-# bus_network.breath_first_search(mathura, list())
-# print("dfs")
-# bus_network.depth_first_search(Agra, list())
-
-# testGraph: graph = graph(True, True)
-
-# a = testGraph.add_vertex("a")
-# b = testGraph.add_vertex("b")
-# c = testGraph.add_vertex("c")
-
-# d = testGraph.add_vertex("d")
-
-# e = testGraph.add_vertex("e")
-# f = testGraph.add_vertex("f")
-# g = testGraph.add_vertex("g")
-# testGraph.add_edge(a, b, 3)
-# testGraph.add_edge(a, c, 100)
-# testGraph.add_edge(a, d, 4)
-# testGraph.add_edge(d, c, 3)
-# testGraph.add_edge(d, e, 8)
-# testGraph.add_edge(e, b, 2)
-# testGraph.add_edge(a, f, 10)
-# testGraph.add_edge(b, g, 10)
-# testGraph.add_edge(e, g, 50)
-
-# dij: dijkistra.dijkistra = dijkistra.dijkistra()
-# dij.dijkistra_result_printer(dij.dijkistra_dicts(testGraph, a))
-# dij.shortest_path_between(testGraph, a, f)
-# # python -m python_redis.models.graph

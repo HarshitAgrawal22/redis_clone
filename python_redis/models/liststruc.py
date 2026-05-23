@@ -23,7 +23,7 @@ class List_Struc:
 
         self.lock: RLock = threading.RLock()
         self.dirty_items: set[tuple[int, str, str]] = set()
-        # In it 1st=index, 2nd=value, 3rd=operation
+       
 
         self.stop_event: threading.Event = threading.Event()
         t = threading.Thread(target=self.periodic_db_sync, args=(), daemon=True)
@@ -45,7 +45,7 @@ class List_Struc:
                 synced_items = set()
                 for index, item, operation in dirty_items_snapshots:
                     try:
-                        # here is try catch because there can be a exception while having a transaction with db
+                    
 
                         if operation == "d":
 

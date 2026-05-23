@@ -6,7 +6,7 @@ from python_redis.models.graph_config import Vertex, Edge
 import threading
 # TODO: create persistence for graph
 # ? figure out how to store in db
-
+# ! important 
 
 
 # (there will be a collection of vertices and a collection of edges, and value of is_directed, graphkey and is_weighted will be stored in meta collection)
@@ -14,7 +14,6 @@ class VerticesStore:
     # this store will keep track of the edges 
     def __init__(self, db: HardDatabase):
         
-        self.stop_event : threading.Event= threading.Event()
         self.db: HardDatabase = db
         self.lock: threading.RLock = threading.RLock()
         self.storage: dict[str, dict] = dict()
@@ -29,6 +28,7 @@ class VerticesStore:
         self.dirty_edges: set[tuple[str, dict, str]] = set() # [start_key, end_key, weight, operation]
         edge_thread = threading.Thread(target= self.periodic_db_sync, args= (), daemon=True)
         edge_thread.start()
+        self.stop_event : threading.Event= threading.Event()
 
     def load_from_hard_db(self):
         for record in self.db.load_from_db(self.collection):
@@ -53,13 +53,12 @@ class VerticesStore:
             "weight": weight
         })
         self.dirty_edges.add((self.create_key(start_vertex.data, end_vertex.data, weight), str( temp_dict), "d"))
-    
-    
+
     def periodic_db_sync(self):
         # * here now we have composite key and data dict can be stored in value
         while not self.stop_event.is_set(): 
             with self.lock:
-                dirty_items_snapshots = set(self.dirty_edges)
+                dirty_items_snapshots = set(self.dirty_keys)
                 ic(dirty_items_snapshots)
             if len(dirty_items_snapshots) != 0:
                 synced_items = set()
