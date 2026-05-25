@@ -15,7 +15,8 @@
           "remoteRoot": "/app"
         }
       ],
-      "justMyCode": false
+      "justMyCode": false,
+      "preLaunchTask": "docker-compose-build"
     }
   ]
 }

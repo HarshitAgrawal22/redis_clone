@@ -16,6 +16,8 @@ class VerticesStore:
         
         self.db: HardDatabase = db
         self.lock: threading.RLock = threading.RLock()
+        self.stop_event : threading.Event= threading.Event()
+        self.dirty_edges: set[tuple[str, dict, str]] = set() # [start_key, end_key, weight, operation]
         self.storage: dict[str, dict] = dict()
         self.collection: Collection
         if self.db.check_collection_exist("Edge"):
@@ -25,10 +27,8 @@ class VerticesStore:
         else:
             self.collection= self.db.new_collection("Edge")
 
-        self.dirty_edges: set[tuple[str, dict, str]] = set() # [start_key, end_key, weight, operation]
         edge_thread = threading.Thread(target= self.periodic_db_sync, args= (), daemon=True)
         edge_thread.start()
-        self.stop_event : threading.Event= threading.Event()
 
     def load_from_hard_db(self):
         for record in self.db.load_from_db(self.collection):
@@ -44,7 +44,8 @@ class VerticesStore:
             "end_vertex": end_vertex_key.data,  
             "weight": weight
         })
-        self.dirty_edges.add((self.create_key(start_vertex_key.data, end_vertex_key.data, weight), str(temp_dict), "c"))
+        with self.lock:
+            self.dirty_edges.add((self.create_key(start_vertex_key.data, end_vertex_key.data, weight), str(temp_dict), "c"))
     
     def remove_edge(self, start_vertex: Vertex.Vertex, end_vertex: Vertex.Vertex,weight: int):
         temp_dict = dict({
@@ -52,28 +53,34 @@ class VerticesStore:
             "end_vertex": end_vertex.data,  
             "weight": weight
         })
-        self.dirty_edges.add((self.create_key(start_vertex.data, end_vertex.data, weight), str( temp_dict), "d"))
+        with self.lock:
+            self.dirty_edges.add((self.create_key(start_vertex.data, end_vertex.data, weight), str( temp_dict), "d"))
 
     def periodic_db_sync(self):
         # * here now we have composite key and data dict can be stored in value
         while not self.stop_event.is_set(): 
+            dirty_edge_snapshots:set
             with self.lock:
-                dirty_items_snapshots = set(self.dirty_keys)
-                ic(dirty_items_snapshots)
-            if len(dirty_items_snapshots) != 0:
+                dirty_edge_snapshots:set = set(self.dirty_edges)
+                ic(dirty_edge_snapshots)
+            if len(dirty_edge_snapshots) != 0:
                 synced_items = set()
-                for item, operation in dirty_items_snapshots:
+                
+                for key,  item, operation in dirty_edge_snapshots:
+                    
                     try:
+                        
                         if operation == "d":
-                            ic(self.db.delete_item(item, self.collection))
-                            synced_items.add((item, operation))
+                            ic(self.db.delete_item(key, self.collection))
+                            synced_items.add((key , item, operation))
                             print(operation)
                         else:
                             ic(self.db.insert_and_update_item(item, self.collection))
+                        
                     except Exception as e:
                         ic(e)
                 with self.lock:
-                    self.dirty_keys = self.dirty_keys - synced_items
+                    self.dirty_edges -=  synced_items
             time.sleep(SyncTime)
 
 
@@ -81,7 +88,8 @@ class GraphStore:
     def __init__(self, db:HardDatabase):
         ic.configureOutput(prefix="DEBUG: ", includeContext=True)
         self.vertices_store: VerticesStore =  VerticesStore(db)
-        
+        self.lock = threading.RLock()
+
         self.db: HardDatabase = db
         self.dirty_vertices: set[tuple[str,str, str]] = set()# [key, value, operation]
         self.meta_collection: Collection = db.new_collection("meta")
@@ -115,19 +123,19 @@ class GraphStore:
 
         while not self.stop_event.is_set():
             with self.lock:
-                dirty_items_snapshots = set(self.dirty_keys)
+                dirty_items_snapshots = set(self.dirty_vertices)
             if len(dirty_items_snapshots) != 0:
                 synced_items = set()
-                for item, operation in dirty_items_snapshots:
+                for start,end,  operation in dirty_items_snapshots:
                     try:
                         if operation == "d":
-                            ic(self.db.delete_item(item, self.collection))
-                            synced_items.add((item, operation))
+                            ic(self.db.delete_item(start, self.collection))
+                            synced_items.add((end, operation))
                             print(operation)
                         else:
                             pass
                     except Exception as e:
                         ic(e)
                 with self.lock:
-                    self.dirty_keys = self.dirty_keys - synced_items
+                    self.dirty_vertices = self.dirty_vertices - synced_items
             time.sleep(SyncTime)

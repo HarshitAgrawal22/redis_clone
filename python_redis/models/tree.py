@@ -206,7 +206,6 @@ class bstree:
         while not self.stop_event.is_set():
             
             with self.lock:
-                # dict_db_snapshot = dict(self.data)
                 dirty_keys_snapshots = set(self.dirty_items)
             if len(dirty_keys_snapshots) != 0:
                 synced_keys = set()

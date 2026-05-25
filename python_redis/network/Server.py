@@ -167,14 +167,18 @@ class Server:
         # TCP keep alive
         # conn.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
 
-        # Windows-specific tuning
+        # Windows-specific tuningf
         # conn.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 30_000, 10_000))
         # Handles each new connection by creating a Peer instance
         this_peer: peer.Peer = peer.Peer.newPeer(
             conn, self.msg_queue, self.del_peer_ch
         )  # here we are provinng the conn and msg_queue of server's to the Peer
 
-        # print(f"Handling connection for peer: {this_peer}")
+        # # It seems like `p` is being used as a variable name in the code snippet you provided. In
+        # the context of the code, `p` is not defined or used anywhere, so it doesn't have any
+        # specific functionality associated with it. If you have a specific question or need
+        # clarification on a particular part of the code related to `p`, please let me know!
+        print(f"Handling connection for peer: {this_peer}")
 
         # this_peer.test_protocol()
         # self.add_peer_ch.append(this_peer)

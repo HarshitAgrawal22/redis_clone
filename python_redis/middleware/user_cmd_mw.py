@@ -142,6 +142,8 @@ class SocketProxyMiddleware:
 
         except Exception as e:
             print(f"[Middleware] {direction} error: {e}")
+            
+            
             destination.sendall(str(e).encode("utf-8"))
         finally:
             source.close()
