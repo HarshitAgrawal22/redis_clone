@@ -34,8 +34,8 @@ class VerticesStore:
         for record in self.db.load_from_db(self.collection):
             pass
     
-    def create_key(self,start: str, end: str, weight: int):
-        return f"{start}->{end}({weight})"
+    def create_key(self,start: str, end: str):
+        return f"{start}->{end}"
     
     
     def add_edge(self, start_vertex_key: Vertex.Vertex, end_vertex_key: Vertex.Vertex, weight: int):
@@ -45,7 +45,7 @@ class VerticesStore:
             "weight": weight
         })
         with self.lock:
-            self.dirty_edges.add((self.create_key(start_vertex_key.data, end_vertex_key.data, weight), str(temp_dict), "c"))
+            self.dirty_edges.add((self.create_key(start_vertex_key.data, end_vertex_key.data),str( temp_dict), "c"))
     
     def remove_edge(self, start_vertex: Vertex.Vertex, end_vertex: Vertex.Vertex,weight: int):
         temp_dict = dict({
@@ -54,7 +54,7 @@ class VerticesStore:
             "weight": weight
         })
         with self.lock:
-            self.dirty_edges.add((self.create_key(start_vertex.data, end_vertex.data, weight), str( temp_dict), "d"))
+            self.dirty_edges.add((self.create_key(start_vertex.data, end_vertex.data),str( temp_dict), "d"))
 
     def periodic_db_sync(self):
         # * here now we have composite key and data dict can be stored in value
@@ -69,18 +69,18 @@ class VerticesStore:
                 for key,  item, operation in dirty_edge_snapshots:
                     
                     try:
-                        
                         if operation == "d":
-                            ic(self.db.delete_item(key, self.collection))
+                            ic(self.db.delete_key(key, self.collection))
                             synced_items.add((key , item, operation))
-                            print(operation)
+                            
                         else:
-                            ic(self.db.insert_and_update_item(item, self.collection))
-                        
+                            self.db.insert_and_update_key_val(key, item, self.collection)
+                            synced_items.add((key, item , operation))
                     except Exception as e:
                         ic(e)
                 with self.lock:
                     self.dirty_edges -=  synced_items
+                del dirty_edge_snapshots
             time.sleep(SyncTime)
 
 
@@ -89,22 +89,28 @@ class GraphStore:
         ic.configureOutput(prefix="DEBUG: ", includeContext=True)
         self.vertices_store: VerticesStore =  VerticesStore(db)
         self.lock = threading.RLock()
+        self.stop_event: threading.Event = threading.Event()
 
         self.db: HardDatabase = db
         self.dirty_vertices: set[tuple[str,str, str]] = set()# [key, value, operation]
         self.meta_collection: Collection = db.new_collection("meta")
         
-        if self.db.check_collection_exist("GRAPH"):
+        if self.db.check_collection_exist("GRAPH"): 
             self.collection = self.db.new_collection("GRAPH")
-            # self.load_from_hard_db()
+            
         else: 
             self.collection: Collection = self.db.new_collection("GRAPH")
-        self.stop_event: threading.Event = threading.Event()
         
         
-        # t = threading.Thread(target=self.periodic_db_sync, args=(), daemon=True)
-        # t.start()
-
+        t = threading.Thread(target=self.periodic_db_sync, args=(), daemon=True)
+        t.start()
+    #TODO: in it at first vertices will be loaded from DB and then edges will be loaded.
+    def get_key_name(self):
+        obj= self.db.get_data_from_meta("GraphKeyName", self.meta_collection)
+        if obj!= None:
+            return obj["value"]
+        else:
+            return obj
     def update_key_name(self, key_name: str):
         self.db.insert_and_update_key_val("GraphKeyName", key_name, self.meta_collection)
     
@@ -119,21 +125,30 @@ class GraphStore:
         
     def remove_edge(self, start :Vertex.Vertex, end:Vertex.Vertex):
         self.vertices_store.remove_edge(start, end, 90)
+    
+    def add_vertex(self,vertex: Vertex.Vertex, key :str):
+        with self.lock:
+            self.dirty_vertices.add((  vertex.data.get(key),str(vertex.data) ,"c"))
+    def remove_vertex(self,vertex: Vertex.Vertex, key :str):
+        with self.lock:
+            self.dirty_vertices.add((  vertex.data.get(key),str(vertex.data) ,"d"))
+    
     def periodic_db_sync(self):
 
         while not self.stop_event.is_set():
             with self.lock:
-                dirty_items_snapshots = set(self.dirty_vertices)
-            if len(dirty_items_snapshots) != 0:
+                dirty_vertices_snapshots = set(self.dirty_vertices)
+            if len(dirty_vertices_snapshots) != 0:
                 synced_items = set()
-                for start,end,  operation in dirty_items_snapshots:
+                for key, data, operation in dirty_vertices_snapshots:
                     try:
                         if operation == "d":
-                            ic(self.db.delete_item(start, self.collection))
-                            synced_items.add((end, operation))
+                            ic(self.db.delete_key(key, self.collection))
+                            synced_items.add((key, operation))
                             print(operation)
                         else:
-                            pass
+                            self.db.insert_and_update_key_val(key, data, self.collection)
+                            synced_items.add((key, data , operation))
                     except Exception as e:
                         ic(e)
                 with self.lock:

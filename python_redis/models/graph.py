@@ -1,11 +1,8 @@
-import threading
 from python_redis.models.service_ds.LinkedList import LinkedList, Node
 from python_redis.models.graph_config import Vertex, Edge, dijkistra
 from python_redis.persistence.db import *
 from python_redis.persistence.graph_store import GraphStore
 from icecream import ic
-import time
-from datetime import datetime
 
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
@@ -20,6 +17,14 @@ class graph:
         self.dij: dijkistra.dijkistra = dijkistra.dijkistra()
         self.db: HardDatabase = db
         self.store: GraphStore = GraphStore(db)
+        
+        if (key:=  self.store.get_key_name()) != None:
+            ic(key)
+            self.set_key_name(key)
+        # TODO: here at first vertices will be loaded 
+        # Todo: after that edges will be loaded
+        
+        
 
     @staticmethod
     def new_graph(db: HardDatabase): 
@@ -27,7 +32,8 @@ class graph:
 
     def check_key_name_none(self):  
         return self.key_name != None
-
+    
+    
     def get_key_name(self):  
         return self.key_name
 
@@ -49,7 +55,7 @@ class graph:
             if temp_dict.get(self.get_key_name()) != None:
                 new_vertex: Vertex.Vertex = Vertex.Vertex(temp_dict)
                 self.vertices.append(new_vertex)
-                
+                self.store.add_vertex(new_vertex, self.key_name)
                 return new_vertex
             else:
                 return None
@@ -74,7 +80,7 @@ class graph:
                     ) == targetVertex.get_data().get(self.get_key_name()):
 
                         v.remove_edge(e, self.get_key_name())
-
+        self.store.remove_vertex(targetVertex, self.key_name)
         return True
 
     def breadth_first_search(
