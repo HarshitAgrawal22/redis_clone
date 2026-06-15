@@ -1,9 +1,14 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
 import time
 from icecream import ic
 from python_redis.constants import SyncTime
 from python_redis.persistence.db import *
 from python_redis.models.graph_config import Vertex, Edge
 import threading
+import json
+if TYPE_CHECKING:
+    from python_redis.models.graph import graph
 # TODO: create persistence for graph
 # ? figure out how to store in db
 # ! important 
@@ -36,7 +41,6 @@ class VerticesStore:
     
     def create_key(self,start: str, end: str):
         return f"{start}->{end}"
-    
     
     def add_edge(self, start_vertex_key: Vertex.Vertex, end_vertex_key: Vertex.Vertex, weight: int):
         temp_dict = dict({
@@ -85,23 +89,21 @@ class VerticesStore:
 
 
 class GraphStore:
-    def __init__(self, db:HardDatabase):
+    def __init__(self, db:HardDatabase, model:graph): # we are receiving the model in it to call its method
         ic.configureOutput(prefix="DEBUG: ", includeContext=True)
         self.vertices_store: VerticesStore =  VerticesStore(db)
         self.lock = threading.RLock()
         self.stop_event: threading.Event = threading.Event()
-
         self.db: HardDatabase = db
         self.dirty_vertices: set[tuple[str,str, str]] = set()# [key, value, operation]
         self.meta_collection: Collection = db.new_collection("meta")
         
-        if self.db.check_collection_exist("GRAPH"): 
+        if self.db.check_collection_exist("GRAPH"):
             self.collection = self.db.new_collection("GRAPH")
             
         else: 
             self.collection: Collection = self.db.new_collection("GRAPH")
-        
-        
+            
         t = threading.Thread(target=self.periodic_db_sync, args=(), daemon=True)
         t.start()
     #TODO: in it at first vertices will be loaded from DB and then edges will be loaded.
@@ -132,6 +134,22 @@ class GraphStore:
     def remove_vertex(self,vertex: Vertex.Vertex, key :str):
         with self.lock:
             self.dirty_vertices.add((  vertex.data.get(key),str(vertex.data) ,"d"))
+    def load_vertices_from_hard_db(self, model: graph):
+        def add_vertex_str(data:dict):
+            result:str= ''
+            for i in data.items():
+                result+=f"{i[0]} {i[1]} "
+            return result.split()
+
+        if (key:= self.get_key_name()) != None:
+            model.load_key_name(key)
+            
+        for record in self.db.load_from_db(self.collection):
+            
+            new_vertex= Vertex.Vertex(json.loads( str(record["value"]).replace("'", '"')))
+            print(new_vertex)
+            model.add_vertex(add_vertex_str(new_vertex.data))
+            
     
     def periodic_db_sync(self):
 

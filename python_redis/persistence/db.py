@@ -77,7 +77,7 @@ class HardDatabase:
 
     def check_collection_exist(self, collection_name: str) -> bool:
         
-        return self.db.list_collections(filter={"name": collection_name})
+        return self.db.list_collections(filter={"name": collection_name})!= None
 
     def delete_key(self, key: str, collection: Collection) -> bool:
         try:

@@ -3,28 +3,25 @@ from python_redis.models.graph_config import Vertex, Edge, dijkistra
 from python_redis.persistence.db import *
 from python_redis.persistence.graph_store import GraphStore
 from icecream import ic
+import threading
 
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
 
 class graph:
     def __init__(self, is_weighted: bool, is_directed: bool, db: HardDatabase):
-        #! the architecture fails here in terms of SOC
+        
         self.vertices: list[Vertex.Vertex] = list()
         self.is_directed: bool = is_directed
         self.is_weighted: bool = is_weighted
         self.key_name: str = None
         self.dij: dijkistra.dijkistra = dijkistra.dijkistra()
         self.db: HardDatabase = db
-        self.store: GraphStore = GraphStore(db)
+        self.store: GraphStore = GraphStore(db, self)
+        self.store.load_vertices_from_hard_db(self)
         
-        if (key:=  self.store.get_key_name()) != None:
-            ic(key)
-            self.set_key_name(key)
         # TODO: here at first vertices will be loaded 
         # Todo: after that edges will be loaded
-        
-        
 
     @staticmethod
     def new_graph(db: HardDatabase): 
@@ -37,12 +34,16 @@ class graph:
     def get_key_name(self):  
         return self.key_name
 
+    def load_key_name(self, key):
+        self.key_name=key
+
     def set_key_name(self, key):  
         self.key_name = key
-        self.store.update_key_name(key )
+        self.store.update_key_name(key)
         return self.key_name
 
     def add_vertex(self, data: list) -> Vertex:  
+        ic(self.check_key_name_none())
         if self.check_key_name_none():
 
             temp_dict = dict()
@@ -50,11 +51,12 @@ class graph:
 
                 for i in range(0, len(data), 2):
                     temp_dict[data[i]] = data[i + 1]
-            # print(f"{temp_dict} => temp_dict")
-
+            print(f"{temp_dict} => temp_dict")
+            ic(self.get_key_name())
             if temp_dict.get(self.get_key_name()) != None:
                 new_vertex: Vertex.Vertex = Vertex.Vertex(temp_dict)
                 self.vertices.append(new_vertex)
+                ic(self.vertices)
                 self.store.add_vertex(new_vertex, self.key_name)
                 return new_vertex
             else:

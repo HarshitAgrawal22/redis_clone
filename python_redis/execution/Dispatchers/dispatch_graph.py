@@ -21,7 +21,7 @@ class GRAPH_TASKS:
     def task_bfs_command(msg: Message, server):
         value = msg.conn_peer._graph.breadth_first_search(msg.cmd.start, list())
         ic(value)
-        msg.conn_peer.send(f"{value}".encode("utf-8"))
+        msg.conn_peer.socket_handler.send(f"{value}", 's')
 
     @staticmethod
     def task_dfs_command(msg: Message, server):
@@ -63,7 +63,7 @@ class GRAPH_TASKS:
             msg.conn_peer.socket_handler.send("OK", "s")
         except Exception as e:
             print(e)
-            msg.conn_peer.send("invalid Vertex data", "s")
+            msg.conn_peer.socket_handler.send("invalid Vertex data", "s")
 
     @staticmethod
     def task_get_vertex_by_value_command(msg: Message, server):
@@ -91,12 +91,12 @@ class GRAPH_TASKS:
     @staticmethod
     def task_display_command(msg: Message, server):
 
-        msg.conn_peer.send(f"{msg.conn_peer._graph.print()}".encode("utf-8"))
-
+        msg.conn_peer.socket_handler.send(f"{msg.conn_peer._graph.print()}", "b")
+# TODO: update all the resp formats here 
     @staticmethod
     def task_get_vertices_command(msg: Message, server):
 
-        msg.conn_peer.send(f"{msg.conn_peer._graph.get_vertices_str()}".encode("utf-8"))
+        msg.conn_peer.socket_handler.send(f"{msg.conn_peer._graph.get_vertices_str()}", "b")
 
     @staticmethod
     def task_get_edges_by_vertex_command(msg: Message, server):
