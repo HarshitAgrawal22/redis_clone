@@ -21,8 +21,6 @@ class graph:
         self.store.load_vertices_from_hard_db(self)
         self.store.vertices_store.load_from_hard_db(self)
         
-        # TODO: here at first vertices will be loaded 
-        # Todo: after that edges will be loaded
 
     @staticmethod
     def new_graph(db: HardDatabase): 

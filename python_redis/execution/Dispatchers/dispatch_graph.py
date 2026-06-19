@@ -26,7 +26,7 @@ class GRAPH_TASKS:
     @staticmethod
     def task_dfs_command(msg: Message, server):
         value = msg.conn_peer._graph.depth_first_search(msg.cmd.start, list())
-        msg.conn_peer.send(f"{value}".encode("utf-8"))
+        msg.conn_peer.socket_handler.send(f"{value}", "b")
 
     @staticmethod
     def task_add_vertex_command(msg: Message, server):
@@ -63,36 +63,35 @@ class GRAPH_TASKS:
             msg.conn_peer.socket_handler.send("OK", "s")
         except Exception as e:
             print(e)
-            msg.conn_peer.socket_handler.send("invalid Vertex data", "s")
+            msg.conn_peer.socket_handler.send("invalid Vertex data", "e")
 
     @staticmethod
     def task_get_vertex_by_value_command(msg: Message, server):
         vertex = msg.conn_peer._graph.get_vertex_by_value(msg.cmd.data)
         
         if vertex != None:
-            msg.conn_peer.send(f"{vertex.data}".encode("utf-8"))
+            msg.conn_peer.socket_handler.send(f"{vertex.data}", "b")
         else:
-            msg.conn_peer.send(f"vertex not found".encode("utf-8"))
+            msg.conn_peer.socket_handler.send(f"vertex not found", "e")
 
     @staticmethod
     def task_is_directed_command(msg: Message, server):
 
-        msg.conn_peer.send(
-            f"{ msg.conn_peer._graph.is_directed_graph()}".encode("utf-8")
+        msg.conn_peer.socket_handler.send(
+            f"{ msg.conn_peer._graph.is_directed_graph()}", "s"
         )
 
     @staticmethod
     def task_is_weighted_command(msg: Message, server):
 
-        msg.conn_peer.send(
-            f"{ msg.conn_peer._graph.is_weighted_graph()}".encode("utf-8")
+        msg.conn_peer.socket_handler.send(
+            f"{ msg.conn_peer._graph.is_weighted_graph()}", "s"
         )
 
     @staticmethod
     def task_display_command(msg: Message, server):
 
-        msg.conn_peer.socket_handler.send(f"{msg.conn_peer._graph.print()}", "b")
-# TODO: update all the resp formats here 
+        msg.conn_peer.socket_handler.send(f"{msg.conn_peer._graph.print()}", "b") 
     @staticmethod
     def task_get_vertices_command(msg: Message, server):
 
@@ -101,31 +100,27 @@ class GRAPH_TASKS:
     @staticmethod
     def task_get_edges_by_vertex_command(msg: Message, server):
 
-        msg.conn_peer.send(
-            f"{msg.conn_peer._graph.get_vertex_by_value(msg.cmd.data).get_edges()}".encode(
-                "utf-8"
-            )
+        msg.conn_peer.socket_handler.send(
+            f"{msg.conn_peer._graph.get_vertex_by_value(msg.cmd.data).get_edges()}", "b"
         )
 
     @staticmethod
     def task_dijkistra_prev_dict_command(msg: Message, server):
 
-        msg.conn_peer.send(
-            f"{msg.conn_peer._graph.dijkistra_prev(msg.cmd.start)}".encode("utf-8")
+        msg.conn_peer.socket_handler.send(
+            f"{msg.conn_peer._graph.dijkistra_prev(msg.cmd.start)}", "b"
         )
 
     @staticmethod
     def task_dijkistra_dist_dict_command(msg: Message, server):
 
-        msg.conn_peer.send(
-            f"{msg.conn_peer._graph.dijkistra_distance(msg.cmd.start)}".encode("utf-8")
-        )
+        msg.conn_peer.socket_handler.send(
+            f"{msg.conn_peer._graph.dijkistra_distance(msg.cmd.start)}"
+        ,"b" )
 
     @staticmethod
     def task_dijkistra_shortest_path_command(msg: Message, server):
 
-        msg.conn_peer.send(
-            f"{msg.conn_peer._graph.dijkistra_shortest_distance(msg.cmd.start,msg.cmd.end )}".encode(
-                "utf-8"
-            )
+        msg.conn_peer.socket_handler.send(
+            f"{msg.conn_peer._graph.dijkistra_shortest_distance(msg.cmd.start,msg.cmd.end )}","b"
         )

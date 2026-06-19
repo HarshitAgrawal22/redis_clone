@@ -12,7 +12,6 @@ from icecream import ic
 
 
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
-# TODO implement pub/sub model to this project, the instructions are written at the bottom of this file
 
 
 class HardDatabase:

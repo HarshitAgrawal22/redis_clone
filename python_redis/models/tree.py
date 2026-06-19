@@ -166,10 +166,7 @@ class bstree:
         else:
             self.key = None
 
-        # meta_data = self.db.get_data_from_meta("Tree", self.db.new_collection("meta"))
-        # TODO: Create a meta collection to store the meta data for the server
-        # TODO: add a update Command(Function) to tree, where a node's fields can be updated
-        # if meta_data is not None:
+        
         bal_tree: AVLTree = AVLTree()
         root: Node_AVL = None
 
@@ -191,16 +188,7 @@ class bstree:
                 pre_order_insertion(avl_root.right)
 
         pre_order_insertion(root)
-        # ic(root)
-        # bal_tree.preorder(root)
-        # print("inorder")
-        # bal_tree.inorder(root)
-
-        # root_key = db.bst_meta.find_one({"_id": "metadata"})["root_key"]
-        # preorder_traversal(db, root_key)
-
-        # TODO: figure out the way to load data from db to DS
-        # self.ll.add_head(record["value"])
+        
 
     def periodic_db_sync(self):
         while not self.stop_event.is_set():
@@ -224,7 +212,6 @@ class bstree:
                             self.db.insert_and_update_key_val(
                                 node_value[self.key], key_value, self.collection
                             )
-                            # TODO update it to have key  not "key"
                             synced_keys.add((key_value, operation))
                     except Exception as e:
                         print(e)
@@ -372,8 +359,6 @@ class bstree:
                 root.left = insert_node(value, root.left)
             return root
 
-        # TODO : check logic for duplication by updation for key-val in mongodb
-        # TODO : duplicate entries are being made here check that
         with self.lock:
             temp_dict = dict()
             if (len(value)) % 2 == 0:

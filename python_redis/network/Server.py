@@ -2,9 +2,6 @@ import socket
 import threading
 from typing import Dict
 
-# TODO: write middleware python application which will convert the normal logical commands to the RESP which this redis needs and then also return the result in Human readable form which will be generated from RESP result
-
-# TODO: add module for server's config
 from python_redis.network.Message import Message
 from python_redis.common import execute_task_hash_map
 from python_redis.network import peer
@@ -92,7 +89,7 @@ class Server:
         # print("loop started")
         # This loop waits for a peer in add_peer_ch and adds to the peers dict
         while not self.quit_event.is_set():
-            # TODO: Check for peers which remain in self.peers
+            
             
             # ! this can create problem here
             # ? solve the problem here
@@ -106,7 +103,7 @@ class Server:
                 try:
                     err = self.handle_message(
                         msg
-                    )  # TODO: check and add error in this function's response
+                    )  
                     if err != None:
                         print(f"Raw Message Error-> {err}")
                 except Exception as e:
@@ -132,10 +129,8 @@ class Server:
                 this_peer = self.del_peer_ch.get_nowait()
                 with self.peers_lock:
 
-                    # TODO: get how to configure peers lock
 
                     del self.peers[this_peer]
-                    # TODO: solve the race condition in del_peer_chan
                     ic(self.peers)
 
                     ic(this_peer)

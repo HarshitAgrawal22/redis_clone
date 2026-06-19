@@ -20,7 +20,6 @@ class RESP_Encoder:
             out += f"${len(item)}\r\n{item}\r\n"
         return out.encode()
 
-# TODO implement these response patterns
 # | Prefix | Type          | Example                              |
 # | ------ | ------------- | ------------------------------------ |
 # | `+`   s | Simple String | `+OK\r\n`                            |

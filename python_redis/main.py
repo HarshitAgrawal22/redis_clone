@@ -2,7 +2,6 @@ import socket
 import threading
 import time
 
-# TODO: add module for server's config
 
 from python_redis.middleware.user_cmd_mw import SocketProxyMiddleware
 
@@ -23,13 +22,6 @@ def main() -> None:
         server_thread: threading.Thread = threading.Thread(target=server.start)
         server_thread.start()
         time.sleep(1)
-        # proxy = SocketProxyMiddleware(
-        #     listen_host="127.0.0.1",
-        #     listen_port=6001,  # Telnet connects here
-        #     target_host="127.0.0.1",
-        #     target_port=5001,  # Your server
-        # )
-        # proxy.start()
         port :int = int(os.getenv("PORT", 6001))
         print( f"port=>{port} ")
         proxy = SocketProxyMiddleware(
@@ -52,10 +44,3 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 
-# mongoDB problem
-# 🕒 5. Clock/Sync Timing
-# Problem: Scheduling syncs precisely every 5 minutes can be tricky across threads or async handlers.
-
-# Impact: Delays or overlapping writes.
-
-# Mitigation: Use a scheduler like APScheduler, threading.Timer, or asyncio.

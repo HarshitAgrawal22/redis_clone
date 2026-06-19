@@ -13,7 +13,7 @@ from icecream import ic
 
 class KV:
     def __init__(self, db: HardDatabase):
-        # TODO:  Here we wil need to add a backup storage which will have the incoming updates when the dictiony is geting synced with the hard db
+       
         ic.configureOutput(prefix="DEBUG: ", includeContext=True)
         # Initialize an empty dictionary and an RLock for thread safety
 
@@ -46,8 +46,7 @@ class KV:
 
     def periodic_db_sync(self):
         while not self.stop_event.is_set():
-            # TODO: here for now the work is getting done by checking each and every key-val pair,
-            # TODO: create copy only of the dirty keys
+            
 
             with self.lock:
                 dict_db_snapshot = dict(self.data)

@@ -7,18 +7,14 @@ ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 class SocketConnection:
     def __init__(self,conn_from_peer:socket.socket):
         self.conn_of_peer= conn_from_peer
-        # TODO : integrate it to code 
+       
     def send(self,msg:str, type_of_message:str):
-    # error :str = "e"
-    # simple_string :str = "s"
-    # bulk_string :str = "b"
-    # array :str = "a"
-    # integer :str = "e"
+  
 
         try:
             func = message_format.get(type_of_message)
             if func!= None:
-                # TODO: here it is returning the number of bytes sent (lets log them somewhere)
+                
                 return  self.conn_of_peer.send(func(msg))
             else:
                 return "Message not sent"
