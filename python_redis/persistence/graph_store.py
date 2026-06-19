@@ -27,17 +27,23 @@ class VerticesStore:
         self.collection: Collection
         if self.db.check_collection_exist("Edge"):
             self.collection = self.db.new_collection("Edge")
-            self.load_from_hard_db()
         
-        else:
-            self.collection= self.db.new_collection("Edge")
 
         edge_thread = threading.Thread(target= self.periodic_db_sync, args= (), daemon=True)
         edge_thread.start()
 
-    def load_from_hard_db(self):
+    def load_from_hard_db(self, model : graph):
         for record in self.db.load_from_db(self.collection):
-            pass
+            # ic(record)
+            if (edge_data :=record["value"]) != None:
+                edge_data= dict(eval(edge_data))
+                start_vertex_data= dict(edge_data.get("start_vertex"))
+                start_vertex= start_vertex_data.get(model.get_key_name()) 
+                end_vertex_data= dict(edge_data.get("end_vertex"))
+                end_vertex= end_vertex_data.get(model.get_key_name())
+                weight : int=int(edge_data.get("weight"))
+                model.add_edge(start_vertex, end_vertex, weight)
+                
     
     def create_key(self,start: str, end: str):
         return f"{start}->{end}"

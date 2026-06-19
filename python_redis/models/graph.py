@@ -19,6 +19,7 @@ class graph:
         self.db: HardDatabase = db
         self.store: GraphStore = GraphStore(db, self)
         self.store.load_vertices_from_hard_db(self)
+        self.store.vertices_store.load_from_hard_db(self)
         
         # TODO: here at first vertices will be loaded 
         # Todo: after that edges will be loaded
