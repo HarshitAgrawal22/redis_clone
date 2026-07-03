@@ -14,6 +14,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from python_redis.persistence.db import HardDatabase
+    
 
 from queue import Queue
 
@@ -26,7 +27,7 @@ class Peer:
         )
 
     def __init__(
-        self, conn: socket.socket, msg_chan: Queue, del_peer_chan: list["Peer"]
+        self, conn: socket.socket, msg_chan: Queue, del_peer_chan: Queue["Peer"]
     ):
         self.Conn: socket.socket = conn
 
@@ -55,7 +56,7 @@ class Peer:
 
     @staticmethod
     def newPeer(
-        conn: socket.socket, msg_chan: Queue, del_peer_chan: list["Peer"]
+        conn: socket.socket, msg_chan: Queue, del_peer_chan: Queue["Peer"]
     ) -> "Peer":
         return Peer(conn, msg_chan, del_peer_chan)
 
@@ -66,7 +67,7 @@ class Peer:
         while True:
             try:
                 # Read data from the socket
-                raw_data: bytearray = self.Conn.recv(1024)
+                raw_data: bytearray = self.Conn.recv(1024)# type: ignore
                 raw_str = raw_data.decode("utf-8")
                 if not raw_data:
                     # self.del_chan.append(self)
@@ -92,7 +93,7 @@ class Peer:
                             
                             # If a valid command is returned, add to message queue
                             if command != None:
-                                message = Message(cmd=command, conn_peer=self)
+                                message = Message(cmd=command, conn_peer=self)# type: ignore
                                 
                                 self.msg_chan.put(message)
                         except Exception as parse_error:

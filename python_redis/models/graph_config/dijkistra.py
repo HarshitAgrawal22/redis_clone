@@ -8,6 +8,7 @@ ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 if TYPE_CHECKING:
 
     from python_redis.models.graph_config.Edge import Edge
+    from python_redis.models.graph import graph
 
 
 class QueueObject:
@@ -28,7 +29,7 @@ class QueueObject:
 
 class dijkistra:
 
-    def dijkistra_dicts(self, g, starting_vertex: Vertex, key: str) -> list[dict]:
+    def dijkistra_dicts(self, g:graph, starting_vertex: Vertex, key: str) -> list[dict]:
 
         dist_dict: dict[str, int] = dict()
 
@@ -43,7 +44,7 @@ class dijkistra:
             if v != starting_vertex:
                 dist_dict[v.get_data()[key]] = 2**63 - 1
 
-            prev_dict[v.get_data()[key]] = Vertex("null")
+            prev_dict[v.get_data()[key]] = Vertex("null")# type: ignore
         dist_dict[starting_vertex.get_data()[key]] = 0
 
         while not queue.empty():
@@ -52,15 +53,16 @@ class dijkistra:
             for e in current.get_edges():
 
                 alternative: int = (
-                    dist_dict.get(current.get_data()[key]) + e.get_weight()
+                    int(str(dist_dict.get(current.get_data()[key])))  + e.get_weight()
                 )
-
+                
                 neighborValue: str = e.get_end().get_data()[key]
-
-                if alternative < dist_dict.get(neighborValue):
-                    dist_dict[neighborValue] = alternative
-                    prev_dict[neighborValue] = current
-                    queue.put(QueueObject(e.get_end(), dist_dict.get(neighborValue)))
+                neightbour_value_from_dist_dict= dist_dict.get(neighborValue)
+                if neightbour_value_from_dist_dict != None:
+                    if  alternative < neightbour_value_from_dist_dict:
+                        dist_dict[neighborValue] = alternative
+                        prev_dict[neighborValue] = current
+                        queue.put(QueueObject(e.get_end(), neightbour_value_from_dist_dict))
 
         return [dist_dict, prev_dict]
 
@@ -85,7 +87,7 @@ class dijkistra:
         )
         dist_dict: dict = dijkistra_dictionaries[0]
         prev_dict: dict[str, Vertex] = dijkistra_dictionaries[1]
-        distance = int(dist_dict.get(target_vertex.get_data().get(key)))
+        distance = int(dist_dict.get(target_vertex.get_data().get(key)))# type: ignore
         # print(dist_dict)
         # print(prev_dict)
 
@@ -97,7 +99,7 @@ class dijkistra:
             # ic(type(v.get_data()))
             path.add_head(v)
 
-            v = prev_dict.get(v.get_data().get(key))
+            v = prev_dict.get(v.get_data().get(key))# type: ignore
 
         print("Shortest path:")
         result = ""
@@ -111,10 +113,10 @@ class dijkistra:
         result += str(distance) + "\n"
 
         while not path.is_empty():
-            if path.head.next != None:
-                result += str(path.remove_head().get_data().get(key)) + "-->"
+            if path.head !=None and  path.head.next != None:
+                result += str(path.remove_head().get_data().get(key)) + "-->" # type: ignore
             else:
-                result += str(path.remove_head().get_data().get(key))
+                result += str(path.remove_head().get_data().get(key))# type: ignore
 
         return result
         # for pathVertex in path:

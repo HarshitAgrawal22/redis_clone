@@ -20,9 +20,8 @@ class Node_AVL:
 class AVLTree:
 
     def insert(self, root: Optional[Node_AVL], key: int, value: dict) -> Node_AVL:
-        """Insert a key into the AVL tree and return the new root."""
+        
 
-        # 1️⃣ Perform standard BST insertion
         if root is None:
             return Node_AVL(key, value)
 
@@ -31,39 +30,29 @@ class AVLTree:
         elif key > root.key:
             root.right = self.insert(root.right, key, value)
         else:
-            # Equal keys are not allowed in BST
             return root
 
-        # 2️⃣ Update height of this ancestor node
         root.height = 1 + max(self.get_height(root.left), self.get_height(root.right))
 
-        # 3️⃣ Get the balance factor
         balance = self.get_balance(root)
 
-        # 4️⃣ If node is unbalanced, perform rotations
 
-        # Case 1 - Left Left
-        if balance > 1 and key < root.left.key:
+        if root.left !=None and balance > 1 and key < root.left.key:
             return self.rotate_right(root)
 
-        # Case 2 - Right Right
-        if balance < -1 and key > root.right.key:
+        if root.right !=None and balance < -1 and key > root.right.key:
             return self.rotate_left(root)
 
-        # Case 3 - Left Right
-        if balance > 1 and key > root.left.key:
+        if  root.left !=None and balance > 1 and key > root.left.key:
             root.left = self.rotate_left(root.left)
             return self.rotate_right(root)
 
-        # Case 4 - Right Left
-        if balance < -1 and key < root.right.key:
+        if root.right !=None and balance < -1 and key < root.right.key:
             root.right = self.rotate_right(root.right)
             return self.rotate_left(root)
 
-        # Return the (unchanged) node pointer
         return root
 
-    # 🔹 Utility Functions
 
     def get_height(self, node: Optional[Node_AVL]) -> int:
         if not node:
@@ -75,37 +64,30 @@ class AVLTree:
             return 0
         return self.get_height(node.left) - self.get_height(node.right)
 
-    # 🔸 Right Rotation
     def rotate_right(self, y: Node_AVL) -> Node_AVL:
         x = y.left
-        T2 = x.right
+        if x !=None:
+            T2 = x.right
 
-        # Perform rotation
-        x.right = y
-        y.left = T2
+        x.right = y# type: ignore
+        y.left = T2# type: ignore
 
-        # Update heights
         y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))
-        x.height = 1 + max(self.get_height(x.left), self.get_height(x.right))
+        x.height = 1 + max(self.get_height(x.left), self.get_height(x.right))# type: ignore
 
-        # Return new root
-        return x
+        return x# type: ignore
 
-    # 🔸 Left Rotation
     def rotate_left(self, x: Node_AVL) -> Node_AVL:
         y = x.right
-        T2 = y.left
+        T2 = y.left# type: ignore
 
-        # Perform rotation
-        y.left = x
+        y.left = x# type: ignore
         x.right = T2
 
-        # Update heights
         x.height = 1 + max(self.get_height(x.left), self.get_height(x.right))
-        y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))
+        y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))# type: ignore
 
-        # Return new root
-        return y
+        return y# type: ignore
 
     def preorder(self, root: Optional[Node_AVL]) -> None:
         if root != None:
@@ -125,20 +107,19 @@ class Node:
     def __init__(self, value):
         self.value: dict = value
 
-        self.right: Node = None
-        self.left: Node = None
+        self.right: Node = None# type: ignore
+        self.left: Node = None# type: ignore
 
     def __str__(self):
         return f"value stored on this node is:{self.value}"
 
 
-# here we intent to store a object in the form of dictionary in the bst
 class bstree:
 
     def __init__(self, db: HardDatabase):
-        self.root: Node = None
+        self.root: Node = None# type: ignore
         self.lock = threading.RLock()
-        self.key: str = None
+        self.key: str = None# type: ignore
         ic.configureOutput(prefix="DEBUG: ", includeContext=True)
         self.db: HardDatabase = db
         self.meta_collection = self.db.new_collection("meta")
@@ -164,11 +145,11 @@ class bstree:
         if obj != None:
             self.key = obj["value"]
         else:
-            self.key = None
+            self.key = None# type: ignore
 
         
         bal_tree: AVLTree = AVLTree()
-        root: Node_AVL = None
+        root: Node_AVL = None# type: ignore
 
         for record in self.db.load_from_db(self.collection):
             print(record)
@@ -184,8 +165,8 @@ class bstree:
                 ic(flat_list)
                 self.insert(flat_list)
 
-                pre_order_insertion(avl_root.left)
-                pre_order_insertion(avl_root.right)
+                pre_order_insertion(avl_root.left)# type: ignore
+                pre_order_insertion(avl_root.right)# type: ignore
 
         pre_order_insertion(root)
         
@@ -197,18 +178,18 @@ class bstree:
                 dirty_keys_snapshots = set(self.dirty_items)
             if len(dirty_keys_snapshots) != 0:
                 synced_keys = set()
-                for key_value, operation in dirty_keys_snapshots:
+                for key_value, operation in dirty_keys_snapshots:# type: ignore
                     
                     try:
                         # here is try catch because there can be a exception while having a transaction with db
 
                         if operation == "d":
                             ic(key_value, self.collection)
-                            ic(self.db.delete_key(key_value, self.collection))
+                            ic(self.db.delete_key(key_value, self.collection))# type: ignore
                             synced_keys.add((key_value, operation))
                             ic(operation)
                         else:
-                            node_value = json.loads(key_value)
+                            node_value = json.loads(key_value)# type: ignore
                             self.db.insert_and_update_key_val(
                                 node_value[self.key], key_value, self.collection
                             )
@@ -252,7 +233,7 @@ class bstree:
                 return search(value, root.left)
         ic(len(args))
         if len(args) % 2 == 0:
-            temp_dict:dict[str:str]= dict()
+            temp_dict:dict[str:str]= dict()# type: ignore
             for i in range(0, len(args), 2):
                 # if args[i] == self.key:
                 #     return "Invalid Key"
@@ -271,7 +252,7 @@ class bstree:
             
             ic(node)
             node.value= temp_dict 
-            self.dirty_items.add((json.dumps(temp_dict), "u"))
+            self.dirty_items.add((json.dumps(temp_dict), "u"))# type: ignore
             return "Ok"
         else:
             return "Invalid pairs"
@@ -366,7 +347,7 @@ class bstree:
                 for i in range(0, len(value), 2):
                     temp_dict[value[i]] = value[i + 1]
             # print(f"{temp_dict} => temp_dict")
-            self.dirty_items.add((json.dumps(temp_dict), "c"))
+            self.dirty_items.add((json.dumps(temp_dict), "c"))# type: ignore
             if temp_dict.get(self.get_key()) != None:
                 self.root = insert_node(temp_dict, self.root)
                 
@@ -427,7 +408,7 @@ class bstree:
 
         with self.lock:
             self.root = delete_node(key, self.root)
-            self.dirty_items.add((key, "d"))
+            self.dirty_items.add((key, "d"))# type: ignore
             
 
 

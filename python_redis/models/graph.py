@@ -41,7 +41,7 @@ class graph:
         self.store.update_key_name(key)
         return self.key_name
 
-    def add_vertex(self, data: list) -> Vertex:  
+    def add_vertex(self, data: list) -> Vertex.Vertex:  
         ic(self.check_key_name_none())
         if self.check_key_name_none():
 

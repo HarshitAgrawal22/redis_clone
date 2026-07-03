@@ -6,6 +6,7 @@ import time
 class KV_store:
     def __init__(self, db:HardDatabase, data: Dict[str, bytes]):
         ic.configureOutput(prefix="DEBUG: ", includeContext=True)
+        self.lock= threading.RLock()
         self.data: Dict[str, bytes] = data
         self.db:HardDatabase= db
         self.collection: Collection
@@ -24,9 +25,6 @@ class KV_store:
             
     def periodic_db_sync(self):
         while not self.stop_event.is_set():
-            # TODO: here for now the work is getting done by checking each and every key-val pair,
-            # TODO: create copy only of the dirty keys
-
             with self.lock:
                 dict_db_snapshot = dict(self.data)
                 dirty_keys_snapshots = set(self.dirty_keys)
@@ -43,7 +41,7 @@ class KV_store:
                             print(operation)
                         else:
                             self.db.insert_and_update_key_val(
-                                key, dict_db_snapshot.get(key), self.collection
+                                key,str( dict_db_snapshot.get(key)), self.collection
                             )
                             synced_keys.add((key, operation))
                     except Exception:

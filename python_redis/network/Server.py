@@ -108,7 +108,7 @@ class Server:
                         print(f"Raw Message Error-> {err}")
                 except Exception as e:
                     # Global exception handler for message processing errors
-                    GlobalExceptionHandler.handle_message_exception(e, msg.conn_peer if hasattr(msg, 'conn_peer') else None)
+                    GlobalExceptionHandler.handle_message_exception(e, msg.conn_peer if hasattr(msg, 'conn_peer') else None) # type: ignore
             except EmptyQueue:
                 pass
 

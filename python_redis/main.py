@@ -7,7 +7,6 @@ from python_redis.middleware.user_cmd_mw import SocketProxyMiddleware
 
 from python_redis.network.Server import Server, Config
 
-# import queue
 from python_redis.client import client
 import os
 from icecream import ic
@@ -39,7 +38,6 @@ def main() -> None:
         server.stop()
 
 
-# python -m python_redis.main
 
 if __name__ == "__main__":
     main()

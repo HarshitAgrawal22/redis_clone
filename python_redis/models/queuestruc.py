@@ -22,7 +22,7 @@ class DataQueue:
             self.collection: Collection = self.db.new_collection("Queue")
 
         self.lock: RLock = threading.RLock()
-        self.dirty_items: set[tuple[int, str, str]] = set()
+        self.dirty_items: set[tuple] = set()
 
         self.stop_event: threading.Event = threading.Event()
         t = threading.Thread(target=self.periodic_db_sync, args=(), daemon=True)

@@ -34,12 +34,12 @@ execute_command_hash_map = {
 }
 
 
-message_format :dict[str :Callable] = {
-    CommandFormat.error:RESP_Encoder.resp_error,
-    CommandFormat.simple_string:RESP_Encoder.resp_simple_string,
-    CommandFormat.bulk_string:RESP_Encoder.resp_bulk_string,
-    CommandFormat.array:RESP_Encoder.resp_array,
-    CommandFormat.integer:RESP_Encoder.resp_integer
+message_format :dict[str :Callable] = {# type: ignore
+    CommandFormat.error:RESP_Encoder.resp_error,# type: ignore
+    CommandFormat.simple_string:RESP_Encoder.resp_simple_string,# type: ignore
+    CommandFormat.bulk_string:RESP_Encoder.resp_bulk_string,# type: ignore
+    CommandFormat.array:RESP_Encoder.resp_array,# type: ignore
+    CommandFormat.integer:RESP_Encoder.resp_integer# type: ignore
 }
 """🚀 How to Optimize Performance?
 Here are some areas where you can improve the efficiency of your Redis clone:

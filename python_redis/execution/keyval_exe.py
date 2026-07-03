@@ -82,7 +82,7 @@ def execute_multiple_attrs_set_command(args):
     key: str = args[0]
     attrs: tuple = args[1:]
 
-    return SetMultipleAttributeCommand(key=key, attrs=attrs)
+    return SetMultipleAttributeCommand(key=key, attrs=attrs)# type: ignore
 
 
 def execute_multiple_attrs_get_command(args):
@@ -91,7 +91,7 @@ def execute_multiple_attrs_get_command(args):
     key: str = args[0]
     attrs: tuple = args[1:]
 
-    return GetMultipleAttributeCommand(key=key, attrs=attrs)
+    return GetMultipleAttributeCommand(key=key, attrs=attrs)# type: ignore
 
 
 def execute_set_multi_key_val_command(args):

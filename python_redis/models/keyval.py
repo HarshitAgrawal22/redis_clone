@@ -98,17 +98,18 @@ class KV:
                 print("System ran out of memory so deleting some key-val pair")
                 self.LRU()
 
-    def get(self, key: str) -> Tuple[Optional[bytes], bool]:
+    def get(self, key: str) -> Tuple[Optional[str|None], bool]:
         # Acquire a read lock for safe concurrent access
         with self.lock:
             # Return the value for the key if it exists, otherwise None and False
-            print(key)
-
-            val = (
-                self.data.get(key).decode("utf-8")
-                if self.data.get(key) != None
-                else None
-            )
+            raw =self.data.get(key)
+            if raw != None:
+                
+                val =  raw.decode("utf-8")
+                
+            else: 
+                val=None
+            
 
             return (val, val is not None)
 
@@ -129,7 +130,7 @@ class KV:
             result = ""
             for i in range(0, len(attr)):
 
-                value: bytes = self.data.get(f"{key}_{attr[i]}")
+                value: bytes|None = self.data.get(f"{key}_{attr[i]}")
                 result += f"{value.decode('utf-8') if value!=None else value } "
             return result.strip()
 
@@ -143,11 +144,11 @@ class KV:
             result: str = ""
             for i in keys:
                 # print(f"value of {i} => {self.data.get(i)}")
-                value: bytes = self.data.get(i)
+                value: bytes|None = self.data.get(i)
                 result += f"{value.decode('utf-8') if value!= None else value} "
             return result.strip()
 
-    def check(self, keys: list[bool]):
+    def check(self, keys: list[str]):
 
         with self.lock:
             print(f"{keys} are the keys available")
@@ -179,8 +180,14 @@ class KV:
             # Return the value for the key if it exists, otherwise None and False
             try:
                 print(key)
-                self.data[key] = str(int(self.data.get(key)) + 1).encode("utf-8")
-                self.dirty_keys.add(key)
+                raw = self.data.get(key)
+                if raw is None:
+                    new_val = 1
+                else:
+                    new_val = int(raw.decode("utf-8")) + 1
+
+                self.data[key] = str(new_val).encode("utf-8")
+                self.dirty_keys.add((key, "u"))
                 # print(self.data[key])
 
                 return (self.data.get(key), self.data.get(key) is not None)

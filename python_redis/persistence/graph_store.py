@@ -9,7 +9,7 @@ import threading
 import json
 if TYPE_CHECKING:
     from python_redis.models.graph import graph
-# TODO: create persistence for graph
+
 # ? figure out how to store in db
 # ! important 
 
@@ -22,10 +22,12 @@ class VerticesStore:
         self.db: HardDatabase = db
         self.lock: threading.RLock = threading.RLock()
         self.stop_event : threading.Event= threading.Event()
-        self.dirty_edges: set[tuple[str, dict, str]] = set() # [start_key, end_key, weight, operation]
+        self.dirty_edges: set[tuple[str, str, str]] = set() # [start_key, end_key, weight, operation]
         self.storage: dict[str, dict] = dict()
         self.collection: Collection
         if self.db.check_collection_exist("Edge"):
+            self.collection = self.db.new_collection("Edge")
+        else:
             self.collection = self.db.new_collection("Edge")
         
 
@@ -37,15 +39,15 @@ class VerticesStore:
             # ic(record)
             if (edge_data :=record["value"]) != None:
                 edge_data= dict(eval(edge_data))
-                start_vertex_data= dict(edge_data.get("start_vertex"))
-                start_vertex= start_vertex_data.get(model.get_key_name()) 
-                end_vertex_data= dict(edge_data.get("end_vertex"))
-                end_vertex= end_vertex_data.get(model.get_key_name())
-                weight : int=int(edge_data.get("weight"))
-                model.add_edge(start_vertex, end_vertex, weight)
+                start_vertex_data= dict(edge_data.get("start_vertex")) # type: ignore
+                start_vertex= start_vertex_data.get(model.get_key_name())  # type: ignore
+                end_vertex_data= dict(edge_data.get("end_vertex"))# type: ignore
+                end_vertex= end_vertex_data.get(model.get_key_name())# type: ignore
+                weight : int=int(edge_data.get("weight"))# type: ignore
+                model.add_edge(start_vertex, end_vertex, weight)# type: ignore
                 
     
-    def create_key(self,start: str, end: str):
+    def create_key(self,start: dict, end: dict):
         return f"{start}->{end}"
     
     def add_edge(self, start_vertex_key: Vertex.Vertex, end_vertex_key: Vertex.Vertex, weight: int):
@@ -112,7 +114,7 @@ class GraphStore:
             
         t = threading.Thread(target=self.periodic_db_sync, args=(), daemon=True)
         t.start()
-    #TODO: in it at first vertices will be loaded from DB and then edges will be loaded.
+   
     def get_key_name(self):
         obj= self.db.get_data_from_meta("GraphKeyName", self.meta_collection)
         if obj!= None:
@@ -136,10 +138,10 @@ class GraphStore:
     
     def add_vertex(self,vertex: Vertex.Vertex, key :str):
         with self.lock:
-            self.dirty_vertices.add((  vertex.data.get(key),str(vertex.data) ,"c"))
+            self.dirty_vertices.add((  vertex.data.get(key),str(vertex.data) ,"c"))# type: ignore
     def remove_vertex(self,vertex: Vertex.Vertex, key :str):
         with self.lock:
-            self.dirty_vertices.add((  vertex.data.get(key),str(vertex.data) ,"d"))
+            self.dirty_vertices.add((  vertex.data.get(key),str(vertex.data) ,"d"))# type: ignore
     def load_vertices_from_hard_db(self, model: graph):
         def add_vertex_str(data:dict):
             result:str= ''
@@ -168,7 +170,7 @@ class GraphStore:
                     try:
                         if operation == "d":
                             ic(self.db.delete_key(key, self.collection))
-                            synced_items.add((key, operation))
+                            synced_items.add((key,data, operation))
                             print(operation)
                         else:
                             self.db.insert_and_update_key_val(key, data, self.collection)
