@@ -9,13 +9,11 @@ class SocketConnection:
         self.conn_of_peer= conn_from_peer
        
     def send(self,msg:str, type_of_message:str):
-  
-
         try:
             func = message_format.get(type_of_message)
             if func!= None:
                 
-                return  self.conn_of_peer.send(func(msg))
+                return  self.conn_of_peer.sendall(func(msg))
             else:
                 return "Message not sent"
         except socket.error as e :

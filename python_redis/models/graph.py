@@ -14,7 +14,7 @@ class graph:
         self.vertices: list[Vertex.Vertex] = list()
         self.is_directed: bool = is_directed
         self.is_weighted: bool = is_weighted
-        self.key_name: str = None
+        self.key_name: str
         self.dij: dijkistra.dijkistra = dijkistra.dijkistra()
         self.db: HardDatabase = db
         self.store: GraphStore = GraphStore(db, self)
@@ -41,7 +41,7 @@ class graph:
         self.store.update_key_name(key)
         return self.key_name
 
-    def add_vertex(self, data: list) -> Vertex.Vertex:  
+    def add_vertex(self, data: list) -> Vertex.Vertex|None:  
         ic(self.check_key_name_none())
         if self.check_key_name_none():
 
@@ -64,7 +64,7 @@ class graph:
             return None
 
     def remove_vertex(self, data: dict):
-        targetVertex: Vertex = self.get_vertex_by_value(data)
+        targetVertex: Vertex.Vertex = self.get_vertex_by_value(data)# type: ignore
         if targetVertex == None:
             return False
         for v in self.vertices:
@@ -92,7 +92,7 @@ class graph:
         visited_queue.add_last(self.get_vertex_by_value(start))
         visited_queue.display()
         while not visited_queue.is_empty():
-            current: Vertex.Vertex = visited_queue.remove_head()
+            current: Vertex.Vertex = visited_queue.remove_head()# type: ignore
 
             result += f"{current.get_data()}" + "\n"
 
@@ -104,10 +104,10 @@ class graph:
         return result
 
     def depth_first_search(
-        self, start: Vertex.Vertex, visitedNodes: list[Vertex.Vertex]
+        self, startv_name: str, visitedNodes: list[Vertex.Vertex|None]
     ):
         result = ""
-        start = self.get_vertex_by_value(start)
+        start  = self.get_vertex_by_value(startv_name)
 
         def dfs(
             start: Vertex.Vertex, visitedNodes: list[Vertex.Vertex], result: str
@@ -120,9 +120,9 @@ class graph:
                     result = dfs(neighbor, visitedNodes, result)
             return result
 
-        return dfs(start, visitedNodes, result)
+        return dfs(start, visitedNodes, result) # type: ignore
 
-    def add_edge(self, v1_name: Vertex.Vertex, v2_name: Vertex.Vertex, weight: int):  
+    def add_edge(self, v1_name: str, v2_name: str, weight: int):  
         weight = int(weight)
         v1, v2 = self.get_vertex_by_value(v1_name), self.get_vertex_by_value(v2_name)
         if v1 == None:
@@ -140,7 +140,7 @@ class graph:
             self.store.add_edge(v2, v1, weight)
         return "OK"
 
-    def remove_edge(self, v1_data: Vertex.Vertex, v2_data: Vertex.Vertex):
+    def remove_edge(self, v1_data: str, v2_data:str):
         v1 = self.get_vertex_by_value(v1_data)
         v2 = self.get_vertex_by_value(v2_data)
         if v1 != None and v2 != None:
@@ -159,8 +159,8 @@ class graph:
     def get_vertices_str(self) -> str:
         return "\n".join(map(str, self.vertices))
 
-    def get_vertex_by_value(self, value: str):  
-        if self.check_key_name_none:
+    def get_vertex_by_value(self, value: str)-> Vertex.Vertex | None:  
+        if self.check_key_name_none():
             for v in self.vertices:
                 if v.get_data().get(self.get_key_name()) == value:
                     return v
@@ -173,20 +173,20 @@ class graph:
             result += v.print(self.is_weighted) + "\n"
         return result
 
-    def dijkistra_distance(self, starting_vertex: Vertex):
-        starting_vertex = self.get_vertex_by_value(starting_vertex)
+    def dijkistra_distance(self, starting_vertex: Vertex.Vertex):
+        starting_vertex = self.get_vertex_by_value(starting_vertex)# type: ignore
         if starting_vertex == None:
             return -1
         return self.dij.dijkistra_distance_dict(
-            self.dij.dijkistra_dicts(self, starting_vertex, self.get_key_name())
+            self.dij.dijkistra_dicts(self, starting_vertex, self.get_key_name())# type: ignore
         )
 
-    def dijkistra_prev(self, starting_vertex: Vertex):
-        starting_vertex = self.get_vertex_by_value(starting_vertex)
+    def dijkistra_prev(self, starting_vertex: Vertex.Vertex):
+        starting_vertex = self.get_vertex_by_value(starting_vertex)# type: ignore
         if starting_vertex == None:
             return -1
         return self.dij.dijkistra_prev_dict(
-            self.dij.dijkistra_dicts(self, starting_vertex, self.get_key_name()),
+            self.dij.dijkistra_dicts(self, starting_vertex, self.get_key_name()),# type: ignore
             self.get_key_name(),
         )
 
