@@ -5,6 +5,7 @@ import time
 from icecream import ic
 from python_redis.persistence.db import *
 import json
+from python_redis.constants import SyncTime
 
 
 class Node_AVL:
@@ -19,9 +20,8 @@ class Node_AVL:
 class AVLTree:
 
     def insert(self, root: Optional[Node_AVL], key: int, value: dict) -> Node_AVL:
-        """Insert a key into the AVL tree and return the new root."""
+        
 
-        # 1️⃣ Perform standard BST insertion
         if root is None:
             return Node_AVL(key, value)
 
@@ -30,39 +30,29 @@ class AVLTree:
         elif key > root.key:
             root.right = self.insert(root.right, key, value)
         else:
-            # Equal keys are not allowed in BST
             return root
 
-        # 2️⃣ Update height of this ancestor node
         root.height = 1 + max(self.get_height(root.left), self.get_height(root.right))
 
-        # 3️⃣ Get the balance factor
         balance = self.get_balance(root)
 
-        # 4️⃣ If node is unbalanced, perform rotations
 
-        # Case 1 - Left Left
-        if balance > 1 and key < root.left.key:
+        if root.left !=None and balance > 1 and key < root.left.key:
             return self.rotate_right(root)
 
-        # Case 2 - Right Right
-        if balance < -1 and key > root.right.key:
+        if root.right !=None and balance < -1 and key > root.right.key:
             return self.rotate_left(root)
 
-        # Case 3 - Left Right
-        if balance > 1 and key > root.left.key:
+        if  root.left !=None and balance > 1 and key > root.left.key:
             root.left = self.rotate_left(root.left)
             return self.rotate_right(root)
 
-        # Case 4 - Right Left
-        if balance < -1 and key < root.right.key:
+        if root.right !=None and balance < -1 and key < root.right.key:
             root.right = self.rotate_right(root.right)
             return self.rotate_left(root)
 
-        # Return the (unchanged) node pointer
         return root
 
-    # 🔹 Utility Functions
 
     def get_height(self, node: Optional[Node_AVL]) -> int:
         if not node:
@@ -74,37 +64,30 @@ class AVLTree:
             return 0
         return self.get_height(node.left) - self.get_height(node.right)
 
-    # 🔸 Right Rotation
     def rotate_right(self, y: Node_AVL) -> Node_AVL:
         x = y.left
-        T2 = x.right
+        if x !=None:
+            T2 = x.right
 
-        # Perform rotation
-        x.right = y
-        y.left = T2
+        x.right = y# type: ignore
+        y.left = T2# type: ignore
 
-        # Update heights
         y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))
-        x.height = 1 + max(self.get_height(x.left), self.get_height(x.right))
+        x.height = 1 + max(self.get_height(x.left), self.get_height(x.right))# type: ignore
 
-        # Return new root
-        return x
+        return x# type: ignore
 
-    # 🔸 Left Rotation
     def rotate_left(self, x: Node_AVL) -> Node_AVL:
         y = x.right
-        T2 = y.left
+        T2 = y.left# type: ignore
 
-        # Perform rotation
-        y.left = x
+        y.left = x# type: ignore
         x.right = T2
 
-        # Update heights
         x.height = 1 + max(self.get_height(x.left), self.get_height(x.right))
-        y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))
+        y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))# type: ignore
 
-        # Return new root
-        return y
+        return y# type: ignore
 
     def preorder(self, root: Optional[Node_AVL]) -> None:
         if root != None:
@@ -124,20 +107,19 @@ class Node:
     def __init__(self, value):
         self.value: dict = value
 
-        self.right: Node = None
-        self.left: Node = None
+        self.right: Node = None# type: ignore
+        self.left: Node = None# type: ignore
 
     def __str__(self):
         return f"value stored on this node is:{self.value}"
 
 
-# here we intent to store a object in the form of dictionary in the bst
 class bstree:
 
     def __init__(self, db: HardDatabase):
-        self.root: Node = None
+        self.root: Node = None# type: ignore
         self.lock = threading.RLock()
-        self.key: str = None
+        self.key: str = None# type: ignore
         ic.configureOutput(prefix="DEBUG: ", includeContext=True)
         self.db: HardDatabase = db
         self.meta_collection = self.db.new_collection("meta")
@@ -145,11 +127,11 @@ class bstree:
         if self.db.check_collection_exist("Tree"):
 
             self.collection: Collection = self.db.new_collection("Tree")
-            self.dirty_items: set[tuple[int, str, str]] = set()
+            
             self.load_from_hard_db()
         else:
             self.collection: Collection = self.db.new_collection("Tree")
-            self.dirty_items: set[tuple[int, str, str]] = set()
+        self.dirty_items: set[tuple[int, str, str]] = set()
 
         self.lock: RLock = threading.RLock()
 
@@ -163,14 +145,11 @@ class bstree:
         if obj != None:
             self.key = obj["value"]
         else:
-            self.key = None
+            self.key = None# type: ignore
 
-        # meta_data = self.db.get_data_from_meta("Tree", self.db.new_collection("meta"))
-        # TODO: Create a meta collection to store the meta data for the server
-        # TODO: add a update Command(Function) to tree, where a node's fields can be updated
-        # if meta_data is not None:
+        
         bal_tree: AVLTree = AVLTree()
-        root: Node_AVL = None
+        root: Node_AVL = None# type: ignore
 
         for record in self.db.load_from_db(self.collection):
             print(record)
@@ -186,46 +165,34 @@ class bstree:
                 ic(flat_list)
                 self.insert(flat_list)
 
-                pre_order_insertion(avl_root.left)
-                pre_order_insertion(avl_root.right)
+                pre_order_insertion(avl_root.left)# type: ignore
+                pre_order_insertion(avl_root.right)# type: ignore
 
         pre_order_insertion(root)
-        ic(root)
-        bal_tree.preorder(root)
-        print("inorder")
-        bal_tree.inorder(root)
-
-        # root_key = db.bst_meta.find_one({"_id": "metadata"})["root_key"]
-        # preorder_traversal(db, root_key)
-
-        # TODO: figure out the way to load data from db to DS
-        # self.ll.add_head(record["value"])
+        
 
     def periodic_db_sync(self):
         while not self.stop_event.is_set():
-            # TODO: here for now the work is getting done by checking each and every key-val pair,
-            # TODO: create copy only of the dirty keys
-
+            
             with self.lock:
-                # dict_db_snapshot = dict(self.data)
                 dirty_keys_snapshots = set(self.dirty_items)
             if len(dirty_keys_snapshots) != 0:
                 synced_keys = set()
-                for key_value, operation in dirty_keys_snapshots:
-                    node_value = json.loads(key_value)
+                for key_value, operation in dirty_keys_snapshots:# type: ignore
+                    
                     try:
                         # here is try catch because there can be a exception while having a transaction with db
 
                         if operation == "d":
-
-                            ic(self.db.delete_key(key_value, self.collection))
+                            ic(key_value, self.collection)
+                            ic(self.db.delete_key(key_value, self.collection))# type: ignore
                             synced_keys.add((key_value, operation))
-                            print(operation)
+                            ic(operation)
                         else:
+                            node_value = json.loads(key_value)# type: ignore
                             self.db.insert_and_update_key_val(
                                 node_value[self.key], key_value, self.collection
                             )
-                            # TODO update it to have key  not "key"
                             synced_keys.add((key_value, operation))
                     except Exception as e:
                         print(e)
@@ -235,7 +202,7 @@ class bstree:
 
                     self.dirty_items -= synced_keys
                     # ic(f"dirty keys after { self.dirty_keys}")
-            time.sleep(5)
+            time.sleep(SyncTime)
 
     @staticmethod
     def new_tree(db: HardDatabase):
@@ -252,7 +219,8 @@ class bstree:
     def get_key(self):
         return self.key
 
-    def upsert_node_data(self, key: str, args: tuple[str]):
+    def upsert_node_data(self, args: tuple[str]):
+        ic( args)
         def search(value, root: Node):
 
             if root is None:
@@ -263,20 +231,33 @@ class bstree:
                 return search(value, root.right)
             else:
                 return search(value, root.left)
-
+        ic(len(args))
         if len(args) % 2 == 0:
-            node: Node = search(key, self.root)
+            temp_dict:dict[str:str]= dict()# type: ignore
+            for i in range(0, len(args), 2):
+                # if args[i] == self.key:
+                #     return "Invalid Key"
+                # node.value[args[i]] = args[i + 1]
+                ic(args[i], args[i+1])
+                temp_dict[args[i]]= args[i+1]
+            ic(temp_dict)
+            ic(temp_dict.get(self.key))
+            if (key:= temp_dict.get(self.key))  == None:
+                return "invalid key"
+            ic(key)
+            node: Node = search( key , self.root)
+            ic(node)
             if node is None:
                 return "Invalid Key"
-            for i in range(0, len(args), 2):
-                if args[i] == self.key:
-                    return "Invalid Key"
-                node.value[args[i]] = args[i + 1]
+            
+            ic(node)
+            node.value= temp_dict 
+            self.dirty_items.add((json.dumps(temp_dict), "u"))# type: ignore
             return "Ok"
         else:
             return "Invalid pairs"
 
-    def pre_order_traversal(self):
+    def pre_order_traversal(self)-> str:
 
         def traversal(node: Node):
 
@@ -292,7 +273,7 @@ class bstree:
         with self.lock:
             return traversal(self.root)
 
-    def post_order_traversal(self):
+    def post_order_traversal(self)->str:
         print("post order traversal ")
 
         def traversal(node: Node):
@@ -309,7 +290,7 @@ class bstree:
 
             return traversal(self.root)
 
-    def in_order_traversal(self):
+    def in_order_traversal(self)-> str:
         print("in order traversal ")
 
         def traversal(node: Node):
@@ -359,18 +340,17 @@ class bstree:
                 root.left = insert_node(value, root.left)
             return root
 
-        # TODO : check logic for duplication by updation for key-val in mongodb
-        # TODO : duplicate entries are being made here check that
         with self.lock:
             temp_dict = dict()
             if (len(value)) % 2 == 0:
 
                 for i in range(0, len(value), 2):
                     temp_dict[value[i]] = value[i + 1]
-            print(f"{temp_dict} => temp_dict")
-            self.dirty_items.add((json.dumps(temp_dict), "c"))
+            # print(f"{temp_dict} => temp_dict")
+            self.dirty_items.add((json.dumps(temp_dict), "c"))# type: ignore
             if temp_dict.get(self.get_key()) != None:
                 self.root = insert_node(temp_dict, self.root)
+                
                 # self.display()
 
                 return "OK"
@@ -399,12 +379,7 @@ class bstree:
             return x
 
     def delete(self, key):
-        # def minValue(node: Node):
-        #     minv = node.value
-        #     while node.left != None:
-        #         minv = node.left.value
-        #         node = node.left
-        #     return minv
+        
         def minValueNode(node: Node) -> Node:
             current = node
             # Keep moving left until we reach the smallest value
@@ -426,7 +401,6 @@ class bstree:
                 elif root.right is None:
                     return root.left
                 succesor = minValueNode(root.right)
-                # root.value = minValue(root.right)
                 root.value = succesor.value
                 root.right = delete_node(succesor.value[self.key], root.right)
             return root
@@ -434,20 +408,7 @@ class bstree:
 
         with self.lock:
             self.root = delete_node(key, self.root)
-            self.display()
+            self.dirty_items.add((key, "d"))# type: ignore
+            
 
 
-# Data Structure	Common Use Cases
-# Strings	Caching, counters, serialized data.
-# Lists	Queues, logs, timelines.
-# Sets	Unique items, set operations.
-# Sorted Sets	Leaderboards, rankings, time-series data.
-# Hashes	User profiles, JSON-like data.
-# Bitmaps	Tracking true/false states.
-# HyperLogLogs	Cardinality estimation.
-# Streams	Event sourcing, real-time analytics.
-# Geospatial	Location-based queries.
-# Redis's flexible data structures make it suitable for a wide range of applications, from caching and messaging to advanced analytics and real-time data processing.
-
-
-# python -m http.server 8080

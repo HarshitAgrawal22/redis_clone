@@ -13,12 +13,12 @@ from icecream import ic
 
 class KV:
     def __init__(self, db: HardDatabase):
-        # TODO:  Here we wil need to add a backup storage which will have the incoming updates when the dictiony is geting synced with the hard db
+       
         ic.configureOutput(prefix="DEBUG: ", includeContext=True)
         # Initialize an empty dictionary and an RLock for thread safety
 
         self.data: Dict[str, bytes] = dict()
-        self.store:KV_store = KV_store(db, self.data)
+        # self.store:KV_store = KV_store(db, self.data)
         self.lock: RLock = threading.RLock()
 
         self.db: HardDatabase = db
@@ -27,14 +27,14 @@ class KV:
         if self.db.check_collection_exist("KV"):
 
             self.collection: Collection = self.db.new_collection("KV")
+            ic(self.collection)
             self.load_from_hard_db()
         else:
             self.collection: Collection = self.db.new_collection("KV")
 
         self.stop_event: threading.Event = threading.Event()
         self.dirty_keys: set[tuple[str, str]] = set()
-        # setter: set[tuple[str:str]] = set({{"name": "c"}, {"name": "c"}})
-        # self.periodic_update_db()
+        
         t = threading.Thread(target=self.periodic_db_sync, args=(), daemon=True)
         t.start()
         # Track dirty keys for periodic updates
@@ -42,13 +42,11 @@ class KV:
     def load_from_hard_db(self):
         # print("loading data from db")
         for record in self.db.load_from_db(self.collection):
-            # ic(record["key"], record["value"])
             self.data[record["key"]] = record["value"]
 
     def periodic_db_sync(self):
         while not self.stop_event.is_set():
-            # TODO: here for now the work is getting done by checking each and every key-val pair,
-            # TODO: create copy only of the dirty keys
+            
 
             with self.lock:
                 dict_db_snapshot = dict(self.data)
@@ -89,29 +87,29 @@ class KV:
             try:
 
                 (
-                    self.store.dirty_keys.add((key, "c"))
+                    self.dirty_keys.add((key, "c"))
                     if self.data.get(key) == None
-                    else self.store.dirty_keys.add((key, "u"))
+                    else self.dirty_keys.add((key, "u"))
                 )
 
                 self.data[key] = val.encode("utf-8")
 
-                # self.periodic_update_db()
             except MemoryError:
                 print("System ran out of memory so deleting some key-val pair")
                 self.LRU()
 
-    def get(self, key: str) -> Tuple[Optional[bytes], bool]:
+    def get(self, key: str) -> Tuple[Optional[str|None], bool]:
         # Acquire a read lock for safe concurrent access
         with self.lock:
             # Return the value for the key if it exists, otherwise None and False
-            print(key)
-
-            val = (
-                self.data.get(key).decode("utf-8")
-                if self.data.get(key) != None
-                else None
-            )
+            raw =self.data.get(key)
+            if raw != None:
+                
+                val =  raw.decode("utf-8")
+                
+            else: 
+                val=None
+            
 
             return (val, val is not None)
 
@@ -132,9 +130,9 @@ class KV:
             result = ""
             for i in range(0, len(attr)):
 
-                value: bytes = self.data.get(f"{key}_{attr[i]}")
+                value: bytes|None = self.data.get(f"{key}_{attr[i]}")
                 result += f"{value.decode('utf-8') if value!=None else value } "
-            return result
+            return result.strip()
 
     def set_multiple_pairs(self, attrs: list):
         # this may trigger a error so needed to be solved later on if needed
@@ -146,11 +144,11 @@ class KV:
             result: str = ""
             for i in keys:
                 # print(f"value of {i} => {self.data.get(i)}")
-                value: bytes = self.data.get(i)
+                value: bytes|None = self.data.get(i)
                 result += f"{value.decode('utf-8') if value!= None else value} "
-            return result
+            return result.strip()
 
-    def check(self, keys: list[bool]):
+    def check(self, keys: list[str]):
 
         with self.lock:
             print(f"{keys} are the keys available")
@@ -166,7 +164,7 @@ class KV:
             print(key)
             try:
                 del self.data[key]
-                self.store.dirty_keys.add((key, "d"))
+                self.dirty_keys.add((key, "d"))
 
                 return key
             except Exception as e:
@@ -182,8 +180,14 @@ class KV:
             # Return the value for the key if it exists, otherwise None and False
             try:
                 print(key)
-                self.data[key] = str(int(self.data.get(key)) + 1).encode("utf-8")
-                self.store.dirty_keys.add(key)
+                raw = self.data.get(key)
+                if raw is None:
+                    new_val = 1
+                else:
+                    new_val = int(raw.decode("utf-8")) + 1
+
+                self.data[key] = str(new_val).encode("utf-8")
+                self.dirty_keys.add((key, "u"))
                 # print(self.data[key])
 
                 return (self.data.get(key), self.data.get(key) is not None)

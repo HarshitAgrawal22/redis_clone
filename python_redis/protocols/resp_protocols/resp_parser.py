@@ -12,17 +12,15 @@ ic.configureOutput(prefix="DEBUG: ", includeContext=True)
 
 class RESP_Parser:
     def parse_command(self, raw: str) -> Optional[Command]:
-        """Parses the raw RESP command bytes and returns a Command object if valid."""
-        # TODO DONE learn what is RESP protocol
+        
         # Decode raw bytes to string without removing any characters
-        # print(f"raw command => {raw} {type(raw)} ")
+        
 
         # ? this is the code which does all the RESP task
 
-        ic(raw)
+        
 
         # Regular expressions for RESP patterns
-        # TODO: Move this resp parsinng code to resp_parser.py(need to create that )
         array_pattern = r"\*([0-9]+)\r\n"
         bulk_string_pattern = r"\$([0-9]+)\r\n(.+?)\r\n"
 
@@ -33,9 +31,6 @@ class RESP_Parser:
 
         expected_items = int(array_match.group(1))
         items = re.findall(bulk_string_pattern, raw)
-
-        # Debugging output for items parsed
-        # print(f"Found items: {items}")
 
         # Validate RESP format
 

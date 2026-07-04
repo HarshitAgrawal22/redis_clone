@@ -21,7 +21,8 @@ class QUEUE_TASKS:
 
     @staticmethod
     def task_display_command(msg:Message, server):
-        msg.conn_peer.socket_handler.send(f"{msg.conn_peer._queue.display()}","a")
+        result=  msg.conn_peer._queue.display()
+        msg.conn_peer.socket_handler.send(result.split("<-"),"a")
 
     @staticmethod
     def task_dequeue_command(msg:Message, server):

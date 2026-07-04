@@ -26,19 +26,7 @@ class Client:
         return resp.encode("utf-8")
 
     def set(self, key: str, value: str):
-        # try:
-
-        # conn = socket.create_connection(
-        #     (self.addr.split(":")[0], int(self.addr.split(":")[1]))
-        # )
-
-        # except socket.error as e:
-        #     return e
-        # Format the RESP array for the SET command
-        # RESP format for "*3\r\n$3\r\nSET\r\n$<key_length>\r\n<key>\r\n$<value_length>\r\n<value>\r\n"
-
-        # message = f"*3\r\n${len('SET')}\r\nSET\r\n${len(key)}\r\n{key}\r\n${len(value)}\r\n{value}\r\n"
-        # lists = ["harshit", "hrishika", "tiwari", "samosa", "mayank", "billa", "uday"]
+        
 
         for i in range(10):
 

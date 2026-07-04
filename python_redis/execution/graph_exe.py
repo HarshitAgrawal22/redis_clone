@@ -1,4 +1,4 @@
-# TODO: rename all files as they perform
+
 from python_redis.protocols.graph_protocols import *
 
 
@@ -34,7 +34,7 @@ def execute_get_key_command(args):
 
 def execute_add_vertex_command(args):
     if len(args) <= 0:
-        raise ValueError("not enough args")
+        raise ValueError("not enough args") 
     return AddVertexCommand(args)
 
 

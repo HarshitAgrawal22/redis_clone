@@ -1,7 +1,7 @@
 class Node:
     def __init__(self, value):
-        self.value = value
-        self.next = None
+        self.value: Node |None= value
+        self.next: Node | None = None
 
     def __str__(self):
         return str(self.value)
@@ -10,8 +10,8 @@ class Node:
 class LinkedList:
 
     def __init__(self):
-        self.head: Node = None
-        self.tail: Node = None
+        self.head: Node|None = None
+        self.tail: Node |None = None
 
     def show_head(self):
         if self.head is None:
@@ -23,14 +23,16 @@ class LinkedList:
         if self.head is None:
             return "Empty"
         else:
-            return self.tail.value
-
+            if self.tail !=None:
+                return self.tail.value
+            else : return None
     def add_head(self, data):
         temp: Node = Node(data)
         if self.head is None:
             self.head = temp
             self.tail = temp
             return
+        
         temp.next = self.head
         self.head = temp
         return
@@ -41,14 +43,15 @@ class LinkedList:
             self.head = temp
             self.tail = temp
             return
-        self.tail.next = temp
-        self.tail = temp
-        return
+        if self.tail!= None:
+            self.tail.next = temp
+            self.tail = temp
+            return
 
     def is_empty(self):
         return self.head is None
 
-    def remove_head(self) -> int:
+    def remove_head(self) :
         if self.head is None:
             print("Cant delete head its empty ")
             return -1
@@ -62,14 +65,14 @@ class LinkedList:
             return
 
         ptr: Node = self.head
-        while ptr.next.next != None:
+        while ptr.next!=None and ptr.next.next != None:
             ptr = ptr.next
         ptr.next = None
         return
 
     def display(self):
         result = ""
-        ptr: Node = self.head
+        ptr: Node |None = self.head
         while ptr != None:
             result += f"<-{ptr.value}"
             ptr = ptr.next

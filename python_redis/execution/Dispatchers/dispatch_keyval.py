@@ -12,14 +12,14 @@ class HASHMAP_TASKS:
     @staticmethod
     def task_unknown_command(msg: Message, server):
         try:
-            msg.conn_peer.socket_handler.send(msg.cmd.response,"e")
+            msg.conn_peer.socket_handler.send(msg.cmd.response,"e") # type:ignore
         except Exception as e:
             print(f"got exception while processing unknown command:  {e}")
 
     @staticmethod
     def task_set_command(msg: Message, server):
         try:
-            msg.conn_peer.kv.set(msg.cmd.key, msg.cmd.value)
+            msg.conn_peer.kv.set(msg.cmd.key, msg.cmd.value)# type:ignore
             msg.conn_peer.socket_handler.send("OK","s")
 
         except Exception as e:
@@ -29,7 +29,7 @@ class HASHMAP_TASKS:
     def task_get_command(msg: Message, server):
 
         try:
-            (value, isOK) = msg.conn_peer.kv.get(msg.cmd.key)
+            (value, isOK) = msg.conn_peer.kv.get(msg.cmd.key)# type:ignore
 
             # if not OK:
             #     raise ValueError("response not OK ")
@@ -53,19 +53,21 @@ class HASHMAP_TASKS:
     @staticmethod
     def task_get_multiple_attrs_command(msg :Message, server):
         try:
-            ic(msg.cmd.key)
-            ic(msg.cmd.attrs)
-            result = msg.conn_peer.kv.get_attributes(msg.cmd.key, msg.cmd.attrs)
-            msg.conn_peer.socket_handler.send(f"{result}", "a")
+            ic(msg.cmd.key)# type:ignore
+            ic(msg.cmd.attrs)# type:ignore
+            result = msg.conn_peer.kv.get_attributes(msg.cmd.key, msg.cmd.attrs)# type:ignore
+            final_response= result.split(" ")
+            ic(final_response)
+            msg.conn_peer.socket_handler.send(final_response, "a")# type:ignore
         except Exception as e:
             print(f"got error in SET_MULTIPLE_ATTRIBUTES {e}")
 
     @staticmethod
     def task_set_multiple_attrs_command(msg:Message, server):
         try:
-            ic(msg.cmd.key)
-            ic(msg.cmd.attrs)
-            msg.conn_peer.kv.set_attributes(msg.cmd.key, msg.cmd.attrs)
+            ic(msg.cmd.key)# type:ignore
+            ic(msg.cmd.attrs)# type:ignore
+            msg.conn_peer.kv.set_attributes(msg.cmd.key, msg.cmd.attrs)# type:ignore
             msg.conn_peer.socket_handler.send("OK", "s")
         except Exception as e:
             print(f"got error in SET_MULTIPLE_ATTRIBUTES {e}")
@@ -73,8 +75,8 @@ class HASHMAP_TASKS:
     @staticmethod
     def task_set_multi_key_val_command(msg: Message, server):
         try:
-            ic(msg.cmd.args)
-            msg.conn_peer.kv.set_multiple_pairs(msg.cmd.args)
+            ic(msg.cmd.args)# type:ignore
+            msg.conn_peer.kv.set_multiple_pairs(msg.cmd.args)# type:ignore
 
             msg.conn_peer.socket_handler.send("OK","s")
         except Exception as e:
@@ -86,7 +88,7 @@ class HASHMAP_TASKS:
         try:
             ic(msg.cmd.keys)
             result: str = msg.conn_peer.kv.get_multiple_values(msg.cmd.keys)
-            msg.conn_peer.socket_handler.send(f"{result.split()}", "a")
+            msg.conn_peer.socket_handler.send(result.split(" "), "a")
         except Exception as e:
             print(f"got error in CLIENT command: {e}")
 
@@ -107,7 +109,7 @@ class HASHMAP_TASKS:
     @staticmethod
     def task_increment_command(msg: Message, server):
         try:
-            msg.conn_peer.kv.increment(msg.cmd.key)
+            msg.conn_peer.kv.increment(msg.cmd.key)# type:ignore
             msg.conn_peer.socket_handler.send("OK", "s")
         except Exception as e:
             print(f"got error in CLIENT command: {e}")
@@ -115,7 +117,7 @@ class HASHMAP_TASKS:
     @staticmethod
     def task_delete_command(msg: Message, server):
         try:
-            msg.conn_peer.kv.delete_pair(msg.cmd.key)
+            msg.conn_peer.kv.delete_pair(msg.cmd.key)# type:ignore
             msg.conn_peer.socket_handler.send("OK","s")
         except Exception as e:
             print(f"got error in CLIENT command: {e}")
@@ -132,11 +134,11 @@ class HASHMAP_TASKS:
     def task_check_command(msg: Message, server):
         try:
 
-            result: list[bool] = msg.conn_peer.kv.check(msg.cmd.keys)
+            result: list[bool] = msg.conn_peer.kv.check(msg.cmd.keys)# type:ignore
             data = "OK "
             for i in result:
                 data += f"{i} "
-            msg.conn_peer.socket_handler.send(data, "a")
+            msg.conn_peer.socket_handler.send(data.split(), "a")# type:ignore
 
         except Exception as e:
             print(f"got error while CHECK command: {e}")
@@ -145,6 +147,6 @@ class HASHMAP_TASKS:
     def task_hello_command(msg: Message, server):
         spec = dict({"server": "redis"})
         try:
-            msg.conn_peer.socket_handler.send(f"{spec}", "b")
+            msg.conn_peer.socket_handler.send(list( spec.items()), "a")# type:ignore
         except:
             print("got error while sending specs")

@@ -2,9 +2,6 @@ import socket
 import threading
 from typing import Dict
 
-# TODO: write middleware python application which will convert the normal logical commands to the RESP which this redis needs and then also return the result in Human readable form which will be generated from RESP result
-
-# TODO: add module for server's config
 from python_redis.network.Message import Message
 from python_redis.common import execute_task_hash_map
 from python_redis.network import peer
@@ -92,11 +89,11 @@ class Server:
         # print("loop started")
         # This loop waits for a peer in add_peer_ch and adds to the peers dict
         while not self.quit_event.is_set():
-            # TODO: Check for peers which remain in self.peers
-            # TODO: Add pub/sub module
+            
+            
             # ! this can create problem here
             # ? solve the problem here
-            # // @param harhsit is wrong here
+            # // @param harshit is wrong here
             # * this is high lighted
 
             # ic(self.peers)
@@ -106,12 +103,12 @@ class Server:
                 try:
                     err = self.handle_message(
                         msg
-                    )  # TODO: check and add error in this function's response
+                    )  
                     if err != None:
                         print(f"Raw Message Error-> {err}")
                 except Exception as e:
                     # Global exception handler for message processing errors
-                    GlobalExceptionHandler.handle_message_exception(e, msg.conn_peer if hasattr(msg, 'conn_peer') else None)
+                    GlobalExceptionHandler.handle_message_exception(e, msg.conn_peer if hasattr(msg, 'conn_peer') else None) # type: ignore
             except EmptyQueue:
                 pass
 
@@ -121,7 +118,7 @@ class Server:
                 peer = self.add_peer_ch.get_nowait()
                 with self.peers_lock:
                     self.peers[peer] = True
-                    ic(self.peers)
+                    # ic(self.peers)
                 print(f"Added new peer: {peer.Conn.getpeername()}")
             except EmptyQueue:
                 pass
@@ -132,10 +129,8 @@ class Server:
                 this_peer = self.del_peer_ch.get_nowait()
                 with self.peers_lock:
 
-                    # TODO: get how to configure peers lock
 
                     del self.peers[this_peer]
-                    # TODO: solve the race condition in del_peer_chan
                     ic(self.peers)
 
                     ic(this_peer)
@@ -167,14 +162,18 @@ class Server:
         # TCP keep alive
         # conn.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
 
-        # Windows-specific tuning
+        # Windows-specific tuningf
         # conn.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 30_000, 10_000))
         # Handles each new connection by creating a Peer instance
         this_peer: peer.Peer = peer.Peer.newPeer(
             conn, self.msg_queue, self.del_peer_ch
         )  # here we are provinng the conn and msg_queue of server's to the Peer
 
-        # print(f"Handling connection for peer: {this_peer}")
+        # # It seems like `p` is being used as a variable name in the code snippet you provided. In
+        # the context of the code, `p` is not defined or used anywhere, so it doesn't have any
+        # specific functionality associated with it. If you have a specific question or need
+        # clarification on a particular part of the code related to `p`, please let me know!
+        print(f"Handling connection for peer: {this_peer}")
 
         # this_peer.test_protocol()
         # self.add_peer_ch.append(this_peer)

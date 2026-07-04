@@ -7,7 +7,7 @@ if TYPE_CHECKING:
 
 
 class Message:
-    def __init__(self, cmd: bytearray, conn_peer: Peer):
+    def __init__(self, cmd: Command, conn_peer: Peer):
         # this is the peer from/to this message is sent/received
         self.conn_peer: Peer = conn_peer
         self.cmd: Command = cmd

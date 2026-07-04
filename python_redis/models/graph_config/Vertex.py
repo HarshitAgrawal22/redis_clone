@@ -33,10 +33,10 @@ class Vertex:
     def get_data(self) -> dict:
         return self.data
 
-    def get_edges(self) -> list:
+    def get_edges(self) -> list[Edge]:
         return self.edges
 
-    def get_edges_str(self) -> list:
+    def get_edges_str(self) -> str:
         return f'{self.data}-> {", ".join(map(str, self.edges))}'
 
     def print(self, show_weight: bool) -> str:

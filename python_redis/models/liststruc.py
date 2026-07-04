@@ -23,7 +23,7 @@ class List_Struc:
 
         self.lock: RLock = threading.RLock()
         self.dirty_items: set[tuple[int, str, str]] = set()
-        # In it 1st=index, 2nd=value, 3rd=operation
+       
 
         self.stop_event: threading.Event = threading.Event()
         t = threading.Thread(target=self.periodic_db_sync, args=(), daemon=True)
@@ -36,7 +36,6 @@ class List_Struc:
             self.storage.append(record["value"])
 
     def periodic_db_sync(self):
-        # TODO change variable names
         while not self.stop_event.is_set():
             with self.lock:
                 dirty_items_snapshots = set(self.dirty_items)
@@ -45,7 +44,7 @@ class List_Struc:
                 synced_items = set()
                 for index, item, operation in dirty_items_snapshots:
                     try:
-                        # here is try catch because there can be a exception while having a transaction with db
+                    
 
                         if operation == "d":
 
@@ -112,7 +111,7 @@ class List_Struc:
             result = ""
             for i in range(end, start, -1):
                 result += f"{self.storage[i]} "
-            return result
+            return result.strip()
 
     def search_index(self, index):
         if index < 0 or index > len(self.storage):

@@ -12,7 +12,6 @@ from icecream import ic
 
 
 ic.configureOutput(prefix="DEBUG: ", includeContext=True)
-# TODO implement pub/sub model to this project, the instructions are written at the bottom of this file
 
 
 class HardDatabase:
@@ -53,7 +52,7 @@ class HardDatabase:
             ic(e)
             return False
 
-    def insert_and_update_key_val(self, key: str, value: str, collection: Collection):
+    def insert_and_update_key_val(self, key: str, value, collection: Collection):
         try:
             
             update_result = collection.update_one(
@@ -76,8 +75,8 @@ class HardDatabase:
         return update_result.modified_count > 0
 
     def check_collection_exist(self, collection_name: str) -> bool:
-        
-        return self.db.list_collections(filter={"name": collection_name})
+        return bool( self.db.list_collections(filter={"name": collection_name}) )
+    
 
     def delete_key(self, key: str, collection: Collection) -> bool:
         try:
@@ -118,12 +117,12 @@ class HardDatabase:
             return False
 
     def load_from_db(self, collection: Collection) -> Cursor:
-        print("this is the collection we have from hard database")
-        docs = list(collection.find())
-        ic(docs)
+        # print("this is the collection we have from hard database")
+        # docs = list(collection.find())
+        # ic(docs)
 
         return collection.find()
-    
+
     @staticmethod
     def drop_all_dbs():
         dbs = client.list_database_names()

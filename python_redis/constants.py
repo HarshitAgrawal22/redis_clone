@@ -11,4 +11,19 @@ class CommandFormat:
     simple_string :str = "s"
     bulk_string :str = "b"
     array :str = "a"
-    integer :str = "i"
+    integer :str = "i" 
+class DbConnectionStrings:
+    class Graph:
+        pass 
+    class List:
+        pass 
+    class Keyval:
+        pass 
+    class Queue:
+        pass 
+    class Set:
+        pass 
+    class Tree:
+        pass 
+    class Stack:
+        pass 
